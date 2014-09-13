@@ -28,9 +28,14 @@ public class MainFrame extends JFrame implements WindowListener {
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		super.setLayout(new BorderLayout());
 
-		JPanel mainPanel = createMainPanel();
-		super.add(mainPanel, BorderLayout.CENTER);
-
+		JPanel backgroundPanel = createMainPanel();
+		MainMenuPanel mainPanel = new MainMenuPanel();
+		//backgroundPanel.setLayout(new BorderLayout());
+		backgroundPanel.setLayout(null);
+		mainPanel.setBounds(100, 100, 300, 300);
+		backgroundPanel.add(mainPanel);
+		
+		super.add(backgroundPanel, BorderLayout.CENTER);
 		super.setSize(background.getIconWidth(), background.getIconHeight());
 		super.setLocationRelativeTo(null); // Center the frame.
 		super.setResizable(false);
