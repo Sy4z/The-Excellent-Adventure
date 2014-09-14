@@ -19,9 +19,10 @@ import javax.swing.WindowConstants;
  * 
  */
 public class MainFrame extends JFrame implements WindowListener {
-	
+
 	private static final long serialVersionUID = 1L;
 	private ImageIcon background = new ImageIcon("Crashed_Spaceship.png");
+	private static ImageIcon loadBackground = new ImageIcon("robot.png");
 
 	public MainFrame() {
 		super.addWindowListener(this);
@@ -30,11 +31,11 @@ public class MainFrame extends JFrame implements WindowListener {
 
 		JPanel backgroundPanel = createMainPanel();
 		MainMenuPanel mainPanel = new MainMenuPanel();
-		//backgroundPanel.setLayout(new BorderLayout());
+		// backgroundPanel.setLayout(new BorderLayout());
 		backgroundPanel.setLayout(null);
 		mainPanel.setBounds(100, 100, 300, 300);
 		backgroundPanel.add(mainPanel);
-		
+
 		super.add(backgroundPanel, BorderLayout.CENTER);
 		super.setSize(background.getIconWidth(), background.getIconHeight());
 		super.setLocationRelativeTo(null); // Center the frame.
@@ -63,6 +64,32 @@ public class MainFrame extends JFrame implements WindowListener {
 		};
 
 		return panel;
+	}
+
+	/**
+	 * This method is used to display a loading window just before the game
+	 * starts up.
+	 * 
+	 * @return the loading frame of the game.
+	 */
+	private static JFrame createLoadingFrame() {
+		JFrame frame = new JFrame();
+		Image resizedImage = loadBackground.getImage().getScaledInstance(500,
+				300, Image.SCALE_SMOOTH);
+		loadBackground = new ImageIcon(resizedImage);
+		JPanel panel = new JPanel() {
+			// Displays the background image on the panel.
+			@Override
+			public void paintComponent(Graphics g) {
+				g.drawImage(loadBackground.getImage(), 0, 0, null);
+			}
+		};
+		frame.setLayout(new BorderLayout());
+		frame.add(panel, BorderLayout.CENTER);
+		frame.setUndecorated(true);
+		frame.setSize(500, 300);
+		frame.setLocationRelativeTo(null);
+		return frame;
 	}
 
 	@Override
@@ -112,7 +139,18 @@ public class MainFrame extends JFrame implements WindowListener {
 	}
 
 	public static void main(String[] args) {
-		MainFrame frame = new MainFrame();
-	}
+		JFrame loadFrame = createLoadingFrame();
+		loadFrame.setVisible(true);
 
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		loadFrame.dispose();
+
+		MainFrame mainFrame = new MainFrame();
+	}
 }
