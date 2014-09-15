@@ -1,7 +1,7 @@
 package gameWorld;
 /**
  *
- * @author mcintochri1
+ * @author ChrisMcIntosh
  *
  */
 public interface GameObject {

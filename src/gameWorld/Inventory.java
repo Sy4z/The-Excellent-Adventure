@@ -5,16 +5,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.IIOException;
+
 /**
- *
- * @author mcintochri1
- *
+ * 
+ * @author ChrisMcIntosh
+ * 
  */
 public class Inventory {
 	private final int defultMaxSize = 7;
 	private int maxSize;
 	private Item[] items;
-	private int itemsHeld = 0;//Current number of items in inventory
+	private int itemsHeld = 0;// Current number of items in inventory
 
 	/**
 	 * Constructor for basic inventory
@@ -23,24 +24,39 @@ public class Inventory {
 		this.maxSize = defultMaxSize;
 		this.items = new Item[maxSize];
 	}
+
 	/**
 	 * Constructor for inventory with starting items or non standard size
-	 * this method will discard any items in item list in excess of maxSize
+	 * 
 	 * @param itemList
 	 * @param maxSize
 	 */
 	public Inventory(Item[] itemList, int maxSize) {
-		if(items.length == maxSize)
+		if (items.length == maxSize)
 			this.items = itemList;
-		else{
+		else {
 			items = new Item[maxSize];
-			for(int i = 0; i < itemList.length; i ++)
-				this.items[i] = itemList[i];
+			int j = 0;
+			for (int i = 0; i < itemList.length; i++) {
+				if (itemList[i] != null)
+					try {
+						this.items[j++] = itemList[i];
+					} catch (IndexOutOfBoundsException e) {
+						System.out
+								.println("Attempting to create invintory with more items than it's lenght");
+					}
+			}
 		}
 
 		this.maxSize = maxSize;
 	}
 
+	/**
+	 * Adds an item to an inventory
+	 * 
+	 * @param item
+	 * @return
+	 */
 	public boolean add(Item item) {
 		if (itemsHeld == maxSize)
 			return false;
@@ -49,6 +65,13 @@ public class Inventory {
 		return true;
 	}
 
+	/**
+	 * Removes an item from an inventory and returns the removed item so it can
+	 * be placed in the game environment
+	 * 
+	 * @param idx
+	 * @return
+	 */
 	public Item drop(int idx) {
 		if (!validIdx(idx) || items[idx] == null)
 			// This may have to be dealt with in some way
@@ -59,7 +82,13 @@ public class Inventory {
 		shunt(idx);
 		return itm;
 	}
-
+	/**
+	 * Uses an item from an inventory.
+	 * Items control how they are used
+	 * @param idx
+	 * @return
+	 * May require extension for items used with other GameObjects or consumables.
+	 */
 	public boolean use(int idx) {
 		if (validIdx(idx) && items[idx] != null) {
 			items[idx].use();
@@ -70,7 +99,7 @@ public class Inventory {
 
 	/**
 	 * Moves all inventory items down by one place after the given index
-	 *
+	 * 
 	 * @param idx
 	 */
 	private void shunt(int idx) {
