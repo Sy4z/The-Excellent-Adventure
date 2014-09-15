@@ -1,5 +1,3 @@
-tests for the sake of testing
-
 The Excellent Adventure
 ========
 
