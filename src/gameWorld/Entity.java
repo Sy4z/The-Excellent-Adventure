@@ -1,5 +1,7 @@
 package gameWorld;
 
+import Tile.Tile;
+
 /**
  *
  * @author ChrisMcIntosh
