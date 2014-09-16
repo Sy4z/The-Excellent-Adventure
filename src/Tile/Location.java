@@ -1,4 +1,4 @@
-package Tile;
+package tile;
 
 public class Location {
 	int x, y;

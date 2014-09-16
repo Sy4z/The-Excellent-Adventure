@@ -1,6 +1,6 @@
 package gameWorld;
 
-import Tile.Tile;
+import tile.Tile;
 
 /**
  * This is a generic robot and is the base unit type that the player will

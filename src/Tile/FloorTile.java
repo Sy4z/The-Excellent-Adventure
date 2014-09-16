@@ -1,4 +1,4 @@
-package Tile;
+package tile;
 
 import gameWorld.GameObject;
 /**

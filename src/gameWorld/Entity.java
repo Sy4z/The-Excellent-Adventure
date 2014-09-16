@@ -1,6 +1,6 @@
 package gameWorld;
 
-import Tile.Tile;
+import tile.Tile;
 
 /**
  *

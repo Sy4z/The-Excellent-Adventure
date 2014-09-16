@@ -6,7 +6,7 @@
  *
  */
 
-package Tile;
+package tile;
 
 import gameWorld.GameObject;
 import gameWorld.InteractiveObject;
