@@ -68,8 +68,8 @@ import javax.swing.*;
 		public Dimension getPreferredSize(){
 			return new Dimension(WIDTH,HEIGHT);
 		}
-		private void toCart(int x, int y){
-			
+		private Point toCart(int x, int y){
+			return new Point ((2 * x + y) / 2,(2 * x - y) / 2);
 		}
 		private Point toIso(int x, int y){
 			return new Point (x - y,(x + y) / 2);
