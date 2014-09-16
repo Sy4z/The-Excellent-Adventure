@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import javax.imageio.IIOException;
 
 /**
- * 
+ *
  * @author ChrisMcIntosh
- * 
+ *
  */
 public class Inventory {
 	private final int defultMaxSize = 7;
@@ -27,7 +27,7 @@ public class Inventory {
 
 	/**
 	 * Constructor for inventory with starting items or non standard size
-	 * 
+	 *
 	 * @param itemList
 	 * @param maxSize
 	 */
@@ -42,8 +42,7 @@ public class Inventory {
 					try {
 						this.items[j++] = itemList[i];
 					} catch (IndexOutOfBoundsException e) {
-						System.out
-								.println("Attempting to create invintory with more items than it's lenght");
+						throw new IllegalArgumentException("Attempting to create invintory with more items than it's lenght");
 					}
 			}
 		}
@@ -53,7 +52,7 @@ public class Inventory {
 
 	/**
 	 * Adds an item to an inventory
-	 * 
+	 *
 	 * @param item
 	 * @return
 	 */
@@ -68,7 +67,7 @@ public class Inventory {
 	/**
 	 * Removes an item from an inventory and returns the removed item so it can
 	 * be placed in the game environment
-	 * 
+	 *
 	 * @param idx
 	 * @return
 	 */
@@ -99,7 +98,7 @@ public class Inventory {
 
 	/**
 	 * Moves all inventory items down by one place after the given index
-	 * 
+	 *
 	 * @param idx
 	 */
 	private void shunt(int idx) {
@@ -119,7 +118,7 @@ public class Inventory {
 	private boolean validIdx(int idx) {
 		if (idx < 0)
 			return false;
-		if (idx > maxSize)
+		if (idx >= maxSize)
 			return false;
 		return true;
 	}
