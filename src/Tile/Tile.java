@@ -58,7 +58,17 @@ public abstract class Tile {
 	 */
 	public boolean addObject(GameObject obj){
 		if(gameObjectIsValid(obj)){
-			objs[objIdx++] = obj;
+			try{
+				objs[objIdx++] = obj;
+			}
+			catch(IndexOutOfBoundsException excep){
+				GameObject[] temp = new GameObject[objs.length*2];
+				int i = 0;
+				for(GameObject e : objs){
+					temp[i] = e;
+				}
+				objs = temp;
+			}
 			return true;
 		}
 		return false;
