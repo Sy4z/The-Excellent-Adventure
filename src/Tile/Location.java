@@ -1,4 +1,4 @@
-package gameWorld;
+package Tile;
 
 public class Location {
 	int x, y;

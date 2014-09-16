@@ -11,7 +11,6 @@ package Tile;
 import gameWorld.GameObject;
 import gameWorld.InteractiveObject;
 import gameWorld.Item;
-import gameWorld.Location;
 
 /**
  *
