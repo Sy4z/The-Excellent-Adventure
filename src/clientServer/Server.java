@@ -13,7 +13,11 @@ import java.net.SocketException;
  * SERVERSIDE CLASS
  * @author syaz
  * Server class dealing with all server calculations
- * Running via UDP, as TCP would be too slow and (i hope) we wont need every packet. 
+ * Running via UDP, as TCP would be too slow and (i hope) we wont need every packet.
+ * TODO: For every packet that gets sent, send back a confirmation it was received.
+ * If the client does not receive confirmation, it will resend the packet until it receives confirmation
+ * Will need to deal with duplicate packets because of the chance of the confirmation packet being lost
+ * May not need confirmation for all packets. Just important ones. Frameskipping can be a thing too. 
  */
 
 public class Server implements Runnable {
