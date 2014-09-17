@@ -24,7 +24,7 @@ public abstract class Tile {
 	protected String type;
 	protected boolean hasInteractive = false;
 	protected GameObject[] objs;
-	protected int objIdx;
+	protected int objIdx = 0;
 
 	/**
 	 *

@@ -11,6 +11,6 @@ public class FloorTile extends Tile{
 		x = dx;
 		y = dy;
 		objs = new GameObject[10];
-		type = "Floortile";
+		type = "floor_tile";
 	}
 }
