@@ -31,7 +31,6 @@ public class MainFrame extends JFrame implements WindowListener {
 
 		JPanel backgroundPanel = createMainPanel();
 		MainMenuPanel mainPanel = new MainMenuPanel();
-		// backgroundPanel.setLayout(new BorderLayout());
 		backgroundPanel.setLayout(null);
 		mainPanel.setBounds(100, 100, 300, 300);
 		backgroundPanel.add(mainPanel);
@@ -68,7 +67,7 @@ public class MainFrame extends JFrame implements WindowListener {
 
 	/**
 	 * This method is used to display a loading window just before the game
-	 * starts up.
+	 * starts up. Image from http://grabcad.com/library/crazy-robot.
 	 * 
 	 * @return the loading frame of the game.
 	 */
