@@ -15,7 +15,7 @@ import javax.swing.WindowConstants;
 /**
  * This class represents the main window of the game.
  * 
- * @author peesapvenk
+ * @author Venkata Peesapati
  * 
  */
 public class MainFrame extends JFrame implements WindowListener {
@@ -30,12 +30,12 @@ public class MainFrame extends JFrame implements WindowListener {
 		super.setLayout(new BorderLayout());
 
 		JPanel backgroundPanel = createMainPanel();
-		MainMenuPanel mainPanel = new MainMenuPanel();
+		MainMenuPanel mainPanel = new MainMenuPanel(this);
 		backgroundPanel.setLayout(null);
-		mainPanel.setBounds(100, 100, 300, 300);
+		mainPanel.setBounds(100, 100, 300, 350);
 		backgroundPanel.add(mainPanel);
 
-		super.add(backgroundPanel, BorderLayout.CENTER);
+		super.getContentPane().add(backgroundPanel, BorderLayout.CENTER);
 		super.setSize(background.getIconWidth(), background.getIconHeight());
 		super.setLocationRelativeTo(null); // Center the frame.
 		super.setResizable(false);
@@ -109,32 +109,22 @@ public class MainFrame extends JFrame implements WindowListener {
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public static void main(String[] args) {

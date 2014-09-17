@@ -78,6 +78,7 @@ import tile.Tile;
 					//temporary solution, 
 					//this will get mental when no. of tile types goes up.
 					if(map[y][x].getType().equals("blue_tile")){
+						g.drawImage(testTile,p.x+OFFSET_X ,p.y+OFFSET_Y ,null);
 						g.drawImage(blueTile,p.x+OFFSET_X ,p.y+OFFSET_Y ,null);
 					}
 					else{
