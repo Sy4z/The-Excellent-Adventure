@@ -16,6 +16,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import tile.Tile;
 	/**
 	 * Testing Canvas, for isometric tiles.
 	 * 
@@ -23,6 +25,7 @@ import javax.swing.*;
 	 *
 	 */
 	public class IsoCanvas extends JPanel{
+		private Tile[][] map = null;
 		private int[][] tiles  = {{1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
 								  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
 								  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
@@ -64,7 +67,10 @@ import javax.swing.*;
 		
 		}
 		
-		
+		public void update(Tile[][] updatedMap){
+			this.map = updatedMap;
+			this.repaint();
+		}
 		public Dimension getPreferredSize(){
 			return new Dimension(WIDTH,HEIGHT);
 		}
