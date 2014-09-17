@@ -15,7 +15,7 @@ public class IsoFrame extends JFrame  {
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			pack();
 			setResizable(false); //prevents board from being resizable
-			setVisible(true); 
+			 
 			}
 
 		public IsoCanvas canvas() {

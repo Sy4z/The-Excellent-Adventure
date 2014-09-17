@@ -47,7 +47,7 @@ import javax.swing.*;
 		public void paint(Graphics g){
 			Image testTile = null;
 			try {
-				testTile = ImageIO.read(new File("src/isoTest/tile.PNG"));
+				testTile = ImageIO.read(new File("src/gameRender/tile.PNG"));
 			} catch (IOException e) {
 				System.out.println("unable to Load image");
 				e.printStackTrace();
@@ -68,7 +68,7 @@ import javax.swing.*;
 		public Dimension getPreferredSize(){
 			return new Dimension(WIDTH,HEIGHT);
 		}
-		private Point toCart(int x, int y){
+		public Point toCart(int x, int y){
 			return new Point ((2 * x + y) / 2,(2 * x - y) / 2);
 		}
 		private Point toIso(int x, int y){
