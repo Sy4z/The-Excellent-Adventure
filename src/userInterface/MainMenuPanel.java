@@ -1,5 +1,10 @@
 package userInterface;
 
+import gameRender.IsoCanvas;
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,10 +16,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+
+import com.sun.xml.internal.messaging.saaj.soap.JpegDataContentHandler;
 
 /**
  * 
@@ -23,6 +31,11 @@ import javax.swing.border.LineBorder;
  */
 public class MainMenuPanel extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	JFrame currentFrame;
 	JLabel gameName;
 	JButton newGameButton;
 	JButton loadButton;
@@ -31,7 +44,8 @@ public class MainMenuPanel extends JPanel {
 	JButton optionsButton;
 	JButton exitButton;
 
-	public MainMenuPanel() {
+	public MainMenuPanel(JFrame currentFrame) {
+		this.currentFrame = currentFrame;
 		setLayout(new GridLayout(7, 1));
 		gameName = new JLabel("Robot Mania");
 		gameName.setFont(gameName.getFont().deriveFont(40.0f));
@@ -45,6 +59,7 @@ public class MainMenuPanel extends JPanel {
 		newGameButton.setFocusPainted(false);
 		newGameButton.setForeground(Color.black);
 		newGameButton.addMouseListener(new HoverButtonListener());
+		newGameButton.addActionListener(new NewGameButtonListener());
 
 		loadButton = new JButton("Load Game");
 		loadButton.setOpaque(false);
@@ -106,6 +121,35 @@ public class MainMenuPanel extends JPanel {
 
 	// Action listeners for each of the buttons can go down here.
 
+	/**
+	 * This is the listener class used for the newGameButton. It opens a new
+	 * canvas.
+	 * 
+	 * @author Venkata Peesapati
+	 * 
+	 */
+	class NewGameButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			currentFrame.getContentPane().removeAll();
+			currentFrame.getContentPane().validate();
+			currentFrame.getContentPane().repaint();
+			currentFrame.getContentPane().add(new IsoCanvas(),
+					BorderLayout.CENTER);
+			currentFrame.getContentPane().validate();
+			currentFrame.getContentPane().repaint();
+		}
+
+	}
+
+	/**
+	 * This is the listener class used for the exitButton. It quits the program
+	 * and closed the window.
+	 * 
+	 * @author Venkata Peesapati
+	 * 
+	 */
 	class ExitButtonListener implements ActionListener {
 
 		@Override
