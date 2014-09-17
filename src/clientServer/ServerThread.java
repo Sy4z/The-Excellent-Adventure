@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.net.SocketException;
 
 /**
+ * SERVERSIDE CLASS
  * @author syaz
  * Class which deals with the logic of each different connected user.
  * This gets invoked when a user connects to the server,

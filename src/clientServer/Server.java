@@ -10,11 +10,10 @@ import java.net.Socket;
 import java.net.SocketException;
 
 /**
+ * SERVERSIDE CLASS
+ * @author syaz
  * Server class dealing with all server calculations
  * Running via UDP, as TCP would be too slow and (i hope) we wont need every packet. 
- * 
- * @author syaz
- *
  */
 
 public class Server implements Runnable {
