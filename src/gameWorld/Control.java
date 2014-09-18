@@ -1,5 +1,7 @@
 package gameWorld;
 
+import java.io.File;
+
 import tile.Tile;
 
 /**
@@ -16,5 +18,19 @@ public class Control {
 
 		}
 	}
+	/**
+	 * Load Constructor
+	 * @return
+	 */
+	public Control(File save, int width, int height){
 
+	}
+
+	/**
+	 * New Game Control
+	 *
+	 */
+	public Control(int width, int height){
+
+	}
 }
