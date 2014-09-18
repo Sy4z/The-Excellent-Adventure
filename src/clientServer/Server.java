@@ -1,12 +1,9 @@
 package clientServer;
 
-import java.io.DataInputStream;
+
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.SocketException;
 
 /**
@@ -17,14 +14,14 @@ import java.net.SocketException;
  * TODO: For every packet that gets sent, send back a confirmation it was received.
  * If the client does not receive confirmation, it will resend the packet until it receives confirmation
  * Will need to deal with duplicate packets because of the chance of the confirmation packet being lost
- * May not need confirmation for all packets. Just important ones. Frameskipping can be a thing too. 
+ * May not need confirmation for all packets. Just important ones. Frameskipping can be a thing too.
  */
 
 public class Server implements Runnable {
-	int port = 32768;
-	DatagramSocket sock;//Socket to recieve datagram packets
+	int port = 80;
+	DatagramSocket sock;//Socket to receive datagram packets
 
-	boolean listening = true; //Boolean stating whether the server is listening
+	boolean listening = false; //Boolean stating whether the server is listening. Default false, server must be started before it will begin listening.
 
 	public Server(){
 		try {
@@ -41,17 +38,44 @@ public class Server implements Runnable {
 
 	@Override
 	public void run() {
-		while(listening){
-			try {
-				DatagramPacket packet = null; //Kinda hacky, I should probably watch out for nullPointers
-				 sock.receive(packet);
-				new Thread(new ServerThread(sock, packet)).start();
-			} catch (IOException e) {
+		while(true){
+			if(listening){
+				try {
+					DatagramPacket packet = null; //Kinda hacky, I should probably watch out for nullPointers.<sarcasm> no never</sarcasm>.
 
-				e.printStackTrace();
+					sock.receive(packet);
+
+					new Thread(new ServerThread(sock, packet)).start();
+
+				} catch (IOException e) {
+
+					e.printStackTrace();
+				}
 			}
 		}
 
+	}
+
+
+
+	/**
+	 * Method which shuts down the server functionality
+	 * Bearing in mind the instance of server is still instantiated
+	 * This method just stops the server from listening for new connections
+	 */
+	public void shutdownServer(){
+		listening = false;
+
+	}
+
+
+	/**
+	 * Method which starts the server listening.
+	 * This must be done before the server will start accepting connections.
+	 */
+	public void startServer(){
+		listening = true;
+		this.run(); //Can this be done? Or is it automatically done via server.start() in the interface runnable?
 	}
 
 

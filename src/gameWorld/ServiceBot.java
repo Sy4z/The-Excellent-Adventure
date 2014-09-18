@@ -9,7 +9,7 @@ import tile.Tile;
  * @author mcintochri1
  *
  */
-public class ServiceBot implements Entity {
+public class ServiceBot implements Unit {
 	private Inventory inventory;
 	private Tile curLocation;
 
