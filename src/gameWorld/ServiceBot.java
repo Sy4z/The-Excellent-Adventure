@@ -23,4 +23,10 @@ public class ServiceBot implements Unit {
 		curLocation = destination;
 	}
 
+	@Override
+	public Tile getLocation() {
+		return curLocation;
+
+	}
+
 }

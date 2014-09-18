@@ -94,4 +94,9 @@ public abstract class Tile {
 		}
 		return false;
 	}
+
+	public void removeObject() {
+		// TODO Auto-generated method stub
+
+	}
 }

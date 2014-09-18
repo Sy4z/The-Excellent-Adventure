@@ -14,4 +14,6 @@ public interface Unit extends GameObject{
 	 * other information related to the move and ensure it is a valid move
 	 */
 	public void move(Tile destination);
+
+	public Tile getLocation();
 }
