@@ -1,5 +1,7 @@
 package gameWorld;
 
+import gameRender.IsoCanvas;
+
 import java.io.File;
 
 import dataStorage.Data;
@@ -15,6 +17,7 @@ public class Control {
 	private Tile[][] gameBoard;
 	private Unit[] units;
 	private File defaultNewGameState = null;
+
 
 	public void tick() {
 		while (true) {
@@ -36,9 +39,16 @@ public class Control {
 	public Control(int width, int height){
 		gameBoard = Data.load(defaultNewGameState);
 	}
-
+	/**
+	 * Moment class.
+	 * Currently works as teleportation.
+	 * Will be updated with a pathfinding alogritm and move one square per tick.
+	 * @param ID
+	 * @param destination
+	 * @return
+	 */
 	public boolean move(int ID, Location destination){
-		if(outOfBounds(destination))
+		if(!inBounds(destination))
 			return false;
 
 		int x = destination.getX();
@@ -54,7 +64,8 @@ public class Control {
 		return true;
 
 	}
-	private boolean outOfBounds(Location destination) {
+
+	private boolean inBounds(Location destination) {
 		int x = destination.getX();
 		int y = destination.getY();
 		if(x >= gameBoard.length)
