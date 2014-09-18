@@ -10,7 +10,7 @@ public class IsoFrame extends JFrame  {
 		
 		public IsoFrame(){
 			super("  ISO-TEST");		
-			canvas = new IsoCanvas();
+			canvas = new IsoCanvas(800,600);
 			add(canvas); 
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			pack();
