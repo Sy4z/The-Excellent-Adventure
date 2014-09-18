@@ -18,8 +18,8 @@ import java.net.SocketException;
  */
 
 public class Server implements Runnable {
-	int port = 32768;
-	DatagramSocket sock;//Socket to recieve datagram packets
+	int port = 80;
+	DatagramSocket sock;//Socket to receive datagram packets
 
 	boolean listening = false; //Boolean stating whether the server is listening. Default false, server must be started before it will begin listening.
 
@@ -43,7 +43,9 @@ public class Server implements Runnable {
 				try {
 					DatagramPacket packet = null; //Kinda hacky, I should probably watch out for nullPointers
 					sock.receive(packet);
+
 					new Thread(new ServerThread(sock, packet)).start();
+
 				} catch (IOException e) {
 
 					e.printStackTrace();
@@ -72,6 +74,7 @@ public class Server implements Runnable {
 	 */
 	public void startServer(){
 		listening = true;
+		this.run(); //Can this be done? Or is it automatically done via server.start() in the interface runnable?
 	}
 
 
