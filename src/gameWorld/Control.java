@@ -2,10 +2,10 @@ package gameWorld;
 
 import gameRender.IsoCanvas;
 
+import java.awt.Point;
 import java.io.File;
 
 import dataStorage.Data;
-import tile.Location;
 import tile.Tile;
 
 /**
@@ -47,17 +47,17 @@ public class Control {
 	 * @param destination
 	 * @return
 	 */
-	public boolean move(int ID, Location destination){
-		if(!inBounds(destination))
+	public boolean move(int ID, Point destination){	//@Chris @frm:Dylan Should this not take a destination of type Tile?
+		if(!inBounds(destination))					//Also I went through and refactored Location to point soz
 			return false;
 
-		int x = destination.getX();
-		int y = destination.getY();
+		int x = (int) destination.getX();
+		int y = (int) destination.getY();
 
 		Tile target = gameBoard[x][y];
 		//add is valid Tile to move to check.
 
-		units[ID].getLocation().removeObject();
+		units[ID].remove(); //Also soz for 
 		gameBoard[x][y].addObject(units[ID]);
 		units[ID].move(target);
 
@@ -65,9 +65,9 @@ public class Control {
 
 	}
 
-	private boolean inBounds(Location destination) {
-		int x = destination.getX();
-		int y = destination.getY();
+	private boolean inBounds(Point destination) {
+		int x = (int) destination.getX();
+		int y = (int) destination.getY();
 		if(x >= gameBoard.length)
 			return false;
 		if(y >= gameBoard[0].length)

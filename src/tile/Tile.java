@@ -8,6 +8,11 @@
 
 package tile;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import gameWorld.GameObject;
 import gameWorld.InteractiveObject;
 import gameWorld.Item;
@@ -23,15 +28,15 @@ public abstract class Tile {
 	protected int x,y;
 	protected String type;
 	protected boolean hasInteractive = false;
-	protected GameObject[] objs;
+	protected List<GameObject> objs;
 	protected int objIdx = 0;
 
 	/**
 	 *
-	 * @return a Location object which stores the x and y of the given tile
+	 * @return a Point object which stores the x and y of the given tile
 	 */
-	public Location getLocation(){
-		return new Location(x,y);
+	public Point getLocation(){
+		return new Point(x,y);
 	}
 
 	/**
@@ -45,32 +50,21 @@ public abstract class Tile {
 	 *
 	 * @return an array of objects that are currently located on this tile
 	 */
-	public GameObject[] getElements(){
+	public List<GameObject> getElements(){
 		return objs;
 	}
 
 	/**
 	 * Add a gameObject to the tile
 	 *
-	 * @param obj The object to be added
+	 * @param newObject The object to be added
 	 * @return True if the object was added, false otherwise
 	 */
-	public boolean addObject(GameObject obj){
-		if(gameObjectIsValid(obj)){
-			try{
-				objs[objIdx++] = obj;
-
-				GameObject[] temp = new GameObject[objs.length*2];
-				int i = 0;
-				for(GameObject e : objs){
-					temp[i] = e;
-				}
-				objs = temp;
+	public boolean addObject(GameObject newObject){
+		if(gameObjectIsValid(newObject)){
+			if(objs.add(newObject)){
+				return true;
 			}
-			catch(IndexOutOfBoundsException excep){
-
-			}
-			return true;
 		}
 		return false;
 	}
@@ -94,9 +88,10 @@ public abstract class Tile {
 		}
 		return false;
 	}
+	
+	
 
-	public void removeObject() {
-		// TODO Auto-generated method stub
-
+	public boolean removeObject(GameObject obj) {
+		return objs.remove(obj);
 	}
 }
