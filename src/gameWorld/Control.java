@@ -9,5 +9,12 @@ import tile.Tile;
  */
 public class Control {
 	private Tile[][] gameBoard;
-	private Entity[] units;
+	private Unit[] units;
+
+	public void tick() {
+		while (true) {
+
+		}
+	}
+
 }

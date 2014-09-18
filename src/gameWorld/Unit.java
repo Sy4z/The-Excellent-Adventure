@@ -7,7 +7,7 @@ import tile.Tile;
  * @author ChrisMcIntosh
  *
  */
-public interface Entity extends GameObject{
+public interface Unit extends GameObject{
 	/**
 	 * Updates a Entities information of its location.
 	 * This will be used my the move methods in Control which will update all

@@ -14,7 +14,7 @@ import java.net.SocketException;
  * TODO: For every packet that gets sent, send back a confirmation it was received.
  * If the client does not receive confirmation, it will resend the packet until it receives confirmation
  * Will need to deal with duplicate packets because of the chance of the confirmation packet being lost
- * May not need confirmation for all packets. Just important ones. Frameskipping can be a thing too. 
+ * May not need confirmation for all packets. Just important ones. Frameskipping can be a thing too.
  */
 
 public class Server implements Runnable {
@@ -41,7 +41,8 @@ public class Server implements Runnable {
 		while(true){
 			if(listening){
 				try {
-					DatagramPacket packet = null; //Kinda hacky, I should probably watch out for nullPointers
+					DatagramPacket packet = null; //Kinda hacky, I should probably watch out for nullPointers.<sarcasm> no never</sarcasm>.
+
 					sock.receive(packet);
 
 					new Thread(new ServerThread(sock, packet)).start();
