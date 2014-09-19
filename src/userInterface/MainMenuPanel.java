@@ -135,7 +135,7 @@ public class MainMenuPanel extends JPanel {
 			currentFrame.getContentPane().removeAll();
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
-			currentFrame.getContentPane().add(new IsoCanvas(),
+			currentFrame.getContentPane().add(new IsoCanvas(1150, 850),
 					BorderLayout.CENTER);
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
