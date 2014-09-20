@@ -28,5 +28,9 @@ public class ServiceBot implements Unit {
 		return curLocation;
 
 	}
+	
+	public boolean remove(){
+		return curLocation.removeObject(this);
+	}
 
 }

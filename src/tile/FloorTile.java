@@ -1,5 +1,7 @@
 package tile;
 
+import java.util.ArrayList;
+
 import gameWorld.GameObject;
 /**
  * STANDIN represents the floor
@@ -10,7 +12,7 @@ public class FloorTile extends Tile{
 	public FloorTile(int dx,int dy){
 		x = dx;
 		y = dy;
-		objs = new GameObject[10];
+		objs = new ArrayList<GameObject>();
 		type = "floor_tile";
 	}
 }

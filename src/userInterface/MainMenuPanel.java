@@ -135,8 +135,8 @@ public class MainMenuPanel extends JPanel {
 			currentFrame.getContentPane().removeAll();
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
-			currentFrame.getContentPane().add(new IsoCanvas(),
-					BorderLayout.CENTER);
+			currentFrame.getContentPane().add(new IsoCanvas(1000,1000),BorderLayout.CENTER); //isocanvas was changed? I added some arbitrary width and height values
+					
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
 		}

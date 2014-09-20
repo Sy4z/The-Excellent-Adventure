@@ -16,4 +16,10 @@ public interface Unit extends GameObject{
 	public void move(Tile destination);
 
 	public Tile getLocation();
+	
+	/**
+	 * remove the unit from the tile it stores
+	 * @return
+	 */
+	public boolean remove();
 }
