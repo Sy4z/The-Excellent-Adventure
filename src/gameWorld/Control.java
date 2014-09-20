@@ -48,7 +48,7 @@ public class Control {
 	 * @return
 	 */
 	public boolean move(int ID, Tile destination){
-		if(!inBounds(destination.getLocation()))	
+		if(!inBounds(destination.getLocation()))
 			return false;
 
 		int x = (int) destination.getLocation().getX();
@@ -57,7 +57,7 @@ public class Control {
 		Tile target = gameBoard[x][y];
 		//add is valid Tile to move to check.
 
-		units[ID].remove(); //Also soz for 
+		units[ID].remove(); //Removes from current tile.
 		gameBoard[x][y].addObject(units[ID]);
 		units[ID].move(target);
 
