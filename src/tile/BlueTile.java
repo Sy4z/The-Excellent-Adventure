@@ -1,6 +1,8 @@
 package tile;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import gameWorld.GameObject;
 /**
@@ -9,10 +11,9 @@ import gameWorld.GameObject;
  *
  */
 public class BlueTile extends Tile{
-	public BlueTile(int dx,int dy){
-		x = dx;
-		y = dy;
-		objs = new ArrayList<GameObject>();
-		type = "blue_tile";
+
+	public BlueTile(int dx, int dy, String type,
+			List<GameObject> objectsOnTile, File imgPath) {
+		super(dx, dy, type, objectsOnTile, imgPath);
 	}
 }

@@ -1,6 +1,8 @@
 package tile;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import gameWorld.GameObject;
 /**
@@ -9,10 +11,10 @@ import gameWorld.GameObject;
  *
  */
 public class FloorTile extends Tile{
-	public FloorTile(int dx,int dy){
-		x = dx;
-		y = dy;
-		objs = new ArrayList<GameObject>();
-		type = "floor_tile";
+
+	public FloorTile(int dx, int dy, String type,
+			List<GameObject> objectsOnTile, File imgPath) {
+		super(dx, dy, type, objectsOnTile, imgPath);
+		// TODO Auto-generated constructor stub
 	}
 }

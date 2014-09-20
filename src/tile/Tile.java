@@ -31,12 +31,18 @@ import gameWorld.Item;
  */
 public abstract class Tile {
 
-	protected int x,y;
+	protected int x,y ;
 	protected String type;
 	protected boolean hasInteractive = false;
 	protected List<GameObject> objs;
 	protected int objIdx = 0;
 	protected File imgPath;
+
+	public Tile(int dx, int dy, String type, List<GameObject> objectsOnTile, File imgPath){
+		this.type = type;
+		objs = objectsOnTile;
+		this.imgPath = imgPath;
+	}
 
 	/**
 	 *
@@ -76,7 +82,6 @@ public abstract class Tile {
 		return false;
 	}
 
-
 	/**
 	 * Determine if a given object may be added to the array of GameObjects for this tile
 	 *
@@ -96,6 +101,13 @@ public abstract class Tile {
 		return false;
 	}
 
+	public boolean canMove(Tile e){
+		//XXX
+		//TODO
+		//FIXME
+		return true;
+	}
+
 	public boolean draw(Graphics2D g, int dx, int dy, int dx2, int dy2,int sx, int sy, int sx2,int sy2){
 		try {
 			BufferedImage img = ImageIO.read(imgPath);
@@ -105,6 +117,7 @@ public abstract class Tile {
 				o.draw(g,dx,dy,dx2,dy2,sx,sy,sx2,sy2);
 			}
 		} catch (IOException e) {
+			//FORCES ALL TILES TO HAVE AN IMG
 			e.printStackTrace();
 		}
 		return false;

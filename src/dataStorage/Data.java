@@ -1,6 +1,9 @@
 package dataStorage;
 
+import gameWorld.GameObject;
+
 import java.io.File;
+import java.util.ArrayList;
 
 import tile.*;
 
@@ -25,9 +28,11 @@ public class Data {
      * @throws FileNotFoundException
      */
     public static Tile[][] load(File fi){
-    	Tile[][] t = {	{ new FloorTile(0, 0), new FloorTile(1, 0), new FloorTile(2, 0)},
-    					{new FloorTile(0, 0), new BlueTile(1, 1) , new FloorTile(2, 1)},
-    					{new FloorTile(0, 2), new FloorTile(1, 2), new FloorTile(2, 2)}};
+    	File FT = new File("src" + File.pathSeparator + "tile" + File.pathSeparator + "t1.png");
+    	File BT = new File("Src" + File.pathSeparator + "tile" + File.pathSeparator + "t2.png");
+    	Tile[][] t = {	{new FloorTile(0, 0, "floor_tile", new ArrayList<GameObject>(), FT), new FloorTile(1, 0, "floor_tile", new ArrayList<GameObject>(), FT), new FloorTile(2, 0, "floor_tile", new ArrayList<GameObject>(), FT)},
+    					{new FloorTile(0, 0, "floor_tile", new ArrayList<GameObject>(), FT), new BlueTile(1, 1, "blue_tile", new ArrayList<GameObject>(), BT) , new FloorTile(2, 1, "floor_tile", new ArrayList<GameObject>(), FT)},
+    					{new FloorTile(0, 2, "floor_tile", new ArrayList<GameObject>(), FT), new FloorTile(1, 2, "floor_tile", new ArrayList<GameObject>(), FT), new FloorTile(2, 2, "floor_tile", new ArrayList<GameObject>(), FT)}};
     	return t;
     }
 }

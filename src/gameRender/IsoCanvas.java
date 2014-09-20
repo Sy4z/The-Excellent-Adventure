@@ -67,7 +67,7 @@ import tile.Tile;
 			} catch (IOException e) {
 				System.out.println("Unable to Load image");
 				//e.printStackTrace();
-				System.exit(-1);
+//				System.exit(-1);
 			}
 		}
 		/**
