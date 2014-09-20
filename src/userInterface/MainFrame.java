@@ -132,7 +132,7 @@ public class MainFrame extends JFrame implements WindowListener {
 		loadFrame.setVisible(true);
 
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(0);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

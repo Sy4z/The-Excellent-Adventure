@@ -110,8 +110,8 @@ public abstract class Tile {
 
 	public boolean draw(Graphics2D g, int dx, int dy, int dx2, int dy2,int sx, int sy, int sx2,int sy2){
 		try {
-			BufferedImage img = ImageIO.read(imgPath);
-
+			BufferedImage img = ImageIO.read(imgPath);//shouldnt the image be passed into the contructor orsomething?
+													  //this is loading the image every time the tile is drawn.
 			g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
 			for(GameObject o : objs){
 				o.draw(g,dx,dy,dx2,dy2,sx,sy,sx2,sy2);
