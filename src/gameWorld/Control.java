@@ -10,7 +10,7 @@ import tile.Tile;
 
 /**
  *
- * @author ChrisMcIntosh
+ * @author ChrisMcIntosh flattterintggiberish
  *
  */
 public class Control {
