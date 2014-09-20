@@ -47,12 +47,12 @@ public class Control {
 	 * @param destination
 	 * @return
 	 */
-	public boolean move(int ID, Point destination){	//@Chris @frm:Dylan Should this not take a destination of type Tile?
-		if(!inBounds(destination))					//Also I went through and refactored Location to point soz
+	public boolean move(int ID, Tile destination){
+		if(!inBounds(destination.getLocation()))	
 			return false;
 
-		int x = (int) destination.getX();
-		int y = (int) destination.getY();
+		int x = (int) destination.getLocation().getX();
+		int y = (int) destination.getLocation().getY();
 
 		Tile target = gameBoard[x][y];
 		//add is valid Tile to move to check.
