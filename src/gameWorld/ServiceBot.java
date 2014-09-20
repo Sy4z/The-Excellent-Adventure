@@ -1,5 +1,12 @@
 package gameWorld;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import tile.Tile;
 
 /**
@@ -12,6 +19,7 @@ import tile.Tile;
 public class ServiceBot implements Unit {
 	private Inventory inventory;
 	private Tile curLocation;
+	private File filePath = null;
 
 	public ServiceBot(Tile loc) {
 		inventory = new Inventory();
@@ -70,6 +78,20 @@ public class ServiceBot implements Unit {
 		} else if (!inventory.equals(other.inventory))
 			return false;
 		return true;
+	}
+
+	@Override
+	public void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx,
+			int sy, int sx2, int sy2) {
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(filePath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.err.println(e + "");
+		}
+		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
+
 	}
 
 
