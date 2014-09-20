@@ -10,8 +10,8 @@ import tile.Tile;
 
 /**
  *
- * @author ChrisMcIntosh flattterintggiberishTHATWILLCAUSEACONFLICTTHISTIMEPLZ
- *
+ * @author ChrisMcIntosh flattterintggiberish
+ *  
  */
 public class Control {
 	private Tile[][] gameBoard;
