@@ -1,11 +1,14 @@
 package gameWorld;
 
 import java.awt.Graphics2D;
+<<<<<<< HEAD
+=======
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+>>>>>>> origin/master
 
 import tile.Tile;
 
@@ -83,6 +86,10 @@ public class ServiceBot implements Unit {
 	@Override
 	public void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx,
 			int sy, int sx2, int sy2) {
+<<<<<<< HEAD
+		//empty method to comply to the implemented interface. May want to change this
+		
+=======
 		BufferedImage img = null;
 		try {
 			img = ImageIO.read(filePath);
@@ -92,6 +99,7 @@ public class ServiceBot implements Unit {
 		}
 		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
 
+>>>>>>> origin/master
 	}
 
 
