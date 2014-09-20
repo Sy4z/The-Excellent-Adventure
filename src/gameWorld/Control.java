@@ -10,7 +10,7 @@ import tile.Tile;
 
 /**
  *
- * @author ChrisMcIntosh flattterintggiberishTHATWILLCAUSEACONFLICTTHISTIMEPLZ
+ * @author ChrisMcIntosh conflicts plz
  *
  */
 public class Control {
