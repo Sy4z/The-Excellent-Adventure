@@ -13,19 +13,19 @@ import tile.*;
  *
  */
 public class Data {
-    
+
     public Data(){}
 
     /**
      * -----STANDIN WHILE I STUDY XML------
      * @param fi Use null the File shall be ignored
-     * 
+     *
      * Returns a 2D array of Tiles for testing purposes, feel free to mess with
      * @return A 2D Array of Tile
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException
      */
     public static Tile[][] load(File fi){
-    	Tile[][] t = {	{new FloorTile(0, 0), new FloorTile(1, 0), new FloorTile(2, 0)},
+    	Tile[][] t = {	{ new FloorTile(0, 0), new FloorTile(1, 0), new FloorTile(2, 0)},
     					{new FloorTile(0, 0), new BlueTile(1, 1) , new FloorTile(2, 1)},
     					{new FloorTile(0, 2), new FloorTile(1, 2), new FloorTile(2, 2)}};
     	return t;

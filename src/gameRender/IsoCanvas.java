@@ -1,6 +1,6 @@
 package gameRender;
 
-	
+
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -18,10 +18,10 @@ import dataStorage.Data;
 import tile.Tile;
 	/**
 	 * Main game Canvas.
-	 * 
-	 * @author Greg Oswald, 
+	 *
+	 * @author Greg Oswald,
 	 * 		   300081254
-	 *		   	
+	 *
 	 */
 	public class IsoCanvas extends Canvas{
 		private Tile[][] map = null;
@@ -38,17 +38,17 @@ import tile.Tile;
 								      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
 								      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
 								      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
-								      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,}};	
+								      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,}};
 		private int WIDTH;//take this and height in as a parameter of the constructor.
 		private int HEIGHT;
-		private int TILE_WIDTH = 26;
-		private int TILE_HEIGHT = 52;
+		private int TILE_WIDTH = 26;//26
+		private int TILE_HEIGHT = 52;//52
 		private int OFFSET_X;
 		private int OFFSET_Y;
 		private BufferedImage testTile = null;
 		private BufferedImage blueTile = null;
 		/**
-		 * 
+		 *
 		 */
 		public IsoCanvas(int Width, int Height){
 			//do some usefull stuff.
@@ -62,8 +62,8 @@ import tile.Tile;
 			OFFSET_X = (WIDTH/2) - (TILE_WIDTH)*(map[0].length)/2;//dont rely on this yet.
 			OFFSET_Y = (HEIGHT/2) - (TILE_HEIGHT)*(map.length)/2; //   ^ ditto ^
 			try {
-				testTile = ImageIO.read(new File("src/gameRender/t1.png"));
-				blueTile = ImageIO.read(new File("src/gameRender/t2.png"));
+				testTile = ImageIO.read(new File("src/gameRender/tile.PNG"));
+				blueTile = ImageIO.read(new File("src/gameRender/blue_tile.PNG"));
 			} catch (IOException e) {
 				System.out.println("Unable to Load image");
 				//e.printStackTrace();
@@ -71,7 +71,7 @@ import tile.Tile;
 			}
 		}
 		/**
-		 * 
+		 *
 		 */
 		public void paint(Graphics g){
 			Graphics2D g2d = (Graphics2D) g;
@@ -79,7 +79,7 @@ import tile.Tile;
 			for(int y = 0; y <map.length;y++){
 				for(int x = 0; x< map[y].length;x++){
 					Point p = toIso((x*(TILE_WIDTH)),(y*(TILE_WIDTH)));
-					//temporary solution, 
+					//temporary solution,
 					//this will get mental when no. of tile types goes up.
 					if(map[y][x].getType().equals("blue_tile")){
 						g.drawImage(testTile,p.x+OFFSET_X ,p.y+OFFSET_Y ,null);
@@ -88,13 +88,13 @@ import tile.Tile;
 					else{
 						g.drawImage(testTile,p.x+OFFSET_X ,p.y+OFFSET_Y ,null);
 					}
-				
+
 				}
 			}
-		
+
 		}
 		/**
-		 * 
+		 *
 		 * @param updatedMap
 		 */
 		public void update(Tile[][] updatedMap){
@@ -102,13 +102,13 @@ import tile.Tile;
 			this.repaint();
 		}
 		/**
-		 * 
+		 *
 		 */
 		public Dimension getPreferredSize(){
 			return new Dimension(WIDTH,HEIGHT);
 		}
 		/**
-		 * 
+		 *
 		 * @param x
 		 * @param y
 		 * @return
@@ -117,7 +117,7 @@ import tile.Tile;
 			return new Point ((2 * x + y) / 2,(2 * x - y) / 2);
 		}
 		/**
-		 * 
+		 *
 		 * @param x
 		 * @param y
 		 * @return
@@ -126,17 +126,17 @@ import tile.Tile;
 			return new Point (x - y,(x + y) / 2);
 		}
 		/**
-		 * 
+		 *
 		 */
 		private void loadImageTiles(){
-			
+
 		}
 		/**
 		 * Was Reading some of the Commander keen source code
 		 * that was recently released and they did this, awesome idea
 		 * (the wrapper not debug statments they have always been so).
 		 * Nicely wrapped debug statements related to the tile map
-		 *                   WORK IN PROGRESS 
+		 *                   WORK IN PROGRESS
 		 */
 		private void mapDebug(){
 			System.out.println("=================Map debug====================");

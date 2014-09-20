@@ -8,10 +8,16 @@
 
 package tile;
 
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import gameWorld.GameObject;
 import gameWorld.InteractiveObject;
@@ -30,6 +36,7 @@ public abstract class Tile {
 	protected boolean hasInteractive = false;
 	protected List<GameObject> objs;
 	protected int objIdx = 0;
+	protected File imgPath;
 
 	/**
 	 *
@@ -88,8 +95,21 @@ public abstract class Tile {
 		}
 		return false;
 	}
-	
-	
+
+	public boolean draw(Graphics2D g, int dx, int dy, int dx2, int dy2,int sx, int sy, int sx2,int sy2){
+		try {
+			BufferedImage img = ImageIO.read(imgPath);
+
+			g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
+			for(GameObject o : objs){
+				o.draw(g,dx,dy,dx2,dy2,sx,sy,sx2,sy2);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+
+	}
 
 	public boolean removeObject(GameObject obj) {
 		return objs.remove(obj);
