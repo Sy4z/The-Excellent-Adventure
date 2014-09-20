@@ -1,5 +1,7 @@
 package gameWorld;
 
+import java.awt.Graphics2D;
+
 import tile.Tile;
 
 /**
@@ -70,6 +72,13 @@ public class ServiceBot implements Unit {
 		} else if (!inventory.equals(other.inventory))
 			return false;
 		return true;
+	}
+
+	@Override
+	public void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx,
+			int sy, int sx2, int sy2) {
+		//empty method to comply to the implemented interface. May want to change this
+		
 	}
 
 
