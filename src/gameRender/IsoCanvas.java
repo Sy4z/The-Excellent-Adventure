@@ -27,7 +27,7 @@ import tile.Tile;
 		private Tile[][] map = null;
 		private int WIDTH;//take this and height in as a parameter of the constructor.
 		private int HEIGHT;
-		private int TILE_WIDTH = 32;//26
+		private int TILE_WIDTH = 64;//26
 		private int TILE_HEIGHT = 64;//52
 		private int OFFSET_X;
 		private int OFFSET_Y;
@@ -56,9 +56,9 @@ import tile.Tile;
 			g.fillRect(0,0,WIDTH,HEIGHT);
 			for(int y = 0; y <map.length;y++){
 				for(int x = 0; x< map[y].length;x++){
-					Point p = toIso((x*(TILE_WIDTH)),(y*(TILE_WIDTH)));
+					Point p = toIso((x*(TILE_WIDTH/2)),(y*(TILE_HEIGHT/2)));
 					Tile tile = map[y][x]; 
-					tile.draw(g2d, p.x+OFFSET_X, p.y+OFFSET_Y, (p.x+(TILE_HEIGHT))+OFFSET_X,(p.y+(TILE_WIDTH))+OFFSET_Y, 0, 0, 64,32);
+					tile.draw(g2d, p.x+OFFSET_X, p.y+OFFSET_Y, (p.x+(TILE_WIDTH))+OFFSET_X,(p.y+(TILE_HEIGHT))+OFFSET_Y, 0, 0, 64,64);
 
 				}
 			}

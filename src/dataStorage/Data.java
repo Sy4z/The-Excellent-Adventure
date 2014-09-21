@@ -28,8 +28,8 @@ public class Data {
      * @throws FileNotFoundException
      */
     public static Tile[][] load(File fi){
-    	File FT = new File("src" + File.separator + "tile" + File.separator + "t1.png");
-    	File BT = new File("src" + File.separator + "tile" + File.separator + "t2.png");
+    	File FT = new File("src" + File.separator + "tile" + File.separator + "tile.png");
+    	File BT = new File("src" + File.separator + "tile" + File.separator + "orb.png");
     	Tile[][] t = {	{new FloorTile(0, 0, "floor_tile", new ArrayList<GameObject>(), FT), new FloorTile(1, 0, "floor_tile", new ArrayList<GameObject>(), FT), new FloorTile(2, 0, "floor_tile", new ArrayList<GameObject>(), FT)},
     					{new FloorTile(0, 0, "floor_tile", new ArrayList<GameObject>(), FT), new BlueTile(1, 1, "blue_tile", new ArrayList<GameObject>(), BT) , new FloorTile(2, 1, "floor_tile", new ArrayList<GameObject>(), FT)},
     					{new FloorTile(0, 2, "floor_tile", new ArrayList<GameObject>(), FT), new FloorTile(1, 2, "floor_tile", new ArrayList<GameObject>(), FT), new FloorTile(2, 2, "floor_tile", new ArrayList<GameObject>(), FT)}};
