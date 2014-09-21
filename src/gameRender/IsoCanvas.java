@@ -2,6 +2,7 @@ package gameRender;
 
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -31,22 +32,21 @@ import tile.Tile;
 		private int TILE_HEIGHT = 64;//52
 		private int OFFSET_X;
 		private int OFFSET_Y;
+		private int HALF_TILE = TILE_HEIGHT/2;
 		
 		/**
 		 *
 		 */
 		public IsoCanvas(int Width, int Height){
 			//do some usefull stuff.
-			//some way of dynamically calculating offsets put this in a method??
+			//some way of dynamically calculating offsets put this in a method??<--DONE
 			//set width height for canvas and tiles
 			//set initial tilemap.
 			map = Data.load(null);
 			mapDebug();
 			this.WIDTH = Width;
 			this.HEIGHT = Height;
-			OFFSET_X = (WIDTH/2) - (TILE_WIDTH)*(map[0].length)/2;//dont rely on this yet.
-			OFFSET_Y = (HEIGHT/2) - (TILE_HEIGHT)*(map.length)/2; //   ^ ditto ^
-			
+			calculateOffset();
 		}
 		/**
 		 *
@@ -56,13 +56,17 @@ import tile.Tile;
 			g.fillRect(0,0,WIDTH,HEIGHT);
 			for(int y = 0; y <map.length;y++){
 				for(int x = 0; x< map[y].length;x++){
-					Point p = toIso((x*(TILE_WIDTH/2)),(y*(TILE_HEIGHT/2)));
+					Point p = toIso((x*(TILE_WIDTH/2)),(y*(TILE_HEIGHT/2)));//why tile size/2 hmm
 					Tile tile = map[y][x]; 
-					tile.draw(g2d, p.x+OFFSET_X, p.y+OFFSET_Y, (p.x+(TILE_WIDTH))+OFFSET_X,(p.y+(TILE_HEIGHT))+OFFSET_Y, 0, 0, 64,64);
-
-				}
+					//top left vertex
+					int x1 = (p.x+OFFSET_X);
+					int y1 = (p.y+OFFSET_Y);
+					//bottom right vertex
+					int x2 = (p.x+(TILE_WIDTH))+OFFSET_X;
+					int y2 = (p.y+(TILE_HEIGHT))+OFFSET_Y;
+					tile.draw(g2d, x1,y1 ,x2 ,y2, 0, 0, TILE_WIDTH,TILE_HEIGHT);
+					}
 			}
-
 		}
 		/**
 		 *
@@ -79,28 +83,29 @@ import tile.Tile;
 			return new Dimension(WIDTH,HEIGHT);
 		}
 		/**
-		 *
+		 *Returns the 2d representation of a isometric point
 		 * @param x
 		 * @param y
 		 * @return
 		 */
-		public Point toCart(int x, int y){
+		public Point to2d(int x, int y){
 			return new Point ((2 * x + y) / 2,(2 * x - y) / 2);
 		}
 		/**
-		 *
+		 *Returns the Isometric representation of a 2d point
 		 * @param x
 		 * @param y
 		 * @return
 		 */
 		private Point toIso(int x, int y){
-			return new Point (x - y,(x + y) / 2);
+			return new Point ((x - y),(x + y) / 2);
 		}
 		/**
-		 *
+		 * Calculates the offsets needed to draw the map centered on the canvas.
 		 */
-		private void loadImageTiles(){
-
+		private void calculateOffset(){
+			OFFSET_X = (int)((WIDTH/2) - (TILE_WIDTH)*1.5)+TILE_WIDTH;//you can rely on this now 83% certain.
+			OFFSET_Y = (int)((HEIGHT/2) - ((HALF_TILE)*map.length)/2)-HALF_TILE; //   ^ ditto ^
 		}
 		/**
 		 * Was Reading some of the Commander keen source code

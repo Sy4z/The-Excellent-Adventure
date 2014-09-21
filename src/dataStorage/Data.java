@@ -28,16 +28,17 @@ public class Data {
 	 * @throws FileNotFoundException
 	 */
 	public static Tile[][] load(File fi){
-		int sizeX = 13;
-		int sizeY = 13;
-		int entityX = 6;
-		int entityY = 6;
+		int sizeX = 12;
+		int sizeY = 12;
+		int entityX = 0;
+		int entityY = 0;
 		File FT = new File("src" + File.separator + "tile" + File.separator + "tile.png");
 		File BT = new File("src" + File.separator + "tile" + File.separator + "orb.png");
 		Tile[][] t = new Tile[sizeY][sizeX];
+		//Creates an array of tiles sizeX by sizeY if statement specifys what coordinate entity will be placed.
 		for(int y = 0;y<sizeY;y++){
 			for(int x = 0;x<sizeX;x++){
-				if(y == entityY && entityX == x||y == entityY-1 && entityX == x+1 ||y == entityY && entityX == x||y == entityY+1 && entityX == x-1 ){ 
+				if(y == entityY && entityX == x){ 
 					t[y][x] = new BlueTile(x, y, "blue_tile", new ArrayList<GameObject>(), BT);
 				}
 				else{
