@@ -17,22 +17,34 @@ import tile.*;
  */
 public class Data {
 
-    public Data(){}
+	public Data(){}
 
-    /**
-     * -----STANDIN WHILE I STUDY XML------
-     * @param fi Use null the File shall be ignored
-     *
-     * Returns a 2D array of Tiles for testing purposes, feel free to mess with
-     * @return A 2D Array of Tile
-     * @throws FileNotFoundException
-     */
-    public static Tile[][] load(File fi){
-    	File FT = new File("src" + File.separator + "tile" + File.separator + "tile.png");
-    	File BT = new File("src" + File.separator + "tile" + File.separator + "orb.png");
-    	Tile[][] t = {	{new FloorTile(0, 0, "floor_tile", new ArrayList<GameObject>(), FT), new FloorTile(1, 0, "floor_tile", new ArrayList<GameObject>(), FT), new FloorTile(2, 0, "floor_tile", new ArrayList<GameObject>(), FT)},
-    					{new FloorTile(0, 0, "floor_tile", new ArrayList<GameObject>(), FT), new BlueTile(1, 1, "blue_tile", new ArrayList<GameObject>(), BT) , new FloorTile(2, 1, "floor_tile", new ArrayList<GameObject>(), FT)},
-    					{new FloorTile(0, 2, "floor_tile", new ArrayList<GameObject>(), FT), new FloorTile(1, 2, "floor_tile", new ArrayList<GameObject>(), FT), new FloorTile(2, 2, "floor_tile", new ArrayList<GameObject>(), FT)}};
-    	return t;
-    }
+	/**
+	 * -----STANDIN WHILE I STUDY XML------
+	 * @param fi Use null the File shall be ignored
+	 *
+	 * Returns a 2D array of Tiles for testing purposes, feel free to mess with
+	 * @return A 2D Array of Tile
+	 * @throws FileNotFoundException
+	 */
+	public static Tile[][] load(File fi){
+		int sizeX = 13;
+		int sizeY = 13;
+		int entityX = 6;
+		int entityY = 6;
+		File FT = new File("src" + File.separator + "tile" + File.separator + "tile.png");
+		File BT = new File("src" + File.separator + "tile" + File.separator + "orb.png");
+		Tile[][] t = new Tile[sizeY][sizeX];
+		for(int y = 0;y<sizeY;y++){
+			for(int x = 0;x<sizeX;x++){
+				if(y == entityY && entityX == x||y == entityY-1 && entityX == x+1 ||y == entityY && entityX == x||y == entityY+1 && entityX == x-1 ){ 
+					t[y][x] = new BlueTile(x, y, "blue_tile", new ArrayList<GameObject>(), BT);
+				}
+				else{
+					t[y][x] = new FloorTile(x, y, "floor_tile", new ArrayList<GameObject>(), FT);
+				}
+			}
+		}
+		return t;
+	}
 }
