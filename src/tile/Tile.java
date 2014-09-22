@@ -13,6 +13,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,12 +37,17 @@ public abstract class Tile {
 	protected boolean hasInteractive = false;
 	protected List<GameObject> objs;
 	protected int objIdx = 0;
-	protected File imgPath;
+	protected BufferedImage img;
 
 	public Tile(int dx, int dy, String type, List<GameObject> objectsOnTile, File imgPath){
 		this.type = type;
 		objs = objectsOnTile;
-		this.imgPath = imgPath;
+		try {
+			img = ImageIO.read(imgPath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -109,16 +115,10 @@ public abstract class Tile {
 	}
 
 	public boolean draw(Graphics2D g, int dx, int dy, int dx2, int dy2,int sx, int sy, int sx2,int sy2){
-		try {
-			BufferedImage img = ImageIO.read(imgPath);//shouldnt the image be passed into the contructor orsomething?
 													  //this is loading the image every time the tile is drawn.
-			g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
-			for(GameObject o : objs){
-				o.draw(g,dx,dy,dx2,dy2,sx,sy,sx2,sy2);
-			}
-		} catch (IOException e) {
-			//FORCES ALL TILES TO HAVE AN IMG
-			e.printStackTrace();
+		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
+		for(GameObject o : objs){
+			o.draw(g,dx,dy,dx2,dy2,sx,sy,sx2,sy2);
 		}
 		return false;
 
