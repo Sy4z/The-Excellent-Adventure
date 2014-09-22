@@ -26,7 +26,7 @@ import tile.Tile;
 	 */
 	public class IsoCanvas extends Canvas{
 		private Tile[][] map = null;
-		private int WIDTH;//take this and height in as a parameter of the constructor.
+		private int WIDTH;
 		private int HEIGHT;
 		private int TILE_WIDTH = 64;//26
 		private int TILE_HEIGHT = 64;//52
@@ -38,10 +38,6 @@ import tile.Tile;
 		 *
 		 */
 		public IsoCanvas(int Width, int Height){
-			//do some usefull stuff.
-			//some way of dynamically calculating offsets put this in a method??<--DONE
-			//set width height for canvas and tiles
-			//set initial tilemap.
 			map = Data.load(null);
 			mapDebug();
 			this.WIDTH = Width;
@@ -79,9 +75,7 @@ import tile.Tile;
 		/**
 		 *
 		 */
-		public Dimension getPreferredSize(){
-			return new Dimension(WIDTH,HEIGHT);
-		}
+		
 		/**
 		 *Returns the 2d representation of a isometric point
 		 * @param x
@@ -104,8 +98,8 @@ import tile.Tile;
 		 * Calculates the offsets needed to draw the map centered on the canvas.
 		 */
 		private void calculateOffset(){
-			OFFSET_X = (int)((WIDTH/2) - (TILE_WIDTH)*1.5)+TILE_WIDTH;//you can rely on this now 83% certain.
-			OFFSET_Y = (int)((HEIGHT/2) - ((HALF_TILE)*map.length)/2)-HALF_TILE; //   ^ ditto ^
+			OFFSET_X = (int)((WIDTH/2) - (TILE_WIDTH)*1.5)+TILE_WIDTH;//spread this calculation out.
+			OFFSET_Y = (int)((HEIGHT/2) - ((HALF_TILE)*map.length)/2)-HALF_TILE;//this too. 
 		}
 		/**
 		 * Was Reading some of the Commander keen source code

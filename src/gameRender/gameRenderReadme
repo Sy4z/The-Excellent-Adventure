@@ -1,2 +1,6 @@
 
 Package containing Graphics Rendering Logic
+
+TODO:
+Figure out how to draw to a bufferedImage or something the current way is waaay to slow.
+Iron out Inconsistencies with canvas and main frame so canvas is set to the right dimensions.
