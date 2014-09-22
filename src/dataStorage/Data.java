@@ -1,10 +1,6 @@
 package dataStorage;
 
-import gameWorld.GameObject;
-
 import java.io.File;
-import java.util.ArrayList;
-
 import tile.*;
 
 /**
@@ -27,23 +23,23 @@ public class Data {
 	 * @return A 2D Array of Tile
 	 * @throws FileNotFoundException
 	 */
-	public static Tile[][] load(File fi){
-		int sizeX = 100;
-		int sizeY = 100;
+	public static TileFactory.type[][] load(File fi){
+
+		int sizeX = 1000;
+		int sizeY = 1000;
 		int entityX = 0;
 		int entityY = 0;
-		File FT = new File("src" + File.separator + "tile" + File.separator + "tile.png");
-		File BT = new File("src" + File.separator + "tile" + File.separator + "orb.png");
-		Tile[][] t = new Tile[sizeY][sizeX];
+
+		TileFactory.type[][] t = new TileFactory.type[sizeY][sizeX];
 		//Creates an array of tiles sizeX by sizeY if statement specifys what coordinate entity will be placed.
 		for(int y = 0;y<sizeY;y++){
 			for(int x = 0;x<sizeX;x++){
-				//if(y == entityY && entityX == x){
-					t[y][x] = new BlueTile(x, y, "blue_tile", new ArrayList<GameObject>(), BT);
-//				}
-//				else{
-					t[y][x] = new FloorTile(x, y, "floor_tile", new ArrayList<GameObject>(), FT);
-//				}
+				if(y == x && x == y){
+					t[y][x] = TileFactory.type.BLUE;
+				}
+				else{
+					t[y][x] = TileFactory.type.FLOOR;
+				}
 			}
 		}
 		return t;

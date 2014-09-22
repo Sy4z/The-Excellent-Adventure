@@ -7,6 +7,7 @@ import java.io.File;
 
 import dataStorage.Data;
 import tile.Tile;
+import tile.TileFactory;
 
 /**
  *
@@ -14,7 +15,7 @@ import tile.Tile;
  *
  */
 public class Control {
-	private Tile[][] gameBoard;
+	private TileFactory.type[][] gameBoard;
 	private Unit[] units;
 	private File defaultNewGameState = null;
 
@@ -39,6 +40,7 @@ public class Control {
 	public Control(int width, int height){
 		gameBoard = Data.load(defaultNewGameState);
 	}
+
 	/**
 	 * Moment class.
 	 * Currently works as teleportation.
@@ -47,23 +49,23 @@ public class Control {
 	 * @param destination
 	 * @return
 	 */
-	public boolean move(int ID, Tile destination){
-		if(!inBounds(destination.getLocation()))
-			return false;
-
-		int x = (int) destination.getLocation().getX();
-		int y = (int) destination.getLocation().getY();
-
-		Tile target = gameBoard[x][y];
-		//add is valid Tile to move to check.
-
-		units[ID].remove(); //Removes from current tile.
-		gameBoard[x][y].addObject(units[ID]);
-		units[ID].move(target);
-
-		return true;
-
-	}
+//	public boolean move(int ID, Tile destination){
+//		if(!inBounds(destination.getLocation()))
+//			return false;
+//
+//		int x = (int) destination.getLocation().getX();
+//		int y = (int) destination.getLocation().getY();
+//
+//		Tile target = gameBoard[x][y];
+//		//add is valid Tile to move to check.
+//
+//		units[ID].remove(); //Removes from current tile.
+//		gameBoard[x][y].addObject(units[ID]);
+//		units[ID].move(target);
+//
+//		return true;
+//
+//	}
 
 	private boolean inBounds(Point destination) {
 		int x = (int) destination.getX();

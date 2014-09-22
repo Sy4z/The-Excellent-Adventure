@@ -1,15 +1,12 @@
 package gameWorld;
 
 import java.awt.Graphics2D;
-
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
-
-import tile.Tile;
 
 /**
  * This is a generic robot and is the base unit type that the player will
@@ -20,27 +17,23 @@ import tile.Tile;
  */
 public class ServiceBot implements Unit {
 	private Inventory inventory;
-	private Tile curLocation;
+	private Point curLocation;
 	private File filePath = null;
 
-	public ServiceBot(Tile loc) {
+	public ServiceBot(Point loc) {
 		inventory = new Inventory();
 		curLocation = loc;
 	}
 
 	@Override
-	public void move(Tile destination) {
+	public void move(Point destination) {
 		curLocation = destination;
 	}
 
 	@Override
-	public Tile getLocation() {
+	public Point getLocation() {
 		return curLocation;
 
-	}
-
-	public boolean remove(){
-		return curLocation.removeObject(this);
 	}
 
 	/* (non-Javadoc)
@@ -90,7 +83,7 @@ public class ServiceBot implements Unit {
 		try {
 			img = ImageIO.read(filePath);
 		} catch (IOException e) {
-			
+
 			System.err.println(e + "");
 		}
 		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);

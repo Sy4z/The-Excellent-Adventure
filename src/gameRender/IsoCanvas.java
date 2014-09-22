@@ -17,6 +17,8 @@ import javax.swing.*;
 
 import dataStorage.Data;
 import tile.Tile;
+import tile.TileFactory;
+import tile.TileFactory.type;
 	/**
 	 * Main game Canvas.
 	 *
@@ -25,7 +27,7 @@ import tile.Tile;
 	 *
 	 */
 	public class IsoCanvas extends Canvas{
-		private Tile[][] map = null;
+		private TileFactory.type[][] map = null;
 		private int WIDTH;
 		private int HEIGHT;
 		private int TILE_WIDTH = 64;//26
@@ -33,13 +35,14 @@ import tile.Tile;
 		private int OFFSET_X;
 		private int OFFSET_Y;
 		private int HALF_TILE = TILE_HEIGHT/2;
-		
+//		private boolean debug = true;
+
 		/**
 		 *
 		 */
 		public IsoCanvas(int Width, int Height){
 			map = Data.load(null);
-			mapDebug();
+//			mapDebug();
 			this.WIDTH = Width;
 			this.HEIGHT = Height;
 			calculateOffset();
@@ -50,10 +53,11 @@ import tile.Tile;
 		public void paint(Graphics g){
 			Graphics2D g2d = (Graphics2D) g;
 			g.fillRect(0,0,WIDTH,HEIGHT);
+			Tile tile;
 			for(int y = 0; y <map.length;y++){
 				for(int x = 0; x< map[y].length;x++){
 					Point p = toIso((x*(TILE_WIDTH/2)),(y*(TILE_HEIGHT/2)));//why tile size/2 hmm
-					Tile tile = map[y][x]; 
+					tile = TileFactory.getTile(map[y][x]);
 					//top left vertex
 					int x1 = (p.x+OFFSET_X);
 					int y1 = (p.y+OFFSET_Y);
@@ -68,14 +72,14 @@ import tile.Tile;
 		 *
 		 * @param updatedMap
 		 */
-		public void update(Tile[][] updatedMap){
+		public void update(TileFactory.type[][] updatedMap){
 			this.map = updatedMap;
 			this.repaint();
 		}
 		/**
 		 *
 		 */
-		
+
 		/**
 		 *Returns the 2d representation of a isometric point
 		 * @param x
@@ -99,7 +103,7 @@ import tile.Tile;
 		 */
 		private void calculateOffset(){
 			OFFSET_X = (int)((WIDTH/2) - (TILE_WIDTH)*1.5)+TILE_WIDTH;//spread this calculation out.
-			OFFSET_Y = (int)((HEIGHT/2) - ((HALF_TILE)*map.length)/2)-HALF_TILE;//this too. 
+			OFFSET_Y = (int)((HEIGHT/2) - ((HALF_TILE)*map.length)/2)-HALF_TILE;//this too.
 		}
 		/**
 		 * Was Reading some of the Commander keen source code
@@ -118,7 +122,7 @@ import tile.Tile;
 				System.out.println("Map contains:");
 				for(int y = 0; y <map.length;y++){
 					for(int x = 0; x< map[y].length;x++){
-						System.out.println("Pos "+x+":"+y+" -> "+map[y][x].getType());
+						System.out.println("Pos "+x+":"+y+" -> "+TileFactory.getTile(map[y][x]).getType());
 					}
 				}
 			}

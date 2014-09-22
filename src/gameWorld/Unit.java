@@ -1,6 +1,7 @@
 package gameWorld;
 
-import tile.Tile;
+import java.awt.Point;
+
 
 /**
  *
@@ -13,13 +14,8 @@ public interface Unit extends GameObject{
 	 * This will be used my the move methods in Control which will update all
 	 * other information related to the move and ensure it is a valid move
 	 */
-	public void move(Tile destination);
+	public void move(Point destination);
 
-	public Tile getLocation();
-	
-	/**
-	 * remove the unit from the tile it stores
-	 * @return
-	 */
-	public boolean remove();
+	public Point getLocation();
+
 }
