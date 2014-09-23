@@ -18,10 +18,9 @@ import tile.TileFactory.type;
  *
  */
 public class World {
-	private TileFactory.type[][] gameBoard;
 	private Unit[] units;
 	private File defaultNewGameState = null;
-	private GameObject[][] worldObjects;
+	private GameObject[][] gameBoard;
 
 
 	public void tick() {
@@ -34,7 +33,7 @@ public class World {
 	 * @return
 	 */
 	public World(File save, int width, int height){
-		gameBoard = Data.testSet(save);
+//		worldObjects = dlynPlz();
 	}
 
 	/**
@@ -42,13 +41,11 @@ public class World {
 	 *
 	 */
 	public World(int width, int height){
-		gameBoard = Data.testSet(defaultNewGameState);
+//		worldObjects = dlynPlz();
 	}
 
 	/**
-	 * Moment class.
-	 * Currently works as teleportation.
-	 * Will be updated with a pathfinding alogritm and move one square per tick.
+	 * Gives a unit a new movment order by calling the find path method
 	 * @param ID
 	 * @param destination
 	 * @return
@@ -61,18 +58,24 @@ public class World {
 		int startY = units[ID].getLocation().y;
 
 
-		UnitCommandMove unitMovment = new UnitCommandMove(findPath(startX,startY,xDes,yDes));
-
-
+		units[ID].newOrder(new UnitCommandMove(findPath(startX,startY,xDes,yDes)));
 
 		return true;
 
 	}
-
+	/**
+	 * Finds a path through the game world that can be triversed by a unit and returns it as a stack of single square movments.
+	 * @param startX
+	 * @param startY
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	private Stack<Point> findPath(int startX, int startY, int x, int y) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	private boolean inBounds(int x, int y) {
 		if(x >= gameBoard.length)
 			return false;
