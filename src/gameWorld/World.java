@@ -17,7 +17,7 @@ import tile.TileFactory.type;
  * @author ChrisMcIntosh
  *
  */
-public class Control {
+public class World {
 	private TileFactory.type[][] gameBoard;
 	private Unit[] units;
 	private File defaultNewGameState = null;
@@ -33,7 +33,7 @@ public class Control {
 	 * Load Constructor
 	 * @return
 	 */
-	public Control(File save, int width, int height){
+	public World(File save, int width, int height){
 		gameBoard = Data.testSet(save);
 	}
 
@@ -41,7 +41,7 @@ public class Control {
 	 * New Game Control
 	 *
 	 */
-	public Control(int width, int height){
+	public World(int width, int height){
 		gameBoard = Data.testSet(defaultNewGameState);
 	}
 

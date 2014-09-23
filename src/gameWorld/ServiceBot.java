@@ -8,6 +8,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.sun.jmx.remote.util.OrderClassLoaders;
+
 /**
  * This is a generic robot and is the base unit type that the player will
  * control.
@@ -17,24 +19,14 @@ import javax.imageio.ImageIO;
  */
 public class ServiceBot extends Unit {
 	private Inventory inventory;
-	private Point curLocation;
-	private File filePath = null;
 
 	public ServiceBot(Point loc) {
+		super(loc);
 		inventory = new Inventory();
-		curLocation = loc;
-	}
-
-	@Override
-	public void move(Point destination) {
-		curLocation = destination;
-	}
-
-	@Override
-	public Point getLocation() {
-		return curLocation;
+		this.filePath = null;//Replace with File once image is aqquired
 
 	}
+
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -75,21 +67,8 @@ public class ServiceBot extends Unit {
 		return true;
 	}
 
-	@Override
-	public void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx,
-			int sy, int sx2, int sy2) {
-
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(filePath);
-		} catch (IOException e) {
-
-			System.err.println(e + "");
-		}
-		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
 
 
-	}
 
 
 }
