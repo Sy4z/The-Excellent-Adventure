@@ -53,17 +53,15 @@ public class Control {
 	 * @param destination
 	 * @return
 	 */
-	public boolean move(int ID, Tile destination){
-		if(!inBounds(destination.getLocation()))
+	public boolean move(int ID, int xDes, int yDes){
+		if(!inBounds(xDes, yDes))
 			return false;
 
 		int startX = units[ID].getLocation().x;
 		int startY = units[ID].getLocation().y;
-		int x = (int) destination.getLocation().getX();
-		int y = (int) destination.getLocation().getY();
 
 
-		Stack<Point> path = findPath(startX,startY,x,y);
+		UnitCommandMove unitMovment = new UnitCommandMove(findPath(startX,startY,xDes,yDes));
 
 
 
@@ -75,9 +73,7 @@ public class Control {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	private boolean inBounds(Point destination) {
-		int x = (int) destination.getX();
-		int y = (int) destination.getY();
+	private boolean inBounds(int x, int y) {
 		if(x >= gameBoard.length)
 			return false;
 		if(y >= gameBoard[0].length)
