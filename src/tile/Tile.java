@@ -9,6 +9,7 @@
 package tile;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +29,8 @@ public abstract class Tile {
 	protected boolean hasInteractive = false;
 	protected int objIdx = 0;
 	protected BufferedImage img;
+
+
 
 	public Tile(File imgPath){
 
@@ -60,6 +63,12 @@ public abstract class Tile {
 		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
 		return false;
 
+	}
+
+
+	public Point getLocation() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

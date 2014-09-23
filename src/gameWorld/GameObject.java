@@ -7,9 +7,9 @@ import java.awt.Graphics2D;
  * @author ChrisMcIntosh
  *
  */
-public interface GameObject {
+public abstract class GameObject {
 
-	void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx, int sy,
+	abstract void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx, int sy,
 			int sx2, int sy2);
 
 }

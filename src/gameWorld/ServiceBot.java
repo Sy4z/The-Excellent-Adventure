@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
  * @author mcintochri1
  *
  */
-public class ServiceBot implements Unit {
+public class ServiceBot extends Unit {
 	private Inventory inventory;
 	private Point curLocation;
 	private File filePath = null;

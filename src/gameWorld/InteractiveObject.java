@@ -4,6 +4,6 @@ package gameWorld;
  * @author ChrisMcIntosh
  *
  */
-public interface InteractiveObject extends GameObject{
+public abstract class InteractiveObject extends GameObject{
 
 }

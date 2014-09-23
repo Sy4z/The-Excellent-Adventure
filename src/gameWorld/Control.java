@@ -4,10 +4,13 @@ import gameRender.IsoCanvas;
 
 import java.awt.Point;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Stack;
 
 import dataStorage.Data;
 import tile.Tile;
 import tile.TileFactory;
+import tile.TileFactory.type;
 
 /**
  *
@@ -18,6 +21,7 @@ public class Control {
 	private TileFactory.type[][] gameBoard;
 	private Unit[] units;
 	private File defaultNewGameState = null;
+	private GameObject[][] worldObjects;
 
 
 	public void tick() {
@@ -49,24 +53,28 @@ public class Control {
 	 * @param destination
 	 * @return
 	 */
-//	public boolean move(int ID, Tile destination){
-//		if(!inBounds(destination.getLocation()))
-//			return false;
-//
-//		int x = (int) destination.getLocation().getX();
-//		int y = (int) destination.getLocation().getY();
-//
-//		Tile target = gameBoard[x][y];
-//		//add is valid Tile to move to check.
-//
-//		units[ID].remove(); //Removes from current tile.
-//		gameBoard[x][y].addObject(units[ID]);
-//		units[ID].move(target);
-//
-//		return true;
-//
-//	}
+	public boolean move(int ID, Tile destination){
+		if(!inBounds(destination.getLocation()))
+			return false;
 
+		int startX = units[ID].getLocation().x;
+		int startY = units[ID].getLocation().y;
+		int x = (int) destination.getLocation().getX();
+		int y = (int) destination.getLocation().getY();
+
+
+		Stack<Point> path = findPath(startX,startY,x,y);
+
+
+
+		return true;
+
+	}
+
+	private Stack<Point> findPath(int startX, int startY, int x, int y) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	private boolean inBounds(Point destination) {
 		int x = (int) destination.getX();
 		int y = (int) destination.getY();

@@ -1,10 +1,10 @@
 package gameWorld;
 
 /**
- * 
+ *
  * @author ChrisMcIntosh
  *
  */
-public interface StationaryObject extends GameObject{
+public abstract class StationaryObject extends GameObject{
 
 }
