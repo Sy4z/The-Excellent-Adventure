@@ -22,7 +22,7 @@ public class Data {
 	}
 
 	public static boolean save(){
-
+		return false;
 	}
 	/**
 	 * -----STANDIN WHILE I STUDY XML------
