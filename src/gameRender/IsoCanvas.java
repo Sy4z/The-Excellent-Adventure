@@ -41,7 +41,7 @@ import tile.TileFactory.type;
 		 *
 		 */
 		public IsoCanvas(int Width, int Height){
-			map = Data.load(null);
+			map = Data.testSet(null);
 //			mapDebug();
 			this.WIDTH = Width;
 			this.HEIGHT = Height;

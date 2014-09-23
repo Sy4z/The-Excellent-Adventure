@@ -34,7 +34,7 @@ public class Control {
 	 * @return
 	 */
 	public Control(File save, int width, int height){
-		gameBoard = Data.load(save);
+		gameBoard = Data.testSet(save);
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class Control {
 	 *
 	 */
 	public Control(int width, int height){
-		gameBoard = Data.load(defaultNewGameState);
+		gameBoard = Data.testSet(defaultNewGameState);
 	}
 
 	/**
