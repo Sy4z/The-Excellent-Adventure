@@ -1,6 +1,9 @@
 package dataStorage;
 
 import java.io.File;
+import java.lang.reflect.Field;
+
+import sun.reflect.*;
 import tile.*;
 
 /**
@@ -13,8 +16,14 @@ import tile.*;
  */
 public class Data {
 
-	public Data(){}
+	public static TileFactory.type[][] load(){
 
+		return null;
+	}
+
+	public static boolean save(){
+
+	}
 	/**
 	 * -----STANDIN WHILE I STUDY XML------
 	 * @param fi Use null the File shall be ignored
@@ -23,7 +32,7 @@ public class Data {
 	 * @return A 2D Array of Tile
 	 * @throws FileNotFoundException
 	 */
-	public static TileFactory.type[][] load(File fi){
+	public static TileFactory.type[][] testSet(File fi){
 
 		int sizeX = 1000;
 		int sizeY = 1000;
