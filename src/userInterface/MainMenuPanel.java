@@ -200,8 +200,16 @@ public class MainMenuPanel extends JPanel {
 
 			JPanel buttonPanel = new JPanel();
 			buttonPanel.setLayout(new FlowLayout());
+			JButton cancelButton = new JButton("Cancel");
+			cancelButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					d.dispose();
+				}
+			});
 			buttonPanel.add(new JButton("OK"));
-			buttonPanel.add(new JButton("Cancel"));
+			buttonPanel.add(cancelButton);
 			buttonPanel.add(new JButton("Delete"));
 			d.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -229,14 +237,23 @@ public class MainMenuPanel extends JPanel {
 			JTextArea story = new JTextArea("Once upon a time...");
 			story.setEditable(false);
 			JScrollPane scrollPane = new JScrollPane(story);
-			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+			scrollPane
+					.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			d.add(scrollPane, BorderLayout.CENTER);
-			
+
 			JPanel buttonPanel = new JPanel();
 			buttonPanel.setLayout(new FlowLayout());
-			buttonPanel.add(new JButton("Close"));
+			JButton closeButton = new JButton("Close");
+			closeButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					d.dispose();
+				}
+			});
+			buttonPanel.add(closeButton);
 			d.add(buttonPanel, BorderLayout.SOUTH);
-			
+
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
 		}
