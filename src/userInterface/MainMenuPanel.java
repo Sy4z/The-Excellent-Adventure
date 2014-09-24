@@ -25,15 +25,13 @@ import javax.swing.border.LineBorder;
 import com.sun.xml.internal.messaging.saaj.soap.JpegDataContentHandler;
 
 /**
+ * This class contains all the necessary buttons for the main menu of the game.
  * 
  * @author Venkata Peesapati
  * 
  */
 public class MainMenuPanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	JFrame currentFrame;
 	JLabel gameName;
@@ -44,6 +42,15 @@ public class MainMenuPanel extends JPanel {
 	JButton optionsButton;
 	JButton exitButton;
 
+	/**
+	 * The main menu has 6 buttons: New Game, Load, Story, Controls, Options and
+	 * Exit.
+	 * 
+	 * @param currentFrame
+	 *            Takes the reference for the frame that the MainMenuPanel is
+	 *            contained in so that its content pane can be changed when
+	 *            required.
+	 */
 	public MainMenuPanel(JFrame currentFrame) {
 		this.currentFrame = currentFrame;
 		setLayout(new GridLayout(7, 1));
@@ -51,6 +58,8 @@ public class MainMenuPanel extends JPanel {
 		gameName.setFont(gameName.getFont().deriveFont(40.0f));
 		gameName.setHorizontalAlignment(JLabel.CENTER);
 
+		// This button starts a new game and replaces the content pane with a
+		// new canvas.
 		newGameButton = new JButton("New Game");
 		newGameButton.setOpaque(false);
 		newGameButton.setContentAreaFilled(false);
@@ -61,6 +70,8 @@ public class MainMenuPanel extends JPanel {
 		newGameButton.addMouseListener(new HoverButtonListener());
 		newGameButton.addActionListener(new NewGameButtonListener());
 
+		// The load button allows the user to load a game they have saved
+		// before.
 		loadButton = new JButton("Load Game");
 		loadButton.setOpaque(false);
 		loadButton.setContentAreaFilled(false);
@@ -70,6 +81,7 @@ public class MainMenuPanel extends JPanel {
 		loadButton.setForeground(Color.black);
 		loadButton.addMouseListener(new HoverButtonListener());
 
+		// Opens a window describing the background story of the game.
 		storyButton = new JButton("Story");
 		storyButton.setOpaque(false);
 		storyButton.setContentAreaFilled(false);
@@ -79,6 +91,8 @@ public class MainMenuPanel extends JPanel {
 		storyButton.setForeground(Color.black);
 		storyButton.addMouseListener(new HoverButtonListener());
 
+		// The controls for the mouse and keyboard can be changed by pressing
+		// this button.
 		controlsButton = new JButton("Controls");
 		controlsButton.setOpaque(false);
 		controlsButton.setContentAreaFilled(false);
@@ -88,6 +102,7 @@ public class MainMenuPanel extends JPanel {
 		controlsButton.setForeground(Color.black);
 		controlsButton.addMouseListener(new HoverButtonListener());
 
+		// Set game options.
 		optionsButton = new JButton("Options");
 		optionsButton.setOpaque(false);
 		optionsButton.setContentAreaFilled(false);
@@ -97,6 +112,7 @@ public class MainMenuPanel extends JPanel {
 		optionsButton.setForeground(Color.black);
 		optionsButton.addMouseListener(new HoverButtonListener());
 
+		// Quit the game.
 		exitButton = new JButton("Exit");
 		exitButton.setOpaque(false);
 		exitButton.setContentAreaFilled(false);
@@ -135,8 +151,20 @@ public class MainMenuPanel extends JPanel {
 			currentFrame.getContentPane().removeAll();
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
-			currentFrame.getContentPane().add(new IsoCanvas(currentFrame.getWidth(),currentFrame.getHeight()),BorderLayout.CENTER); //isocanvas was changed? I added some arbitrary width and height values
-					
+			currentFrame.getContentPane().add(
+					new IsoCanvas(currentFrame.getWidth(),
+							currentFrame.getHeight()), BorderLayout.CENTER); // isocanvas
+																				// was
+																				// changed?
+																				// I
+																				// added
+																				// some
+																				// arbitrary
+																				// width
+																				// and
+																				// height
+																				// values
+
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
 		}

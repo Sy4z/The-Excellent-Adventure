@@ -14,9 +14,9 @@ import javax.swing.WindowConstants;
 
 /**
  * This class represents the main window of the game.
- *
+ * 
  * @author Venkata Peesapati
- *
+ * 
  */
 public class MainFrame extends JFrame implements WindowListener {
 
@@ -26,13 +26,19 @@ public class MainFrame extends JFrame implements WindowListener {
 
 	public MainFrame() {
 		super.addWindowListener(this);
-		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);//Potentially change this to JFrame.EXIT_ON_CLOSE
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);// Potentially
+																			// change
+																			// this
+																			// to
+																			// JFrame.EXIT_ON_CLOSE
 		super.setLayout(new BorderLayout());
 
 		JPanel backgroundPanel = createMainPanel();
 		MainMenuPanel mainPanel = new MainMenuPanel(this);
 		backgroundPanel.setLayout(null);
-		mainPanel.setBounds(100, 100, 300, 350);
+		mainPanel.setBounds(100, 100, 300, 350); // Position the main panel at
+													// (100,100) with width 300
+													// and height 350.
 		backgroundPanel.add(mainPanel);
 
 		super.getContentPane().add(backgroundPanel, BorderLayout.CENTER);
@@ -45,7 +51,7 @@ public class MainFrame extends JFrame implements WindowListener {
 	/**
 	 * This method creates the main panel for the frame which displays the main
 	 * menu of the game.
-	 *
+	 * 
 	 * @return the mainPanel for the game.
 	 */
 	private JPanel createMainPanel() {
@@ -68,7 +74,7 @@ public class MainFrame extends JFrame implements WindowListener {
 	/**
 	 * This method is used to display a loading window just before the game
 	 * starts up. Image from http://grabcad.com/library/crazy-robot.
-	 *
+	 * 
 	 * @return the loading frame of the game.
 	 */
 	private static JFrame createLoadingFrame() {
