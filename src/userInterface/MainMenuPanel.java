@@ -102,6 +102,7 @@ public class MainMenuPanel extends JPanel {
 		controlsButton.setFocusPainted(false);
 		controlsButton.setForeground(Color.black);
 		controlsButton.addMouseListener(new HoverButtonListener());
+		controlsButton.addActionListener(new ControlsButtonListener());
 
 		// Set game options.
 		optionsButton = new JButton("Options");
@@ -112,6 +113,7 @@ public class MainMenuPanel extends JPanel {
 		optionsButton.setFocusPainted(false);
 		optionsButton.setForeground(Color.black);
 		optionsButton.addMouseListener(new HoverButtonListener());
+		optionsButton.addActionListener(new OptionsButtonListener());
 
 		// Quit the game.
 		exitButton = new JButton("Exit");
@@ -202,7 +204,7 @@ public class MainMenuPanel extends JPanel {
 			buttonPanel.setLayout(new FlowLayout());
 			JButton cancelButton = new JButton("Cancel");
 			cancelButton.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					d.dispose();
@@ -230,7 +232,7 @@ public class MainMenuPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			final JDialog d = new JDialog(currentFrame, "Load Game", true);
+			final JDialog d = new JDialog(currentFrame, "Story", true);
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
 
@@ -245,7 +247,7 @@ public class MainMenuPanel extends JPanel {
 			buttonPanel.setLayout(new FlowLayout());
 			JButton closeButton = new JButton("Close");
 			closeButton.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					d.dispose();
@@ -253,6 +255,34 @@ public class MainMenuPanel extends JPanel {
 			});
 			buttonPanel.add(closeButton);
 			d.add(buttonPanel, BorderLayout.SOUTH);
+
+			d.setLocationRelativeTo(null);
+			d.setVisible(true);
+		}
+
+	}
+
+	class ControlsButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			final JDialog d = new JDialog(currentFrame, "Controls", true);
+			d.setSize(400, 300);
+			d.setLayout(new BorderLayout());
+
+			d.setLocationRelativeTo(null);
+			d.setVisible(true);
+		}
+
+	}
+
+	class OptionsButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			final JDialog d = new JDialog(currentFrame, "Options", true);
+			d.setSize(400, 300);
+			d.setLayout(new BorderLayout());
 
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
