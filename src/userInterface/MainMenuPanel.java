@@ -3,26 +3,23 @@ package userInterface;
 import gameRender.IsoCanvas;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-
-import com.sun.xml.internal.messaging.saaj.soap.JpegDataContentHandler;
+import javax.swing.JScrollPane;
 
 /**
  * This class contains all the necessary buttons for the main menu of the game.
@@ -80,6 +77,7 @@ public class MainMenuPanel extends JPanel {
 		loadButton.setFocusPainted(false);
 		loadButton.setForeground(Color.black);
 		loadButton.addMouseListener(new HoverButtonListener());
+		loadButton.addActionListener(new LoadButtonListener());
 
 		// Opens a window describing the background story of the game.
 		storyButton = new JButton("Story");
@@ -167,6 +165,39 @@ public class MainMenuPanel extends JPanel {
 
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
+		}
+
+	}
+
+	/**
+	 * This is the listener class used for the loadButton. It opens a list of
+	 * the games saved by the user and allows them to select one.
+	 * 
+	 * @author Venkata Peesapati
+	 * 
+	 */
+	class LoadButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			final JDialog d = new JDialog(currentFrame, "Load Game", true);
+			d.setSize(400, 300);
+			d.setLayout(new BorderLayout());
+			
+			DefaultListModel<String> model = new DefaultListModel<String>(); 
+			JList<String> list = new JList<String>(model);
+			JScrollPane scrollPane = new JScrollPane(list);
+			d.add(scrollPane, BorderLayout.CENTER);
+			
+			JPanel buttonPanel = new JPanel();
+			buttonPanel.setLayout(new FlowLayout());
+			buttonPanel.add(new JButton("OK"));
+			buttonPanel.add(new JButton("Cancel"));
+			buttonPanel.add(new JButton("Delete"));
+			d.add(buttonPanel, BorderLayout.SOUTH);
+			
+			d.setLocationRelativeTo(null);
+			d.setVisible(true);
 		}
 
 	}
