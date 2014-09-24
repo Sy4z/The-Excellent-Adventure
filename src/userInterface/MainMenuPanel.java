@@ -20,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 /**
  * This class contains all the necessary buttons for the main menu of the game.
@@ -88,6 +90,7 @@ public class MainMenuPanel extends JPanel {
 		storyButton.setFocusPainted(false);
 		storyButton.setForeground(Color.black);
 		storyButton.addMouseListener(new HoverButtonListener());
+		storyButton.addActionListener(new StoryButtonListener());
 
 		// The controls for the mouse and keyboard can be changed by pressing
 		// this button.
@@ -183,17 +186,55 @@ public class MainMenuPanel extends JPanel {
 			final JDialog d = new JDialog(currentFrame, "Load Game", true);
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
-			
-			DefaultListModel<String> model = new DefaultListModel<String>(); 
+
+			DefaultListModel<String> model = new DefaultListModel<String>(); // Add
+																				// saved
+																				// game
+																				// names
+																				// to
+																				// this
+																				// model.
 			JList<String> list = new JList<String>(model);
 			JScrollPane scrollPane = new JScrollPane(list);
 			d.add(scrollPane, BorderLayout.CENTER);
-			
+
 			JPanel buttonPanel = new JPanel();
 			buttonPanel.setLayout(new FlowLayout());
 			buttonPanel.add(new JButton("OK"));
 			buttonPanel.add(new JButton("Cancel"));
 			buttonPanel.add(new JButton("Delete"));
+			d.add(buttonPanel, BorderLayout.SOUTH);
+
+			d.setLocationRelativeTo(null);
+			d.setVisible(true);
+		}
+
+	}
+
+	/**
+	 * This is the listener class used for the story button. It opens a text
+	 * area which describes the background story of the game.
+	 * 
+	 * @author Venkata Peesapati
+	 * 
+	 */
+	class StoryButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			final JDialog d = new JDialog(currentFrame, "Load Game", true);
+			d.setSize(400, 300);
+			d.setLayout(new BorderLayout());
+
+			JTextArea story = new JTextArea("Once upon a time...");
+			story.setEditable(false);
+			JScrollPane scrollPane = new JScrollPane(story);
+			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+			d.add(scrollPane, BorderLayout.CENTER);
+			
+			JPanel buttonPanel = new JPanel();
+			buttonPanel.setLayout(new FlowLayout());
+			buttonPanel.add(new JButton("Close"));
 			d.add(buttonPanel, BorderLayout.SOUTH);
 			
 			d.setLocationRelativeTo(null);
