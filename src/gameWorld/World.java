@@ -90,7 +90,7 @@ public class World {
 	 * returns it as a stack of single square movments.
 	 *
 	 * @param startX
-	 * @param startY
+	 * @param smaptartY
 	 * @param x
 	 * @param y
 	 * @return

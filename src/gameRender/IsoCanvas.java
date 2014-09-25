@@ -21,7 +21,7 @@ import javax.swing.*;
 import dataStorage.*;
 import tile.Tile;
 import tile.TileMultiton;
-import tile.TileMultiton.type;
+
 	/**
 	 * Main game Canvas.
 	 *
@@ -74,13 +74,16 @@ import tile.TileMultiton.type;
 					tile.draw(g2d, x1,y1 ,x2 ,y2, 0, 0, TILE_WIDTH,TILE_HEIGHT);
 					}
 			}
+
+			moveUnit(g2d, null, null);
 		}
 		/**
 		 *
 		 * @param updatedMap
 		 */
-		public void update(TileMultiton.type[][] updatedMap){
-			this.MAP = updatedMap;
+		public void update(Tuple t){
+			this.MAP = t.tiles;
+			ENTITIES = t.units;
 			this.repaint();
 		}
 		/**
@@ -88,16 +91,17 @@ import tile.TileMultiton.type;
 		 */
 
 		/**
-		 *Returns the 2d representation of a isometric point
+		 *
+		 * Returns the Cartesian representation of a isometric point
 		 * @param x
 		 * @param y
 		 * @return
 		 */
-		public Point to2d(int x, int y){
+		public Point toCart(int x, int y){
 			return new Point ((2 * x + y) / 2,(2 * x - y) / 2);
 		}
 		/**
-		 *Returns the Isometric representation of a 2d point
+		 *Returns the Isometric representation of a Cartesian point
 		 * @param x
 		 * @param y
 		 * @return
@@ -118,8 +122,10 @@ import tile.TileMultiton.type;
 		 *
 		 * @param unit
 		 */
-		public void moveUnit(Unit unit, Stack<Point> cordinates){
-
+		public void moveUnit( Graphics2D g,Unit unit, Stack<Point> cordinates){
+			for(Unit i: ENTITIES){
+				i.draw(g,0,0,0,0,0,0,0,0);
+			}
 		}
 		/**
 		 * Was Reading some of the Commander keen source code
