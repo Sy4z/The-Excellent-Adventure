@@ -9,8 +9,8 @@ import java.io.File;
  */
 public class FloorTile extends Tile{
 
-	public FloorTile(File imgPath) {
-		super( imgPath);
+	public FloorTile(File imgPath, Character key) {
+		super( imgPath, key);
 		type = "Floor_Tile";
 	}
 }

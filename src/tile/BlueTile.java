@@ -9,8 +9,8 @@ import java.io.File;
  */
 public class BlueTile extends Tile{
 
-	public BlueTile( File imgPath) {
-		super(imgPath);
+	public BlueTile( File imgPath,Character key) {
+		super(imgPath,key);
 		type = "Blue_Tile";
 	}
 }

@@ -24,20 +24,26 @@ import javax.imageio.ImageIO;
  *
  */
 public abstract class Tile {
-
+	protected static boolean[] chars = new boolean[200]; //if this proves to be to few, extend it
+	protected Character key;
 	protected String type;
 	protected boolean hasInteractive = false;
 	protected int objIdx = 0;
 	protected BufferedImage img;
 
-
-
-	public Tile(File imgPath){
-
+	public Tile(File imgPath, Character key){
 		try {
 			img = ImageIO.read(imgPath);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+
+		if(key < chars.length && !chars[key]){
+			this.key = key;
+			chars[key] = true;
+		}
+		else{
+			throw new IllegalArgumentException("Key already used, choose another up to char 200");
 		}
 	}
 
@@ -65,11 +71,8 @@ public abstract class Tile {
 
 	}
 
-
-	public Point getLocation() {
-		// TODO Auto-generated method stub
-		return null;
+	public Character getRepresentation(){
+		return key;
 	}
-
 
 }

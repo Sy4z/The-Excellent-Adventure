@@ -3,6 +3,7 @@ package tile;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * Implements the the multiton design pattern to efficiently define each type of tile
  * @author macdondyla1
@@ -27,11 +28,11 @@ public class TileMultiton {
 			switch(type){
 			case FLOOR: tiles.put(type, new FloorTile(
 					new File("src" + File.separator + "tile" +
-							File.separator + "tile.png")));
+							File.separator + "tile.png"),'f'));
 				break;
 			case BLUE:  tiles.put(type , new BlueTile(
 					new File("src" + File.separator + "tile" +
-							File.separator + "orb.png")));
+							File.separator + "orb.png"),'b'));
 				break;
 			}
 		}

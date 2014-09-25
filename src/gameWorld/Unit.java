@@ -80,8 +80,14 @@ public abstract class Unit extends GameObject {
 		else moveAction = false;
 	}
 
-
-
-
+	/**
+	 * Used by the save method to aquire all of the information relevant to saving the state
+	 * @return an array of objects which represent the data pertaining to saving
+	 */
+	public Object[] save(){
+		Object[] objs = {curLocation, filePath, isActiveUnit,
+			standardAction,moveAction,swiftAction};
+		return objs ;
+	}
 
 }
