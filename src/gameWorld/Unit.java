@@ -53,15 +53,15 @@ public abstract class Unit extends GameObject {
 	public void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx,
 			int sy, int sx2, int sy2) {
 
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(filePath);
-		} catch (IOException e) {
-
-			System.err.println(e + "");
-		}
-		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
-
+//		BufferedImage img = null;
+//		try {
+//			img = ImageIO.read(filePath);
+//		} catch (IOException e) {
+//
+//			System.err.println(e + "");
+//		}
+//		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
+		g.drawOval(curLocation.x, curLocation.y, 10, 10);
 	}
 
 }
