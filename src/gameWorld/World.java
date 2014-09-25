@@ -31,7 +31,7 @@ public class World {
 				activePlayer = u;
 				while (u.isActive()) {
 					calculatePossibleMovments(u.curLocation);
-					highlight(tilesToHightlight());
+					canvas.highlight(tilesToHightlight());
 				}
 			}
 	}
