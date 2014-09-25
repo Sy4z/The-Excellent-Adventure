@@ -60,6 +60,9 @@ public abstract class Unit extends GameObject {
 	}
 
 	public void activate() {
+		moveAction = true;
+		standardAction = true;
+		swiftAction = true;
 		this.isActiveUnit = true;
 
 	}
@@ -81,6 +84,8 @@ public abstract class Unit extends GameObject {
 			standardAction = false;
 		else moveAction = false;
 	}
+
+
 
 
 
