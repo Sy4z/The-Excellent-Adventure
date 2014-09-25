@@ -1,6 +1,7 @@
 package gameRender;
 
 
+import gameWorld.GameObject;
 import gameWorld.Unit;
 
 import java.awt.Canvas;
@@ -13,12 +14,14 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Stack;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import dataStorage.*;
+import sun.management.counter.Units;
 import tile.Tile;
 import tile.TileMultiton;
 
@@ -32,7 +35,6 @@ import tile.TileMultiton;
 	public class IsoCanvas extends Canvas{
 		private TileMultiton.type[][] MAP = null;
 		private Unit ENTITIES[]; //#Rebellion
-
 		private int WIDTH;
 		private int HEIGHT;
 		private int TILE_WIDTH = 64;//26
@@ -40,7 +42,8 @@ import tile.TileMultiton;
 		private int OFFSET_X;
 		private int OFFSET_Y;
 		private int HALF_TILE = TILE_HEIGHT/2;
-//		private boolean debug = true;
+		private ArrayList<Point> HIGHLIGHTED_TILES; 
+		private boolean debug = true;
 
 		/**
 		 *
@@ -74,7 +77,7 @@ import tile.TileMultiton;
 					tile.draw(g2d, x1,y1 ,x2 ,y2, 0, 0, TILE_WIDTH,TILE_HEIGHT);
 					}
 			}
-
+			
 			moveUnit(g2d, null, null);
 		}
 		/**
@@ -97,7 +100,7 @@ import tile.TileMultiton;
 		 * @param y
 		 * @return
 		 */
-		public Point toCart(int x, int y){
+		private Point toCart(int x, int y){
 			return new Point ((2 * x + y) / 2,(2 * x - y) / 2);
 		}
 		/**
@@ -126,6 +129,15 @@ import tile.TileMultiton;
 			for(Unit i: ENTITIES){
 				i.draw(g,0,0,0,0,0,0,0,0);
 			}
+		}
+		public void highlight(ArrayList<Point> tiles){
+			this.HIGHLIGHTED_TILES = tiles;
+		}
+		public void initGameWorld(GameObject[][] obs, Units[][] units){
+			
+		}
+		public void addObject(GameObject ob){
+			
 		}
 		/**
 		 * Was Reading some of the Commander keen source code
