@@ -1,5 +1,6 @@
 package gameWorld;
 
+@Deprecated
 public abstract class UnitCommand {
 	protected boolean complete;
 

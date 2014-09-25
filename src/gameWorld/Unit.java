@@ -38,6 +38,13 @@ public abstract class Unit extends GameObject {
 
 	}
 
+	public boolean takeAction(){
+		if(currentOrders == null)
+			return false;
+		currentOrders.takeAction();
+		return true;
+	}
+
 
 	public void newOrder(UnitCommand newOrder) {
 		currentOrders = newOrder;
