@@ -21,6 +21,7 @@ public class World {
 	private GameObject[][] gameBoard;
 	private LogicalTile[][] worldMap;
 	private Unit activePlayer;
+	private IsoCanvas canvas;
 
 	public void turn() {
 		while (true)
@@ -56,8 +57,40 @@ public class World {
 
 
 	private void calculatePossibleMovments(Point curLocation) {
-		// TODO Auto-generated method stub
+		moveFrom(curLocation.x, curLocation.y, 6, new Stack<Point>());
 
+	}
+
+	private void moveFrom(int x, int y, int numMoves, Stack<Point> path){
+		path.add(new Point(x, y));
+		worldMap[x][y].setPath(path);
+		worldMap[x][y].setReachable(true);
+		if(numMoves==0) return;
+
+		if(validMove(x+1, y, path))
+			moveFrom(x+1, y, numMoves-1, path);
+
+		if(validMove(x-1, y, path))
+			moveFrom(x-1, y, numMoves-1, path);
+
+		if(validMove(x,y-1, path))
+			moveFrom(x,y-1, numMoves-1,path);
+
+		if(validMove(x,y+1, path))
+			moveFrom(x,y+1, numMoves-1,path);
+
+	}
+
+	private boolean validMove(int x, int y, Stack<Point> path){
+		if(!inBounds(x,y))
+			return false;
+		if(!worldMap[x][y].isCanTouchThis())
+			return false;
+		if(worldMap[x][y].getPath() == null)
+			return true;
+		if(worldMap[x][y].getPath().size() < path.size())
+			return false;
+		return true;
 	}
 
 	/**
@@ -67,13 +100,13 @@ public class World {
 	 * @param destination
 	 * @return
 	 */
-	public int move(int x, int y) {
+	public void move(int x, int y) {
 		if (!inBounds(x, y))
-			return 0;
+			return;
 		if(worldMap[x][y].isCanTouchThis())
-			if(activePlayer.avilableMoves()>= worldMap[x][y].getMovesRequired()){
-				moveUnit(activePlayer, worldMap[x][y].getPath());
-				activePlayer.depleateMoves(worldMap[x][y].getMovesRequired());
+			if(worldMap[x][y].isReachable()){
+				//canvas.moveUnit(null, activePlayer, worldMap[x][y].getPath());
+				activePlayer.depleateMoves();
 				gameBoard[x][y] = activePlayer;
 				gameBoard[activePlayer.getLocation().x][activePlayer.getLocation().y] = null;
 			}
@@ -83,50 +116,6 @@ public class World {
 
 
 
-	/**
-	 * Finds a path through the game world that can be triversed by a unit and
-	 * returns it as a stack of single square movments.
-	 *
-	 * @param startX
-	 * @param smaptartY
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	private Stack<Point> findPath(int startX, int startY, int x, int y) {
-		Stack<Point> path = new Stack<Point>();
-		int curX = startX;
-		int curY = startY;
-
-		while (true) {
-			if(curX == x && curY == y) break;
-			if (curX < x && accesable[curX + 1][curY]){
-				path.add(new Point(++curX, curY));
-				continue;
-			}
-			if (curY < y && accesable[curX][curY+1]){
-				path.add(new Point(curX, ++curY));
-				continue;
-			}
-			if (curX > x && accesable[curX - 1][curY]){
-				path.add(new Point(--curX, curY));
-				continue;
-			}
-			if (curY > y && accesable[curX][curY-1]){
-				path.add(new Point(curX, --curY));
-				continue;
-			}
-
-			break;
-		}
-		//Beter versions of pathfinding will give things in the oposite order of traversal so a stack
-		//is used thus untill pathfinding is improved we need to reverse the stack;
-		Stack<Point> rPath = new Stack<Point>();
-		while(!path.isEmpty())
-			rPath.add(path.pop());
-		return rPath;
-
-	}
 
 	private boolean inBounds(int x, int y) {
 		if (x >= gameBoard.length)

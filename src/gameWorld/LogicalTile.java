@@ -6,11 +6,11 @@ import java.util.Stack;
 public class LogicalTile {
 	private boolean canTouchThis; //dananana
 	private Stack<Point> path;
-	private int movesRequired;
+	private boolean reachable;
 
 	public LogicalTile(boolean canTouchThis){
 		this.canTouchThis = canTouchThis;
-		movesRequired = -1;
+		reachable = false;
 	}
 
 	/**
@@ -37,17 +37,20 @@ public class LogicalTile {
 	public void setPath(Stack<Point> path) {
 		this.path = path;
 	}
+
+
 	/**
-	 * @return the distance
+	 * @return the reachable
 	 */
-	public int getMovesRequired() {
-		return movesRequired;
+	public boolean isReachable() {
+		return reachable;
 	}
+
 	/**
-	 * @param distance the distance to set
+	 * @param reachable the reachable to set
 	 */
-	public void setMovesRequired(int movesRequired) {
-		this.movesRequired = movesRequired;
+	public void setReachable(boolean reachable) {
+		this.reachable = reachable;
 	}
 
 	/**
@@ -55,7 +58,7 @@ public class LogicalTile {
 	 */
 	public void clearMoveInfo(){
 		path = null;
-		movesRequired = -1;
+		reachable = false;
 	}
 
 
