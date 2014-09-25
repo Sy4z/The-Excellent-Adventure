@@ -2,8 +2,9 @@ package gameWorld;
 
 import java.awt.Point;
 import java.util.Stack;
-
+@Deprecated
 public class UnitCommandMove extends UnitCommand{
+
 
 	private Stack<Point> path;
 
@@ -12,7 +13,7 @@ public class UnitCommandMove extends UnitCommand{
 	}
 	@Override
 	public void takeAction() {
-		// TODO Auto-generated method stub
+
 
 
 		if(path.isEmpty())
