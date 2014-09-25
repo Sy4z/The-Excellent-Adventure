@@ -64,8 +64,7 @@ public class Data {
 		for(int i = 0; i < 7; i++){
 			u[i] = new ServiceBot(new Point(i,i));
 		}
-		b = (b + 1 )%9;
-		if(b == 0){
+		if(b++ > 9){
 			b = -9;
 		}
 		return new Tuple(t,u);
@@ -73,7 +72,7 @@ public class Data {
 
 	public static void main(String args[]){
 		JFrame j = new JFrame();
-		j.setBounds(30, 20, 1000, 1000);
+		j.setBounds(30, 20, 600	, 480);
 		IsoCanvas c = new IsoCanvas(j.getWidth(), j.getHeight());
 		j.add(c);
 		j.setVisible(true);

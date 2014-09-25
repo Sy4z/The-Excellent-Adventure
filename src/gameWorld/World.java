@@ -9,8 +9,6 @@ import java.util.Stack;
 
 import dataStorage.Data;
 import tile.Tile;
-import tile.TileFactory;
-import tile.TileFactory.type;
 
 /**
  *
