@@ -1,9 +1,7 @@
 package gameWorld;
 
 import gameRender.IsoCanvas;
-
 import java.awt.Point;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -15,14 +13,15 @@ import java.util.Stack;
  */
 public class World {
 	private Unit[] units;
-	private File defaultNewGameState = null;
 	private GameObject[][] gameBoard;
 	private LogicalTile[][] worldMap;
 	private Unit activePlayer;
 	private IsoCanvas canvas;
 
+	/**
+	 * Keeps on running through the turn cycle.
+	 */
 	public void turn() {
-		System.exit(-1); //Damn it chris! <3 Dylan
 		while (true)
 			for (Unit u : units) {
 				refresh(u);
@@ -37,7 +36,11 @@ public class World {
 	}
 
 
-
+	/**
+	 * Works out which tiles can be reached in one action.
+	 * This is used to be passed to the renderer.
+	 * @return
+	 */
 	private ArrayList<Point> tilesToHightlight() {
 		ArrayList<Point> highPoints = new ArrayList<Point>();
 		for(int x = 0; x < worldMap.length; x++)
@@ -50,6 +53,10 @@ public class World {
 
 
 
+	/**
+	 * Resets infomation about what can move where.
+	 * @param u
+	 */
 	private void refresh(Unit u) {
 		for(int x = 0; x < worldMap.length; x++)
 			for(int y =0; y < worldMap[0].length; y++){
@@ -62,20 +69,11 @@ public class World {
 
 
 	/**
-	 * Load Constructor
+	 * Constructor
 	 *
 	 * @return
 	 */
-	public World(File save, int width, int height) {
-		// worldObjects = dlynPlz();
-		//TODO
-	}
-
-	/**
-	 * New Game Control
-	 *
-	 */
-	public World(int width, int height) {
+	public World(String save, int width, int height) {
 		// worldObjects = dlynPlz();
 		//TODO
 	}
