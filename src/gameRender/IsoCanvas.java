@@ -4,20 +4,10 @@ package gameRender;
 import gameWorld.Unit;
 
 import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Stack;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
 import dataStorage.*;
 import tile.Tile;
 import tile.TileMultiton;
@@ -30,6 +20,11 @@ import tile.TileMultiton;
 	 *
 	 */
 	public class IsoCanvas extends Canvas{
+		/**
+		 *	Why does this need a java doc?
+		 *	--DYLAN
+		 */
+		private static final long serialVersionUID = -1838809788973263253L;
 		private TileMultiton.type[][] MAP = null;
 		private Unit ENTITIES[]; //#Rebellion
 

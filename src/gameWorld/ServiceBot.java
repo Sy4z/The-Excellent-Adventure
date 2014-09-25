@@ -1,14 +1,6 @@
 package gameWorld;
 
-import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import com.sun.jmx.remote.util.OrderClassLoaders;
 
 /**
  * This is a generic robot and is the base unit type that the player will

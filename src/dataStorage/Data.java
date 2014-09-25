@@ -9,6 +9,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 import javax.swing.JFrame;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import sun.reflect.*;
 import tile.*;
@@ -25,12 +26,13 @@ public class Data {
 	static int b = 0;
 	public Data(){}
 
-	public static Tuple load(){
+	public static Tuple load(File f){
 
-		return null;
+		return new Tuple(null, null);
 	}
 
 	public static boolean save(){
+		DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
 		return false;
 	}
 
