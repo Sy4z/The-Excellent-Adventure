@@ -55,7 +55,7 @@ public abstract class Unit extends GameObject {
 	}
 
 	public void activate() {
-		 this.isActiveUnit = true;
+		this.isActiveUnit = true;
 
 	}
 
@@ -70,19 +70,13 @@ public abstract class Unit extends GameObject {
 		return moves;
 	}
 
-	public void depleateMoves(int movesRequired) {
-		//If 2 moves are used deplete both standard and move
-		if(movesRequired == 2){
-			standardAction = false;
-			moveAction = false;
-		}
-		//If one move required try to use move first and if it is already used use standard
-		else if(movesRequired ==1){
-			if(moveAction == false)
-				standardAction = false;
-			else moveAction = false;
-		}
+	public void depleateMoves() {
 
+		if(moveAction == false)
+			standardAction = false;
+		else moveAction = false;
 	}
+
+
 
 }
