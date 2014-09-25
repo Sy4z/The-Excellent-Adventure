@@ -25,9 +25,9 @@ import javax.swing.ScrollPaneConstants;
 
 /**
  * This class contains all the necessary buttons for the main menu of the game.
- * 
+ *
  * @author Venkata Peesapati
- * 
+ *
  */
 public class MainMenuPanel extends JPanel {
 
@@ -44,7 +44,7 @@ public class MainMenuPanel extends JPanel {
 	/**
 	 * The main menu has 6 buttons: New Game, Load, Story, Controls, Options and
 	 * Exit.
-	 * 
+	 *
 	 * @param currentFrame
 	 *            Takes the reference for the frame that the MainMenuPanel is
 	 *            contained in so that its content pane can be changed when
@@ -53,7 +53,7 @@ public class MainMenuPanel extends JPanel {
 	public MainMenuPanel(JFrame currentFrame) {
 		this.currentFrame = currentFrame;
 		setLayout(new GridLayout(7, 1));
-		gameName = new JLabel("Robot Mania");
+		gameName = new JLabel("Apocalypse Mania");
 		gameName.setFont(gameName.getFont().deriveFont(40.0f));
 		gameName.setHorizontalAlignment(JLabel.CENTER);
 
@@ -143,9 +143,9 @@ public class MainMenuPanel extends JPanel {
 	/**
 	 * This is the listener class used for the newGameButton. It opens a new
 	 * canvas.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class NewGameButtonListener implements ActionListener {
 
@@ -177,9 +177,9 @@ public class MainMenuPanel extends JPanel {
 	/**
 	 * This is the listener class used for the loadButton. It opens a list of
 	 * the games saved by the user and allows them to select one.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class LoadButtonListener implements ActionListener {
 
@@ -224,9 +224,9 @@ public class MainMenuPanel extends JPanel {
 	/**
 	 * This is the listener class used for the story button. It opens a text
 	 * area which describes the background story of the game.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class StoryButtonListener implements ActionListener {
 
@@ -293,9 +293,9 @@ public class MainMenuPanel extends JPanel {
 	/**
 	 * This is the listener class used for the exitButton. It quits the program
 	 * and closed the window.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class ExitButtonListener implements ActionListener {
 
@@ -309,9 +309,9 @@ public class MainMenuPanel extends JPanel {
 	/**
 	 * This MouseListener class is used to change the color of the text when
 	 * hovering over a button. It is used for all the buttons in the main menu.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class HoverButtonListener implements MouseListener {
 
