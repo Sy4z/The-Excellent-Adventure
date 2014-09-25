@@ -105,7 +105,7 @@ public class World {
 			return;
 		if(worldMap[x][y].isCanTouchThis())
 			if(worldMap[x][y].isReachable()){
-				canvas.moveUnit(activePlayer, worldMap[x][y].getPath());
+				//canvas.moveUnit(null, activePlayer, worldMap[x][y].getPath());
 				activePlayer.depleateMoves();
 				gameBoard[x][y] = activePlayer;
 				gameBoard[activePlayer.getLocation().x][activePlayer.getLocation().y] = null;
@@ -113,6 +113,7 @@ public class World {
 
 
 	}
+
 
 
 

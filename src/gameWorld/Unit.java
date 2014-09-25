@@ -1,11 +1,13 @@
 package gameWorld;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Stack;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -42,15 +44,18 @@ public abstract class Unit extends GameObject {
 
 	public void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx,
 			int sy, int sx2, int sy2) {
-
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(filePath);
-		} catch (IOException e) {
-
-			System.err.println(e + "");
-		}
-		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
+//
+//		BufferedImage img = null;
+//		try {
+//			img = ImageIO.read(filePath);
+//		} catch (IOException e) {
+//
+//			System.err.println(e + "");
+//		}
+//		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
+		System.err.println("Drawing unit");
+		g.setColor(Color.CYAN);
+		g.fillOval(curLocation.x, curLocation.y, 10, 10);
 
 	}
 
