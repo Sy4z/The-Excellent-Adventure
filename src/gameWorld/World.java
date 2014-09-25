@@ -7,8 +7,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import dataStorage.Data;
-import tile.Tile;
 
 /**
  *
@@ -32,7 +30,7 @@ public class World {
 				activePlayer = u;
 				while (u.isActive()) {
 					calculatePossibleMovments(u.curLocation);
-					highlight(tilesToHightlight());
+					canvas.highlight(tilesToHightlight());
 				}
 			}
 

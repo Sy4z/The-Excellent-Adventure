@@ -1,14 +1,17 @@
 package gameRender;
 
 
+import gameWorld.GameObject;
 import gameWorld.Unit;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Stack;
 import dataStorage.*;
+import sun.management.counter.Units;
 import tile.Tile;
 import tile.TileMultiton;
 
@@ -27,7 +30,6 @@ import tile.TileMultiton;
 		private static final long serialVersionUID = -1838809788973263253L;
 		private TileMultiton.type[][] MAP = null;
 		private Unit ENTITIES[]; //#Rebellion
-
 		private int WIDTH;
 		private int HEIGHT;
 		private int TILE_WIDTH = 64;//26
@@ -35,7 +37,8 @@ import tile.TileMultiton;
 		private int OFFSET_X;
 		private int OFFSET_Y;
 		private int HALF_TILE = TILE_HEIGHT/2;
-//		private boolean debug = true;
+		private ArrayList<Point> HIGHLIGHTED_TILES;
+		private boolean debug = true;
 
 		/**
 		 *
@@ -92,7 +95,7 @@ import tile.TileMultiton;
 		 * @param y
 		 * @return
 		 */
-		public Point toCart(int x, int y){
+		private Point toCart(int x, int y){
 			return new Point ((2 * x + y) / 2,(2 * x - y) / 2);
 		}
 		/**
@@ -121,6 +124,15 @@ import tile.TileMultiton;
 			for(Unit i: ENTITIES){
 				i.draw(g,0,0,0,0,0,0,0,0);
 			}
+		}
+		public void highlight(ArrayList<Point> tiles){
+			this.HIGHLIGHTED_TILES = tiles;
+		}
+		public void initGameWorld(GameObject[][] obs, Units[][] units){
+
+		}
+		public void addObject(GameObject ob){
+
 		}
 		/**
 		 * Was Reading some of the Commander keen source code
