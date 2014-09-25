@@ -24,6 +24,7 @@ public class World {
 	private IsoCanvas canvas;
 
 	public void turn() {
+		System.exit(-1); //Damn it chris! <3 Dylan
 		while (true)
 			for (Unit u : units) {
 				u.activate();
@@ -32,6 +33,7 @@ public class World {
 					calculatePossibleMovments(u.curLocation);
 				}
 			}
+
 	}
 
 

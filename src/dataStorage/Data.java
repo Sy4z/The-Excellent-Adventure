@@ -24,7 +24,8 @@ import tile.*;
 public class Data {
 	static int b = 0;
 	public Data(){}
-	public static TileMultiton.type[][] load(){
+
+	public static Tuple load(){
 
 		return null;
 	}
@@ -32,6 +33,7 @@ public class Data {
 	public static boolean save(){
 		return false;
 	}
+
 	/**
 	 * -----STANDIN WHILE I STUDY XML------
 	 * @param fi Use null the File shall be ignored
@@ -42,8 +44,8 @@ public class Data {
 	 */
 	public static Tuple testSet(File fi){
 
-		int sizeX = 10;
-		int sizeY = 10;
+		int sizeX = 11;
+		int sizeY = 11;
 		int entityX = 0;
 		int entityY = 0;
 
@@ -72,6 +74,7 @@ public class Data {
 
 	public static void main(String args[]){
 		JFrame j = new JFrame();
+		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		j.setBounds(30, 20, 600	, 480);
 		IsoCanvas c = new IsoCanvas(j.getWidth(), j.getHeight());
 		j.add(c);
