@@ -1,6 +1,8 @@
 package gameRender;
 
 
+import gameWorld.Unit;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,6 +13,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Stack;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -104,6 +107,15 @@ import tile.TileFactory.type;
 		private void calculateOffset(){
 			OFFSET_X = (int)((WIDTH/2) - (TILE_WIDTH)*1.5)+TILE_WIDTH;//spread this calculation out.
 			OFFSET_Y = (int)((HEIGHT/2) - ((HALF_TILE)*map.length)/2)-HALF_TILE;//this too.
+		}
+		
+		
+		/**
+		 * 
+		 * @param unit
+		 */
+		public void moveUnit(Unit unit, Stack<Point> cordinates){
+			
 		}
 		/**
 		 * Was Reading some of the Commander keen source code
