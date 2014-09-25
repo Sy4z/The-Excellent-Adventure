@@ -24,14 +24,41 @@ public class World {
 	private IsoCanvas canvas;
 
 	public void turn() {
+		System.exit(-1); //Damn it chris! <3 Dylan
 		while (true)
 			for (Unit u : units) {
+				refresh(u);
 				u.activate();
 				activePlayer = u;
 				while (u.isActive()) {
 					calculatePossibleMovments(u.curLocation);
+					canvas.highlight(tilesToHightlight());
 				}
 			}
+
+	}
+
+
+
+	private ArrayList<Point> tilesToHightlight() {
+		ArrayList<Point> highPoints = new ArrayList<Point>();
+		for(int x = 0; x < worldMap.length; x++)
+			for(int y = 0; y < worldMap[0].length; y++)
+				if(worldMap[x][y].isReachable())
+					highPoints.add(new Point(x, y));
+
+		return highPoints;
+	}
+
+
+
+	private void refresh(Unit u) {
+		for(int x = 0; x < worldMap.length; x++)
+			for(int y =0; y < worldMap[0].length; y++){
+				worldMap[x][y].setPath(null);
+				worldMap[x][y].setReachable(false);
+			}
+
 	}
 
 
