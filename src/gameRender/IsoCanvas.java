@@ -18,7 +18,7 @@ import java.util.Stack;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import dataStorage.Data;
+import dataStorage.*;
 import tile.Tile;
 import tile.TileMultiton;
 import tile.TileMultiton.type;
@@ -30,7 +30,9 @@ import tile.TileMultiton.type;
 	 *
 	 */
 	public class IsoCanvas extends Canvas{
-		private TileMultiton.type[][] map = null;
+		private TileMultiton.type[][] MAP = null;
+		private Unit ENTITIES[]; //#Rebellion
+
 		private int WIDTH;
 		private int HEIGHT;
 		private int TILE_WIDTH = 64;//26
@@ -44,7 +46,9 @@ import tile.TileMultiton.type;
 		 *
 		 */
 		public IsoCanvas(int Width, int Height){
-			map = Data.testSet(null);
+			Tuple t = Data.testSet(null);
+			MAP = t.tiles;
+			ENTITIES = t.units;
 //			mapDebug();
 			this.WIDTH = Width;
 			this.HEIGHT = Height;
@@ -57,10 +61,10 @@ import tile.TileMultiton.type;
 			Graphics2D g2d = (Graphics2D) g;
 			g.fillRect(0,0,WIDTH,HEIGHT);
 			Tile tile;
-			for(int y = 0; y <map.length;y++){
-				for(int x = 0; x< map[y].length;x++){
+			for(int y = 0; y <MAP.length;y++){
+				for(int x = 0; x< MAP[y].length;x++){
 					Point p = toIso((x*(TILE_WIDTH/2)),(y*(TILE_HEIGHT/2)));//why tile size/2 hmm
-					tile = TileMultiton.getTile(map[y][x]);
+					tile = TileMultiton.getTile(MAP[y][x]);
 					//top left vertex
 					int x1 = (p.x+OFFSET_X);
 					int y1 = (p.y+OFFSET_Y);
@@ -76,7 +80,7 @@ import tile.TileMultiton.type;
 		 * @param updatedMap
 		 */
 		public void update(TileMultiton.type[][] updatedMap){
-			this.map = updatedMap;
+			this.MAP = updatedMap;
 			this.repaint();
 		}
 		/**
@@ -106,16 +110,16 @@ import tile.TileMultiton.type;
 		 */
 		private void calculateOffset(){
 			OFFSET_X = (int)((WIDTH/2) - (TILE_WIDTH)*1.5)+TILE_WIDTH;//spread this calculation out.
-			OFFSET_Y = (int)((HEIGHT/2) - ((HALF_TILE)*map.length)/2)-HALF_TILE;//this too.
+			OFFSET_Y = (int)((HEIGHT/2) - ((HALF_TILE)*MAP.length)/2)-HALF_TILE;//this too.
 		}
-		
-		
+
+
 		/**
-		 * 
+		 *
 		 * @param unit
 		 */
 		public void moveUnit(Unit unit, Stack<Point> cordinates){
-			
+
 		}
 		/**
 		 * Was Reading some of the Commander keen source code
@@ -126,15 +130,15 @@ import tile.TileMultiton.type;
 		 */
 		private void mapDebug(){
 			System.out.println("=================Map debug====================");
-			if(map == null){
+			if(MAP == null){
 				System.out.println("Somethinghasgoneterriblywrong : Map is null");
 			}
 			else{
-				System.out.println("Map is: "+map[0].length+" x "+map.length+" tiles");
+				System.out.println("Map is: "+MAP[0].length+" x "+MAP.length+" tiles");
 				System.out.println("Map contains:");
-				for(int y = 0; y <map.length;y++){
-					for(int x = 0; x< map[y].length;x++){
-						System.out.println("Pos "+x+":"+y+" -> "+TileMultiton.getTile(map[y][x]).getType());
+				for(int y = 0; y <MAP.length;y++){
+					for(int x = 0; x< MAP[y].length;x++){
+						System.out.println("Pos "+x+":"+y+" -> "+TileMultiton.getTile(MAP[y][x]).getType());
 					}
 				}
 			}

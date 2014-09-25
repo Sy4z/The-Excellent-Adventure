@@ -62,14 +62,4 @@ public class Data {
 		}
 		return new Tuple(t,u);
 	}
-
-	static class Tuple{
-		TileMultiton.type[][] tiles;
-		Unit[] units;
-
-		public Tuple(TileMultiton.type[][] t, Unit[] u){
-			tiles = t;
-			units = u;
-		}
-	}
 }
