@@ -17,8 +17,8 @@ import javax.swing.*;
 
 import dataStorage.Data;
 import tile.Tile;
-import tile.TileFactory;
-import tile.TileFactory.type;
+import tile.TileMultiton;
+import tile.TileMultiton.type;
 	/**
 	 * Main game Canvas.
 	 *
@@ -27,7 +27,7 @@ import tile.TileFactory.type;
 	 *
 	 */
 	public class IsoCanvas extends Canvas{
-		private TileFactory.type[][] map = null;
+		private TileMultiton.type[][] map = null;
 		private int WIDTH;
 		private int HEIGHT;
 		private int TILE_WIDTH = 64;//26
@@ -57,7 +57,7 @@ import tile.TileFactory.type;
 			for(int y = 0; y <map.length;y++){
 				for(int x = 0; x< map[y].length;x++){
 					Point p = toIso((x*(TILE_WIDTH/2)),(y*(TILE_HEIGHT/2)));//why tile size/2 hmm
-					tile = TileFactory.getTile(map[y][x]);
+					tile = TileMultiton.getTile(map[y][x]);
 					//top left vertex
 					int x1 = (p.x+OFFSET_X);
 					int y1 = (p.y+OFFSET_Y);
@@ -72,7 +72,7 @@ import tile.TileFactory.type;
 		 *
 		 * @param updatedMap
 		 */
-		public void update(TileFactory.type[][] updatedMap){
+		public void update(TileMultiton.type[][] updatedMap){
 			this.map = updatedMap;
 			this.repaint();
 		}
@@ -122,7 +122,7 @@ import tile.TileFactory.type;
 				System.out.println("Map contains:");
 				for(int y = 0; y <map.length;y++){
 					for(int x = 0; x< map[y].length;x++){
-						System.out.println("Pos "+x+":"+y+" -> "+TileFactory.getTile(map[y][x]).getType());
+						System.out.println("Pos "+x+":"+y+" -> "+TileMultiton.getTile(map[y][x]).getType());
 					}
 				}
 			}

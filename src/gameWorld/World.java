@@ -9,8 +9,8 @@ import java.util.Stack;
 
 import dataStorage.Data;
 import tile.Tile;
-import tile.TileFactory;
-import tile.TileFactory.type;
+import tile.TileMultiton;
+import tile.TileMultiton.type;
 
 /**
  *

@@ -1,5 +1,9 @@
 package dataStorage;
 
+import gameWorld.ServiceBot;
+import gameWorld.Unit;
+
+import java.awt.Point;
 import java.io.File;
 import java.lang.reflect.Field;
 
@@ -16,7 +20,8 @@ import tile.*;
  */
 public class Data {
 
-	public static TileFactory.type[][] load(){
+	public Data(){}
+	public static TileMultiton.type[][] load(){
 
 		return null;
 	}
@@ -32,25 +37,39 @@ public class Data {
 	 * @return A 2D Array of Tile
 	 * @throws FileNotFoundException
 	 */
-	public static TileFactory.type[][] testSet(File fi){
+	public static Tuple testSet(File fi){
 
-		int sizeX = 1000;
-		int sizeY = 1000;
+		int sizeX = 30;
+		int sizeY = 30;
 		int entityX = 0;
 		int entityY = 0;
 
-		TileFactory.type[][] t = new TileFactory.type[sizeY][sizeX];
+		TileMultiton.type[][] t = new TileMultiton.type[sizeY][sizeX];
 		//Creates an array of tiles sizeX by sizeY if statement specifys what coordinate entity will be placed.
 		for(int y = 0;y<sizeY;y++){
 			for(int x = 0;x<sizeX;x++){
 				if(y == x && x == y){
-					t[y][x] = TileFactory.type.BLUE;
+					t[y][x] = TileMultiton.type.BLUE;
 				}
 				else{
-					t[y][x] = TileFactory.type.FLOOR;
+					t[y][x] = TileMultiton.type.FLOOR;
 				}
 			}
 		}
-		return t;
+		Unit[] u = new Unit[7];
+		for(int i = 0; i < 7; i++){
+			u[i] = new ServiceBot(new Point(i*20,i*20));
+		}
+		return new Tuple(t,u);
+	}
+
+	static class Tuple{
+		TileMultiton.type[][] tiles;
+		Unit[] units;
+
+		public Tuple(TileMultiton.type[][] t, Unit[] u){
+			tiles = t;
+			units = u;
+		}
 	}
 }

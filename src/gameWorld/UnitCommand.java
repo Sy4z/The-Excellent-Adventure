@@ -10,6 +10,7 @@ public abstract class UnitCommand {
 	public boolean terminate(){
 		return this.complete;
 	}
+	
 	/**
 	 * The unit executes within one tick worth of it's current command
 	 */

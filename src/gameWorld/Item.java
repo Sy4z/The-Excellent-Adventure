@@ -8,5 +8,4 @@ package gameWorld;
 public abstract class Item extends GameObject{
 	//TODO boolean maybe?
 	public abstract void use();
-
 }
