@@ -9,8 +9,8 @@ import java.util.Stack;
 
 import dataStorage.Data;
 import tile.Tile;
-import tile.TileMultiton;
-import tile.TileMultiton.type;
+import tile.TileFactory;
+import tile.TileFactory.type;
 
 /**
  *
@@ -21,14 +21,21 @@ public class World {
 	private Unit[] units;
 	private File defaultNewGameState = null;
 	private GameObject[][] gameBoard;
-	private boolean[][] accesable;
+	private LogicalTile[][] worldMap;
+	private Unit activePlayer;
 
-	public void tick() {
-		while (true) {
-			for (Unit u : units)
-				u.takeAction();
-		}
+	public void turn() {
+		while (true)
+			for (Unit u : units) {
+				u.activate();
+				activePlayer = u;
+				while (u.isActive()) {
+					calculatePossibleMovments(u.curLocation);
+				}
+			}
 	}
+
+
 
 	/**
 	 * Load Constructor
@@ -37,6 +44,7 @@ public class World {
 	 */
 	public World(File save, int width, int height) {
 		// worldObjects = dlynPlz();
+		//TODO
 	}
 
 	/**
@@ -45,28 +53,37 @@ public class World {
 	 */
 	public World(int width, int height) {
 		// worldObjects = dlynPlz();
+		//TODO
+	}
+
+
+	private void calculatePossibleMovments(Point curLocation) {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
-	 * Gives a unit a new movment order by calling the find path method
+	 * Gives a unit a new movement order by calling the find path method
 	 *
 	 * @param ID
 	 * @param destination
 	 * @return
 	 */
-	public boolean move(int ID, int xDes, int yDes) {
-		if (!inBounds(xDes, yDes))
-			return false;
+	public int move(int x, int y) {
+		if (!inBounds(x, y))
+			return 0;
+		if(worldMap[x][y].isCanTouchThis())
+			if(activePlayer.avilableMoves()>= worldMap[x][y].getMovesRequired()){
+				moveUnit(activePlayer, worldMap[x][y].getPath());
+				activePlayer.depleateMoves(worldMap[x][y].getMovesRequired());
+				gameBoard[x][y] = activePlayer;
+				gameBoard[activePlayer.getLocation().x][activePlayer.getLocation().y] = null;
+			}
 
-		int startX = units[ID].getLocation().x;
-		int startY = units[ID].getLocation().y;
-
-		units[ID].newOrder(new UnitCommandMove(findPath(startX, startY, xDes,
-				yDes)));
-
-		return true;
 
 	}
+
+
 
 	/**
 	 * Finds a path through the game world that can be triversed by a unit and

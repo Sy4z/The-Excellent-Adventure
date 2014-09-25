@@ -16,12 +16,13 @@ import javax.imageio.ImageIO;
 public abstract class Unit extends GameObject {
 	protected Point curLocation;
 	protected File filePath;
-	protected UnitCommand currentOrders; // That I was just following #didnothingwrong
+	private boolean isActiveUnit;
+	private boolean standardAction;
+	private boolean moveAction;
+	private boolean swiftAction;
 
 	public Unit(Point loc) {
-		currentOrders = null;
 		curLocation = loc;
-
 	}
 
 	/**
@@ -38,30 +39,50 @@ public abstract class Unit extends GameObject {
 
 	}
 
-	public boolean takeAction(){
-		if(currentOrders == null)
-			return false;
-		currentOrders.takeAction();
-		return true;
-	}
-
-
-	public void newOrder(UnitCommand newOrder) {
-		currentOrders = newOrder;
-	}
 
 	public void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx,
 			int sy, int sx2, int sy2) {
 
-//		BufferedImage img = null;
-//		try {
-//			img = ImageIO.read(filePath);
-//		} catch (IOException e) {
-//
-//			System.err.println(e + "");
-//		}
-//		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
-		g.drawOval(curLocation.x, curLocation.y, 10, 10);
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(filePath);
+		} catch (IOException e) {
+
+			System.err.println(e + "");
+		}
+		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
+
+	}
+
+	public void activate() {
+		 this.isActiveUnit = true;
+
+	}
+
+	public boolean isActive() {
+		return isActiveUnit;
+	}
+
+	public int avilableMoves() {
+		int moves = 0;
+		if(standardAction) moves++;
+		if(moveAction) moves++;
+		return moves;
+	}
+
+	public void depleateMoves(int movesRequired) {
+		//If 2 moves are used deplete both standard and move
+		if(movesRequired == 2){
+			standardAction = false;
+			moveAction = false;
+		}
+		//If one move required try to use move first and if it is already used use standard
+		else if(movesRequired ==1){
+			if(moveAction == false)
+				standardAction = false;
+			else moveAction = false;
+		}
+
 	}
 
 }
