@@ -154,19 +154,8 @@ public class MainMenuPanel extends JPanel {
 			currentFrame.getContentPane().removeAll();
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
-			//currentFrame.getContentPane().add(
-				//	new GamePanel(currentFrame), BorderLayout.CENTER); // isocanvas
-																				// was
-																				// changed?
-																				// I
-																				// added
-																				// some
-																				// arbitrary
-																				// width
-																				// and
-																				// height
-																				// values
-			currentFrame.getContentPane().add(new IsoCanvas(currentFrame.getWidth(), currentFrame.getHeight()), BorderLayout.CENTER);
+			currentFrame.getContentPane().add(
+					new GamePanel(currentFrame), BorderLayout.CENTER);
 
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
