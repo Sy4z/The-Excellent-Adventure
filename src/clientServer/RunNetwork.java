@@ -1,5 +1,6 @@
 package clientServer;
 
+
 import java.io.IOException;
 import java.net.ServerSocket;
 
@@ -9,7 +10,7 @@ import java.net.ServerSocket;
  *Class which will create an instance of a server
  *If this program instance is an instance of a client, will not start server,
  *Will deal with client instead.
- *
+ *@deprecated
  */
 
 
@@ -19,13 +20,15 @@ public class RunNetwork {
 	public static void main(String[] args) {
 		makeServer();
 		Client client = new Client(); //Client will never be created for the server to accept. Will have to do this another way probably
-	
-		
-	
-		
+
+
+
+
 	}
-	
-	
+
+	/**
+	 * @deprecated
+	 */
 	public static void makeServer(){
 		ServerSocket serverSock = null;
 		try{
@@ -38,7 +41,7 @@ public class RunNetwork {
 			}
 			catch(IOException e){
 				e.printStackTrace();
-				
+
 			}
 		}
 		catch(IOException e){
@@ -52,7 +55,7 @@ public class RunNetwork {
 			catch(IOException e){
 				e.printStackTrace();
 				System.exit(1);
-				
+
 			}
 		}
 	}

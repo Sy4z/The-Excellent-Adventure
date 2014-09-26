@@ -14,55 +14,36 @@ import java.net.UnknownHostException;
  * This class creates packets, and sends them to the server for processing.
  * This class can also receive packets back from the server, and perform actions accordingly.
  */
-public class Client {
-Socket sock;
-	public Client(){
-		String serverIp = new String ("127.0.0.1");//Localhost. Leave it on this for testing purposes
-		int port = 10008; //Port. Server is currently listening at 10008
-
+public class Client extends Thread {
+	Socket sock;
+	int port;
+	String serverIp;
+	public Client(Socket socket){
+		this.sock = socket;
 		System.out.println ("Attemping to connect to host " +
 				serverIp + " on port " + port);
 
-		sock = null; //this is the socket where information is sent/received
+
 		PrintWriter toServer = null;
 		BufferedReader fromServer = null;
-		
-		try {
-			sock = new Socket(serverIp, port); //create a socket in sock with the desired details
-		} catch (UnknownHostException e) { //Thrown if the host details lead to the host not being found
-			
-			e.printStackTrace();
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-		try {
-			//toServer.close(); (Nullpointer Currently)
-			//fromServer.close();
-			sock.close();//Close this last
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
-		
-		}
-	
-	
-	/**
-	 * Method which gets the socket from this class for the main network method to use
-	 * @return Socket - Client main socket
-	 */
-	public Socket getSock(){
-		return sock;
+
+
+		//TODO Information for client goes here
 	}
 	
 	
-	
+	public void run(){
+		
 	}
+
+}
+
+
+
+
+
+
+
 
 
 
