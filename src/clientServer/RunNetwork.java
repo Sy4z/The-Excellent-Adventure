@@ -17,9 +17,10 @@ public class RunNetwork {
 
 
 	public static void main(String[] args) {
-		Client client = new Client();
-	
 		makeServer();
+		Client client = new Client(); //Client will never be created for the server to accept. Will have to do this another way probably
+	
+		
 	
 		
 	}
