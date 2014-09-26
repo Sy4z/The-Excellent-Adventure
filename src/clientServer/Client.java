@@ -1,6 +1,8 @@
 package clientServer;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -16,24 +18,21 @@ import java.net.UnknownHostException;
  */
 public class Client extends Thread {
 	Socket sock;
-	int port;
-	String serverIp;
+	private DataOutputStream toServer;
+	private DataInputStream fromServer;
 	public Client(Socket socket){
 		this.sock = socket;
-		System.out.println ("Attemping to connect to host " +
-				serverIp + " on port " + port);
-
-
-		PrintWriter toServer = null;
-		BufferedReader fromServer = null;
-
-
-		//TODO Information for client goes here
 	}
-	
-	
+
+
 	public void run(){
-		
+		try {
+			toServer = new DataOutputStream(sock.getOutputStream());
+			fromServer = new DataInputStream(sock.getInputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
