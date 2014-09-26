@@ -1,5 +1,8 @@
 package clientServer;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+
 
 /**
  *@author syaz
@@ -16,9 +19,41 @@ public class RunNetwork {
 	public static void main(String[] args) {
 		Client client = new Client();
 	
-		Server server = new Server(client.getSock());//possibly shouldnt be grabbing the client socket for this
+		makeServer();
 	
 		
+	}
+	
+	
+	public static void makeServer(){
+		ServerSocket serverSock = null;
+		try{
+			serverSock = new ServerSocket(10008);
+			System.out.println("Server Socket created at port: 10008");
+			try{
+				while(true){
+					new Server(serverSock.accept());
+				}
+			}
+			catch(IOException e){
+				e.printStackTrace();
+				
+			}
+		}
+		catch(IOException e){
+			e.printStackTrace();
+			System.exit(1);
+		}
+		finally{
+			try{
+				serverSock.close();
+			}
+			catch(IOException e){
+				e.printStackTrace();
+				System.exit(1);
+				
+			}
+		}
 	}
 
 }
