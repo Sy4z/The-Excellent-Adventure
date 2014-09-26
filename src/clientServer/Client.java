@@ -1,95 +1,68 @@
 package clientServer;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
 /**
  * CLIENTSIDE CLASS
  * @author syaz
+ * runs via TCP
  * This class creates packets, and sends them to the server for processing.
- * This class can also recieve packets back from the server, and perform actions accordingly.
+ * This class can also receive packets back from the server, and perform actions accordingly.
  */
 public class Client {
-	byte[] sendingData = new byte[65508]; //The maximum size that can be sent via a packet, 65.508KB
-	byte[] receivedData = new byte[65508]; //The data stored here is what was received from the server
-	private InetAddress address; //Ip Address to send packet to - Set at localhost for now, for testing
-	DatagramPacket packet; //Packet client will send to the server
-	private int port = 80; //Port server will listen on - UDP port (UDP and TCP ports are different)
-	DatagramSocket socket;;
-
-
+Socket sock;
 	public Client(){
+		String serverIp = new String ("127.0.0.1");//Localhost. Leave it on this for testing purposes
+		int port = 10008; //Port. Server is currently listening at 10008
 
-		try{
-			address = InetAddress.getLocalHost(); //The address of which to send the packet to
-			socket = new DatagramSocket(port);
-		}
-		catch(UnknownHostException e){
-			e.printStackTrace();
-		}
-		catch(SocketException f){
-			f.printStackTrace();
-		}
+		System.out.println ("Attemping to connect to host " +
+				serverIp + " on port " + port);
 
-	}
-
-	/**
-	 * Method which creates a packet with what is in the bytearray
-	 * After creation, sends the packet to the server immediately
-	 * TODO: Will put argument to push new bytearray into this method eventually
-	 */
-	public void createPacket(){
-		//May have to make sure sendingData is not Empty/Null.
-		byte[] buffer = sendingData; //Buffer for the DatagramPacket. Contains a copy of sendingData.
-		packet = new DatagramPacket(buffer, buffer.length, address, port);
+		sock = null; //this is the socket where information is sent/received
+		PrintWriter toServer = null;
+		BufferedReader fromServer = null;
+		
 		try {
-			socket.send(packet);
+			sock = new Socket(serverIp, port); //create a socket in sock with the desired details
+		} catch (UnknownHostException e) { //Thrown if the host details lead to the host not being found
+			
+			e.printStackTrace();
 		} catch (IOException e) {
-			System.out.println("Client: Socket did not send packet correctly");
+			
 			e.printStackTrace();
 		}
-
-	}
-
-	/**
-	 * Method which receives packet from server
-	 */
-	public void receivePacket(){
-		byte[] buffer = new byte[10]; //Buffer for the DatagramPacket.
-		packet = new DatagramPacket(buffer, buffer.length); //We don't need address or port here, as we are receiving
+		
+		
+		
+		
 		try {
-			socket.receive(packet);
-			receivedData = packet.getData();//Get data out of packet buffer and store in Local Buffer
+			//toServer.close(); (Nullpointer Currently)
+			//fromServer.close();
+			sock.close();//Close this last
 		} catch (IOException e) {
-			System.out.println("Client: There was an error with the reception of a packet");
+			
 			e.printStackTrace();
 		}
-	}	
+		
+		}
 	
-	
-/**
- * Method which sets the ip for the client to send to the server
- * int? or InetAddress?
- * @param ip
- */
-	public void setIP(int ip){
-
-	}
 	
 	/**
-	 * Method which sets the UDP port the server will connect on
-	 * @param port The port number the server is listening on
+	 * Method which gets the socket from this class for the main network method to use
+	 * @return Socket - Client main socket
 	 */
-	public void setPort(int port){
-		this.port = port;
+	public Socket getSock(){
+		return sock;
 	}
-
-}
-
+	
+	
+	
+	}
 
 
 
