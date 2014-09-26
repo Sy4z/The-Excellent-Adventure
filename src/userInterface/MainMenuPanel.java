@@ -53,7 +53,7 @@ public class MainMenuPanel extends JPanel {
 	public MainMenuPanel(JFrame currentFrame) {
 		this.currentFrame = currentFrame;
 		setLayout(new GridLayout(7, 1));
-		gameName = new JLabel("Apocalypse Mania");
+		gameName = new JLabel("Apocalypse");
 		gameName.setFont(gameName.getFont().deriveFont(40.0f));
 		gameName.setHorizontalAlignment(JLabel.CENTER);
 
