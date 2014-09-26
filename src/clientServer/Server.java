@@ -26,6 +26,14 @@ public class Server extends Thread{
 	}
 	
 	
+	/**
+	 * When start is called in the constructor, this runs.
+	 */
+	public void run(){
+		
+	}
+	
+	
 	
 	
 	

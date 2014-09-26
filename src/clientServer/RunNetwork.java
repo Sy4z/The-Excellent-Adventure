@@ -14,7 +14,9 @@ public class RunNetwork {
 
 
 	public static void main(String[] args) {
-		Server server = new Server();
+		Client client = new Client();
+	
+		Server server = new Server(client.getSock());//possibly shouldnt be grabbing the client socket for this
 	
 		
 	}
