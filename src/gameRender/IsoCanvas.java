@@ -18,9 +18,9 @@ import tile.TileMultiton;
 	/**
 	 * Main game Canvas.
 	 *
-	 * @author Greg Oswald,
-	 * 		   300081254
-	 *
+	 * @author 	Greg Oswald,
+	 * 			300081254
+	 *			oswald.gm@gmail.com
 	 */
 	public class IsoCanvas extends Canvas{
 		/**
