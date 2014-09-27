@@ -155,7 +155,7 @@ public class MainMenuPanel extends JPanel {
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
 			currentFrame.getContentPane().add(
-					new GamePanel(currentFrame), BorderLayout.CENTER);
+					new GamePanel(currentFrame, MainMenuPanel.this), BorderLayout.CENTER);
 
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
