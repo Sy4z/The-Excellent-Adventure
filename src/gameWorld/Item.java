@@ -7,7 +7,7 @@ package gameWorld;
  */
 public abstract class Item extends GameObject{
 	//TODO boolean maybe?
-	public abstract void use();
+	public abstract boolean use();
 
 	/**
 	 * Method used to obtain all information about an object that is relevant to saving

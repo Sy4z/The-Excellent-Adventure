@@ -75,6 +75,7 @@ public class Inventory {
 			return null;
 		Item itm = items[idx];
 		shunt(idx);
+		itemsHeld--;
 		return itm;
 	}
 	/**
@@ -86,8 +87,7 @@ public class Inventory {
 	 */
 	public boolean use(int idx) {
 		if (validIdx(idx) && items[idx] != null) {
-			items[idx].use();
-			return true;
+			return items[idx].use();
 		}
 		return false;
 	}
