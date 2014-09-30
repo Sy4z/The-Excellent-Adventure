@@ -4,8 +4,11 @@ import gameRender.IsoCanvas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,12 +21,13 @@ import javax.swing.JPanel;
  * @author Venkata Peesapati
  * 
  */
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements MouseListener {
 
 	private JFrame currentFrame;
 	private JPanel oldPanel;
 
 	public GamePanel(JFrame frame, JPanel menuPanel) {
+		addMouseListener(this);
 		currentFrame = frame;
 		oldPanel = menuPanel;
 		setLayout(null);
@@ -54,6 +58,35 @@ public class GamePanel extends JPanel {
 			currentFrame.getContentPane().repaint();
 		}
 
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		System.out.println(e.getX() + " " + e.getY());
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
