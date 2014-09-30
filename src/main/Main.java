@@ -3,7 +3,8 @@ package main;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import clientServer;
+import clientServer.Client;
+import clientServer.Server;
 
 public class Main {
 
@@ -31,7 +32,16 @@ public class Main {
 	 */
 	private static void runClient(String addr, int port){
 		
-			Socket sock = new Socket(addr, port);
+			Socket sock = null;
+			try {
+				sock = new Socket(addr, port);
+			} catch (UnknownHostException e) {
+				
+				e.printStackTrace();
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
 		new clientServer.Client(sock).run();
 		}
 		
