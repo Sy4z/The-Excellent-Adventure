@@ -66,11 +66,11 @@ import tile.TileMultiton;
 					Point p = toIso((x*(TILE_WIDTH/2)),(y*(TILE_HEIGHT/2)));//why tile size/2 hmm
 					tile = TileMultiton.getTile(MAP[y][x]);
 					//top left vertex
-					int x1 = (p.x+OFFSET_X);
-					int y1 = (p.y+OFFSET_Y);
+					int x1 = (p.x);
+					int y1 = (p.y);
 					//bottom right vertex
-					int x2 = (p.x+(TILE_WIDTH))+OFFSET_X;
-					int y2 = (p.y+(TILE_HEIGHT))+OFFSET_Y;
+					int x2 = (p.x+(TILE_WIDTH));
+					int y2 = (p.y+(TILE_HEIGHT));
 					tile.draw(g2d, x1,y1 ,x2 ,y2, 0, 0, TILE_WIDTH,TILE_HEIGHT);
 					}
 			}
@@ -98,7 +98,10 @@ import tile.TileMultiton;
 		 * @return
 		 */
 		public Point toCart(int x, int y){
-			return new Point ((2 * x + y) / 2,(2 * x - y) / 2);
+			Point point = new Point();
+			point.x =  ((2 * x + y) / 2)-OFFSET_Y;
+			point.y = ((2 * x - y) / 2)-OFFSET_X;
+			return point;
 		}
 		/**
 		 *Returns the Isometric representation of a Cartesian point
@@ -107,7 +110,10 @@ import tile.TileMultiton;
 		 * @return
 		 */
 		private Point toIso(int x, int y){
-			return new Point ((x - y),(x + y) / 2);
+			Point point = new Point();
+			point.x = ((x - y)) + OFFSET_X;
+			point.y = ((x + y) / 2)+OFFSET_Y;
+			return point;
 		}
 		/**
 		 * Calculates the offsets needed to draw the map centered on the canvas.
