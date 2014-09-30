@@ -63,7 +63,7 @@ public abstract class Unit extends GameObject {
 		return swiftAction;
 	}
 
-	public int avilableMoves() {
+	public int getAvilableMoves() {
 		int moves = 0;
 		if(standardAction) moves++;
 		if(moveAction) moves++;

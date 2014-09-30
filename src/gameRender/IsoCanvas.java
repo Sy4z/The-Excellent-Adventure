@@ -95,7 +95,7 @@ import tile.TileMultiton;
 		 * @param y
 		 * @return
 		 */
-		private Point toCart(int x, int y){
+		public Point toCart(int x, int y){
 			return new Point ((2 * x + y) / 2,(2 * x - y) / 2);
 		}
 		/**
