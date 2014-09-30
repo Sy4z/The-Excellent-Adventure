@@ -41,8 +41,15 @@ public class World {
 	/**
 	 *	takes a mouse command and causes the active player to take the relevant action
 	 */
-	public void intepretMouseCommand(Coordinator coords){
-
+	public void intepretMouseCommand(Point coords){
+		//Currently just handles movement will be extended to interact with game objects
+		
+		int x = coords.x;
+		int y = coords.y;
+		
+		x = canvas.toCart(x, y).x;
+		y = canvas.toCart(x, y).y;
+		if(move(x, y)) return;
 	}
 
 
@@ -133,16 +140,18 @@ public class World {
 	 * @param destination
 	 * @return
 	 */
-	public void move(int x, int y) {
+	public boolean move(int x, int y) {
 		if (!inBounds(x, y))
-			return;
+			return false;
 		if(worldMap[x][y].isCanTouchThis())
 			if(worldMap[x][y].isReachable()){
-				//canvas.moveUnit(null, activePlayer, worldMap[x][y].getPath());
+				canvas.moveUnit(null, activePlayer, worldMap[x][y].getPath());
 				activePlayer.depleateMoves();
 				gameBoard[x][y] = activePlayer;
 				gameBoard[activePlayer.getLocation().x][activePlayer.getLocation().y] = null;
+				return true;
 			}
+		return false;
 	}
 
 
