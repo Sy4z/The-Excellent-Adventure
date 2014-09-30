@@ -5,15 +5,16 @@ import java.awt.Graphics2D;
 public class ItemKey extends Item{
 
 	@Override
+	//A Key can not be used by itself once a text pane is implemented an output explaing that will be added to this method.
 	public boolean use() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public Object[] save() {
-		// TODO Auto-generated method stub
-		return null;
+		Object[] data = new Object[1];
+		data[0] = this;
+		return data;
 	}
 
 	@Override
@@ -22,5 +23,11 @@ public class ItemKey extends Item{
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public String toString() {
+		return "This is a Key, you could use it to open something. Alternitivly it looks tasty.";
+	}
+	
 
 }
