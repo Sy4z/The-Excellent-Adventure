@@ -7,6 +7,7 @@ import gameWorld.Unit;
 
 import java.awt.Point;
 import java.io.File;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
 
@@ -91,8 +92,12 @@ public class Data {
 		String[] test = {"curLocation", "filePath", "isActiveUnit",
 				"standardAction","moveAction","swiftAction"};
 		int i = 0;
+		Scanner scan = null;
 		for(Unit e : units){
+			scan = new Scanner(e.toString());
+
 			elem = new Element(e.getClass().getSimpleName());
+
 			for(Object o : e.save()){
 				System.out.println(elem.toString() + "\n\t" + o);
 				if(o == null){
@@ -173,10 +178,10 @@ public class Data {
 	}
 
 	public static void main(String args[]){
-//		System.out.println("Beginning test");
-//		Tuple t = testSet(null);
-//		save(t.tiles, t.units, new Item[0]);
-		RenderingTest();
+		System.out.println("Beginning test");
+		Tuple t = testSet(null);
+		save(t.tiles, t.units, new Item[0]);
+//		RenderingTest();
 	}
 
 	private static void RenderingTest(){

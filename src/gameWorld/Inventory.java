@@ -126,7 +126,11 @@ public class Inventory {
 	public String toString(String append){
 		StringBuilder s = new StringBuilder("Inventory{");
 		append += "|\t";
-		s.append("\n"+append+ "Words");
-		return s+"}";
+		if(items[0] != null){
+			for(Item i: items){
+				s.append("\n" + append + i.toString(append));
+			}
+		}
+		return s+"\n"+append.substring(2)+"}";
 	}
 }

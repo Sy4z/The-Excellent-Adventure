@@ -11,13 +11,6 @@ public class ItemKey extends Item{
 	}
 
 	@Override
-	public Object[] save() {
-		Object[] data = new Object[1];
-		data[0] = this;
-		return data;
-	}
-
-	@Override
 	void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx, int sy,
 			int sx2, int sy2) {
 		// TODO Auto-generated method stub
@@ -26,8 +19,15 @@ public class ItemKey extends Item{
 
 	@Override
 	public String toString() {
-		return "This is a Key, you could use it to open something. Alternitivly it looks tasty.";
+		return toString("");
 	}
-	
+
+	public String toString(String append){
+		StringBuilder s = new StringBuilder("Key{");
+		append = "|\n" + append;
+
+		return s + "\n" + append.substring(2) + "}";
+	}
+
 
 }
