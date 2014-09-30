@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * 
  */
 public class GamePanel extends JPanel {
-	
+
 	private JFrame currentFrame;
 	private JPanel oldPanel;
 
@@ -27,17 +27,19 @@ public class GamePanel extends JPanel {
 		currentFrame = frame;
 		oldPanel = menuPanel;
 		setLayout(null);
-		
+
 		JButton pl = new JButton("Test");
 		pl.addActionListener(new TestListener());
 		pl.setBounds(20, 20, 100, 40);
 		add(pl);
-		
-		IsoCanvas canvas = new IsoCanvas(currentFrame.getWidth(), currentFrame.getHeight());
-		canvas.setBounds(0, 0, currentFrame.getWidth(), currentFrame.getHeight());
+
+		IsoCanvas canvas = new IsoCanvas(currentFrame.getWidth(),
+				currentFrame.getHeight());
+		canvas.setBounds(0, 0, currentFrame.getWidth(),
+				currentFrame.getHeight());
 		add(canvas);
 	}
-	
+
 	class TestListener implements ActionListener {
 
 		@Override
@@ -45,13 +47,13 @@ public class GamePanel extends JPanel {
 			currentFrame.getContentPane().removeAll();
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
-			
+
 			currentFrame.getContentPane().add(oldPanel, BorderLayout.CENTER);
-			
+
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
 		}
-		
+
 	}
 
 }
