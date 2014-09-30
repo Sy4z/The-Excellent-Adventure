@@ -34,8 +34,6 @@ public class Data {
 	public Data(){}
 
 	public static Tuple load(File f){
-
-
 		return new Tuple(null, null);
 	}
 
@@ -48,6 +46,10 @@ public class Data {
 	 * @return True is successful, else false.
 	 */
 	public static boolean save(TileMultiton.type[][] types, Unit[] units, Item[] items){
+		assert(types != null);
+		assert(units != null);
+		assert(items != null);
+
 		//Initialise the document
 		Document document = new Document();
 		//initialise the root node
@@ -86,11 +88,23 @@ public class Data {
 		subRoot = new Element("Units");
 		subRoot.setAttribute("Size", Integer.toString(units.length));
 		//for each unit, create a new element, tie everything about the unit to it, and add it to the tree
+		String[] test = {"curLocation", "filePath", "isActiveUnit",
+				"standardAction","moveAction","swiftAction"};
+		int i = 0;
 		for(Unit e : units){
 			elem = new Element(e.getClass().getSimpleName());
 			for(Object o : e.save()){
-				elem.setAttribute(o.getClass().getSimpleName(), o.toString());
+				System.out.println(elem.toString() + "\n\t" + o);
+				if(o == null){
+					elem.setAttribute(test[i], "NULL");
+				}
+				else{
+
+					elem.setAttribute(o.getClass().getSimpleName(), o + "");
+				}
+				i++;
 			}
+			i=0;
 			subRoot.addContent(elem);
 		}
 		root.addContent(subRoot);
@@ -146,6 +160,7 @@ public class Data {
 				}
 			}
 		}
+
 		Unit[] u = new ServiceBot[7];
 
 		for(int i = 0; i < 7; i++){
@@ -158,11 +173,13 @@ public class Data {
 	}
 
 	public static void main(String args[]){
-//		System.out.println("Beginning test");
-		RenderingTest();
+		System.out.println("Beginning test");
+		Tuple t = testSet(null);
+		save(t.tiles, t.units, new Item[0]);
+//		RenderingTest();
 	}
 
-	public static void RenderingTest(){
+	private static void RenderingTest(){
 		JFrame j = new JFrame();
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		j.setBounds(30, 20, 600	, 480);

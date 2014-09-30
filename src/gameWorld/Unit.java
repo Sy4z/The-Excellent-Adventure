@@ -1,6 +1,5 @@
 package gameWorld;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.io.File;
@@ -37,22 +36,8 @@ public abstract class Unit extends GameObject {
 	}
 
 
-	public void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx,
-			int sy, int sx2, int sy2) {
-//
-//		BufferedImage img = null;
-//		try {
-//			img = ImageIO.read(filePath);
-//		} catch (IOException e) {
-//
-//			System.err.println(e + "");
-//		}
-//		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
-		System.err.println("Drawing unit");
-		g.setColor(Color.CYAN);
-		g.fillOval(curLocation.x, curLocation.y, 10, 10);
-
-	}
+	public abstract void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx,
+			int sy, int sx2, int sy2);
 
 	public void activate() {
 		moveAction = true;
@@ -64,6 +49,18 @@ public abstract class Unit extends GameObject {
 
 	public boolean isActive() {
 		return isActiveUnit;
+	}
+
+	public boolean getStandardAction(){
+		return standardAction;
+	}
+
+	public boolean getMoveAction(){
+		return moveAction;
+	}
+
+	public boolean getSwiftACtion(){
+		return swiftAction;
 	}
 
 	public int avilableMoves() {
@@ -78,16 +75,6 @@ public abstract class Unit extends GameObject {
 		if(moveAction == false)
 			standardAction = false;
 		else moveAction = false;
-	}
-
-	/**
-	 * Used by the save method to aquire all of the information relevant to saving the state
-	 * @return an array of objects which represent the data pertaining to saving
-	 */
-	public Object[] save(){
-		Object[] objs = {curLocation, filePath, isActiveUnit,
-			standardAction,moveAction,swiftAction};
-		return objs ;
 	}
 
 }

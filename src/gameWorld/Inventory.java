@@ -118,4 +118,15 @@ public class Inventory {
 			return false;
 		return true;
 	}
+
+	public String toString(){
+		return toString("");
+	}
+
+	public String toString(String append){
+		StringBuilder s = new StringBuilder("Inventory{");
+		append += "|\t";
+		s.append("\n"+append+ "Words");
+		return s+"}";
+	}
 }

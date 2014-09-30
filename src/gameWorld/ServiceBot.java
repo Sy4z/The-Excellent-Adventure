@@ -1,5 +1,6 @@
 package gameWorld;
 
+import java.awt.Graphics2D;
 import java.awt.Point;
 
 /**
@@ -60,6 +61,36 @@ public class ServiceBot extends Unit {
 	}
 
 
+	@Override
+	public void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx,
+			int sy, int sx2, int sy2) {
+		g.drawOval(curLocation.x, curLocation.y, 10, 10);
+	}
+
+	public String toString(){
+		return toString("");
+	}
+
+	public String toString(String append){
+		StringBuilder s = new StringBuilder();
+		append = "|\t" + append;
+		s.append("ServiceBot{");
+		s.append("\n"+append+"X: "+curLocation.x);
+		s.append("\n"+append+"Y: "+curLocation.y);
+		s.append("\n"+append+"Image: " + ((filePath != null) ? filePath.toString() : "NULL") + "");
+		s.append("\n"+append+"isActive: "+isActive());
+		s.append("\n"+append+"StandardAction: "+getStandardAction());
+		s.append("\n"+append+"MoveAction: "+getMoveAction());
+		s.append("\n"+append+"SwiftAction: "+getSwiftACtion());
+		s.append("\n"+append+""+inventory.toString(append) + "\n");
+		return s + "}";
+	}
+
+	public static void main(String[] args){
+		ServiceBot b = new ServiceBot(new Point(6,10));
+		System.out.println(b.toString());
+
+	}
 
 
 
