@@ -6,6 +6,14 @@ import java.net.UnknownHostException;
 import clientServer.Client;
 import clientServer.Server;
 
+/**
+ * Main method, Ties the Program together
+ * @author Syaz
+ * honejarred@gmail.com
+ */
+
+
+
 public class Main {
 
 	/**

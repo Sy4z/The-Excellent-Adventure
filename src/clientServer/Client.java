@@ -12,6 +12,7 @@ import java.net.UnknownHostException;
 /**
  * CLIENTSIDE CLASS
  * @author syaz
+ * honejarred@gmail.com
  * runs via TCP
  * This class creates packets, and sends them to the server for processing.
  * This class can also receive packets back from the server, and perform actions accordingly.

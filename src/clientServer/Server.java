@@ -9,6 +9,7 @@ import java.net.SocketException;
 /**
  * SERVERSIDE CLASS
  * @author syaz
+ * honejarred@gmail.com
  * Server class dealing with all server calculations
  * Running via TCP, as the game is now turn based.
  * Currently Sends data from client to server and server Echos the data. 
