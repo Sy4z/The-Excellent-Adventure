@@ -4,12 +4,14 @@ package gameRender;
 import gameWorld.GameObject;
 import gameWorld.Unit;
 
-import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Stack;
+
+import javax.swing.JPanel;
+
 import dataStorage.*;
 import sun.management.counter.Units;
 import tile.Tile;
@@ -22,7 +24,7 @@ import tile.TileMultiton;
 	 * 			300081254
 	 *			oswald.gm@gmail.com
 	 */
-	public class IsoCanvas extends Canvas{
+	public class IsoCanvas extends JPanel{
 		/**
 		 *	Why does this need a java doc?
 		 *	--DYLAN

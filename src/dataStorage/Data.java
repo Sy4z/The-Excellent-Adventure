@@ -173,10 +173,10 @@ public class Data {
 	}
 
 	public static void main(String args[]){
-		System.out.println("Beginning test");
-		Tuple t = testSet(null);
-		save(t.tiles, t.units, new Item[0]);
-//		RenderingTest();
+//		System.out.println("Beginning test");
+//		Tuple t = testSet(null);
+//		save(t.tiles, t.units, new Item[0]);
+		RenderingTest();
 	}
 
 	private static void RenderingTest(){

@@ -74,7 +74,8 @@ public class ServiceBot extends Unit {
 	public String toString(String append){
 		StringBuilder s = new StringBuilder();
 		append = "|\t" + append;
-		s.append("ServiceBot{");
+		s.append(ServiceBot.class.getSimpleName()+"{");
+
 		s.append("\n"+append+"X: "+curLocation.x);
 		s.append("\n"+append+"Y: "+curLocation.y);
 		s.append("\n"+append+"Image: " + ((filePath != null) ? filePath.toString() : "NULL") + "");
