@@ -1,9 +1,12 @@
 package gameWorld;
 
 import gameRender.IsoCanvas;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Stack;
+
+import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 
 
 /**
@@ -32,6 +35,13 @@ public class World {
 					canvas.highlight(tilesToHightlight());
 				}
 			}
+
+	}
+
+	/**
+	 *	takes a mouse command and causes the active player to take the relevant action
+	 */
+	public void intepretMouseCommand(Coordinator coords){
 
 	}
 
@@ -133,9 +143,8 @@ public class World {
 				gameBoard[x][y] = activePlayer;
 				gameBoard[activePlayer.getLocation().x][activePlayer.getLocation().y] = null;
 			}
-
-
 	}
+
 
 
 

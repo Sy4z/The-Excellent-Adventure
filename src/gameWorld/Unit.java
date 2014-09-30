@@ -66,7 +66,7 @@ public abstract class Unit extends GameObject {
 		return isActiveUnit;
 	}
 
-	public int avilableMoves() {
+	public int getAvilableMoves() {
 		int moves = 0;
 		if(standardAction) moves++;
 		if(moveAction) moves++;
