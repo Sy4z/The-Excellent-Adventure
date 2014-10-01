@@ -30,7 +30,7 @@ public abstract class Tile {
 	protected boolean hasInteractive = false;
 	protected int objIdx = 0;
 	protected BufferedImage img;
-
+	protected int heightOffset;
 	public Tile(File imgPath, Character key){
 		try {
 			img = ImageIO.read(imgPath);
@@ -64,9 +64,9 @@ public abstract class Tile {
 //	}
 
 
-	public boolean draw(Graphics2D g, int dx, int dy, int dx2, int dy2,int sx, int sy, int sx2,int sy2){
-													  //this is loading the image every time the tile is drawn.
-		g.drawImage(img, dx, dy, dx2, dy2, sx, sy, sx2, sy2, null);
+	public boolean draw(Graphics2D g, int dx, int dy){
+													  
+		g.drawImage(img, dx, dy,null);
 		return false;
 
 	}

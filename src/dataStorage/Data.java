@@ -157,7 +157,7 @@ public class Data {
 		//Creates an array of tiles sizeX by sizeY if statement specifys what coordinate entity will be placed.
 		for(int y = 0;y<sizeY;y++){
 			for(int x = 0;x<sizeX;x++){
-				if(x == y + b){
+				if(x < 2 && y < 2 ){
 					t[y][x] = TileMultiton.type.BLUE;
 				}
 				else{

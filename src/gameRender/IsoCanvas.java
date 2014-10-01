@@ -25,56 +25,60 @@ import tile.TileMultiton;
 	 *			oswald.gm@gmail.com
 	 */
 	public class IsoCanvas extends JPanel{
-		/**
-		 *	Why does this need a java doc?
-		 *	--DYLAN
-		 */
+		
 		private static final long serialVersionUID = -1838809788973263253L;
-		private TileMultiton.type[][] MAP = null;
-		private Unit ENTITIES[]; //#Rebellion
-		private int WIDTH;
-		private int HEIGHT;
-		private int TILE_WIDTH = 64;//26
-		private int TILE_HEIGHT = 64;//52
-		private int OFFSET_X;
-		private int OFFSET_Y;
-		private int HALF_TILE = TILE_HEIGHT/2;
+		private TileMultiton.type[][] map = null;
+		private Unit entities[]; 
+		private int width;
+		private int height;
+		private int tile_width = 64;
+		private int tile_height = 32;
+		
+		private int center_offset_x;
+		private int center_offset_y;
+		
 		private ArrayList<Point> HIGHLIGHTED_TILES;
-		private boolean debug = true;
+		
 
 		/**
 		 *
 		 */
 		public IsoCanvas(int Width, int Height){
 			Tuple t = Data.testSet(null);
-			MAP = t.tiles;
-			ENTITIES = t.units;
+			map = t.tiles;
+			entities = t.units;
 //			mapDebug();
-			this.WIDTH = Width;
-			this.HEIGHT = Height;
+			
+			this.width = Width;
+			this.height = Height;
 			calculateOffset();
+			conversionDebug();
 		}
 		/**
 		 *
 		 */
 		public void paint(Graphics g){
 			Graphics2D g2d = (Graphics2D) g;
-			g.fillRect(0,0,WIDTH,HEIGHT);
+			g.fillRect(0,0,width,height);
 			Tile tile;
-			for(int y = 0; y <MAP.length;y++){
-				for(int x = 0; x< MAP[y].length;x++){
-					Point p = toIso((x*(TILE_WIDTH/2)),(y*(TILE_HEIGHT/2)));//why tile size/2 hmm
-					tile = TileMultiton.getTile(MAP[y][x]);
+			for(int y = map.length-1;y >=0;y--){
+				for(int x = 0;x<map[y].length;x++){
+					Point p = toIso((x*(tile_width/2)),(y*(tile_height)));//
+					tile = TileMultiton.getTile(map[y][x]);
 					//top left vertex
 					int x1 = (p.x);
 					int y1 = (p.y);
 					//bottom right vertex
-					int x2 = (p.x+(TILE_WIDTH));
-					int y2 = (p.y+(TILE_HEIGHT));
-					tile.draw(g2d, x1,y1 ,x2 ,y2, 0, 0, TILE_WIDTH,TILE_HEIGHT);
+					int x2 = (p.x+(tile_width));
+					int y2 = (p.y+(tile_height));
+					if(tile.getType().equals("Blue_Tile")){
+						tile.draw(g2d, x1,y1-32);
 					}
+					else{
+						tile.draw(g2d, x1,y1);	
+					}
+				}
 			}
-
 			moveUnit(g2d, null, null);
 		}
 		/**
@@ -82,8 +86,8 @@ import tile.TileMultiton;
 		 * @param updatedMap
 		 */
 		public void update(Tuple t){
-			this.MAP = t.tiles;
-			ENTITIES = t.units;
+			this.map = t.tiles;
+			entities = t.units;
 			this.repaint();
 		}
 		/**
@@ -99,8 +103,8 @@ import tile.TileMultiton;
 		 */
 		public Point toCart(int x, int y){
 			Point point = new Point();
-			point.x =  ((2 * x + y) / 2)-OFFSET_Y;
-			point.y = ((2 * x - y) / 2)-OFFSET_X;
+			point.x =  0;
+			point.y =  0;
 			return point;
 		}
 		/**
@@ -111,25 +115,23 @@ import tile.TileMultiton;
 		 */
 		private Point toIso(int x, int y){
 			Point point = new Point();
-			point.x = ((x - y)) + OFFSET_X;
-			point.y = ((x + y) / 2)+OFFSET_Y;
+			point.x = ((x + y))+center_offset_x;
+			point.y = ((x - y)/2)+center_offset_y;
 			return point;
 		}
 		/**
 		 * Calculates the offsets needed to draw the map centered on the canvas.
 		 */
 		private void calculateOffset(){
-			OFFSET_X = (int)((WIDTH/2) - (TILE_WIDTH)*1.5)+TILE_WIDTH;//spread this calculation out.
-			OFFSET_Y = (int)((HEIGHT/2) - ((HALF_TILE)*MAP.length)/2)-HALF_TILE;//this too.
+			center_offset_y = (int)((height/2) - (tile_height)*1.5)+tile_height;//spread this calculation out.
+			center_offset_x = (int)((width/2) - ((tile_width)*map.length)/2)-tile_height;//this too.
 		}
-
-
 		/**
 		 *
 		 * @param unit
 		 */
 		public void moveUnit( Graphics2D g,Unit unit, Stack<Point> cordinates){
-			for(Unit i: ENTITIES){
+			for(Unit i: entities){
 				i.draw(g,0,0,0,0,0,0,0,0);
 			}
 		}
@@ -142,6 +144,32 @@ import tile.TileMultiton;
 		public void addObject(GameObject ob){
 
 		}
+		public void getMapLocation(int x, int i){
+			
+		}
+		private void conversionDebug(){
+			int x = 0;
+			int y = 0;
+			int numberOfTests = 5;
+			while(y < numberOfTests){
+				x = 0;
+				while(x < numberOfTests){
+					System.out.println(center_offset_x+":"+center_offset_y);
+					Point iso = toIso(x,y);
+					Point cart =  toCart(iso.x,iso.y);
+					
+					System.out.println("********************************************************");
+					System.out.println("XY in cart:"+"("+x+","+y+")");
+					System.out.println("");
+					System.out.println("XY in iso:"+"("+iso.x+","+iso.y+")");
+					System.out.println("XY converted back to cart:"+"("+cart.x+","+cart.y+")");
+					System.out.println("");
+					System.out.println("********************************************************");
+				    x++;
+				}
+				y++;
+			}
+		}
 		/**
 		 * Was Reading some of the Commander keen source code
 		 * that was recently released and they did this, awesome idea
@@ -151,15 +179,15 @@ import tile.TileMultiton;
 		 */
 		private void mapDebug(){
 			System.out.println("=================Map debug====================");
-			if(MAP == null){
+			if(map == null){
 				System.out.println("Somethinghasgoneterriblywrong : Map is null");
 			}
 			else{
-				System.out.println("Map is: "+MAP[0].length+" x "+MAP.length+" tiles");
+				System.out.println("Map is: "+map[0].length+" x "+map.length+" tiles");
 				System.out.println("Map contains:");
-				for(int y = 0; y <MAP.length;y++){
-					for(int x = 0; x< MAP[y].length;x++){
-						System.out.println("Pos "+x+":"+y+" -> "+TileMultiton.getTile(MAP[y][x]).getType());
+				for(int y = 0; y <map.length;y++){
+					for(int x = 0; x< map[y].length;x++){
+						System.out.println("Pos "+x+":"+y+" -> "+TileMultiton.getTile(map[y][x]).getType());
 					}
 				}
 			}
