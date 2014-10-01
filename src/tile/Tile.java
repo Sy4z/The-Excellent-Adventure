@@ -27,10 +27,11 @@ public abstract class Tile {
 	protected static boolean[] chars = new boolean[200]; //if this proves to be to few, extend it
 	protected Character key;
 	protected String type;
-	protected boolean hasInteractive = false;
-	protected int objIdx = 0;
+
 	protected BufferedImage img;
-	protected int heightOffset;
+	protected int heightOffSet;
+
+
 	public Tile(File imgPath, Character key){
 		try {
 			img = ImageIO.read(imgPath);
@@ -45,6 +46,9 @@ public abstract class Tile {
 		else{
 			throw new IllegalArgumentException("Key already used, choose another up to char 200");
 		}
+
+		heightOffSet = img.getHeight();
+		heightOffSet = Math.max(32 - heightOffSet, heightOffSet -32);
 	}
 
 
@@ -65,9 +69,8 @@ public abstract class Tile {
 
 
 	public boolean draw(Graphics2D g, int dx, int dy){
-													  
-		g.drawImage(img, dx, dy,null);
-		return false;
+		return g.drawImage(img, dx, dy,null);
+
 
 	}
 
