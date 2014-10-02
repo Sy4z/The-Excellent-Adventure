@@ -20,8 +20,8 @@ public class ServiceBot extends Unit {
 	private Inventory inventory;
 	private BufferedImage img;
 	private int heightOffSet;
-	public ServiceBot(Point loc) {
-		super(loc);
+	public ServiceBot(Point loc, int ID) {
+		super(loc, ID);
 		inventory = new Inventory();
 		this.filePath = null;//Replace with File once image is aqquired
 		try {
@@ -91,6 +91,7 @@ public class ServiceBot extends Unit {
 
 		s.append("\n"+append+"X: "+curLocation.x);
 		s.append("\n"+append+"Y: "+curLocation.y);
+		s.append("\n" +append + "ID: " + ID);
 		s.append("\n"+append+"Image: " + ((filePath != null) ? filePath.toString() : "NULL") + "");
 		s.append("\n"+append+"isActive: "+isActive());
 		s.append("\n"+append+"StandardAction: "+getStandardAction());
@@ -98,12 +99,6 @@ public class ServiceBot extends Unit {
 		s.append("\n"+append+"SwiftAction: "+getSwiftACtion());
 		s.append("\n"+append+""+inventory.toString(append));
 		return s +"\n" + append.substring(2) + "}";
-	}
-
-	public static void main(String[] args){
-		ServiceBot b = new ServiceBot(new Point(6,10));
-		System.out.println(b.toString());
-
 	}
 
 

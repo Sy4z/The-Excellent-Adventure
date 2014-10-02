@@ -20,9 +20,12 @@ public abstract class Unit extends GameObject {
 	private boolean moveAction;
 	private boolean swiftAction;
 	private BufferedImage img;
-	public Unit(Point loc) {
+	protected int ID;
+	public Unit(Point loc, int ID) {
 		curLocation = loc;
+		this.ID = ID;
 	}
+
 
 
 	/**
@@ -79,5 +82,26 @@ public abstract class Unit extends GameObject {
 			standardAction = false;
 		else moveAction = false;
 	}
+
+
+	/**
+	 * @return the iD
+	 */
+	public int getID() {
+		return ID;
+	}
+
+
+	/**
+	 * @param iD the iD to set
+	 */
+	public void setID(int iD) {
+		ID = iD;
+	}
+
+
+
+
+
 
 }

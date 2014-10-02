@@ -33,12 +33,13 @@ public class World {
 	 * @return
 	 */
 	public World(String save, int width, int height, IsoCanvas cvs) {
-		Tuple t = Data.load(null);
+		Tuple t = Data.testSet(null);
 		this.canvas = cvs;
 		units = t.units;
 		worldMap = new LogicalTile[t.tiles.length][t.tiles[0].length];
+		gameBoard = new GameObject[t.tiles.length][t.tiles[0].length];
 		populateWorldMape(t.tiles);
-		turn();
+		checkPlayerStatus();
 
 	}
 
@@ -57,20 +58,23 @@ public class World {
 
 
 	/**
-	 * Keeps on running through the turn cycle.
+	 *
 	 */
-	public void turn() {
-		while (true)
-			for (Unit u : units) {
-				refresh(u);
-				u.activate();
-				activePlayer = u;
-				while (u.isActive()) {
-					calculatePossibleMovments(u.curLocation);
-					canvas.highlight(tilesToHightlight());
-				}
-			}
+	public void checkPlayerStatus() {
+		if(!activePlayer.isActive()){
+			activePlayer = units[incrementID()];
+			activePlayer.activate();
+		}
+		calculatePossibleMovments(activePlayer.curLocation);
+		canvas.highlight(tilesToHightlight());
 
+
+	}
+
+	private int incrementID() {
+		if(activePlayer.getID() == units.length-1)
+			return 0;
+		return activePlayer.getID() +1;
 	}
 
 	/**
@@ -88,6 +92,7 @@ public class World {
 	}
 
 	public void moveFromKeyBoard(int i){
+		System.out.println("Cats");
 		//0 is up
 		//1 is down
 		//2 is left
