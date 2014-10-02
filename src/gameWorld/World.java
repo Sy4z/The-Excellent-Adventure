@@ -47,8 +47,8 @@ public class World {
 		int x = coords.x;
 		int y = coords.y;
 		
-		x = canvas.toCart(x, y).x;
-		y = canvas.toCart(x, y).y;
+		//x = canvas.toCart(x, y).x; // sorry chris this dosnt work yet
+		//y = canvas.toCart(x, y).y;
 		if(move(x, y)) return;
 	}
 

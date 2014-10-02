@@ -1,7 +1,9 @@
 package gameWorld;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 /**
  * This is a generic robot and is the base unit type that the player will
@@ -12,7 +14,7 @@ import java.awt.Point;
  */
 public class ServiceBot extends Unit {
 	private Inventory inventory;
-
+	private BufferedImage img;
 	public ServiceBot(Point loc) {
 		super(loc);
 		inventory = new Inventory();
@@ -62,9 +64,9 @@ public class ServiceBot extends Unit {
 
 
 	@Override
-	public void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx,
-			int sy, int sx2, int sy2) {
-		g.drawOval(curLocation.x, curLocation.y, 10, 10);
+	public void draw(Graphics2D g, int dx, int dy) {
+		g.setColor(new Color(155,144,255));
+		g.fillOval(dx, dy, 20, 20);
 	}
 
 	public String toString(){

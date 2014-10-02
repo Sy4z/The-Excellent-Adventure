@@ -157,7 +157,7 @@ public class Data {
 		//Creates an array of tiles sizeX by sizeY if statement specifys what coordinate entity will be placed.
 		for(int y = 0;y<sizeY;y++){
 			for(int x = 0;x<sizeX;x++){
-				if(x < 2 && y < 2 ){
+				if(y == x + b ){
 					t[y][x] = TileMultiton.type.BLUE;
 				}
 				else{
@@ -178,10 +178,10 @@ public class Data {
 	}
 
 	public static void main(String args[]){
-		System.out.println("Beginning test");
-		Tuple t = testSet(null);
-		save(t.tiles, t.units, new Item[0]);
-//		RenderingTest();
+		//System.out.println("Beginning test");
+		//Tuple t = testSet(null);
+		//save(t.tiles, t.units, new Item[0]);
+		RenderingTest();
 	}
 
 	private static void RenderingTest(){
