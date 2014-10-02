@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -21,11 +22,11 @@ public class Client extends Thread {
 	private final Socket sock;
 	private DataOutputStream toServer;
 	private DataInputStream fromServer;
+
 	public Client(Socket socket){
 		this.sock = socket;
 		System.out.println("Client is Constructed");
 	}
-
 
 	public void run(){
 		System.out.println("Trying Connection");
@@ -42,7 +43,6 @@ public class Client extends Thread {
 		}
 
 	}
-
 }
 
 

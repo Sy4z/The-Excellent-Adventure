@@ -19,9 +19,9 @@ import clientServer.Server;
 public class Main {
 
 	private static int numberOfPlayers = 3; //Variable for the number of players in the game
-	
-	
-	
+
+
+
 	/**
 	 * Main Method to tie the whole program together.
 	 * Using for networking currently.
@@ -70,7 +70,7 @@ public class Main {
 	/**
 	 * This method is in charge of initialising the server
 	 */
-	private static void runServer(String addr, int port){
+	public static void runServer(String addr, int port){
 		ServerSocket serverSock = null;
 		Socket accept = null;
 		try{
