@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 public class ServiceBot extends Unit {
 	private Inventory inventory;
 	private BufferedImage img;
+
 	public ServiceBot(Point loc) {
 		super(loc);
 		inventory = new Inventory();

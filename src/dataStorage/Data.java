@@ -198,18 +198,10 @@ public class Data {
 	}
 
 	public static void main(String args[]){
-<<<<<<< HEAD
-		System.out.println("Beginning test");
-		Tuple t = testSet(null);
-		save(t.tiles, t.units, new Item[0]);
-		//RenderingTest();
-=======
-
 //		System.out.println("Beginning test");
 //		Tuple t = testSet(null);
 //		save(t.tiles, t.units, new Item[0]);
 		RenderingTest();
->>>>>>> c26bdc866f4e68aaabb16c8794515fc6f4e240eb
 	}
 
 	private static void RenderingTest(){
@@ -219,6 +211,7 @@ public class Data {
 		IsoCanvas c = new IsoCanvas(j.getWidth(), j.getHeight());
 		j.add(c);
 		j.setVisible(true);
+
 		while(true){
 			c.update(testSet(null));
 			try{
