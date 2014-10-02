@@ -46,7 +46,7 @@ public abstract class Tile {
 		else{
 			throw new IllegalArgumentException("Key already used, choose another up to char 200");
 		}
-
+		//-----Build the height offset-----
 		heightOffSet = img.getHeight();
 		heightOffSet = Math.max(32 - heightOffSet, heightOffSet -32);
 	}

@@ -65,7 +65,7 @@ public class Data {
 		File fi = new File("saves" + File.separatorChar + fileName);
 
 		if(!fi.exists()){
-			error("Make dir");
+			error("Making directory");
 			fi.mkdir();
 		}
 
@@ -79,6 +79,7 @@ public class Data {
 
 		Element elem;
 		String tileMap = "";
+
 		//For each element in tiles, if the tiles are not already in the tree, add them,
 		//else add the char for the tile to the tileMap, and continue onwards
 		char tileRepresentation;
@@ -98,8 +99,7 @@ public class Data {
 		}
 		root.addContent(subRoot);
 
-		//		Files.createFile(path, attrs)
-
+		Files.createFile(fi, tileMap);
 
 
 		//---------Handle Units---------
@@ -199,12 +199,9 @@ public class Data {
 
 	public static void main(String args[]){
 
-
-
-
-		//		System.out.println("Beginning test");
-		//		Tuple t = testSet(null);
-		//		save(t.tiles, t.units, new Item[0]);
+		//System.out.println("Beginning test");
+		//Tuple t = testSet(null);
+		//save(t.tiles, t.units, new Item[0]);
 		RenderingTest();
 
 	}
@@ -216,6 +213,7 @@ public class Data {
 		IsoCanvas c = new IsoCanvas(j.getWidth(), j.getHeight());
 		j.add(c);
 		j.setVisible(true);
+
 		while(true){
 			c.update(testSet(null));
 			try{
