@@ -78,7 +78,7 @@ public class World {
 		ArrayList<Point> highPoints = new ArrayList<Point>();
 		for(int x = 0; x < worldMap.length; x++)
 			for(int y = 0; y < worldMap[0].length; y++)
-				if(worldMap[x][y].isTile())
+				if(worldMap[x][y].isReachableByActive() && worldMap[x][y].isIsTile())
 					highPoints.add(new Point(x, y));
 
 		return highPoints;
@@ -87,14 +87,14 @@ public class World {
 
 
 	/**
-	 * Resets infomation about what can move where.
+	 * Resets information about what can move where.
 	 * @param u
 	 */
 	private void refresh(Unit u) {
 		for(int x = 0; x < worldMap.length; x++)
 			for(int y =0; y < worldMap[0].length; y++){
 				worldMap[x][y].setPath(null);
-				worldMap[x][y].setIsTile(false);
+				worldMap[x][y].setReachableByActive(false);
 			}
 
 	}
@@ -120,7 +120,7 @@ public class World {
 	private void moveFrom(int x, int y, int numMoves, Stack<Point> path){
 		path.add(new Point(x, y));
 		worldMap[x][y].setPath(path);
-		worldMap[x][y].setIsTile(true);
+		worldMap[x][y].setReachableByActive(true);
 		if(numMoves==0) return;
 
 		if(validMove(x+1, y, path))
@@ -140,7 +140,7 @@ public class World {
 	private boolean validMove(int x, int y, Stack<Point> path){
 		if(!inBounds(x,y))
 			return false;
-		if(!worldMap[x][y].isCanTouchThis())
+		if(!worldMap[x][y].isIsTile())
 			return false;
 		if(worldMap[x][y].getPath() == null)
 			return true;
@@ -159,8 +159,8 @@ public class World {
 	public boolean move(int x, int y) {
 		if (!inBounds(x, y))
 			return false;
-		if(worldMap[x][y].isCanTouchThis())
-			if(worldMap[x][y].isTile()){
+		if(worldMap[x][y].isIsTile())
+			if(worldMap[x][y].isReachableByActive()){
 				canvas.moveUnit(null, activePlayer, worldMap[x][y].getPath());
 				activePlayer.depleateMoves();
 				gameBoard[x][y] = activePlayer;

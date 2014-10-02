@@ -4,26 +4,26 @@ import java.awt.Point;
 import java.util.Stack;
 
 public class LogicalTile {
-	private boolean canTouchThis; //dananana
-	private Stack<Point> path;
 	private boolean isTile;
+	private Stack<Point> path;
+	private boolean reachableByActive;
 
 	public LogicalTile(boolean canTouchThis){
-		this.canTouchThis = canTouchThis;
-		isTile = false;
+		this.isTile = canTouchThis;
+		reachableByActive = false;
 	}
 
 	/**
 	 * @return the canTouchThis
 	 */
-	public boolean isCanTouchThis() {
-		return canTouchThis;
+	public boolean isIsTile() {
+		return isTile;
 	}
 	/**
-	 * @param canTouchThis the canTouchThis to set
+	 * @param isTile the canTouchThis to set
 	 */
-	public void setCanTouchThis(boolean canTouchThis) {
-		this.canTouchThis = canTouchThis;
+	public void setIsTile(boolean isTile) {
+		this.isTile = isTile;
 	}
 	/**
 	 * @return the path
@@ -42,16 +42,15 @@ public class LogicalTile {
 	/**
 	 * @return the reachable
 	 */
-	public boolean isTile() {
-		return isTile;
+	public boolean isReachableByActive() {
+		return reachableByActive;
 	}
 
 	/**
-	 * @param isTile is used used for non rectangular
-	 * rooms represented by retangular arrays of Logical tiles
+	 * @param
 	 */
-	public void setIsTile(boolean isTile) {
-		this.isTile = isTile;
+	public void setReachableByActive(boolean reachable) {
+		this.reachableByActive = reachable;
 	}
 
 	/**
@@ -59,7 +58,7 @@ public class LogicalTile {
 	 */
 	public void clearMoveInfo(){
 		path = null;
-		isTile = false;
+		reachableByActive = false;
 	}
 
 
