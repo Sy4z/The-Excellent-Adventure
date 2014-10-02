@@ -70,7 +70,7 @@ public class Main {
 	/**
 	 * This method is in charge of initialising the server
 	 */
-	private static void runServer(String addr, int port){
+	public static void runServer(String addr, int port){
 		ServerSocket serverSock = null;
 		Socket accept = null;
 		try{
