@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 /**
  * This is a generic robot and is the base unit type that the player will
@@ -15,12 +19,18 @@ import java.awt.image.BufferedImage;
 public class ServiceBot extends Unit {
 	private Inventory inventory;
 	private BufferedImage img;
-
+	private int heightOffSet;
 	public ServiceBot(Point loc) {
 		super(loc);
 		inventory = new Inventory();
 		this.filePath = null;//Replace with File once image is aqquired
-
+		try {
+			img = ImageIO.read(new File("src/tile/orb.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		heightOffSet = img.getHeight();
+		heightOffSet = Math.max(32 - heightOffSet, heightOffSet -32);
 	}
 
 
@@ -67,7 +77,7 @@ public class ServiceBot extends Unit {
 	@Override
 	public void draw(Graphics2D g, int dx, int dy) {
 		g.setColor(new Color(155,144,255));
-		g.fillOval(dx, dy, 20, 20);
+		g.drawImage(img, dx, dy-heightOffSet, null);
 	}
 
 	public String toString(){

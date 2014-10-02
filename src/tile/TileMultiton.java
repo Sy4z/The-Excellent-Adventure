@@ -32,7 +32,7 @@ public class TileMultiton {
 				break;
 			case BLUE:  tiles.put(type , new BlueTile(
 					new File("src" + File.separator + "tile" +
-							File.separator + "orb.png"),'b'));
+							File.separator + "tower.png"),'b'));
 				break;
 			}
 		}
