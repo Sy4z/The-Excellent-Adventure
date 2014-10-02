@@ -7,7 +7,11 @@ import gameWorld.Unit;
 
 import java.awt.Point;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
+import java.util.Collections;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
@@ -62,11 +66,13 @@ public class Data {
 
 		//initialise the root node
 		Element root = new Element("World");
-		File fi = new File("saves" + File.separatorChar + fileName);
+		File savePath = new File("saves" + File.separatorChar + fileName);
 
-		if(!fi.exists()){
+		System.out.println(savePath);
+
+		if(!savePath.exists()){
 			error("Making directory");
-			fi.mkdir();
+			savePath.mkdirs();
 		}
 
 		//-------Handle Tiles--------
@@ -99,35 +105,30 @@ public class Data {
 		}
 		root.addContent(subRoot);
 
-		Files.createFile(fi, tileMap);
-
+		File tileMapPath = new File(savePath.toString() + File.separator + "map" );
+		PrintStream print = null;
+		try {
+			print = new PrintStream(tileMapPath);
+			print.print(tileMap);
+		} catch (FileNotFoundException e) {
+			try {
+				tileMapPath.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+		finally{
+			print.close();
+		}
 
 		//---------Handle Units---------
 		subRoot = new Element("Units");
 		subRoot.setAttribute("Size", Integer.toString(units.length));
 		//for each unit, create a new element, tie everything about the unit to it, and add it to the tree
-		String[] test = {"curLocation", "filePath", "isActiveUnit",
-				"standardAction","moveAction","swiftAction"};
-		int i = 0;
 		Scanner scan = null;
+		Scanner curLine = null;
 		for(Unit e : units){
-			scan = new Scanner(e.toString());
-
-			elem = new Element(e.getClass().getSimpleName());
-
-			for(Object o : e.save()){
-				System.out.println(elem.toString() + "\n\t" + o);
-				if(o == null){
-					elem.setAttribute(test[i], "NULL");
-				}
-				else{
-
-					elem.setAttribute(o.getClass().getSimpleName(), o + "");
-				}
-				i++;
-			}
-			i=0;
-			subRoot.addContent(elem);
+			subRoot.addContent(parseUnitString(e.toString()));
 		}
 		root.addContent(subRoot);
 
@@ -155,7 +156,50 @@ public class Data {
 		return true;
 	}
 
-	/**
+
+
+	private static String parseUnitString(String unitdata) {
+		Scanner scan = new Scanner(unitdata);
+		Element e = new Element(scan.next());
+
+		while(scan.hasNext()){
+			switch(scan.next()){
+			case "{":scan.next();continue;
+			case "}":scan.next();continue;
+			case ":":scan.next();continue;
+			case "|":scan.next();continue;
+			case "Inventory" : parseInventory(e,scan);continue;
+			default: parseUnitLine(e,scan.nextLine());continue;
+			}
+		}
+		return null;
+	}
+
+	private static void parseUnitLine(Element e, String ln){
+		int idx = 0;
+		int lookahead = 0;
+		while(!Character.isAlphabetic(ln.charAt(idx))){
+			idx++;
+		}
+
+		lookahead = idx;
+		while(ln.charAt(lookahead) != ':'){
+			lookahead++;
+		}
+
+		String attribName = ln.substring(idx, lookahead);
+		lookahead += 2;
+		idx = lookahead;
+
+		while(ln.charAt(lookahead) != '\n'){
+			lookahead++;
+		}
+
+		String attribValue = ln.substring(idx, lookahead);
+		e.setAttribute(new Attribute(attribName, attribValue));
+	}
+
+	/**newContent
 	 * -----STANDIN WHILE I STUDY XML------
 	 * @param fi Use null the File shall be ignored
 	 *
@@ -169,7 +213,7 @@ public class Data {
 		int sizeY = 11;
 		int entityX = 0;
 		int entityY = 0;
-
+		System.out.println("Beginning test");
 		TileMultiton.type[][] t = new TileMultiton.type[sizeY][sizeX];
 
 		//Creates an array of tiles sizeX by sizeY if statement specifys what coordinate entity will be placed.
@@ -198,11 +242,10 @@ public class Data {
 	}
 
 	public static void main(String args[]){
-
-		//System.out.println("Beginning test");
-		//Tuple t = testSet(null);
-		//save(t.tiles, t.units, new Item[0]);
-		RenderingTest();
+		System.out.println("Beginning test");
+		Tuple t = testSet(null);
+		save("test",t.tiles, t.units, new Item[0]);
+//		RenderingTest();
 
 	}
 

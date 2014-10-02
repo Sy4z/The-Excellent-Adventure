@@ -97,6 +97,7 @@ public class ServiceBot extends Unit {
 		s.append("\n"+append+"MoveAction: "+getMoveAction());
 		s.append("\n"+append+"SwiftAction: "+getSwiftACtion());
 		s.append("\n"+append+""+inventory.toString(append));
+
 		return s +"\n" + append.substring(2) + "}";
 	}
 

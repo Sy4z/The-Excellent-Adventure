@@ -10,6 +10,10 @@ public class StationaryObjectHatStand extends StationaryObject{
 
 	}
 
+	public String toString(){
+		return toString("");
+	}
+
 	@Override
 	public String toString(String append) {
 		return "This is a Hat stand, if I had a hat I could put it on here.";
