@@ -29,7 +29,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 
-		runServer("127.0.0.1", 28596);
+		runServer("127.0.0.1", 29596);
 		//runClient("127.0.0.1", 29596);
 
 	}
