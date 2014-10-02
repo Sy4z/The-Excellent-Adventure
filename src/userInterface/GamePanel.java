@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		//Create a world then get the canvas off it
 		canvas = new IsoCanvas(currentFrame.getWidth(),
 				currentFrame.getHeight());
-		world = new World("", currentFrame.getWidth(), currentFrame.getHeight());
+		world = new World("", currentFrame.getWidth(), currentFrame.getHeight(), canvas);
 
 		canvas.setBounds(0, 0, currentFrame.getWidth(),
 				currentFrame.getHeight());
