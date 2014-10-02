@@ -7,6 +7,7 @@ import gameWorld.Unit;
 
 import java.awt.Point;
 import java.io.File;
+import java.nio.file.Files;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
@@ -34,6 +35,10 @@ public class Data {
 	static int b = 0;
 	public Data(){}
 
+	private static void error(String s){
+		System.err.println(s);
+	}
+
 	public static Tuple load(File f){
 		return new Tuple(null, null);
 	}
@@ -46,19 +51,28 @@ public class Data {
 	 * @param items An array containing all of the units that are to be saved
 	 * @return True is successful, else false.
 	 */
-	public static boolean save(TileMultiton.type[][] types, Unit[] units, Item[] items){
-		assert(types != null);
-		assert(units != null);
-		assert(items != null);
+	public static boolean save(String fileName, TileMultiton.type[][] types, Unit[] units, Item[] items){
+		assert(types 	!= 	null);
+		assert(units 	!= 	null);
+		assert(items 	!= 	null);
+		assert(fileName != 	null);
 
 		//Initialise the document
 		Document document = new Document();
+
 		//initialise the root node
 		Element root = new Element("World");
+		File fi = new File("saves" + File.separatorChar + fileName);
+
+		if(!fi.exists()){
+			error("Make dir");
+			fi.mkdir();
+		}
 
 		//-------Handle Tiles--------
 		//create the tile root
 		Element subRoot = new Element("Tiles");
+
 		//give the subroot the dimensions of the tile array
 		subRoot.setAttribute("X", Integer.toString(types.length));
 		subRoot.setAttribute("Y", Integer.toString(types[1].length));
@@ -83,6 +97,9 @@ public class Data {
 			tileMap += "\n";
 		}
 		root.addContent(subRoot);
+
+//		Files.createFile(path, attrs)
+
 
 
 		//---------Handle Units---------
@@ -154,10 +171,12 @@ public class Data {
 		int entityY = 0;
 
 		TileMultiton.type[][] t = new TileMultiton.type[sizeY][sizeX];
+
 		//Creates an array of tiles sizeX by sizeY if statement specifys what coordinate entity will be placed.
+
 		for(int y = 0;y<sizeY;y++){
 			for(int x = 0;x<sizeX;x++){
-				if(x < 2 && y < 2 ){
+				if(y == x + b ){
 					t[y][x] = TileMultiton.type.BLUE;
 				}
 				else{
@@ -171,6 +190,7 @@ public class Data {
 		for(int i = 0; i < 7; i++){
 			u[i] = new ServiceBot(new Point(i,i));
 		}
+
 		if(b++ > 9){
 			b = -9;
 		}
@@ -178,10 +198,18 @@ public class Data {
 	}
 
 	public static void main(String args[]){
+<<<<<<< HEAD
 		System.out.println("Beginning test");
 		Tuple t = testSet(null);
 		save(t.tiles, t.units, new Item[0]);
 		//RenderingTest();
+=======
+
+//		System.out.println("Beginning test");
+//		Tuple t = testSet(null);
+//		save(t.tiles, t.units, new Item[0]);
+		RenderingTest();
+>>>>>>> c26bdc866f4e68aaabb16c8794515fc6f4e240eb
 	}
 
 	private static void RenderingTest(){

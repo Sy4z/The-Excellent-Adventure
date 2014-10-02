@@ -11,8 +11,7 @@ public class ItemKey extends Item{
 	}
 
 	@Override
-	void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx, int sy,
-			int sx2, int sy2) {
+	void draw(Graphics2D g, int dx, int dy) {
 		// TODO Auto-generated method stub
 
 	}

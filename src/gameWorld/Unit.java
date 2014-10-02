@@ -2,7 +2,10 @@ package gameWorld;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.File;
+
+import sun.net.util.IPAddressUtil;
 
 /**
  *
@@ -16,10 +19,11 @@ public abstract class Unit extends GameObject {
 	private boolean standardAction;
 	private boolean moveAction;
 	private boolean swiftAction;
-
+	private BufferedImage img;
 	public Unit(Point loc) {
 		curLocation = loc;
 	}
+
 
 	/**
 	 * Updates a Entities information of its location. This will be used my the
@@ -36,8 +40,7 @@ public abstract class Unit extends GameObject {
 	}
 
 
-	public abstract void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx,
-			int sy, int sx2, int sy2);
+	public abstract void draw(Graphics2D g, int dx, int dy);
 
 	public void activate() {
 		moveAction = true;
