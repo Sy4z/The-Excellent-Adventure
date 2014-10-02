@@ -21,6 +21,7 @@ public class World {
 	private Unit activePlayer;
 	private IsoCanvas canvas;
 
+
 	/**
 	 * Keeps on running through the turn cycle.
 	 */
@@ -184,6 +185,20 @@ public class World {
 		if (y < 0)
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the canvas
+	 */
+	public IsoCanvas getCanvas() {
+		return canvas;
+	}
+
+	/**
+	 * @param canvas the canvas to set
+	 */
+	public void setCanvas(IsoCanvas canvas) {
+		this.canvas = canvas;
 	}
 
 }
