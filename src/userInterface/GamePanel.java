@@ -17,14 +17,16 @@ import javax.swing.JPanel;
 /**
  * This class contains the main canvas displaying the gameplay and other
  * controls required for playing the game.
- * 
+ *
  * @author Venkata Peesapati
- * 
+ *
  */
 public class GamePanel extends JPanel implements MouseListener {
 
 	private JFrame currentFrame;
 	private JPanel oldPanel;
+	//Field for world
+	// Field for the canvas
 
 	public GamePanel(JFrame frame, JPanel menuPanel) {
 		addMouseListener(this);
@@ -36,9 +38,11 @@ public class GamePanel extends JPanel implements MouseListener {
 		pl.addActionListener(new TestListener());
 		pl.setBounds(20, 20, 100, 40);
 		add(pl);
-
+		//Create a world then get the canvas off it
 		IsoCanvas canvas = new IsoCanvas(currentFrame.getWidth(),
 				currentFrame.getHeight());
+		// World.canvas = canvas (Set canvas of world)
+
 		canvas.setBounds(0, 0, currentFrame.getWidth(),
 				currentFrame.getHeight());
 		add(canvas);
@@ -63,13 +67,13 @@ public class GamePanel extends JPanel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -80,13 +84,15 @@ public class GamePanel extends JPanel implements MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
+	// TODO keyboard listener.
 
 }

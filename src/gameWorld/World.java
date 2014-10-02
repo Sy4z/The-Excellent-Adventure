@@ -21,6 +21,7 @@ public class World {
 	private Unit activePlayer;
 	private IsoCanvas canvas;
 
+
 	/**
 	 * Keeps on running through the turn cycle.
 	 */
@@ -43,13 +44,29 @@ public class World {
 	 */
 	public void intepretMouseCommand(Point coords){
 		//Currently just handles movement will be extended to interact with game objects
-		
+
 		int x = coords.x;
 		int y = coords.y;
-		
+
 		//x = canvas.toCart(x, y).x; // sorry chris this dosnt work yet
 		//y = canvas.toCart(x, y).y;
 		if(move(x, y)) return;
+	}
+
+	public void moveFromKeyBoard(int i){
+		//0 is up
+		//1 is down
+		//2 is left
+		//3 is right
+		if(i==0)
+			move(activePlayer.getLocation().x+1,activePlayer.getLocation().y);
+		if(i==1)
+			move(activePlayer.getLocation().x-1,activePlayer.getLocation().y);
+		if(i==2)
+			move(activePlayer.getLocation().x,activePlayer.getLocation().y+1);
+		if(i==3)
+			move(activePlayer.getLocation().x,activePlayer.getLocation().y-1);
+
 	}
 
 
@@ -90,7 +107,7 @@ public class World {
 	 *
 	 * @return
 	 */
-	public World(String save, int width, int height) {
+	public World(String save, int width, int height, IsoCanvas cvs) {
 		// worldObjects = dlynPlz();
 		//TODO
 	}
@@ -168,6 +185,20 @@ public class World {
 		if (y < 0)
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the canvas
+	 */
+	public IsoCanvas getCanvas() {
+		return canvas;
+	}
+
+	/**
+	 * @param canvas the canvas to set
+	 */
+	public void setCanvas(IsoCanvas canvas) {
+		this.canvas = canvas;
 	}
 
 }
