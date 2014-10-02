@@ -25,20 +25,20 @@ import tile.TileMultiton;
 	 *			oswald.gm@gmail.com
 	 */
 	public class IsoCanvas extends JPanel{
-		
+
 		private static final long serialVersionUID = -1838809788973263253L;
 		private TileMultiton.type[][] map = null;
-		private Unit entities[]; 
+		private Unit entities[];
 		private int width;
 		private int height;
 		private int tile_width = 64;
 		private int tile_height = 32;
-		
+
 		private int center_offset_x;
 		private int center_offset_y;
-		
+
 		private ArrayList<Point> HIGHLIGHTED_TILES;
-		
+
 
 		/**
 		 *
@@ -48,11 +48,11 @@ import tile.TileMultiton;
 			map = t.tiles;
 			entities = t.units;
 //			mapDebug();
-			
+
 			this.width = Width;
 			this.height = Height;
 			calculateOffset();
-			conversionDebug();
+//			conversionDebug();
 		}
 		/**
 		 *
@@ -75,7 +75,7 @@ import tile.TileMultiton;
 						tile.draw(g2d, x1,y1-32);
 					}
 					else{
-						tile.draw(g2d, x1,y1);	
+						tile.draw(g2d, x1,y1);
 					}
 				}
 			}
@@ -145,7 +145,7 @@ import tile.TileMultiton;
 
 		}
 		public void getMapLocation(int x, int i){
-			
+
 		}
 		private void conversionDebug(){
 			int x = 0;
@@ -157,7 +157,7 @@ import tile.TileMultiton;
 					System.out.println(center_offset_x+":"+center_offset_y);
 					Point iso = toIso(x,y);
 					Point cart =  toCart(iso.x,iso.y);
-					
+
 					System.out.println("********************************************************");
 					System.out.println("XY in cart:"+"("+x+","+y+")");
 					System.out.println("");

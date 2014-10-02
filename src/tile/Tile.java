@@ -71,7 +71,6 @@ public abstract class Tile {
 	public boolean draw(Graphics2D g, int dx, int dy){
 		return g.drawImage(img, dx, dy,null);
 
-
 	}
 
 	public Character getRepresentation(){

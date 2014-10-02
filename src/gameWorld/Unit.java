@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.io.File;
 
+import sun.net.util.IPAddressUtil;
+
 /**
  *
  * @author ChrisMcIntosh
@@ -20,6 +22,7 @@ public abstract class Unit extends GameObject {
 	public Unit(Point loc) {
 		curLocation = loc;
 	}
+
 
 	/**
 	 * Updates a Entities information of its location. This will be used my the

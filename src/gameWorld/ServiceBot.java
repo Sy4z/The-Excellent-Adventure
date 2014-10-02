@@ -1,7 +1,13 @@
 package gameWorld;
 
+import gameRender.IsoCanvas;
+
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 
 /**
  * This is a generic robot and is the base unit type that the player will
@@ -64,7 +70,8 @@ public class ServiceBot extends Unit {
 	@Override
 	public void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx,
 			int sy, int sx2, int sy2) {
-		g.drawOval(curLocation.x, curLocation.y, 10, 10);
+		g.setColor(Color.BLUE);
+//		g.drawOval(p.x, p.y, 10, 10);
 	}
 
 	public String toString(){
