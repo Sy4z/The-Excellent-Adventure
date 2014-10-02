@@ -6,7 +6,12 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import tile.TileMultiton.type;
+
 import com.sun.xml.internal.bind.v2.runtime.Coordinator;
+
+import dataStorage.Data;
+import dataStorage.Tuple;
 
 
 /**
@@ -20,6 +25,35 @@ public class World {
 	private LogicalTile[][] worldMap;
 	private Unit activePlayer;
 	private IsoCanvas canvas;
+
+
+	/**
+	 * Constructor
+	 *
+	 * @return
+	 */
+	public World(String save, int width, int height, IsoCanvas cvs) {
+		Tuple t = Data.load(null);
+		this.canvas = cvs;
+		units = t.units;
+		worldMap = new LogicalTile[t.tiles.length][t.tiles[0].length];
+		populateWorldMape(t.tiles);
+		turn();
+
+	}
+
+	/**
+	 * This is very niaeve and may break will be fixed affter discussing the Tuple class
+	 * with group members
+	 * @param tiles
+	 */
+	private void populateWorldMape(type[][] tiles) {
+		for(int x = 0; x < tiles.length; x++)
+			for(int y = 0; y < tiles[0].length; y++)
+					worldMap[x][y] = new LogicalTile(tiles[x][y] != null);
+
+
+	}
 
 
 	/**
@@ -78,7 +112,7 @@ public class World {
 		ArrayList<Point> highPoints = new ArrayList<Point>();
 		for(int x = 0; x < worldMap.length; x++)
 			for(int y = 0; y < worldMap[0].length; y++)
-				if(worldMap[x][y].isReachableByActive() && worldMap[x][y].isIsTile())
+				if(worldMap[x][y].isReachableByActive())
 					highPoints.add(new Point(x, y));
 
 		return highPoints;
@@ -100,16 +134,6 @@ public class World {
 	}
 
 
-
-	/**
-	 * Constructor
-	 *
-	 * @return
-	 */
-	public World(String save, int width, int height, IsoCanvas cvs) {
-		// worldObjects = dlynPlz();
-		//TODO
-	}
 
 
 	private void calculatePossibleMovments(Point curLocation) {
