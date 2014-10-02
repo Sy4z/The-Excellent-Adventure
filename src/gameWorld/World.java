@@ -107,7 +107,7 @@ public class World {
 	 *
 	 * @return
 	 */
-	public World(String save, int width, int height) {
+	public World(String save, int width, int height, IsoCanvas cvs) {
 		// worldObjects = dlynPlz();
 		//TODO
 	}
