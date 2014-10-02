@@ -102,7 +102,6 @@ public class Data {
 		Files.createFile(fi, tileMap);
 
 
-
 		//---------Handle Units---------
 		subRoot = new Element("Units");
 		subRoot.setAttribute("Size", Integer.toString(units.length));
@@ -199,10 +198,12 @@ public class Data {
 	}
 
 	public static void main(String args[]){
-//		System.out.println("Beginning test");
-//		Tuple t = testSet(null);
-//		save(t.tiles, t.units, new Item[0]);
+
+		//System.out.println("Beginning test");
+		//Tuple t = testSet(null);
+		//save(t.tiles, t.units, new Item[0]);
 		RenderingTest();
+
 	}
 
 	private static void RenderingTest(){
