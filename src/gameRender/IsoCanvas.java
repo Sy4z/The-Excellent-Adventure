@@ -63,7 +63,7 @@ import tile.TileMultiton;
 			Tile tile;
 			for(int y = map.length-1;y >=0;y--){
 				for(int x = 0;x<map[y].length;x++){
-					Point p = toIso((x*(tile_width/2)),(y*(tile_height)));//
+					Point p = toIso((x),(y));//
 					tile = TileMultiton.getTile(map[y][x]);
 					//top left vertex
 					int x1 = (p.x);
@@ -72,7 +72,7 @@ import tile.TileMultiton;
 					int x2 = (p.x+(tile_width));
 					int y2 = (p.y+(tile_height));
 					if(tile.getType().equals("Blue_Tile")){
-						tile.draw(g2d, x1,y1-32);
+						tile.draw(g2d, x1,y1);
 					}
 					else{
 						tile.draw(g2d, x1,y1);
@@ -97,11 +97,12 @@ import tile.TileMultiton;
 		/**
 		 *
 		 * Returns the Cartesian representation of a isometric point
+		 * THIS DOSE NOT WORK YET
 		 * @param x
 		 * @param y
 		 * @return
 		 */
-		public Point toCart(int x, int y){
+		private Point toCart(int x, int y){
 			Point point = new Point();
 			point.x =  0;
 			point.y =  0;
@@ -115,8 +116,10 @@ import tile.TileMultiton;
 		 */
 		private Point toIso(int x, int y){
 			Point point = new Point();
-			point.x = ((x + y))+center_offset_x;
-			point.y = ((x - y)/2)+center_offset_y;
+			int dx = x*(tile_width/2);
+			int dy = y*(tile_height);
+			point.x = ((dx + dy))+center_offset_x;
+			point.y = ((dx - dy)/2)+center_offset_y;
 			return point;
 		}
 		/**
@@ -132,7 +135,8 @@ import tile.TileMultiton;
 		 */
 		public void moveUnit( Graphics2D g,Unit unit, Stack<Point> cordinates){
 			for(Unit i: entities){
-				i.draw(g,0,0,0,0,0,0,0,0);
+				Point location = toIso(i.getLocation().x,i.getLocation().y);
+				 i.draw(g,location.x,location.y);
 			}
 		}
 		public void highlight(ArrayList<Point> tiles){

@@ -1,6 +1,7 @@
 package gameWorld;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -8,9 +9,8 @@ import java.awt.Graphics2D;
  *
  */
 public abstract class GameObject {
-
-	abstract void draw(Graphics2D g, int dx, int dy, int dx2, int dy2, int sx, int sy,
-			int sx2, int sy2);
+	protected BufferedImage img;
+	abstract void draw(Graphics2D g, int dx, int dy);
 
 	public abstract String toString(String append);
 
