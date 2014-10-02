@@ -181,7 +181,7 @@ public class Data {
 		System.out.println("Beginning test");
 		Tuple t = testSet(null);
 		save(t.tiles, t.units, new Item[0]);
-//		RenderingTest();
+		//RenderingTest();
 	}
 
 	private static void RenderingTest(){
@@ -194,7 +194,7 @@ public class Data {
 		while(true){
 			c.update(testSet(null));
 			try{
-			Thread.sleep(300);
+				Thread.sleep(300);
 			}
 			catch(InterruptedException e){
 				e.printStackTrace();
