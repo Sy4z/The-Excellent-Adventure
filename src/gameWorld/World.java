@@ -66,7 +66,6 @@ public class World {
 			move(activePlayer.getLocation().x,activePlayer.getLocation().y+1);
 		if(i==3)
 			move(activePlayer.getLocation().x,activePlayer.getLocation().y-1);
-
 	}
 
 
@@ -79,7 +78,7 @@ public class World {
 		ArrayList<Point> highPoints = new ArrayList<Point>();
 		for(int x = 0; x < worldMap.length; x++)
 			for(int y = 0; y < worldMap[0].length; y++)
-				if(worldMap[x][y].isReachable())
+				if(worldMap[x][y].isTile())
 					highPoints.add(new Point(x, y));
 
 		return highPoints;
@@ -95,7 +94,7 @@ public class World {
 		for(int x = 0; x < worldMap.length; x++)
 			for(int y =0; y < worldMap[0].length; y++){
 				worldMap[x][y].setPath(null);
-				worldMap[x][y].setReachable(false);
+				worldMap[x][y].setIsTile(false);
 			}
 
 	}
@@ -121,7 +120,7 @@ public class World {
 	private void moveFrom(int x, int y, int numMoves, Stack<Point> path){
 		path.add(new Point(x, y));
 		worldMap[x][y].setPath(path);
-		worldMap[x][y].setReachable(true);
+		worldMap[x][y].setIsTile(true);
 		if(numMoves==0) return;
 
 		if(validMove(x+1, y, path))
@@ -161,7 +160,7 @@ public class World {
 		if (!inBounds(x, y))
 			return false;
 		if(worldMap[x][y].isCanTouchThis())
-			if(worldMap[x][y].isReachable()){
+			if(worldMap[x][y].isTile()){
 				canvas.moveUnit(null, activePlayer, worldMap[x][y].getPath());
 				activePlayer.depleateMoves();
 				gameBoard[x][y] = activePlayer;
