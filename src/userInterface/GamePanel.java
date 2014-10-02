@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -22,7 +24,7 @@ import javax.swing.JPanel;
  * @author Venkata Peesapati
  *
  */
-public class GamePanel extends JPanel implements MouseListener {
+public class GamePanel extends JPanel implements MouseListener, KeyListener {
 
 	private JFrame currentFrame;
 	private JPanel oldPanel;
@@ -90,6 +92,36 @@ public class GamePanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+
+		if (key == KeyEvent.VK_UP) {
+
+		}
+		else if (key == KeyEvent.VK_DOWN) {
+
+		}
+		else if (key == KeyEvent.VK_LEFT) {
+
+		}
+		else if (key == KeyEvent.VK_RIGHT) {
+
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 	}
