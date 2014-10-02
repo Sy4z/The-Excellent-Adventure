@@ -5,8 +5,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import clientServer.Client;
-import clientServer.Server;
+import clientServer.ClientThread;
+import clientServer.ServerThread;
 
 /**
  * Main method, Ties the Program together
@@ -51,7 +51,7 @@ public class Main {
 		Socket clientSock = null;
 		try {
 			clientSock = new Socket(InetAddress.getByName(addr), port);
-			Client client = new Client(clientSock);
+			ClientThread client = new ClientThread(clientSock);
 			client.start();
 		} catch (UnknownHostException e) {
 
@@ -74,13 +74,13 @@ public class Main {
 		ServerSocket serverSock = null;
 		Socket accept = null;
 		try{
-			Server[] serverThreads = new Server[numberOfPlayers];
+			ServerThread[] serverThreads = new ServerThread[numberOfPlayers];
 			serverSock = new ServerSocket(port);
 			while(true){
 				System.err.println("I didnt accept connection because i suck");
 				accept = serverSock.accept();
 				System.out.println("Accepted Connection from: " + accept.getInetAddress());
-				Server server = new Server(accept);
+				ServerThread server = new ServerThread(accept);
 				server.start();
 
 			}
