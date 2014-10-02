@@ -1,6 +1,7 @@
 package userInterface;
 
 import gameRender.IsoCanvas;
+import gameWorld.World;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,8 +26,8 @@ public class GamePanel extends JPanel implements MouseListener {
 
 	private JFrame currentFrame;
 	private JPanel oldPanel;
-	//Field for world
-	// Field for the canvas
+	private World world; // The game world.
+	private IsoCanvas canvas;
 
 	public GamePanel(JFrame frame, JPanel menuPanel) {
 		addMouseListener(this);
@@ -39,9 +40,9 @@ public class GamePanel extends JPanel implements MouseListener {
 		pl.setBounds(20, 20, 100, 40);
 		add(pl);
 		//Create a world then get the canvas off it
-		IsoCanvas canvas = new IsoCanvas(currentFrame.getWidth(),
+		canvas = new IsoCanvas(currentFrame.getWidth(),
 				currentFrame.getHeight());
-		// World.canvas = canvas (Set canvas of world)
+		world = new World("", currentFrame.getWidth(), currentFrame.getHeight());
 
 		canvas.setBounds(0, 0, currentFrame.getWidth(),
 				currentFrame.getHeight());
