@@ -107,16 +107,16 @@ public class GamePanel extends JPanel implements MouseListener, KeyListener {
 		int key = e.getKeyCode();
 
 		if (key == KeyEvent.VK_UP) {
-
+			world.moveFromKeyBoard(0);
 		}
 		else if (key == KeyEvent.VK_DOWN) {
-
+			world.moveFromKeyBoard(1);
 		}
 		else if (key == KeyEvent.VK_LEFT) {
-
+			world.moveFromKeyBoard(2);
 		}
 		else if (key == KeyEvent.VK_RIGHT) {
-
+			world.moveFromKeyBoard(3);
 		}
 	}
 
