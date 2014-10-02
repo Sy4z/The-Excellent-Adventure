@@ -1,12 +1,15 @@
 package userInterface;
 
 import gameRender.IsoCanvas;
+import gameWorld.World;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -21,12 +24,12 @@ import javax.swing.JPanel;
  * @author Venkata Peesapati
  *
  */
-public class GamePanel extends JPanel implements MouseListener {
+public class GamePanel extends JPanel implements MouseListener, KeyListener {
 
 	private JFrame currentFrame;
 	private JPanel oldPanel;
-	//Field for world
-	// Field for the canvas
+	private World world; // The game world.
+	private IsoCanvas canvas;
 
 	public GamePanel(JFrame frame, JPanel menuPanel) {
 		addMouseListener(this);
@@ -39,9 +42,9 @@ public class GamePanel extends JPanel implements MouseListener {
 		pl.setBounds(20, 20, 100, 40);
 		add(pl);
 		//Create a world then get the canvas off it
-		IsoCanvas canvas = new IsoCanvas(currentFrame.getWidth(),
+		canvas = new IsoCanvas(currentFrame.getWidth(),
 				currentFrame.getHeight());
-		// World.canvas = canvas (Set canvas of world)
+		world = new World("", currentFrame.getWidth(), currentFrame.getHeight(), canvas);
 
 		canvas.setBounds(0, 0, currentFrame.getWidth(),
 				currentFrame.getHeight());
@@ -89,6 +92,36 @@ public class GamePanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+
+		if (key == KeyEvent.VK_UP) {
+
+		}
+		else if (key == KeyEvent.VK_DOWN) {
+
+		}
+		else if (key == KeyEvent.VK_LEFT) {
+
+		}
+		else if (key == KeyEvent.VK_RIGHT) {
+
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 	}

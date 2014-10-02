@@ -16,10 +16,10 @@ public class clientMain {
 		runClient("127.0.0.1", 29596);
 
 	}
-	
-	
-	
-	private static void runClient(String addr, int port){
+
+
+
+	public static void runClient(String addr, int port){
 
 		Socket clientSock = null;
 		try {
