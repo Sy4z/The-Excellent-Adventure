@@ -65,6 +65,7 @@ public class World {
 			move(activePlayer.getLocation().x,activePlayer.getLocation().y+1);
 		if(i==3)
 			move(activePlayer.getLocation().x,activePlayer.getLocation().y-1);
+
 	}
 
 
