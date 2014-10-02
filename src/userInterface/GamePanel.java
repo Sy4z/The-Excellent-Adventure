@@ -21,9 +21,9 @@ import javax.swing.JPanel;
 /**
  * This class contains the main canvas displaying the gameplay and other
  * controls required for playing the game.
- *
+ * 
  * @author Venkata Peesapati
- *
+ * 
  */
 public class GamePanel extends JPanel implements MouseListener, KeyListener {
 
@@ -38,6 +38,7 @@ public class GamePanel extends JPanel implements MouseListener, KeyListener {
 		oldPanel = menuPanel;
 		setLayout(null);
 
+		// This code is used to set up the quit button to quit during game play.
 		JButton quit = new JButton("Quit");
 		quit.setOpaque(false);
 		quit.setContentAreaFilled(false);
@@ -47,19 +48,28 @@ public class GamePanel extends JPanel implements MouseListener, KeyListener {
 		quit.setForeground(Color.green);
 
 		quit.addActionListener(new QuitGameListener());
-		quit.setBounds(1000, 20, 100, 40);
+		quit.setBounds(1000, 20, 100, 40); // Sets the position of the quit
+											// button on the canvas.
 		add(quit);
 
-		// Creates a canvas and a world to put the canvas into it.
+		// Creates a canvas and a world to put the canvas into the world.
 		canvas = new IsoCanvas(currentFrame.getWidth(),
 				currentFrame.getHeight());
-		world = new World("", currentFrame.getWidth(), currentFrame.getHeight(), canvas);
+		world = new World("", currentFrame.getWidth(),
+				currentFrame.getHeight(), canvas);
 
 		canvas.setBounds(0, 0, currentFrame.getWidth(),
 				currentFrame.getHeight());
 		add(canvas);
 	}
 
+	/**
+	 * This is the listener class used for the quit button. It returns to the
+	 * main menu by replacing the game panel with the main menu's panel.
+	 * 
+	 * @author Venkata Peesapati
+	 * 
+	 */
 	class QuitGameListener implements ActionListener {
 
 		@Override
@@ -117,14 +127,11 @@ public class GamePanel extends JPanel implements MouseListener, KeyListener {
 
 		if (key == KeyEvent.VK_UP) {
 			world.moveFromKeyBoard(0);
-		}
-		else if (key == KeyEvent.VK_DOWN) {
+		} else if (key == KeyEvent.VK_DOWN) {
 			world.moveFromKeyBoard(1);
-		}
-		else if (key == KeyEvent.VK_LEFT) {
+		} else if (key == KeyEvent.VK_LEFT) {
 			world.moveFromKeyBoard(2);
-		}
-		else if (key == KeyEvent.VK_RIGHT) {
+		} else if (key == KeyEvent.VK_RIGHT) {
 			world.moveFromKeyBoard(3);
 		}
 	}
@@ -134,7 +141,5 @@ public class GamePanel extends JPanel implements MouseListener, KeyListener {
 		// TODO Auto-generated method stub
 
 	}
-
-	// TODO keyboard listener.
 
 }
