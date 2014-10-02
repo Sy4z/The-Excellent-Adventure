@@ -6,7 +6,12 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import tile.TileMultiton.type;
+
 import com.sun.xml.internal.bind.v2.runtime.Coordinator;
+
+import dataStorage.Data;
+import dataStorage.Tuple;
 
 
 /**
@@ -23,20 +28,53 @@ public class World {
 
 
 	/**
-	 * Keeps on running through the turn cycle.
+	 * Constructor
+	 *
+	 * @return
 	 */
-	public void turn() {
-		while (true)
-			for (Unit u : units) {
-				refresh(u);
-				u.activate();
-				activePlayer = u;
-				while (u.isActive()) {
-					calculatePossibleMovments(u.curLocation);
-					canvas.highlight(tilesToHightlight());
-				}
-			}
+	public World(String save, int width, int height, IsoCanvas cvs) {
+		Tuple t = Data.testSet(null);
+		this.canvas = cvs;
+		units = t.units;
+		worldMap = new LogicalTile[t.tiles.length][t.tiles[0].length];
+		gameBoard = new GameObject[t.tiles.length][t.tiles[0].length];
+		populateWorldMape(t.tiles);
+		checkPlayerStatus();
 
+	}
+
+	/**
+	 * This is very niaeve and may break will be fixed affter discussing the Tuple class
+	 * with group members
+	 * @param tiles
+	 */
+	private void populateWorldMape(type[][] tiles) {
+		for(int x = 0; x < tiles.length; x++)
+			for(int y = 0; y < tiles[0].length; y++)
+					worldMap[x][y] = new LogicalTile(tiles[x][y] != null);
+
+
+	}
+
+
+	/**
+	 *
+	 */
+	public void checkPlayerStatus() {
+		if(!activePlayer.isActive()){
+			activePlayer = units[incrementID()];
+			activePlayer.activate();
+		}
+		calculatePossibleMovments(activePlayer.curLocation);
+		canvas.highlight(tilesToHightlight());
+
+
+	}
+
+	private int incrementID() {
+		if(activePlayer.getID() == units.length-1)
+			return 0;
+		return activePlayer.getID() +1;
 	}
 
 	/**
@@ -54,6 +92,7 @@ public class World {
 	}
 
 	public void moveFromKeyBoard(int i){
+		System.out.println("Cats");
 		//0 is up
 		//1 is down
 		//2 is left
@@ -78,7 +117,7 @@ public class World {
 		ArrayList<Point> highPoints = new ArrayList<Point>();
 		for(int x = 0; x < worldMap.length; x++)
 			for(int y = 0; y < worldMap[0].length; y++)
-				if(worldMap[x][y].isReachableByActive() && worldMap[x][y].isIsTile())
+				if(worldMap[x][y].isReachableByActive())
 					highPoints.add(new Point(x, y));
 
 		return highPoints;
@@ -100,16 +139,6 @@ public class World {
 	}
 
 
-
-	/**
-	 * Constructor
-	 *
-	 * @return
-	 */
-	public World(String save, int width, int height, IsoCanvas cvs) {
-		// worldObjects = dlynPlz();
-		//TODO
-	}
 
 
 	private void calculatePossibleMovments(Point curLocation) {

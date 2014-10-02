@@ -5,6 +5,7 @@ import gameWorld.World;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,11 +38,19 @@ public class GamePanel extends JPanel implements MouseListener, KeyListener {
 		oldPanel = menuPanel;
 		setLayout(null);
 
-		JButton pl = new JButton("Test");
-		pl.addActionListener(new TestListener());
-		pl.setBounds(20, 20, 100, 40);
-		add(pl);
-		//Create a world then get the canvas off it
+		JButton quit = new JButton("Quit");
+		quit.setOpaque(false);
+		quit.setContentAreaFilled(false);
+		quit.setBorderPainted(false);
+		quit.setFont(new Font("Arial", Font.PLAIN, 35));
+		quit.setFocusPainted(false);
+		quit.setForeground(Color.green);
+
+		quit.addActionListener(new QuitGameListener());
+		quit.setBounds(1000, 20, 100, 40);
+		add(quit);
+
+		// Creates a canvas and a world to put the canvas into it.
 		canvas = new IsoCanvas(currentFrame.getWidth(),
 				currentFrame.getHeight());
 		world = new World("", currentFrame.getWidth(), currentFrame.getHeight(), canvas);
@@ -51,7 +60,7 @@ public class GamePanel extends JPanel implements MouseListener, KeyListener {
 		add(canvas);
 	}
 
-	class TestListener implements ActionListener {
+	class QuitGameListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
