@@ -35,8 +35,8 @@ public class ClientThread extends Thread {
 			toServer = new DataOutputStream(sock.getOutputStream());
 			//fromServer = new DataInputStream(sock.getInputStream());
 			System.out.println("Client Socket connected on " + sock.getInetAddress() + ":" + sock.getPort());
-			String sentence = "Hi Server, From Client";
-			toServer.writeBytes(sentence + '\n');
+			String sentence = "Hi Server, From Client"; //Thus is the string that gets sent to the server
+			toServer.writeBytes(sentence + '\n'); //Apparantly, writeBytes converts a string to bytes automatically
 			toServer.flush();
 			sock.close();
 		} catch (IOException e) {

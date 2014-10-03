@@ -34,7 +34,7 @@ public class Main {
 		Server server = new Server(numberOfPlayers);
 		Client client = new Client();
 
-		if(isServer == false){
+		if(isServer == false){ //Sets whether this instance of the program is client or server from a boolean
 			client.runClient("127.0.0.1", 29596);
 		}
 		else{
