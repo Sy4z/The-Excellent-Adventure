@@ -232,7 +232,7 @@ public class Data {
 		Unit[] u = new ServiceBot[7];
 
 		for(int i = 0; i < 7; i++){
-			u[i] = new ServiceBot(new Point(i,i));
+			u[i] = new ServiceBot(new Point(i,i),i);
 		}
 
 		if(b++ > 9){

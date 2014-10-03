@@ -20,6 +20,7 @@ public class ServiceBot extends Unit {
 	private Inventory inventory;
 	private BufferedImage img;
 	private int heightOffSet;
+	
 	public ServiceBot(Point loc, int ID) {
 		super(loc, ID);
 		inventory = new Inventory();

@@ -61,7 +61,12 @@ public class World {
 	 *
 	 */
 	public void checkPlayerStatus() {
-		if(!activePlayer.isActive()){
+		//Yo chris, fixed a null pointer, active player was never initialised, so calling active player broke everything
+		//ta, --Dylan //TODO
+		if(activePlayer == null){
+			activePlayer = units[1];
+		}
+		else if(!activePlayer.isActive()){
 			activePlayer = units[incrementID()];
 			activePlayer.activate();
 		}
