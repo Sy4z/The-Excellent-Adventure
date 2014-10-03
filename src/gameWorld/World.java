@@ -64,7 +64,7 @@ public class World {
 		//Yo chris, fixed a null pointer, active player was never initialised, so calling active player broke everything
 		//ta, --Dylan //TODO
 		if(activePlayer == null){
-			activePlayer = units[1];
+			activePlayer = units[0];
 		}
 		else if(!activePlayer.isActive()){
 			activePlayer = units[incrementID()];
