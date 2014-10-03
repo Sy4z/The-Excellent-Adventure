@@ -1,9 +1,11 @@
 package clientServer;
 
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -22,46 +24,47 @@ import java.net.SocketException;
 
 public class ServerThread extends Thread{
 	private final Socket socket;
-	
+
 	public ServerThread(Socket clientSocket){
 		System.out.println("New Server Thread Created");//debugging info
 		this.socket = clientSocket;
 		//start(); Not sure that i need this
-		
+
 	}
-	
-	
+
+
 	/**
 	 * When start is called in the constructor, this runs.
 	 */
 	public void run(){
 		try {
-			socket
-			DataInputStream input = new DataInputStream(socket.getInputStream());
+			BufferedReader fromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
 			DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-			output.writeUTF("Hi Client");
-			output.close();
-			System.out.println(input.readUTF()); //Reads UTF-8 String from the Input Stream 
+			
+			String sentence = "Hello";
+			output.writeBytes(sentence + '\n');
+			System.out.println(fromClient.readLine()); 
 			socket.close();
 		} catch (IOException e) {
 			System.out.println("There was a problem with input/output to/from the server");
 			e.printStackTrace();
 		}
-		
-		
+
+
 		//Succesful opening of both input and output streams, now write map state to output
-		
-		
+
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -22,7 +22,7 @@ import clientServer.ServerThread;
 public class Main {
 
 	private static int numberOfPlayers = 3; //Variable for the number of players in the game
-	private static boolean isServer = false; //Is this instance of the program a server
+	private static boolean isServer = true; //Is this instance of the program a server
 
 
 	/**
@@ -34,7 +34,7 @@ public class Main {
 		Server server = new Server(numberOfPlayers);
 		Client client = new Client();
 
-		if(isServer){
+		if(isServer == false){
 			client.runClient("127.0.0.1", 29596);
 		}
 		else{

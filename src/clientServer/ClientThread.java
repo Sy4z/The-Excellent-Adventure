@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
@@ -30,11 +31,12 @@ public class ClientThread extends Thread {
 	public void run(){
 		System.out.println("Trying Connection");
 		try {
+			BufferedReader fromServer = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			toServer = new DataOutputStream(sock.getOutputStream());
-			fromServer = new DataInputStream(sock.getInputStream());
+			//fromServer = new DataInputStream(sock.getInputStream());
 			System.out.println("Client Socket connected on " + sock.getInetAddress() + ":" + sock.getPort());
-			String print = fromServer.readUTF();
-			toServer.writeUTF("Hi Server, From Client");
+			String sentence = "Hi Server, From Client";
+			toServer.writeBytes(sentence + '\n');
 			toServer.flush();
 			sock.close();
 		} catch (IOException e) {
