@@ -14,9 +14,12 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 /**
  * This class contains the main canvas displaying the gameplay and other
@@ -25,7 +28,7 @@ import javax.swing.JPanel;
  * @author Venkata Peesapati
  * 
  */
-public class GamePanel extends JPanel implements MouseListener, KeyListener {
+public class GamePanel extends JPanel implements MouseListener {
 
 	private JFrame currentFrame;
 	private JPanel oldPanel;
@@ -34,10 +37,11 @@ public class GamePanel extends JPanel implements MouseListener, KeyListener {
 	private String moveType;
 
 	public GamePanel(JFrame frame, JPanel menuPanel, String moveType) {
-		addMouseListener(this);
 		currentFrame = frame;
 		oldPanel = menuPanel;
 		this.moveType = moveType;
+		addMouseListener(this);
+		addKeyBindings();
 		setLayout(null);
 
 		// This code is used to set up the quit button to quit during game play.
@@ -116,32 +120,70 @@ public class GamePanel extends JPanel implements MouseListener, KeyListener {
 		// TODO Auto-generated method stub
 
 	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-
-		if (key == KeyEvent.VK_UP) {
-			world.moveFromKeyBoard(0);
-		} else if (key == KeyEvent.VK_DOWN) {
-			world.moveFromKeyBoard(1);
-		} else if (key == KeyEvent.VK_LEFT) {
-			world.moveFromKeyBoard(2);
-		} else if (key == KeyEvent.VK_RIGHT) {
-			world.moveFromKeyBoard(3);
+	
+	private void addKeyBindings() {
+		if (moveType.equals("arrows")) {
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "back");
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "right");
+	        this.getActionMap().put("up", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	//world.moveFromKeyBoard(0);
+	                System.out.println("test");
+	            }
+	        });
+	        this.getActionMap().put("down", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	world.moveFromKeyBoard(1);
+	            }
+	        });
+	        this.getActionMap().put("left", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	world.moveFromKeyBoard(2);
+	            }
+	        });
+	        this.getActionMap().put("right", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	world.moveFromKeyBoard(3);
+	            }
+	        });
 		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+		else {
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), "up");
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), "back");
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "left");
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), "right");
+	        this.getActionMap().put("up", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	//world.moveFromKeyBoard(0);
+	                System.out.println("test");
+	            }
+	        });
+	        this.getActionMap().put("down", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	world.moveFromKeyBoard(1);
+	            }
+	        });
+	        this.getActionMap().put("left", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	world.moveFromKeyBoard(2);
+	            }
+	        });
+	        this.getActionMap().put("right", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	world.moveFromKeyBoard(3);
+	            }
+	        });
+		}
 	}
 
 }
