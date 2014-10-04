@@ -41,7 +41,9 @@ public abstract class Unit extends GameObject {
 		return curLocation;
 
 	}
-
+	public void upDateLocation(Point newLocation){
+		this.curLocation = newLocation;
+	}
 
 	public abstract void draw(Graphics2D g, int dx, int dy);
 

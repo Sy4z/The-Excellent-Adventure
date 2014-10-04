@@ -97,18 +97,22 @@ public class World {
 	}
 
 	public void moveFromKeyBoard(int i){
-		System.out.println("Cats");
+		//System.out.println("Cats");//this is not helpfull -- Greg >:-/
 		//0 is up
 		//1 is down
 		//2 is left
 		//3 is right
 		if(i==0)
+			System.out.println("World.moveFromKeyBoard(): UP");
 			move(activePlayer.getLocation().x+1,activePlayer.getLocation().y);
 		if(i==1)
+			System.out.println("World.moveFromKeyBoard(): DOWN");
 			move(activePlayer.getLocation().x-1,activePlayer.getLocation().y);
 		if(i==2)
+			System.out.println("World.moveFromKeyBoard(): LEFT");
 			move(activePlayer.getLocation().x,activePlayer.getLocation().y+1);
 		if(i==3)
+			System.out.println("World.moveFromKeyBoard(): RIGHT");
 			move(activePlayer.getLocation().x,activePlayer.getLocation().y-1);
 	}
 
@@ -195,7 +199,7 @@ public class World {
 			return false;
 		if(worldMap[x][y].isIsTile())
 			if(worldMap[x][y].isReachableByActive()){
-				canvas.moveUnit(null, activePlayer, worldMap[x][y].getPath());
+				canvas.moveUnit(activePlayer, worldMap[x][y].getPath());
 				activePlayer.depleateMoves();
 				gameBoard[x][y] = activePlayer;
 				gameBoard[activePlayer.getLocation().x][activePlayer.getLocation().y] = null;
