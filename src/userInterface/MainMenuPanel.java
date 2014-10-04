@@ -4,6 +4,7 @@ import gameRender.IsoCanvas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -12,6 +13,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
@@ -261,8 +265,28 @@ public class MainMenuPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			final JDialog d = new JDialog(currentFrame, "Controls", true);
 			d.setSize(400, 300);
-			d.setLayout(new BorderLayout());
+			d.setLayout(new BoxLayout(d.getContentPane(), BoxLayout.Y_AXIS));
+			
+			JPanel moveControls = new JPanel();
+			moveControls.setLayout(new GridLayout(3,1));
+			
+			JLabel moveLabel = new JLabel("Player Move Controls:");
+			moveLabel.setFont(moveLabel.getFont().deriveFont(18.f));
+			
+			JRadioButton arrows = new JRadioButton("Use arrows to move the player.");
+			arrows.setActionCommand("arrows");
+			JRadioButton letters = new JRadioButton("Use alphabets(W,A,S,D) to move the player.");
+			letters.setActionCommand("letters");
+			arrows.setSelected(true);
+			final ButtonGroup moveButtons = new ButtonGroup();
+			moveButtons.add(arrows);
+			moveButtons.add(letters);
+			
+			moveControls.add(moveLabel);
+			moveControls.add(arrows);
+			moveControls.add(letters);
 
+			d.add(moveControls);
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
 		}
