@@ -31,11 +31,13 @@ public class GamePanel extends JPanel implements MouseListener, KeyListener {
 	private JPanel oldPanel;
 	private World world; // The game world.
 	private IsoCanvas canvas;
+	private String moveType;
 
-	public GamePanel(JFrame frame, JPanel menuPanel) {
+	public GamePanel(JFrame frame, JPanel menuPanel, String moveType) {
 		addMouseListener(this);
 		currentFrame = frame;
 		oldPanel = menuPanel;
+		this.moveType = moveType;
 		setLayout(null);
 
 		// This code is used to set up the quit button to quit during game play.

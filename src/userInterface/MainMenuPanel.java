@@ -36,16 +36,17 @@ import javax.swing.ScrollPaneConstants;
 public class MainMenuPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	JFrame currentFrame;
-	JPanel currentPanel;
+	private JFrame currentFrame;
+	private JPanel currentPanel;
+	private String moveType;
 
-	JLabel gameName;
-	JButton newGameButton;
-	JButton loadButton;
-	JButton storyButton;
-	JButton controlsButton;
-	JButton optionsButton;
-	JButton exitButton;
+	private JLabel gameName;
+	private JButton newGameButton;
+	private JButton loadButton;
+	private JButton storyButton;
+	private JButton controlsButton;
+	private JButton optionsButton;
+ 	private JButton exitButton;
 
 	/**
 	 * The main menu has 6 buttons: New Game, Load, Story, Controls, Options and
@@ -59,6 +60,7 @@ public class MainMenuPanel extends JPanel {
 	public MainMenuPanel(JFrame currentFrame, JPanel currentPanel) {
 		this.currentFrame = currentFrame;
 		this.currentPanel = currentPanel;
+		moveType = "arrows";
 		setLayout(new GridLayout(7, 1));
 		gameName = new JLabel("Apocalypse");
 		gameName.setFont(gameName.getFont().deriveFont(40.0f));
@@ -162,7 +164,7 @@ public class MainMenuPanel extends JPanel {
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
 			currentFrame.getContentPane().add(
-					new GamePanel(currentFrame, currentPanel),
+					new GamePanel(currentFrame, currentPanel, moveType),
 					BorderLayout.CENTER);
 
 			currentFrame.getContentPane().validate();
@@ -265,13 +267,13 @@ public class MainMenuPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			final JDialog d = new JDialog(currentFrame, "Controls", true);
 			d.setSize(400, 300);
-			d.setLayout(new BoxLayout(d.getContentPane(), BoxLayout.Y_AXIS));
+			d.setLayout(new BorderLayout());
 			
 			JPanel moveControls = new JPanel();
 			moveControls.setLayout(new GridLayout(3,1));
 			
 			JLabel moveLabel = new JLabel("Player Move Controls:");
-			moveLabel.setFont(moveLabel.getFont().deriveFont(18.f));
+			moveLabel.setFont(moveLabel.getFont().deriveFont(15.f));
 			
 			JRadioButton arrows = new JRadioButton("Use arrows to move the player.");
 			arrows.setActionCommand("arrows");
@@ -285,8 +287,33 @@ public class MainMenuPanel extends JPanel {
 			moveControls.add(moveLabel);
 			moveControls.add(arrows);
 			moveControls.add(letters);
+			
+			JPanel buttonsPanel = new JPanel();
+			buttonsPanel.setLayout(new FlowLayout());
+			JButton okButton = new JButton("OK");
+			JButton cancelButton = new JButton("Cancel");
+			buttonsPanel.add(okButton);
+			buttonsPanel.add(cancelButton);
+			
+			okButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					moveType = moveButtons.getSelection().getActionCommand();
+					d.dispose();
+				}
+			});
+			
+			cancelButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					d.dispose();
+				}
+			});
 
-			d.add(moveControls);
+			d.add(moveControls, BorderLayout.CENTER);
+			d.add(buttonsPanel, BorderLayout.SOUTH);
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
 		}
