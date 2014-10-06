@@ -119,14 +119,16 @@ public class World {
 		int y = activePlayer.getLocation().y;
 
 		if(i==0)y++;
-		if(i==1)y--;
+		if(i==1){y--; System.out.println("#YOLOSWAG420NOSCPEBLAZEIT111!!1");}
 		if(i==2)x++;
 		if(i==3)x--;
 
 
 		if(inBounds(x, y))
 			if (worldMap[x][y].isIsTile()) {
-				canvas.moveUnit(activePlayer, worldMap[x][y].getPath());
+				ArrayDeque<Point> step = new ArrayDeque<Point>();
+				step.add(new Point(x, y));
+				canvas.moveUnit(activePlayer, step);
 				gameBoard[x][y] = activePlayer;
 				gameBoard[activePlayer.getLocation().x][activePlayer
 						.getLocation().y] = null;

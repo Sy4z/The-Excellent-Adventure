@@ -124,14 +124,14 @@ public class GamePanel extends JPanel implements MouseListener {
 	private void addKeyBindings() {
 		if (moveType.equals("arrows")) {
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");
-			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "back");
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "down");//Hey chet I changed this to down so it works now
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "right");
 	        this.getActionMap().put("up", new AbstractAction() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	            	//world.moveFromKeyBoard(0);
-	                System.out.println("test");
+	            	world.moveFromKeyBoard(0);
+	                //System.out.println("test");
 	            }
 	        });
 	        this.getActionMap().put("down", new AbstractAction() {
@@ -155,7 +155,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		}
 		else {
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), "up");
-			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), "back");
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), "down");//Hey chet I changed this to down so it works now
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "left");
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), "right");
 	        this.getActionMap().put("up", new AbstractAction() {
