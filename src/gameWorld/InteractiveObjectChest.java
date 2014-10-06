@@ -11,8 +11,15 @@ public class InteractiveObjectChest extends InteractiveObject{
 	}
 
 	@Override
-	public String toString(String append) {
-		return "This Is a chest you should open it";
+	public String toString() {
+		return toString("");
+	}
+
+	public String toString(String append){
+		StringBuilder s = new StringBuilder("Chest{");
+		append = "|\n" + append;
+
+		return s + "\n" + append.substring(2) + "}";
 	}
 
 }

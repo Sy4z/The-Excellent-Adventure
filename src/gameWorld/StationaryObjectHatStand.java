@@ -14,10 +14,12 @@ public class StationaryObjectHatStand extends StationaryObject{
 		return toString("");
 	}
 
-	@Override
-	public String toString(String append) {
-		return "This is a Hat stand, if I had a hat I could put it on here.";
-	}
 
+	public String toString(String append){
+		StringBuilder s = new StringBuilder("Hat Stand{");
+		append = "|\n" + append;
+
+		return s + "\n" + append.substring(2) + "}";
+	}
 
 }
