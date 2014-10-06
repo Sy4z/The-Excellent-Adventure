@@ -41,7 +41,7 @@ public class World {
 		worldMap = new LogicalTile[t.tiles.length][t.tiles[0].length];
 		gameBoard = new GameObject[t.tiles.length][t.tiles[0].length];
 		populateWorldMape(t.tiles);
-		activePlayer = units[0];
+		activePlayer = units[5];
 		checkPlayerStatus();
 
 	}
@@ -102,18 +102,38 @@ public class World {
 		//1 is down
 		//2 is left
 		//3 is right
-		if(i==0)
-			System.out.println("World.moveFromKeyBoard(): UP");
-			move(activePlayer.getLocation().x,activePlayer.getLocation().y+1);
-		if(i==1)
-			System.out.println("World.moveFromKeyBoard(): DOWN");
-			move(activePlayer.getLocation().x,activePlayer.getLocation().y-1);
-		if(i==2)
-			System.out.println("World.moveFromKeyBoard(): LEFT");
-			move(activePlayer.getLocation().x+1,activePlayer.getLocation().y);
-		if(i==3)
-			System.out.println("World.moveFromKeyBoard(): RIGHT");
-			move(activePlayer.getLocation().x-1,activePlayer.getLocation().y);
+//		if(i==0)
+//			System.out.println("World.moveFromKeyBoard(): UP");
+//			move(activePlayer.getLocation().x,activePlayer.getLocation().y+1);
+//		if(i==1)
+//			System.out.println("World.moveFromKeyBoard(): DOWN");
+//			move(activePlayer.getLocation().x,activePlayer.getLocation().y-1);
+//		if(i==2)
+//			System.out.println("World.moveFromKeyBoard(): LEFT");
+//			move(activePlayer.getLocation().x+1,activePlayer.getLocation().y);
+//		if(i==3)
+//			System.out.println("World.moveFromKeyBoard(): RIGHT");
+//			move(activePlayer.getLocation().x-1,activePlayer.getLocation().y);
+
+		int x = activePlayer.getLocation().x;
+		int y = activePlayer.getLocation().y;
+
+		if(i==0)y++;
+		if(i==1)y--;
+		if(i==2)x++;
+		if(i==3)x--;
+
+
+		if(inBounds(x, y))
+			if (worldMap[x][y].isIsTile()) {
+				canvas.moveUnit(activePlayer, worldMap[x][y].getPath());
+				gameBoard[x][y] = activePlayer;
+				gameBoard[activePlayer.getLocation().x][activePlayer
+						.getLocation().y] = null;
+
+			}
+
+
 	}
 
 

@@ -24,9 +24,9 @@ import javax.swing.KeyStroke;
 /**
  * This class contains the main canvas displaying the gameplay and other
  * controls required for playing the game.
- * 
+ *
  * @author Venkata Peesapati
- * 
+ *
  */
 public class GamePanel extends JPanel implements MouseListener {
 
@@ -72,9 +72,9 @@ public class GamePanel extends JPanel implements MouseListener {
 	/**
 	 * This is the listener class used for the quit button. It returns to the
 	 * main menu by replacing the game panel with the main menu's panel.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class QuitGameListener implements ActionListener {
 
@@ -120,7 +120,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	private void addKeyBindings() {
 		if (moveType.equals("arrows")) {
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");
@@ -161,14 +161,14 @@ public class GamePanel extends JPanel implements MouseListener {
 	        this.getActionMap().put("up", new AbstractAction() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	            	//world.moveFromKeyBoard(0);
-	                System.out.println("test");
+	            	world.moveFromKeyBoard(0);
+	               // System.out.println("test");
 	            }
 	        });
 	        this.getActionMap().put("down", new AbstractAction() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	            	world.moveFromKeyBoard(1); 
+	            	world.moveFromKeyBoard(1);
 	            }
 	        });
 	        this.getActionMap().put("left", new AbstractAction() {
