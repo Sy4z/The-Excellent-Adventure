@@ -121,25 +121,28 @@ public class World {
 		int x = cursor.getLocation().x;
 		int y = cursor.getLocation().y;
 
+		if (i == 0)
+			y++;
+		if (i == 1)
+			y--;
+		if (i == 2)
+			x--;
+		if (i == 3)
+			x++;
 
-		if(i==0)y++;
-		if(i==1)y--;
-		if(i==2)x--;
-		if(i==3)x++;
-
-
-		if(inBounds(x, y))
+		if (inBounds(x, y))
 			if (worldMap[x][y].isIsTile()) {
-				//canvas.moveCursor(x, y);
-				ArrayDeque<Point> step = new ArrayDeque<Point>();
-				step.add(new Point(x, y));
-				canvas.moveUnit(cursor, step);
-				//gameBoard[x][y] = activePlayer;
-				//gameBoard[activePlayer.getLocation().x][activePlayer
-					//	.getLocation().y] = null;
+				if (worldMap[x][y].isReachableByActive()) {
+					// canvas.moveCursor(x, y);
+					ArrayDeque<Point> step = new ArrayDeque<Point>();
+					step.add(new Point(x, y));
+					canvas.moveUnit(cursor, step);
+					// gameBoard[x][y] = activePlayer;
+					// gameBoard[activePlayer.getLocation().x][activePlayer
+					// .getLocation().y] = null;
 
+				}
 			}
-
 
 	}
 
