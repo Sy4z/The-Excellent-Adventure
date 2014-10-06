@@ -26,6 +26,7 @@ public class World {
 	private GameObject[][] gameBoard;
 	private LogicalTile[][] worldMap;
 	private Unit activePlayer;
+	private UnitCursor cursor;
 	private IsoCanvas canvas;
 
 
@@ -42,6 +43,7 @@ public class World {
 		gameBoard = new GameObject[t.tiles.length][t.tiles[0].length];
 		populateWorldMape(t.tiles);
 		activePlayer = units[0];
+		cursor = new UnitCursor(activePlayer.curLocation, -1);
 		checkPlayerStatus();
 
 	}
@@ -66,6 +68,7 @@ public class World {
 	public void checkPlayerStatus() {
 		if(activePlayer == null){
 			activePlayer = units[0];
+			cursor = new UnitCursor(activePlayer.curLocation, -1);
 		}
 		else if(!activePlayer.isActive()){
 			//activePlayer = units[nextPlayerID()]; //Removed while Testing is being done
@@ -92,7 +95,7 @@ public class World {
 		int x = coords.x;
 		int y = coords.y;
 
-		//x = canvas.toCart(x, y).x; // sorry chris this dosnt work yet
+		//x = canvas.toCart(x, y).x; // Sorry Chris this dosn't work yet
 		//y = canvas.toCart(x, y).y;
 		if(move(x, y)) return;
 	}
@@ -115,8 +118,8 @@ public class World {
 //			System.out.println("World.moveFromKeyBoard(): RIGHT");
 //			move(activePlayer.getLocation().x+1,activePlayer.getLocation().y);
 
-		int x = activePlayer.getLocation().x;
-		int y = activePlayer.getLocation().y;
+		int x = cursor.getLocation().x;
+		int y = cursor.getLocation().y;
 
 
 		if(i==0)y++;
@@ -130,10 +133,10 @@ public class World {
 				//canvas.moveCursor(x, y);
 				ArrayDeque<Point> step = new ArrayDeque<Point>();
 				step.add(new Point(x, y));
-				canvas.moveUnit(activePlayer, step);
-				gameBoard[x][y] = activePlayer;
-				gameBoard[activePlayer.getLocation().x][activePlayer
-						.getLocation().y] = null;
+				canvas.moveUnit(cursor, step);
+				//gameBoard[x][y] = activePlayer;
+				//gameBoard[activePlayer.getLocation().x][activePlayer
+					//	.getLocation().y] = null;
 
 			}
 
