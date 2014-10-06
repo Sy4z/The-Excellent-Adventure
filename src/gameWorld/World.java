@@ -39,6 +39,7 @@ public class World {
 		worldMap = new LogicalTile[t.tiles.length][t.tiles[0].length];
 		gameBoard = new GameObject[t.tiles.length][t.tiles[0].length];
 		populateWorldMape(t.tiles);
+		activePlayer = units[0];
 		checkPlayerStatus();
 
 	}
@@ -61,13 +62,11 @@ public class World {
 	 *
 	 */
 	public void checkPlayerStatus() {
-		//Yo chris, fixed a null pointer, active player was never initialised, so calling active player broke everything
-		//ta, --Dylan //TODO
 		if(activePlayer == null){
 			activePlayer = units[0];
 		}
 		else if(!activePlayer.isActive()){
-			activePlayer = units[incrementID()];
+			activePlayer = units[nextPlayerID()];
 			activePlayer.activate();
 		}
 		calculatePossibleMovments(activePlayer.curLocation);
@@ -76,7 +75,7 @@ public class World {
 
 	}
 
-	private int incrementID() {
+	private int nextPlayerID() {
 		if(activePlayer.getID() == units.length-1)
 			return 0;
 		return activePlayer.getID() +1;
@@ -97,7 +96,6 @@ public class World {
 	}
 
 	public void moveFromKeyBoard(int i){
-		//System.out.println("Cats");//this is not helpfull -- Greg >:-/
 		//0 is up
 		//1 is down
 		//2 is left
@@ -151,28 +149,31 @@ public class World {
 
 
 	private void calculatePossibleMovments(Point curLocation) {
-		moveFrom(curLocation.x, curLocation.y, 6, new Stack<Point>());
+		checkMoveFrom(curLocation.x, curLocation.y, 6, new Stack<Point>());
 
 	}
 
-	private void moveFrom(int x, int y, int numMoves, Stack<Point> path){
+	private void checkMoveFrom(int x, int y, int numMoves, Stack<Point> path){
 		path.add(new Point(x, y));
 		worldMap[x][y].setPath(path);
 		worldMap[x][y].setReachableByActive(true);
 		if(numMoves==0) return;
 
+		//Hey greg I saw you didn't commit your changes
+		//here and some refactoring I did changed the method so you
+		//would have a conflict so I made the changes here as well
+		//Cheers Chris.
 		if(validMove(x+1, y, path))
-			moveFrom(x+1, y, numMoves-1, (Stack<Point>)path.clone());
+			checkMoveFrom(x+1, y, numMoves-1, (Stack<Point>)path.clone());
 
 		if(validMove(x-1, y, path))
-			moveFrom(x-1, y, numMoves-1, (Stack<Point>)path.clone());
+			checkMoveFrom(x-1, y, numMoves-1, (Stack<Point>)path.clone());
 
 		if(validMove(x,y-1, path))
-			moveFrom(x,y-1, numMoves-1,(Stack<Point>)path.clone());
+			checkMoveFrom(x,y-1, numMoves-1,(Stack<Point>)path.clone());
 
 		if(validMove(x,y+1, path))
-			moveFrom(x,y+1, numMoves-1,(Stack<Point>)path.clone());
-
+			checkMoveFrom(x,y+1, numMoves-1,(Stack<Point>)path.clone());
 	}
 
 	private boolean validMove(int x, int y, Stack<Point> path){

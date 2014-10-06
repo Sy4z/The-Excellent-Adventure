@@ -11,13 +11,20 @@ public class ItemRustyNail extends Item{
 	}
 
 	@Override
-	public String toString(String append) {
-		return "This is a rusty nail";
+	public String toString() {
+		return toString("");
 	}
 
 	@Override
 	void draw(Graphics2D g, int dx, int dy) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public String toString(String append){
+		StringBuilder s = new StringBuilder("Rusty Nail{");
+		append = "|\n" + append;
+
+		return s + "\n" + append.substring(2) + "}";
 	}
 }
