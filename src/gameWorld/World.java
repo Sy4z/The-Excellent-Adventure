@@ -3,11 +3,13 @@ package gameWorld;
 import gameRender.IsoCanvas;
 
 import java.awt.Point;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Stack;
 
 import tile.TileMultiton.type;
 
+import com.sun.jmx.remote.internal.ArrayQueue;
 import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 
 import dataStorage.Data;
@@ -66,7 +68,7 @@ public class World {
 			activePlayer = units[0];
 		}
 		else if(!activePlayer.isActive()){
-			activePlayer = units[nextPlayerID()];
+			//activePlayer = units[nextPlayerID()]; //Removed while Testing is being done
 			activePlayer.activate();
 		}
 		calculatePossibleMovments(activePlayer.curLocation);
@@ -102,16 +104,16 @@ public class World {
 		//3 is right
 		if(i==0)
 			System.out.println("World.moveFromKeyBoard(): UP");
-			move(activePlayer.getLocation().x+1,activePlayer.getLocation().y);
+			move(activePlayer.getLocation().x,activePlayer.getLocation().y+1);
 		if(i==1)
 			System.out.println("World.moveFromKeyBoard(): DOWN");
-			move(activePlayer.getLocation().x-1,activePlayer.getLocation().y);
+			move(activePlayer.getLocation().x,activePlayer.getLocation().y-1);
 		if(i==2)
 			System.out.println("World.moveFromKeyBoard(): LEFT");
-			move(activePlayer.getLocation().x,activePlayer.getLocation().y+1);
+			move(activePlayer.getLocation().x+1,activePlayer.getLocation().y);
 		if(i==3)
 			System.out.println("World.moveFromKeyBoard(): RIGHT");
-			move(activePlayer.getLocation().x,activePlayer.getLocation().y-1);
+			move(activePlayer.getLocation().x-1,activePlayer.getLocation().y);
 	}
 
 
@@ -126,7 +128,6 @@ public class World {
 			for(int y = 0; y < worldMap[0].length; y++)
 				if(worldMap[x][y].isReachableByActive())
 					highPoints.add(new Point(x, y));
-
 		return highPoints;
 	}
 
@@ -149,34 +150,30 @@ public class World {
 
 
 	private void calculatePossibleMovments(Point curLocation) {
-		checkMoveFrom(curLocation.x, curLocation.y, 6, new Stack<Point>());
+		checkMoveFrom(curLocation.x, curLocation.y, 6, new ArrayDeque<Point>());
 
 	}
 
-	private void checkMoveFrom(int x, int y, int numMoves, Stack<Point> path){
+	private void checkMoveFrom(int x, int y, int numMoves, ArrayDeque<Point> path){
 		path.add(new Point(x, y));
 		worldMap[x][y].setPath(path);
 		worldMap[x][y].setReachableByActive(true);
 		if(numMoves==0) return;
 
-		//Hey greg I saw you didn't commit your changes
-		//here and some refactoring I did changed the method so you
-		//would have a conflict so I made the changes here as well
-		//Cheers Chris.
 		if(validMove(x+1, y, path))
-			checkMoveFrom(x+1, y, numMoves-1, (Stack<Point>)path.clone());
+			checkMoveFrom(x+1, y, numMoves-1, path.clone());
 
 		if(validMove(x-1, y, path))
-			checkMoveFrom(x-1, y, numMoves-1, (Stack<Point>)path.clone());
+			checkMoveFrom(x-1, y, numMoves-1, path.clone());
 
 		if(validMove(x,y-1, path))
-			checkMoveFrom(x,y-1, numMoves-1,(Stack<Point>)path.clone());
+			checkMoveFrom(x,y-1, numMoves-1,path.clone());
 
 		if(validMove(x,y+1, path))
-			checkMoveFrom(x,y+1, numMoves-1,(Stack<Point>)path.clone());
+			checkMoveFrom(x,y+1, numMoves-1,path.clone());
 	}
 
-	private boolean validMove(int x, int y, Stack<Point> path){
+	private boolean validMove(int x, int y, ArrayDeque<Point> path){
 		if(!inBounds(x,y))
 			return false;
 		if(!worldMap[x][y].isIsTile())

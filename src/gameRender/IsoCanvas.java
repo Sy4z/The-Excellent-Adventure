@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -87,7 +88,7 @@ public class IsoCanvas extends JPanel{
 				}
 			}
 		}
-	} 
+	}
 	/**
 	 *
 	 * @param updatedMap
@@ -140,11 +141,11 @@ public class IsoCanvas extends JPanel{
 	 *
 	 * @param unit
 	 */
-	public void moveUnit(Unit unit, Stack<Point> cordinates){
+	public void moveUnit(Unit unit, ArrayDeque<Point> arrayDeque){
 		int i = 0;
 		this.entity = unit;
-		while(!cordinates.empty()){
-			Point p = cordinates.pop();
+		while(!arrayDeque.isEmpty()){
+			Point p = arrayDeque.pop();
 			System.out.println("IsoCanvas.MoveUnit(), StackPoint "+"("+i+"):"+p.x+","+p.y);
 			entity.upDateLocation(p);
 			this.repaint();
@@ -166,8 +167,8 @@ public class IsoCanvas extends JPanel{
 	public void getMapLocation(int x, int i){
 
 	}
-	
-	
+
+
 	/**
 	 * Was Reading some of the Commander keen source code
 	 * that was recently released and they did this, awesome idea

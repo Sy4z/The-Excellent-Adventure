@@ -168,7 +168,7 @@ public class GamePanel extends JPanel implements MouseListener {
 	        this.getActionMap().put("down", new AbstractAction() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	            	world.moveFromKeyBoard(1);
+	            	world.moveFromKeyBoard(1); 
 	            }
 	        });
 	        this.getActionMap().put("left", new AbstractAction() {

@@ -1,11 +1,12 @@
 package gameWorld;
 
 import java.awt.Point;
+import java.util.ArrayDeque;
 import java.util.Stack;
 
 public class LogicalTile {
 	private boolean isTile;
-	private Stack<Point> path;
+	private ArrayDeque<Point> path;
 	private boolean reachableByActive;
 
 	public LogicalTile(boolean canTouchThis){
@@ -28,14 +29,14 @@ public class LogicalTile {
 	/**
 	 * @return the path
 	 */
-	public Stack<Point> getPath() {
+	public ArrayDeque<Point> getPath() {
 		return path;
 	}
 	/**
-	 * @param path the path to set
+	 * @param path2 the path to set
 	 */
-	public void setPath(Stack<Point> path) {
-		this.path = path;
+	public void setPath(ArrayDeque<Point> path2) {
+		this.path = path2;
 	}
 
 
