@@ -162,16 +162,16 @@ public class World {
 		if(numMoves==0) return;
 
 		if(validMove(x+1, y, path))
-			moveFrom(x+1, y, numMoves-1, path);
+			moveFrom(x+1, y, numMoves-1, (Stack<Point>)path.clone());
 
 		if(validMove(x-1, y, path))
-			moveFrom(x-1, y, numMoves-1, path);
+			moveFrom(x-1, y, numMoves-1, (Stack<Point>)path.clone());
 
 		if(validMove(x,y-1, path))
-			moveFrom(x,y-1, numMoves-1,path);
+			moveFrom(x,y-1, numMoves-1,(Stack<Point>)path.clone());
 
 		if(validMove(x,y+1, path))
-			moveFrom(x,y+1, numMoves-1,path);
+			moveFrom(x,y+1, numMoves-1,(Stack<Point>)path.clone());
 
 	}
 

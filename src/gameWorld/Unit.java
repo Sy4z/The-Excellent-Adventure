@@ -33,17 +33,15 @@ public abstract class Unit extends GameObject {
 	 * move methods in Control which will update all other information related
 	 * to the move and ensure it is a valid move
 	 */
-	public void move(Point destination) {
-		curLocation = destination;
+	public void upDateLocation(Point newLocation){
+		this.curLocation = newLocation;
 	}
-
+	
 	public Point getLocation() {
 		return curLocation;
 
 	}
-	public void upDateLocation(Point newLocation){
-		this.curLocation = newLocation;
-	}
+	
 
 	public abstract void draw(Graphics2D g, int dx, int dy);
 

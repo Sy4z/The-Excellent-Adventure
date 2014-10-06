@@ -4,6 +4,7 @@ package gameRender;
 import gameWorld.GameObject;
 import gameWorld.Unit;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -59,6 +60,7 @@ public class IsoCanvas extends JPanel{
 	 */
 	public void paint(Graphics g){
 		Graphics2D g2d = (Graphics2D) g;
+		g.setColor(new Color(50,50,60));
 		g.fillRect(0,0,width,height);
 		Tile tile;
 		Point tilePos;
@@ -143,7 +145,7 @@ public class IsoCanvas extends JPanel{
 		this.entity = unit;
 		while(!cordinates.empty()){
 			Point p = cordinates.pop();
-			//System.out.println("IsoCanvas.MoveUnit(), StackPoint "+"("+i+"):"+p.x+","+p.y);
+			System.out.println("IsoCanvas.MoveUnit(), StackPoint "+"("+i+"):"+p.x+","+p.y);
 			entity.upDateLocation(p);
 			this.repaint();
 			i++;
