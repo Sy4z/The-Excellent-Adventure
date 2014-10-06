@@ -161,7 +161,9 @@ public class IsoCanvas extends JPanel{
 	public void moveCursor(int x, int y){
 		this.cursorX = x;
 		this.cursorY = y;
+		this.repaint();
 	}
+
 	public void highlight(ArrayList<Point> tiles){
 		this.HIGHLIGHTED_TILES = tiles;
 	}

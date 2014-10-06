@@ -118,6 +118,7 @@ public class World {
 		int x = activePlayer.getLocation().x;
 		int y = activePlayer.getLocation().y;
 
+
 		if(i==0)y++;
 		if(i==1)y--;
 		if(i==2)x--;
@@ -126,6 +127,7 @@ public class World {
 
 		if(inBounds(x, y))
 			if (worldMap[x][y].isIsTile()) {
+				//canvas.moveCursor(x, y);
 				ArrayDeque<Point> step = new ArrayDeque<Point>();
 				step.add(new Point(x, y));
 				canvas.moveUnit(activePlayer, step);
