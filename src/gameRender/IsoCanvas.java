@@ -27,7 +27,8 @@ import tile.TileMultiton;
  *			oswald.gm@gmail.com
  */
 public class IsoCanvas extends JPanel{
-
+	private int cursorX = 0;
+	private int cursorY = 0;
 	private static final long serialVersionUID = -1838809788973263253L;
 	private TileMultiton.type[][] map = null;
 	private Unit entity;
@@ -81,6 +82,10 @@ public class IsoCanvas extends JPanel{
 				if(entity != null){
 					eX = entity.getLocation().x;
 					eY = entity.getLocation().y;
+					if(cursorX == x && cursorY == y){
+						g.setColor(new Color(0,0,155));
+						g.drawOval(x + 16, y + 16, 20, 10);
+					}
 					if(eX==x && eY==y){
 						entityPos = toIso(eX,eY);
 						entity.draw(g2d, entityPos.x, entityPos.y);
@@ -151,6 +156,10 @@ public class IsoCanvas extends JPanel{
 			this.repaint();
 			i++;
 		}
+	}
+	public void moveCursor(int x, int y){
+		this.cursorX = x;
+		this.cursorY = y;
 	}
 	public void highlight(ArrayList<Point> tiles){
 		this.HIGHLIGHTED_TILES = tiles;
