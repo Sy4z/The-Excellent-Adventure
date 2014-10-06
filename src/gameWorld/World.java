@@ -41,7 +41,7 @@ public class World {
 		worldMap = new LogicalTile[t.tiles.length][t.tiles[0].length];
 		gameBoard = new GameObject[t.tiles.length][t.tiles[0].length];
 		populateWorldMape(t.tiles);
-		activePlayer = units[5];
+		activePlayer = units[0];
 		checkPlayerStatus();
 
 	}
@@ -110,18 +110,18 @@ public class World {
 //			move(activePlayer.getLocation().x,activePlayer.getLocation().y-1);
 //		if(i==2)
 //			System.out.println("World.moveFromKeyBoard(): LEFT");
-//			move(activePlayer.getLocation().x+1,activePlayer.getLocation().y);
+//			move(activePlayer.getLocation().x-1,activePlayer.getLocation().y);
 //		if(i==3)
 //			System.out.println("World.moveFromKeyBoard(): RIGHT");
-//			move(activePlayer.getLocation().x-1,activePlayer.getLocation().y);
+//			move(activePlayer.getLocation().x+1,activePlayer.getLocation().y);
 
 		int x = activePlayer.getLocation().x;
 		int y = activePlayer.getLocation().y;
 
 		if(i==0)y++;
-		if(i==1){y--; System.out.println("#YOLOSWAG420NOSCPEBLAZEIT111!!1");}
-		if(i==2)x++;
-		if(i==3)x--;
+		if(i==1)y--;
+		if(i==2)x--;
+		if(i==3)x++;
 
 
 		if(inBounds(x, y))
