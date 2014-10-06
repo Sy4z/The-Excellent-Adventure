@@ -84,7 +84,8 @@ public class IsoCanvas extends JPanel{
 					eY = entity.getLocation().y;
 					if(cursorX == x && cursorY == y){
 						g.setColor(new Color(0,0,155));
-						g.drawOval(x + 16, y + 16, 20, 10);
+						Point cursor = new Point(toIso(x, y));
+						g.fillOval(cursor.x+15, cursor.y+15, 20, 10);
 					}
 					if(eX==x && eY==y){
 						entityPos = toIso(eX,eY);
