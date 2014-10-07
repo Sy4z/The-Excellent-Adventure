@@ -24,9 +24,9 @@ import javax.swing.KeyStroke;
 /**
  * This class contains the main canvas displaying the gameplay and other
  * controls required for playing the game.
- *
+ * 
  * @author Venkata Peesapati
- *
+ * 
  */
 public class GamePanel extends JPanel implements MouseListener {
 
@@ -58,6 +58,17 @@ public class GamePanel extends JPanel implements MouseListener {
 											// button on the canvas.
 		add(quit);
 
+		JButton controls = new JButton("Controls");
+		controls.setOpaque(false);
+		controls.setContentAreaFilled(false);
+		controls.setBorderPainted(false);
+		controls.setFont(new Font("Arial", Font.PLAIN, 35));
+		controls.setFocusPainted(false);
+		controls.setForeground(Color.green);
+
+		controls.setBounds(965, 60, 170, 40);
+		add(controls);
+
 		// Creates a canvas and a world to put the canvas into the world.
 		canvas = new IsoCanvas(currentFrame.getWidth(),
 				currentFrame.getHeight());
@@ -72,9 +83,9 @@ public class GamePanel extends JPanel implements MouseListener {
 	/**
 	 * This is the listener class used for the quit button. It returns to the
 	 * main menu by replacing the game panel with the main menu's panel.
-	 *
+	 * 
 	 * @author Venkata Peesapati
-	 *
+	 * 
 	 */
 	class QuitGameListener implements ActionListener {
 
@@ -88,6 +99,22 @@ public class GamePanel extends JPanel implements MouseListener {
 
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
+		}
+
+	}
+
+	/**
+	 * This is the listener class used for the controls button. It allows the
+	 * user to change the keyboard controls during the gameplay.
+	 * 
+	 * @author Venkata Peesapati
+	 * 
+	 */
+	class ControlsGameListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
 		}
 
 	}
@@ -123,66 +150,92 @@ public class GamePanel extends JPanel implements MouseListener {
 
 	private void addKeyBindings() {
 		if (moveType.equals("arrows")) {
-			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");
-			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "down");//Hey chet I changed this to down so it works now
-			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
-			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "right");
-	        this.getActionMap().put("up", new AbstractAction() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	world.moveFromKeyBoard(0);
-	                //System.out.println("test");
-	            }
-	        });
-	        this.getActionMap().put("down", new AbstractAction() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	world.moveFromKeyBoard(1);
-	            }
-	        });
-	        this.getActionMap().put("left", new AbstractAction() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	world.moveFromKeyBoard(2);
-	            }
-	        });
-	        this.getActionMap().put("right", new AbstractAction() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	world.moveFromKeyBoard(3);
-	            }
-	        });
-		}
-		else {
-			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), "up");
-			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), "down");//Hey chet I changed this to down so it works now
-			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "left");
-			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), "right");
-	        this.getActionMap().put("up", new AbstractAction() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	world.moveFromKeyBoard(0);
-	               // System.out.println("test");
-	            }
-	        });
-	        this.getActionMap().put("down", new AbstractAction() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	world.moveFromKeyBoard(1);
-	            }
-	        });
-	        this.getActionMap().put("left", new AbstractAction() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	world.moveFromKeyBoard(2);
-	            }
-	        });
-	        this.getActionMap().put("right", new AbstractAction() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	world.moveFromKeyBoard(3);
-	            }
-	        });
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+					KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+					KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "down");// Hey
+																			// chet
+																			// I
+																			// changed
+																			// this
+																			// to
+																			// down
+																			// so
+																			// it
+																			// works
+																			// now
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+					KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+					KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "right");
+			this.getActionMap().put("up", new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					world.moveFromKeyBoard(0);
+					// System.out.println("test");
+				}
+			});
+			this.getActionMap().put("down", new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					world.moveFromKeyBoard(1);
+				}
+			});
+			this.getActionMap().put("left", new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					world.moveFromKeyBoard(2);
+				}
+			});
+			this.getActionMap().put("right", new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					world.moveFromKeyBoard(3);
+				}
+			});
+		} else {
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+					KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), "up");
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+					KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), "down");// Hey
+																		// chet
+																		// I
+																		// changed
+																		// this
+																		// to
+																		// down
+																		// so it
+																		// works
+																		// now
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+					KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "left");
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+					KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), "right");
+			this.getActionMap().put("up", new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					world.moveFromKeyBoard(0);
+					// System.out.println("test");
+				}
+			});
+			this.getActionMap().put("down", new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					world.moveFromKeyBoard(1);
+				}
+			});
+			this.getActionMap().put("left", new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					world.moveFromKeyBoard(2);
+				}
+			});
+			this.getActionMap().put("right", new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					world.moveFromKeyBoard(3);
+				}
+			});
 		}
 	}
 
