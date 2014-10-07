@@ -133,4 +133,11 @@ public class Inventory {
 		}
 		return s+"\n"+append.substring(2)+"}";
 	}
+
+	public boolean hasKey() {
+		for(Item itm: items)
+			if(itm instanceof ItemKey)
+				return true;
+		return false;
+	}
 }

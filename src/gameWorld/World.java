@@ -95,9 +95,35 @@ public class World {
 		int x = coords.x;
 		int y = coords.y;
 
-		//x = canvas.toCart(x, y).x; // Sorry Chris this dosn't work yet
-		//y = canvas.toCart(x, y).y;
-		if(move(x, y)) return;
+		// x = canvas.toCart(x, y).x; // Sorry Chris this dosn't work yet
+		// y = canvas.toCart(x, y).y;
+		if (move(x, y))
+			return;
+		if (gameBoard[x][y] instanceof InteractiveObject)
+			if(nextTo(x,y,activePlayer.curLocation.x, activePlayer.curLocation.y))
+				interactWith(x,y);
+
+
+
+	}
+
+	/**
+	 * Handles interaction with InteractiveObjects
+	 * @param x
+	 * @param y
+	 */
+	private void interactWith(int x, int y) {
+		//If a player does not have a standard action left they may not interact with an object
+		if(!activePlayer.getStandardAction())
+			return;
+		if(gameBoard[x][y] instanceof InteractiveObjectDoor){
+			if(activePlayer.hasKey()){
+				//Maybe make keys used up but for now one key does everything
+				//Hey Greg we should draw this
+				gameBoard[x][y] = null;//Contemplating changing this to hold a container so we can do walkthrough able objects.
+			}
+		}
+
 	}
 
 	public void moveFromKeyBoard(int i){
@@ -236,21 +262,23 @@ public class World {
 		return false;
 	}
 
-
-
-
-
-	private boolean inBounds(int x, int y) {
-		if (x >= gameBoard.length)
-			return false;
-		if (y >= gameBoard[0].length)
-			return false;
-		if (x < 0)
-			return false;
-		if (y < 0)
-			return false;
-		return true;
+	/**
+	 * Helper method to allow move to be called with a point
+	 */
+	public boolean move(Point p){
+		return move(p.x,p.y);
 	}
+
+	/**
+	 * Moves the active player to the cursor
+	 * @return
+	 */
+	public boolean moveToCursor(){
+		return move(cursor.curLocation);
+	}
+
+
+
 
 	/**
 	 * @return the canvas
@@ -264,6 +292,50 @@ public class World {
 	 */
 	public void setCanvas(IsoCanvas canvas) {
 		this.canvas = canvas;
+	}
+
+	//Helper Methods Below this Point--------------------------------------------------------------------------
+
+	/**
+	 * Checks if two points are next to each other by
+	 * checking if the absolute value of the change in X and Y is
+	 * equal to 1
+	 * @param p1
+	 * @param p2
+	 * @return
+	 */
+	private boolean nextTo(Point p1, Point p2){
+		return ((Math.abs(p1.x-p2.x) + Math.abs(p1.y-p2.y)) == 1);
+	}
+
+	/**
+	 * Calls method of same name with points instead of xy
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @return
+	 */
+	private boolean nextTo(int x1, int y1, int x2, int y2){
+		return nextTo(new Point(x1,y1), new Point(x2,y2));
+	}
+
+	/**
+	 * Checks if a point is on the GameBoard
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	private boolean inBounds(int x, int y) {
+		if (x >= gameBoard.length)
+			return false;
+		if (y >= gameBoard[0].length)
+			return false;
+		if (x < 0)
+			return false;
+		if (y < 0)
+			return false;
+		return true;
 	}
 
 }

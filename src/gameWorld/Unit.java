@@ -13,17 +13,18 @@ import sun.net.util.IPAddressUtil;
  *
  */
 public abstract class Unit extends GameObject {
+	protected Inventory inventory;
 	protected Point curLocation;
 	protected File filePath;
 	private boolean isActiveUnit;
 	private boolean standardAction;
 	private boolean moveAction;
-	private boolean swiftAction;
 	private BufferedImage img;
 	protected int ID;
-	public Unit(Point loc, int ID) {
+	public Unit(Point loc, int ID, Inventory inventory) {
 		curLocation = loc;
 		this.ID = ID;
+		this.inventory = inventory;
 	}
 
 
@@ -36,19 +37,18 @@ public abstract class Unit extends GameObject {
 	public void upDateLocation(Point newLocation){
 		this.curLocation = newLocation;
 	}
-	
+
 	public Point getLocation() {
 		return curLocation;
 
 	}
-	
+
 
 	public abstract void draw(Graphics2D g, int dx, int dy);
 
 	public void activate() {
 		moveAction = true;
 		standardAction = true;
-		swiftAction = true;
 		this.isActiveUnit = true;
 
 	}
@@ -63,10 +63,7 @@ public abstract class Unit extends GameObject {
 
 	public boolean getMoveAction(){
 		return moveAction;
-	}
 
-	public boolean getSwiftACtion(){
-		return swiftAction;
 	}
 
 	public int getAvilableMoves() {
@@ -98,6 +95,12 @@ public abstract class Unit extends GameObject {
 	public void setID(int iD) {
 		ID = iD;
 	}
+
+	public boolean hasKey() {
+		return inventory.hasKey();
+	}
+
+
 
 
 

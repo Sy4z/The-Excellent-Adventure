@@ -17,13 +17,11 @@ import javax.imageio.ImageIO;
  *
  */
 public class ServiceBot extends Unit {
-	private Inventory inventory;
 	private BufferedImage img;
 	private int heightOffSet;
-	
+
 	public ServiceBot(Point loc, int ID) {
-		super(loc, ID);
-		inventory = new Inventory();
+		super(loc, ID,new Inventory());
 		this.filePath = null;//Replace with File once image is aqquired
 		try {
 			img = ImageIO.read(new File("src/tile/orb.png"));
@@ -97,7 +95,6 @@ public class ServiceBot extends Unit {
 		s.append("\n"+append+"isActive: "+isActive());
 		s.append("\n"+append+"StandardAction: "+getStandardAction());
 		s.append("\n"+append+"MoveAction: "+getMoveAction());
-		s.append("\n"+append+"SwiftAction: "+getSwiftACtion());
 		s.append("\n"+append+""+inventory.toString(append));
 
 		return s +"\n" + append.substring(2) + "}";
