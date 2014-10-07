@@ -5,7 +5,9 @@ import gameWorld.World;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,10 +17,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.AbstractAction;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.KeyStroke;
 
 /**
@@ -67,6 +73,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		controls.setForeground(Color.green);
 
 		controls.setBounds(965, 60, 170, 40);
+		controls.addActionListener(new ControlsGameListener());
 		add(controls);
 
 		// Creates a canvas and a world to put the canvas into the world.
@@ -91,6 +98,7 @@ public class GamePanel extends JPanel implements MouseListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			moveType = "arrows";
 			currentFrame.getContentPane().removeAll();
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
@@ -114,7 +122,61 @@ public class GamePanel extends JPanel implements MouseListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+			final JDialog d = new JDialog(currentFrame, "Controls", true);
+			d.setSize(400, 300);
+			d.setLayout(new BorderLayout());
+
+			JPanel moveControls = new JPanel();
+			moveControls.setLayout(new GridLayout(3, 1));
+
+			JLabel moveLabel = new JLabel("Player Move Controls:");
+			moveLabel.setFont(moveLabel.getFont().deriveFont(15.f));
+
+			JRadioButton arrows = new JRadioButton(
+					"Use arrows to move the player.");
+			arrows.setActionCommand("arrows");
+			JRadioButton letters = new JRadioButton(
+					"Use alphabets(W,A,S,D) to move the player.");
+			letters.setActionCommand("letters");
+			arrows.setSelected(true);
+			final ButtonGroup moveButtons = new ButtonGroup();
+			moveButtons.add(arrows);
+			moveButtons.add(letters);
+
+			moveControls.add(moveLabel);
+			moveControls.add(arrows);
+			moveControls.add(letters);
+
+			JPanel buttonsPanel = new JPanel();
+			buttonsPanel.setLayout(new FlowLayout());
+			JButton okButton = new JButton("OK");
+			JButton cancelButton = new JButton("Cancel");
+			buttonsPanel.add(okButton);
+			buttonsPanel.add(cancelButton);
+
+			okButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					moveType = moveButtons.getSelection().getActionCommand();
+					addKeyBindings(); // Resetting key bindings to match new
+										// control settings.
+					d.dispose();
+				}
+			});
+
+			cancelButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					d.dispose();
+				}
+			});
+
+			d.add(moveControls, BorderLayout.CENTER);
+			d.add(buttonsPanel, BorderLayout.SOUTH);
+			d.setLocationRelativeTo(null);
+			d.setVisible(true);
 		}
 
 	}
@@ -168,6 +230,7 @@ public class GamePanel extends JPanel implements MouseListener {
 					KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
 					KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "right");
+
 			this.getActionMap().put("up", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -211,11 +274,12 @@ public class GamePanel extends JPanel implements MouseListener {
 					KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "left");
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
 					KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), "right");
+
 			this.getActionMap().put("up", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(0);
-					// System.out.println("test");
+					System.out.println("test");
 				}
 			});
 			this.getActionMap().put("down", new AbstractAction() {
