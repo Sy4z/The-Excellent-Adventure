@@ -28,7 +28,7 @@ public class ServerThread extends Thread{
 	public ServerThread(Socket clientSocket){
 		System.out.println("New Server Thread Created");//debugging info
 		this.socket = clientSocket;
-		//start(); Not sure that i need this
+		//start(); Not sure that i need this - I don't
 
 	}
 

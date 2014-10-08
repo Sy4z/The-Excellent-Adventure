@@ -35,10 +35,21 @@ public class ClientThread extends Thread {
 			toServer = new DataOutputStream(sock.getOutputStream());
 			//fromServer = new DataInputStream(sock.getInputStream());
 			System.out.println("Client Socket connected on " + sock.getInetAddress() + ":" + sock.getPort());
+			
+			
+			
+			/**
+			 * The following block of code is where information can be sent to/from the server.
+			 * Helper methods incoming
+			 */
 			String sentence = "Hi Server, From Client"; //Thus is the string that gets sent to the server
 			toServer.writeBytes(sentence + '\n'); //Apparantly, writeBytes converts a string to bytes automatically
+			//End Data Transfer Block
+			
+			
+			
 			toServer.flush();
-			sock.close();
+			sock.close(); //Closes Socket - Important to do this but this closes the client thread completely, which might be a bad idea until the data beings being sent via a loop w/ exit clause
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
