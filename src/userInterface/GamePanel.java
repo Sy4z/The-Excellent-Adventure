@@ -218,6 +218,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				world.moveToCursor();
+				repaint();
 			}
 		});
 
@@ -246,24 +247,28 @@ public class GamePanel extends JPanel implements MouseListener {
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(0);
 					// System.out.println("test");
+					repaint();
 				}
 			});
 			this.getActionMap().put("down", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(1);
+					repaint();
 				}
 			});
 			this.getActionMap().put("left", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(2);
+					repaint();
 				}
 			});
 			this.getActionMap().put("right", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(3);
+					repaint();
 				}
 			});
 		} else {
@@ -290,24 +295,28 @@ public class GamePanel extends JPanel implements MouseListener {
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(0);
 					System.out.println("test");
+					repaint();
 				}
 			});
 			this.getActionMap().put("down", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(1);
+					repaint();
 				}
 			});
 			this.getActionMap().put("left", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(2);
+					repaint();
 				}
 			});
 			this.getActionMap().put("right", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(3);
+					repaint();
 				}
 			});
 		}
