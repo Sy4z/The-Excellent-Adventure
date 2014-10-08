@@ -12,7 +12,7 @@ import java.awt.Point;
 public class UnitCursor extends Unit{
 
 	public UnitCursor(Point loc, int ID) {
-		super(loc, ID);
+		super(loc, ID, null);
 		// TODO Auto-generated constructor stub
 	}
 

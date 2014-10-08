@@ -257,10 +257,13 @@ public class World {
 				activePlayer.depleateMoves();
 				gameBoard[x][y] = activePlayer;
 				gameBoard[activePlayer.getLocation().x][activePlayer.getLocation().y] = null;
+				calculatePossibleMovments(x,y);
 				return true;
 			}
 		return false;
 	}
+
+
 
 	/**
 	 * Helper method to allow move to be called with a point
@@ -274,7 +277,7 @@ public class World {
 	 * @return
 	 */
 	public boolean moveToCursor(){
-		return move(cursor.curLocation);
+		return (move(cursor.curLocation));
 	}
 
 
@@ -336,6 +339,10 @@ public class World {
 		if (y < 0)
 			return false;
 		return true;
+	}
+
+	private void calculatePossibleMovments(int x, int y) {
+		calculatePossibleMovments(new Point(x,y));
 	}
 
 }
