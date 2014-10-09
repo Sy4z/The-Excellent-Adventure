@@ -49,7 +49,7 @@ public class World {
 	}
 
 	/**
-	 * This is very niaeve and may break will be fixed affter discussing the Tuple class
+	 * This is very niaeve and may break will be fixed after discussing the Tuple class
 	 * with group members
 	 * @param tiles
 	 */
@@ -57,8 +57,6 @@ public class World {
 		for(int x = 0; x < tiles.length; x++)
 			for(int y = 0; y < tiles[0].length; y++)
 					worldMap[x][y] = new LogicalTile(tiles[x][y] != null);
-
-
 	}
 
 
@@ -116,13 +114,14 @@ public class World {
 		//If a player does not have a standard action left they may not interact with an object
 		if(!activePlayer.getStandardAction())
 			return;
-		if(gameBoard[x][y] instanceof InteractiveObjectDoor){
-			if(activePlayer.hasKey()){
-				//Maybe make keys used up but for now one key does everything
-				//Hey Greg we should draw this
-				gameBoard[x][y] = null;//Contemplating changing this to hold a container so we can do walkthrough able objects.
-			}
-		}
+		//Moving to using logical tiles for doors.
+//		if(gameBoard[x][y] instanceof InteractiveObjectDoor){
+//			if(activePlayer.hasKey()){
+//				//Maybe make keys used up but for now one key does everything
+//				//Hey Greg we should draw this
+//				gameBoard[x][y] = null;//Contemplating changing this to hold a container so we can do walkthrough able objects.
+//			}
+//		}
 
 	}
 
@@ -158,14 +157,14 @@ public class World {
 
 		if (inBounds(x, y))
 			if (worldMap[x][y].isIsTile()) {
+				//If it's a door only a player with a key can go through
+				if(worldMap[x][y] instanceof LogicalTileDoor)
+					if(!activePlayer.hasKey()) return;
+				//If the XY is within one movment of the active player
 				if (worldMap[x][y].isReachableByActive()) {
-					// canvas.moveCursor(x, y);
 					ArrayDeque<Point> step = new ArrayDeque<Point>();
 					step.add(new Point(x, y));
 					canvas.moveUnit(cursor, step);
-					// gameBoard[x][y] = activePlayer;
-					// gameBoard[activePlayer.getLocation().x][activePlayer
-					// .getLocation().y] = null;
 
 				}
 			}

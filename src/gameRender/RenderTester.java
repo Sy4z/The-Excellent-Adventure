@@ -20,15 +20,15 @@ public class RenderTester extends JFrame implements KeyListener{
 	private Unit entity;
 	private IsoCanvas testCanvas;
 	public RenderTester(int width, int height){
-		super("Render Tester");	
+		super("Render Tester");
 		System.out.println("Intitialising RenderTester..");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(50, 50, width, height);
 		testCanvas = new IsoCanvas(this.getWidth(),this.getHeight());
 		add(testCanvas);
 		pack();
-		setResizable(true); 
-		setVisible(true); 
+		setResizable(true);
+		setVisible(true);
 		addKeyListener(this);
 		this.entity = new ServiceBot(new Point(0,0), 32);
 		testCanvas.initEntity(entity);
@@ -59,8 +59,8 @@ public class RenderTester extends JFrame implements KeyListener{
 			//testCanvas.moveUnit(entity,down);
 			
 			break;
-			
-		
+
+
 		case 39: //right
 			//Point pR = new Point(entity.getLocation().x+1,entity.getLocation().y+1);
 			//ArrayDeque<Point> right = new ArrayDeque<Point>();
@@ -74,16 +74,16 @@ public class RenderTester extends JFrame implements KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	public static void main(String args[]){
 		RenderTester rt = new RenderTester(800,600);
 	}
-	
+
 }

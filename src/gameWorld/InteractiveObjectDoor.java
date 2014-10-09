@@ -1,7 +1,7 @@
 package gameWorld;
 
 import java.awt.Graphics2D;
-
+@Deprecated
 public class InteractiveObjectDoor extends InteractiveObject{
 
 	@Override
