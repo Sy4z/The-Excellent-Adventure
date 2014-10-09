@@ -114,14 +114,12 @@ public class World {
 		//If a player does not have a standard action left they may not interact with an object
 		if(!activePlayer.getStandardAction())
 			return;
-		//Moving to using logical tiles for doors.
-//		if(gameBoard[x][y] instanceof InteractiveObjectDoor){
-//			if(activePlayer.hasKey()){
-//				//Maybe make keys used up but for now one key does everything
-//				//Hey Greg we should draw this
-//				gameBoard[x][y] = null;//Contemplating changing this to hold a container so we can do walkthrough able objects.
-//			}
-//		}
+		if(gameBoard[x][y] instanceof InteractiveObjectChest){
+			if(((InteractiveObjectChest)gameBoard[x][y]).isLocked())
+				if(!activePlayer.hasKey())
+					return;
+			//Call chest interaction POP up here.
+		}
 
 	}
 

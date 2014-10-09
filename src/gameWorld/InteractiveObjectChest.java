@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 
 public class InteractiveObjectChest extends InteractiveObject{
 
+	private boolean locked;
+
 	@Override
 	void draw(Graphics2D g, int dx, int dy) {
 		// TODO Auto-generated method stub
@@ -21,5 +23,21 @@ public class InteractiveObjectChest extends InteractiveObject{
 
 		return s + "\n" + append.substring(2) + "}";
 	}
+
+	/**
+	 * @return the locked
+	 */
+	public boolean isLocked() {
+		return locked;
+	}
+
+	/**
+	 * @param locked the locked to set
+	 */
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+
+
 
 }
