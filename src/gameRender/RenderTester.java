@@ -23,14 +23,13 @@ public class RenderTester extends JFrame implements KeyListener{
 		super("Render Tester");
 		System.out.println("Intitialising RenderTester..");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(50, 50, width, height);
+		setSize(width,height);
 		testCanvas = new IsoCanvas(this.getWidth(),this.getHeight());
 		add(testCanvas);
-		pack();
-		setResizable(true);
+		setResizable(false);
 		setVisible(true);
 		addKeyListener(this);
-		this.entity = new ServiceBot(new Point(0,0), 32);
+		this.entity = new ServiceBot(new Point(1,0), 32);
 		testCanvas.initEntity(entity);
 	}
 

@@ -1,6 +1,7 @@
 package gameRender;
 
 import gameWorld.Unit;
+import gameWorld.UnitCursor;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -36,11 +37,12 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 
 
 	@Override
-	public void draw(Graphics2D g2d, TileMultiton.type[][] map, Unit entity) {
+	public void draw(Graphics2D g2d, TileMultiton.type[][] map, Unit entity, UnitCursor cursor) {
 		System.out.println("DrawMapNorth.draw");
 		Tile tile;
 		Point tilePos;
 		Point entityPos;
+		
 		int tX;
 		int tY;
 		int eX;
@@ -52,7 +54,7 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 				//top left vertex
 				tX = (tilePos.x);
 				tY = (tilePos.y);
-				System.out.println("DrawMapNorth.draw current tile : " + tile );
+				//System.out.println("DrawMapNorth.draw current tile : " + tile );
 				tile.draw(g2d, tX,tY);
 				if(entity != null){
 					eX = entity.getLocation().x;

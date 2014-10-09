@@ -2,14 +2,20 @@ package gameRender;
 
 import gameWorld.GameObject;
 import gameWorld.Unit;
+import gameWorld.UnitCursor;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageFilter;
+import java.awt.image.BufferedImageOp;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+
 import javax.swing.JPanel;
+
 import dataStorage.*;
 import sun.management.counter.Units;
 import tile.Tile;
@@ -35,12 +41,13 @@ public class IsoCanvas extends JPanel{
 	public int veiwport_y = 0;
 	private String orientation;
 	private ArrayList<Point> HIGHLIGHTED_TILES;
-
-
+	private UnitCursor  cursor;
+	private BufferedImage highLight;
 	/**
 	 *
 	 */
 	public IsoCanvas(int Width, int Height){
+		cursor = new UnitCursor(new Point(3,3), 1234);
 		Tuple t = Data.testSet(null);
 		map = t.tiles;
 		this.width = Width;
@@ -54,9 +61,9 @@ public class IsoCanvas extends JPanel{
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(new Color(50,50,60));
 		g2d.fillRect(0,0,width,height);
+		render.draw(g2d, map, entity, cursor);
+		//g2d.fillRect((width/2)-5,(height/2-5),10,10); //center of canvas.
 		
-		render.draw(g2d, map, entity);
-		g2d.fillRect((width/2)-5,(height/2-5),10,10);
 	}
 	/**
 	 *
@@ -123,7 +130,7 @@ public class IsoCanvas extends JPanel{
 		public int tile_height = 32;
 		public void calculateOffset(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int mapSize);
 		public Point toIso(int x, int y);
-		public void draw(Graphics2D g2d, TileMultiton.type[][] map, Unit entity);
+		public void draw(Graphics2D g2d, TileMultiton.type[][] map, Unit entity, UnitCursor cursor);
 	}
 	/**
 	 * Was Reading some of the Commander keen source code
