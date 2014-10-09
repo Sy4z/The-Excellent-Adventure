@@ -221,7 +221,7 @@ public class Data {
 		for(int y = 0;y<sizeY;y++){
 			for(int x = 0;x<sizeX;x++){
 				if(y == x + b ){
-					t[y][x] = TileMultiton.type.BLUE;
+					t[y][x] = TileMultiton.type.FLOOR;
 				}
 				else{
 					t[y][x] = TileMultiton.type.FLOOR;
