@@ -2,7 +2,7 @@ package gameWorld;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Deprecated
 public class WorldInventory extends Inventory {
 	private int x;
 	private int y;

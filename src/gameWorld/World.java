@@ -49,7 +49,7 @@ public class World {
 	}
 
 	/**
-	 * This is very niaeve and may break will be fixed affter discussing the Tuple class
+	 * This is very niaeve and may break will be fixed after discussing the Tuple class
 	 * with group members
 	 * @param tiles
 	 */
@@ -57,8 +57,6 @@ public class World {
 		for(int x = 0; x < tiles.length; x++)
 			for(int y = 0; y < tiles[0].length; y++)
 					worldMap[x][y] = new LogicalTile(tiles[x][y] != null);
-
-
 	}
 
 
@@ -162,6 +160,7 @@ public class World {
 				//If it's a door only a player with a key can go through
 				if(worldMap[x][y] instanceof LogicalTileDoor)
 					if(!activePlayer.hasKey()) return;
+				//If the XY is within one movment of the active player
 				if (worldMap[x][y].isReachableByActive()) {
 					ArrayDeque<Point> step = new ArrayDeque<Point>();
 					step.add(new Point(x, y));
