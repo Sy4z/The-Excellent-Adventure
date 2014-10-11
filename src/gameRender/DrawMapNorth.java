@@ -61,7 +61,7 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 				cY = cursor.getLocation().y;
 				if(cX == x && cY == y){
 					cursorPos = toIso(cX,cY);
-					//cursor.draw(g2d, cursorPos.x, cursorPos.y);
+					cursor.draw(g2d, cursorPos.x, cursorPos.y);
 				}
 				if(entity != null){
 					eX = entity.getLocation().x;
