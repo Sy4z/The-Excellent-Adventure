@@ -1,16 +1,20 @@
 package dataStorage;
 
 import gameRender.IsoCanvas;
+import gameWorld.GameObject;
+import gameWorld.Inventory;
 import gameWorld.Item;
 import gameWorld.UnitPlayer;
 import gameWorld.Unit;
 
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
+import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -42,7 +46,7 @@ public class Data {
 	public Data(){}
 
 	private static void error(String s){
-		System.err.println(s);
+//		System.err.println(s);
 	}
 
 	public static Tuple load(File f){
@@ -56,8 +60,9 @@ public class Data {
 	 * @param units An array containing all of the units the are to be saved
 	 * @param items An array containing all of the units that are to be saved
 	 * @return True is successful, else false.
+	 * @throws UnexpectedException
 	 */
-	public static boolean save(String fileName, TileMultiton.type[][] types, Unit[] units, Item[] items){
+	public static boolean save(String fileName, TileMultiton.type[][] types, Unit[] units, Item[] items) throws UnexpectedException{
 		assert(types 	!= 	null);
 		assert(units 	!= 	null);
 		assert(items 	!= 	null);
@@ -132,10 +137,10 @@ public class Data {
 		boolean accesible = false;
 
 //		Class[] classList = new Class[10];
-
+		Element fieldElem = null;
 		List<Class> classList = new ArrayList<Class>();
 		for(Unit e : units){
-
+			elem = new Element(e.getClass().getSimpleName());
 			classList.add(e.getClass());
 
 			while(classList.get(classList.size()-1).getSuperclass() != (Object.class)){
@@ -145,10 +150,25 @@ public class Data {
 			for(Class c : classList){
 				error("---Iterating " + c.getCanonicalName()+ "---");
 				for(Field f : c.getDeclaredFields()){
-
+					fieldElem = null;
 					accesible = f.isAccessible();
 					f.setAccessible(true);
-					error(f.getName());
+					Object o = f;
+//					error(f.getName() +" " + f.getType().getSimpleName());
+					switch(f.getType().getSimpleName()){
+					case "BufferedImage": break;
+					case "int": fieldElem = handleIntField(f,e); break;
+					case "Inventory": fieldElem = handleInventoryField(f,e);break;
+					case "Point": fieldElem = handlePointField(f,e); break;
+					case "File": fieldElem = handleFileField(f,e); break;
+					case "boolean":fieldElem = handlebooleanField(f,e); break;
+					case "String" : fieldElem = handleStringField(f,e); break;
+					default:throw new UnexpectedException("SAVING: Unexpected field type in unit: +"+ f.getName() + " " + f.getType().getSimpleName());
+					}
+					if(fieldElem != null){
+						elem.addContent(fieldElem);
+					}
+
 					f.setAccessible(accesible);
 				}
 			}
@@ -179,6 +199,87 @@ public class Data {
 		return true;
 	}
 
+
+
+	private static Element handleFileField(Field f, GameObject instance) {
+		Element elem = new Element(f.getName());
+		try {
+			File fi = (File) f.get(instance);
+			elem.addContent(fi.getPath());
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return elem;
+	}
+
+	private static Element handleStringField(Field f, GameObject instance) {
+		Element elem = new Element(f.getName());
+		try {
+			elem.addContent(f.get(instance)+"");
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return elem;
+	}
+
+	private static Element handlebooleanField(Field f,GameObject instance) {
+		Element elem = new Element(f.getName());
+		try {
+			elem.addContent(f.getBoolean(instance)+"");
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return elem;
+	}
+
+	private static Element handlePointField(Field f, GameObject instance) {
+		Element elem = new Element(f.getName());
+		try {
+			Point p = (Point) f.get(instance);
+			Element subElement = new Element("X");
+			subElement.addContent(p.x+"");
+			elem.addContent(subElement);
+
+			subElement = new Element("Y");
+			subElement.addContent(p.y+"");
+			elem.addContent(subElement);
+
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return elem;
+	}
+
+	private static Element handleInventoryField(Field f, GameObject instance) {
+		Element elem = new Element(f.getName());
+		try {
+			Inventory i = (Inventory) f.get(instance);
+			//TODO
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return elem;
+	}
+
+	private static Element handleIntField(Field f,GameObject instance) {
+		Element elem = new Element(f.getName());
+		try {
+			elem.addContent(f.getInt(instance)+"");
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return elem;
+	}
 
 
 	private static String parseUnitString(String unitdata) {
@@ -241,7 +342,7 @@ public class Data {
 		int sizeY = 11;
 		int entityX = 0;
 		int entityY = 0;
-		System.out.println("Beginning test");
+		error("Beginning test");
 		TileMultiton.type[][] t = new TileMultiton.type[sizeY][sizeX];
 
 		//Creates an array of tiles sizeX by sizeY if statement specifys what coordinate entity will be placed.
@@ -270,9 +371,13 @@ public class Data {
 	}
 
 	public static void main(String args[]){
-		System.out.println("Beginning test");
 		Tuple t = testSet(null);
-		save("test",t.tiles, t.units, new Item[0]);
+		try {
+			save("test",t.tiles, t.units, new Item[0]);
+		} catch (UnexpectedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //		RenderingTest();
 
 	}
