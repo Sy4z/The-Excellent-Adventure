@@ -1,6 +1,6 @@
 package gameRender;
 
-import gameWorld.ServiceBot;
+import gameWorld.UnitPlayer;
 import gameWorld.Unit;
 
 import java.awt.Dimension;
@@ -29,7 +29,7 @@ public class RenderTester extends JFrame implements KeyListener{
 		setResizable(false);
 		setVisible(true);
 		addKeyListener(this);
-		this.entity = new ServiceBot(new Point(1,0), 32);
+		this.entity = new UnitPlayer(new Point(1,0), 32);
 		testCanvas.initEntity(entity);
 	}
 
