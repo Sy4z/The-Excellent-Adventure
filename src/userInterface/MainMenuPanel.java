@@ -203,7 +203,7 @@ public class MainMenuPanel extends JPanel {
 					if (option.equals("server")) {
 						String input = JOptionPane
 								.showInputDialog("Enter IP Address:");
-						Main.ipAddress = input;
+						Main.setIP(input);
 					}
 				}
 			});
