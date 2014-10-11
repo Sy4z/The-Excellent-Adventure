@@ -41,9 +41,11 @@ public Server(int numberPlayers){
 			e.printStackTrace();
 		}
 		}
+		System.out.println("Server Stopped");
 		try {
+			
 			serverSock.close();
-			System.out.println("Server Stopped");
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,6 +81,7 @@ public Server(int numberPlayers){
 		
 		if(serverIsOn){
 		//Stopped message happens after loop closes anyway
+			System.out.println("Stopping Server");
 			serverIsOn = false;
 		}
 		else{
