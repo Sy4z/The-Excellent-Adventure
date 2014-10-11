@@ -5,8 +5,12 @@ import java.util.ArrayList;
 
 public class InteractiveObjectChest extends InteractiveObject{
 
-	private ArrayList<Item> contents = new ArrayList<Item>();
+//	private ArrayList<Item> contents = new ArrayList<Item>();
+	private int[] contents;
 
+	public int[] takeContents(){
+		return contents = null;
+	}
 	@Override
 	void draw(Graphics2D g, int dx, int dy) {
 		// TODO Auto-generated method stub

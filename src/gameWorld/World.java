@@ -5,14 +5,7 @@ import gameRender.IsoCanvas;
 import java.awt.Point;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Stack;
-
-import tile.DoorTile;
 import tile.TileMultiton.type;
-
-import com.sun.jmx.remote.internal.ArrayQueue;
-import com.sun.xml.internal.bind.v2.runtime.Coordinator;
-
 import dataStorage.Data;
 import dataStorage.Tuple;
 
@@ -23,10 +16,11 @@ import dataStorage.Tuple;
  *
  */
 public class World {
-	private UnitPlayer[] units;
+	//private UnitPlayer[] units;
+	private boolean isActive;
 	private GameObject[][] gameBoard;
 	private LogicalTile[][] worldMap;
-	private UnitPlayer activePlayer;
+	private UnitPlayer avatar;
 	private UnitCursor cursor;
 	private IsoCanvas canvas;
 
@@ -39,12 +33,12 @@ public class World {
 	public World(String save, int width, int height, IsoCanvas cvs) {
 		Tuple t = Data.testSet(null);
 		this.canvas = cvs;
-		units = (UnitPlayer[]) t.units;
+		//units = (UnitPlayer[]) t.units;
 		worldMap = new LogicalTile[t.tiles.length][t.tiles[0].length];
 		gameBoard = new GameObject[t.tiles.length][t.tiles[0].length];
 		populateWorldMape(t.tiles);
-		activePlayer = units[0];
-		cursor = new UnitCursor(activePlayer.curLocation, -1);
+		avatar = (UnitPlayer) t.units[0];
+		cursor = new UnitCursor(avatar.curLocation, -1);
 		checkPlayerStatus();
 
 	}
@@ -69,26 +63,26 @@ public class World {
 	 *Updates active player
 	 *Then re calculates possible movements
 	 */
-	public void checkPlayerStatus() {
-		if(activePlayer == null){
-			activePlayer = units[0];
-			cursor = new UnitCursor(activePlayer.curLocation, -1);
+	public boolean checkPlayerStatus() {
+		//Return false if
+		if(!avatar.isNotTurnEnd()){
+			return isActive = false;
 		}
-		else if(!activePlayer.isActive()){
-			//activePlayer = units[nextPlayerID()]; //Removed while Testing is being done
-			activePlayer.activate();
-		}
-		calculatePossibleMovments(activePlayer.curLocation);
-		canvas.highlight(tilesToHightlight());
+		//Otherwise refresh movment and return true
+		calculatePossibleMovments(avatar.curLocation);
+		return true;
+	}
 
+	public void startTurn(){
+		avatar.activate();
+		calculatePossibleMovments(avatar.curLocation);
 	}
 
 
 	/**
-	 *	takes a mouse command and causes the active player to take the relevant action
+	 *	This is unlikely to function due to time constraints :(
 	 */
 	public void intepretMouseCommand(Point coords){
-		//Currently just handles movement will be extended to interact with game objects
 
 		int x = coords.x;
 		int y = coords.y;
@@ -98,11 +92,8 @@ public class World {
 		if (move(x, y))
 			return;
 		if (gameBoard[x][y] instanceof InteractiveObject)
-			if(nextTo(x,y,activePlayer.curLocation.x, activePlayer.curLocation.y))
+			if(nextTo(x,y,avatar.curLocation.x, avatar.curLocation.y))
 				interactWith(x,y);
-
-
-
 	}
 
 	/**
@@ -112,12 +103,11 @@ public class World {
 	 */
 	private void interactWith(int x, int y) {
 		//If a player does not have a standard action left they may not interact with an object
-		if(!activePlayer.getStandardAction())
+		if(!avatar.getStandardAction())
 			return;
 		if(gameBoard[x][y] instanceof InteractiveObjectChest){
-				if(!activePlayer.hasKey())
-					return;
-			//Call chest interaction POP up here.
+			avatar.addToInventory(((InteractiveObjectChest)gameBoard[x][y]).takeContents());
+
 		}
 
 	}
@@ -144,7 +134,7 @@ public class World {
 			if (worldMap[x][y].isIsTile()) {
 				// If it's a door only a player with a key can go through
 				if (worldMap[x][y] instanceof LogicalTileDoor)
-					if (!activePlayer.hasKey())
+					if (!avatar.hasKey())
 						return;
 				// If the XY is within one movement of the active player
 				if (worldMap[x][y].isReachableByActive()) {
@@ -192,6 +182,8 @@ public class World {
 
 	private void calculatePossibleMovments(Point curLocation) {
 		checkMoveFrom(curLocation.x, curLocation.y, 6, new ArrayDeque<Point>());
+		canvas.highlight(tilesToHightlight());
+
 	}
 
 
@@ -238,10 +230,10 @@ public class World {
 			return false;
 		if(worldMap[x][y].isIsTile())
 			if(worldMap[x][y].isReachableByActive()){
-				canvas.moveUnit(activePlayer, worldMap[x][y].getPath());
-				activePlayer.depleateMoves();
-				gameBoard[x][y] = activePlayer;
-				gameBoard[activePlayer.getLocation().x][activePlayer.getLocation().y] = null;
+				canvas.moveUnit(avatar, worldMap[x][y].getPath());
+				avatar.depleateMoves();
+				gameBoard[x][y] = avatar;
+				gameBoard[avatar.getLocation().x][avatar.getLocation().y] = null;
 				calculatePossibleMovments(x,y);
 				return true;
 			}
@@ -335,15 +327,10 @@ public class World {
 	}
 
 	private void calculatePossibleMovments() {
-		calculatePossibleMovments(activePlayer.getLocation());
+		calculatePossibleMovments(avatar.getLocation());
 	}
 
 
-	private int nextPlayerID() {
-		if(activePlayer.getID() == units.length-1)
-			return 0;
-		return activePlayer.getID() +1;
-	}
 
 	//Networking Methods--------------------------------------------------------------------------------------------
 

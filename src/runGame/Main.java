@@ -59,6 +59,11 @@ public class Main {
 
 	}
 
+	private boolean turn(){
+		return false;
+
+	}
+
 
 
 	/**

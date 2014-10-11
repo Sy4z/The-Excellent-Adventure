@@ -89,13 +89,19 @@ public class UnitPlayer extends Unit {
 		s.append("\n"+append+"X: "+curLocation.x);
 		s.append("\n"+append+"Y: "+curLocation.y);
 		s.append("\n" +append + "ID: " + ID);
-		s.append("\n"+append+"Image: " + ((filePath != null) ? filePath.toString() : "NULL") + "");
-		s.append("\n"+append+"isActive: "+isActive());
+		//s.append("\n"+append+"Image: " + ((filePath != null) ? filePath.toString() : "NULL") + "");
+		s.append("\n"+append+"isActive: "+isNotTurnEnd());
 		s.append("\n"+append+"StandardAction: "+getStandardAction());
 		s.append("\n"+append+"MoveAction: "+getMoveAction());
 		//s.append("\n"+append+""+inventory.toString(append));
 
 		return s +"\n" + append.substring(2) + "}";
+	}
+
+
+	public void addToInventory(int[] chestContents) {
+		inventory.add(chestContents);
+
 	}
 
 

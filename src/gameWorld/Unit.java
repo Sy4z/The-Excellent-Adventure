@@ -15,7 +15,7 @@ import sun.net.util.IPAddressUtil;
 public abstract class Unit extends GameObject {
 	protected Inventory inventory;
 	protected Point curLocation;
-	private boolean isActiveUnit;
+	private boolean notTurnEnd;
 	private boolean standardAction;
 	private boolean moveAction;
 
@@ -48,12 +48,12 @@ public abstract class Unit extends GameObject {
 	public void activate() {
 		moveAction = true;
 		standardAction = true;
-		this.isActiveUnit = true;
+		this.notTurnEnd = true;
 
 	}
 
-	public boolean isActive() {
-		return isActiveUnit;
+	public boolean isNotTurnEnd() {
+		return notTurnEnd;
 	}
 
 	public boolean getStandardAction(){

@@ -38,4 +38,11 @@ public class Inventory {
 	public boolean hasKey() {
 		return items[itemTypes.KEY.ordinal()] > 0;
 	}
+
+
+	public void add(int[] chestContents) {
+		for(int i = 0; i < chestContents.length && i < items.length; i++)
+			items[i] += chestContents[i];
+
+	}
 }
