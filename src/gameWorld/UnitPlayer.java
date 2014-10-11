@@ -94,7 +94,7 @@ public class UnitPlayer extends Unit {
 		s.append("\n"+append+"isActive: "+isActive());
 		s.append("\n"+append+"StandardAction: "+getStandardAction());
 		s.append("\n"+append+"MoveAction: "+getMoveAction());
-		s.append("\n"+append+""+inventory.toString(append));
+		//s.append("\n"+append+""+inventory.toString(append));
 
 		return s +"\n" + append.substring(2) + "}";
 	}
