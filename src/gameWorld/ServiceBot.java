@@ -17,7 +17,6 @@ import javax.imageio.ImageIO;
  *
  */
 public class ServiceBot extends Unit {
-	private BufferedImage img;
 	private int heightOffSet;
 
 	public ServiceBot(Point loc, int ID) {

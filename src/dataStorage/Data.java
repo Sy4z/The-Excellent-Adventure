@@ -10,8 +10,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.Files;
-import java.util.Collections;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
@@ -23,6 +24,7 @@ import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import sun.reflect.Reflection;
 import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 import tile.*;
 import tile.TileMultiton.type;
@@ -109,7 +111,7 @@ public class Data {
 		PrintStream print = null;
 		try {
 			print = new PrintStream(tileMapPath);
-			print.print(tileMap);
+			//print.print(tileMap);
 		} catch (FileNotFoundException e) {
 			try {
 				tileMapPath.createNewFile();
@@ -127,24 +129,45 @@ public class Data {
 		//for each unit, create a new element, tie everything about the unit to it, and add it to the tree
 		Scanner scan = null;
 		Scanner curLine = null;
+		boolean accesible = false;
+
+//		Class[] classList = new Class[10];
+
+		List<Class> classList = new ArrayList<Class>();
 		for(Unit e : units){
-			subRoot.addContent(parseUnitString(e.toString()));
+
+			classList.add(e.getClass());
+
+			while(classList.get(classList.size()-1).getSuperclass() != (Object.class)){
+				classList.add(classList.get(classList.size()-1).getSuperclass());
+			}
+
+			for(Class c : classList){
+				error("---Iterating " + c.getCanonicalName()+ "---");
+				for(Field f : c.getDeclaredFields()){
+
+					accesible = f.isAccessible();
+					f.setAccessible(true);
+					error(f.getName());
+					f.setAccessible(accesible);
+				}
+			}
 		}
 		root.addContent(subRoot);
 
 
 		//----------Handle Items--------
-		subRoot = new Element("Items");
-		subRoot.setAttribute("Size", Integer.toString(items.length));
-
-		for(Item e : items){
-			elem = new Element(e.getClass().getSimpleName());
-			for(Object o : e.save()){
-				elem.setAttribute(o.getClass().getSimpleName(), o.toString());
-			}
-			subRoot.addContent(elem);
-		}
-		root.addContent(subRoot);
+//		subRoot = new Element("Items");
+//		subRoot.setAttribute("Size", Integer.toString(items.length));
+//
+//		for(Item e : items){
+//			elem = new Element(e.getClass().getSimpleName());
+//			for(Object o : e.save()){
+//				elem.setAttribute(o.getClass().getSimpleName(), o.toString());
+//			}
+//			subRoot.addContent(elem);
+//		}
+//		root.addContent(subRoot);
 
 		//----------Output the XML--------
 		XMLOutputter xmlOut = new XMLOutputter();
@@ -175,6 +198,11 @@ public class Data {
 		return null;
 	}
 
+	private static void parseInventory(Element e, Scanner scan) {
+
+
+	}
+
 	private static void parseUnitLine(Element e, String ln){
 		int idx = 0;
 		int lookahead = 0;
@@ -199,7 +227,7 @@ public class Data {
 		e.setAttribute(new Attribute(attribName, attribValue));
 	}
 
-	/**newContent
+	/**
 	 * -----STANDIN WHILE I STUDY XML------
 	 * @param fi Use null the File shall be ignored
 	 *
