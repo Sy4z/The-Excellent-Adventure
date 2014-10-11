@@ -3,7 +3,6 @@ package gameWorld;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -16,8 +15,8 @@ import javax.imageio.ImageIO;
  * @author mcintochri1
  *
  */
+
 public class UnitPlayer extends Unit {
-	private BufferedImage img;
 	private int heightOffSet;
 
 	public UnitPlayer(Point loc, int ID) {

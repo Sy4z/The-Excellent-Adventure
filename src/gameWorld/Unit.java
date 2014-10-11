@@ -19,7 +19,7 @@ public abstract class Unit extends GameObject {
 	private boolean isActiveUnit;
 	private boolean standardAction;
 	private boolean moveAction;
-	private BufferedImage img;
+
 	protected int ID;
 	public Unit(Point loc, int ID, Inventory inventory) {
 		curLocation = loc;

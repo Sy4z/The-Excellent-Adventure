@@ -26,7 +26,9 @@ public class RenderTester extends JFrame implements KeyListener{
 		setSize(width,height);
 		testCanvas = new IsoCanvas(this.getWidth(),this.getHeight());
 		add(testCanvas);
-		setResizable(false);
+		pack();
+		setResizable(true);
+
 		setVisible(true);
 		addKeyListener(this);
 		this.entity = new UnitPlayer(new Point(1,0), 32);
@@ -42,7 +44,7 @@ public class RenderTester extends JFrame implements KeyListener{
 			//ArrayDeque<Point> left = new ArrayDeque<Point>();
 			//left.add(pL);
 			//testCanvas.moveUnit(entity,left);
-			
+
 		break;
 		case 38://up
 		//Point pU = new Point(entity.getLocation().x-1,entity.getLocation().y+1);
@@ -52,11 +54,11 @@ public class RenderTester extends JFrame implements KeyListener{
 		testCanvas.north();
 		break;
 		case 40://down
-			//Point pD = new Point(entity.getLocation().x+1,entity.getLocation().y-1);
-			//ArrayDeque<Point> down = new ArrayDeque<Point>();
-			//down.add(pD);
-			//testCanvas.moveUnit(entity,down);
-			
+			Point pD = new Point(entity.getLocation().x+1,entity.getLocation().y-1);
+			Stack<Point> down = new Stack<Point>();
+			down.add(pD);
+			testCanvas.moveUnit(entity,down);
+
 			break;
 
 

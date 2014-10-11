@@ -20,7 +20,7 @@ public class InteractiveObjectChest extends InteractiveObject{
 
 	public String toString(String append){
 		StringBuilder s = new StringBuilder("Chest{");
-		append = "|\n" + append;
+		append = "|\t" + append;
 
 		return s + "\n" + append.substring(2) + "}";
 	}
