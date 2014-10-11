@@ -26,10 +26,10 @@ public class Main {
 
 	private static int numberOfPlayers = 3; //Variable for the number of players in the game
 	private static boolean isServer = true; //Is this instance of the program a server
-	private static String ipAddress = "127.0.0.1";
+	public static String ipAddress = "127.0.0.1";
 	public static Server server;
 	public static Client client;
-	
+
 	/**
 	 * Main Method to tie the whole program together.
 	 * Using for networking currently.
@@ -84,21 +84,21 @@ public class Main {
 
 		}
 	}
-	
+
 	/**
 	 * This method sets from the UI whether to start server or client
 	 * @param serverTrue - True if this should start server, false if this should start client
 	 */
 	public static void isServer(boolean serverTrue){
-	
-		
+
+
 	if(serverTrue){
 		isServer = true;
 	}
 	else{
 		isServer = false;
 	}
-	
+
 	}
 
 }
