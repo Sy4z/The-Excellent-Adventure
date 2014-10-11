@@ -23,10 +23,10 @@ import dataStorage.Tuple;
  *
  */
 public class World {
-	private Unit[] units;
+	private UnitPlayer[] units;
 	private GameObject[][] gameBoard;
 	private LogicalTile[][] worldMap;
-	private Unit activePlayer;
+	private UnitPlayer activePlayer;
 	private UnitCursor cursor;
 	private IsoCanvas canvas;
 
@@ -39,7 +39,7 @@ public class World {
 	public World(String save, int width, int height, IsoCanvas cvs) {
 		Tuple t = Data.testSet(null);
 		this.canvas = cvs;
-		units = t.units;
+		units = (UnitPlayer[]) t.units;
 		worldMap = new LogicalTile[t.tiles.length][t.tiles[0].length];
 		gameBoard = new GameObject[t.tiles.length][t.tiles[0].length];
 		populateWorldMape(t.tiles);
@@ -148,11 +148,8 @@ public class World {
 						return;
 				// If the XY is within one movement of the active player
 				if (worldMap[x][y].isReachableByActive()) {
-					ArrayDeque<Point> step = new ArrayDeque<Point>();
-					step.add(new Point(x, y));
-					//cursor.setLocation(x,y);
-					//canvas.moveCursor(cursor, x, y);//
-					canvas.moveUnit(cursor, step);
+					cursor.setLocation(x,y);
+					//canvas.moveCursor(cursor);
 
 				}
 			}
