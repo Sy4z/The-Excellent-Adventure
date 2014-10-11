@@ -2,7 +2,7 @@ package dataStorage;
 
 import gameRender.IsoCanvas;
 import gameWorld.Item;
-import gameWorld.ServiceBot;
+import gameWorld.UnitPlayer;
 import gameWorld.Unit;
 
 import java.awt.Point;
@@ -257,10 +257,10 @@ public class Data {
 			}
 		}
 
-		Unit[] u = new ServiceBot[7];
+		Unit[] u = new UnitPlayer[7];
 
 		for(int i = 0; i < 7; i++){
-			u[i] = new ServiceBot(new Point(i,i),i);
+			u[i] = new UnitPlayer(new Point(i,i),i);
 		}
 
 		if(b++ > 9){

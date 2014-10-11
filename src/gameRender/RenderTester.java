@@ -1,12 +1,13 @@
 package gameRender;
 
-import gameWorld.ServiceBot;
+import gameWorld.UnitPlayer;
 import gameWorld.Unit;
 
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayDeque;
 import java.util.Stack;
 
 import javax.swing.JFrame;
@@ -22,14 +23,15 @@ public class RenderTester extends JFrame implements KeyListener{
 		super("Render Tester");
 		System.out.println("Intitialising RenderTester..");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(50, 50, width, height);
+		setSize(width,height);
 		testCanvas = new IsoCanvas(this.getWidth(),this.getHeight());
 		add(testCanvas);
 		pack();
 		setResizable(true);
+
 		setVisible(true);
 		addKeyListener(this);
-		this.entity = new ServiceBot(new Point(0,1), 32);
+		this.entity = new UnitPlayer(new Point(1,0), 32);
 		testCanvas.initEntity(entity);
 	}
 
@@ -38,31 +40,35 @@ public class RenderTester extends JFrame implements KeyListener{
 		//System.out.println(e.getKeyCode());
 		switch(e.getKeyCode()){
 		case 37://left
-			Point pL = new Point(entity.getLocation().x-1,entity.getLocation().y-1);
-			Stack<Point> left = new Stack<Point>();
-			left.add(pL);
-			testCanvas.moveUnit(entity,left);
+			//Point pL = new Point(entity.getLocation().x-1,entity.getLocation().y-1);
+			//ArrayDeque<Point> left = new ArrayDeque<Point>();
+			//left.add(pL);
+			//testCanvas.moveUnit(entity,left);
+
 		break;
 		case 38://up
-		Point pU = new Point(entity.getLocation().x-1,entity.getLocation().y+1);
-		Stack<Point> up = new Stack<Point>();
-		up.add(pU);
-		testCanvas.moveUnit(entity,up);
+		//Point pU = new Point(entity.getLocation().x-1,entity.getLocation().y+1);
+		//ArrayDeque<Point> up = new ArrayDeque<Point>();
+		//up.add(pU);
+		//testCanvas.moveUnit(entity,up);
+		testCanvas.north();
 		break;
 		case 40://down
 			Point pD = new Point(entity.getLocation().x+1,entity.getLocation().y-1);
 			Stack<Point> down = new Stack<Point>();
 			down.add(pD);
 			testCanvas.moveUnit(entity,down);
+
 			break;
 
 
 		case 39: //right
-			Point pR = new Point(entity.getLocation().x+1,entity.getLocation().y+1);
-			Stack<Point> right = new Stack<Point>();
-			right.add(pR);
-			testCanvas.moveUnit(entity,right);
-		break;
+			//Point pR = new Point(entity.getLocation().x+1,entity.getLocation().y+1);
+			//ArrayDeque<Point> right = new ArrayDeque<Point>();
+			//right.add(pR);
+			//testCanvas.moveUnit(entity,right);
+			testCanvas.west();
+			break;
 		}
 	}
 

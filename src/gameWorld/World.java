@@ -7,6 +7,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import tile.DoorTile;
 import tile.TileMultiton.type;
 
 import com.sun.jmx.remote.internal.ArrayQueue;
@@ -49,21 +50,24 @@ public class World {
 	}
 
 	/**
-	 * This is very niaeve and may break will be fixed affter discussing the Tuple class
+	 * This is very niaeve and may break will be fixed after discussing the Tuple class
 	 * with group members
 	 * @param tiles
 	 */
 	private void populateWorldMape(type[][] tiles) {
 		for(int x = 0; x < tiles.length; x++)
-			for(int y = 0; y < tiles[0].length; y++)
+			for(int y = 0; y < tiles[0].length; y++){
+				//if(tiles[x][y].DOOR)
+				//	worldMap[x][y] = new LogicalTileDoor(tiles[x][y] != null);
+			//	else
 					worldMap[x][y] = new LogicalTile(tiles[x][y] != null);
-
-
+			}
 	}
 
 
 	/**
-	 *
+	 *Updates active player
+	 *Then re calculates possible movements
 	 */
 	public void checkPlayerStatus() {
 		if(activePlayer == null){
@@ -77,14 +81,8 @@ public class World {
 		calculatePossibleMovments(activePlayer.curLocation);
 		canvas.highlight(tilesToHightlight());
 
-
 	}
 
-	private int nextPlayerID() {
-		if(activePlayer.getID() == units.length-1)
-			return 0;
-		return activePlayer.getID() +1;
-	}
 
 	/**
 	 *	takes a mouse command and causes the active player to take the relevant action
@@ -116,33 +114,19 @@ public class World {
 		//If a player does not have a standard action left they may not interact with an object
 		if(!activePlayer.getStandardAction())
 			return;
-		if(gameBoard[x][y] instanceof InteractiveObjectDoor){
-			if(activePlayer.hasKey()){
-				//Maybe make keys used up but for now one key does everything
-				//Hey Greg we should draw this
-				gameBoard[x][y] = null;//Contemplating changing this to hold a container so we can do walkthrough able objects.
-			}
+		if(gameBoard[x][y] instanceof InteractiveObjectChest){
+				if(!activePlayer.hasKey())
+					return;
+			//Call chest interaction POP up here.
 		}
 
 	}
 
-	public void moveFromKeyBoard(int i){
-		//0 is up
-		//1 is down
-		//2 is left
-		//3 is right
-//		if(i==0)
-//			System.out.println("World.moveFromKeyBoard(): UP");
-//			move(activePlayer.getLocation().x,activePlayer.getLocation().y+1);
-//		if(i==1)
-//			System.out.println("World.moveFromKeyBoard(): DOWN");
-//			move(activePlayer.getLocation().x,activePlayer.getLocation().y-1);
-//		if(i==2)
-//			System.out.println("World.moveFromKeyBoard(): LEFT");
-//			move(activePlayer.getLocation().x-1,activePlayer.getLocation().y);
-//		if(i==3)
-//			System.out.println("World.moveFromKeyBoard(): RIGHT");
-//			move(activePlayer.getLocation().x+1,activePlayer.getLocation().y);
+	public void moveFromKeyBoard(int i) {
+		// 0 is up
+		// 1 is down
+		// 2 is left
+		// 3 is right
 
 		int x = cursor.getLocation().x;
 		int y = cursor.getLocation().y;
@@ -158,14 +142,17 @@ public class World {
 
 		if (inBounds(x, y))
 			if (worldMap[x][y].isIsTile()) {
+				// If it's a door only a player with a key can go through
+				if (worldMap[x][y] instanceof LogicalTileDoor)
+					if (!activePlayer.hasKey())
+						return;
+				// If the XY is within one movement of the active player
 				if (worldMap[x][y].isReachableByActive()) {
-					// canvas.moveCursor(x, y);
 					ArrayDeque<Point> step = new ArrayDeque<Point>();
 					step.add(new Point(x, y));
+					//cursor.setLocation(x,y);
+					//canvas.moveCursor(cursor, x, y);//
 					canvas.moveUnit(cursor, step);
-					// gameBoard[x][y] = activePlayer;
-					// gameBoard[activePlayer.getLocation().x][activePlayer
-					// .getLocation().y] = null;
 
 				}
 			}
@@ -193,13 +180,14 @@ public class World {
 	 * Resets information about what can move where.
 	 * @param u
 	 */
-	private void refresh(Unit u) {
+	private void refresh() {
 		for(int x = 0; x < worldMap.length; x++)
 			for(int y =0; y < worldMap[0].length; y++){
 				worldMap[x][y].setPath(null);
 				worldMap[x][y].setReachableByActive(false);
 			}
 
+		checkPlayerStatus();
 	}
 
 
@@ -207,8 +195,8 @@ public class World {
 
 	private void calculatePossibleMovments(Point curLocation) {
 		checkMoveFrom(curLocation.x, curLocation.y, 6, new ArrayDeque<Point>());
-
 	}
+
 
 	private void checkMoveFrom(int x, int y, int numMoves, ArrayDeque<Point> path){
 		path.add(new Point(x, y));
@@ -277,7 +265,11 @@ public class World {
 	 * @return
 	 */
 	public boolean moveToCursor(){
-		return (move(cursor.curLocation));
+		if(move(cursor.curLocation)){
+			refresh();
+			return true;
+		}
+		return false;
 	}
 
 
@@ -344,5 +336,18 @@ public class World {
 	private void calculatePossibleMovments(int x, int y) {
 		calculatePossibleMovments(new Point(x,y));
 	}
+
+	private void calculatePossibleMovments() {
+		calculatePossibleMovments(activePlayer.getLocation());
+	}
+
+
+	private int nextPlayerID() {
+		if(activePlayer.getID() == units.length-1)
+			return 0;
+		return activePlayer.getID() +1;
+	}
+
+	//Networking Methods--------------------------------------------------------------------------------------------
 
 }

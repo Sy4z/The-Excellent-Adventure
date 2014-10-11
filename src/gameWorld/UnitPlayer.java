@@ -3,7 +3,6 @@ package gameWorld;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -16,14 +15,15 @@ import javax.imageio.ImageIO;
  * @author mcintochri1
  *
  */
-public class ServiceBot extends Unit {
+
+public class UnitPlayer extends Unit {
 	private int heightOffSet;
 
-	public ServiceBot(Point loc, int ID) {
+	public UnitPlayer(Point loc, int ID) {
 		super(loc, ID,new Inventory());
 		this.filePath = null;//Replace with File once image is aqquired
 		try {
-			img = ImageIO.read(new File("src/tile/orb.png"));
+			img = ImageIO.read(new File("src/tile/wastelander0.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -55,9 +55,9 @@ public class ServiceBot extends Unit {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof ServiceBot))
+		if (!(obj instanceof UnitPlayer))
 			return false;
-		ServiceBot other = (ServiceBot) obj;
+		UnitPlayer other = (UnitPlayer) obj;
 		if (curLocation == null) {
 			if (other.curLocation != null)
 				return false;
@@ -85,7 +85,7 @@ public class ServiceBot extends Unit {
 	public String toString(String append){
 		StringBuilder s = new StringBuilder();
 		append = "|\t" + append;
-		s.append(ServiceBot.class.getSimpleName()+"{");
+		s.append(UnitPlayer.class.getSimpleName()+"{");
 
 		s.append("\n"+append+"X: "+curLocation.x);
 		s.append("\n"+append+"Y: "+curLocation.y);
