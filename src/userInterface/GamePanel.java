@@ -116,7 +116,7 @@ public class GamePanel extends JPanel implements MouseListener {
 
         table.setCellSelectionEnabled(true);
 		table.setRowHeight(0, 100);
-		table.setBounds(10, 550, 300, 200);
+		table.setBounds(10, 550, 450, 1000);
 		add(table);
 
 		// Creates a canvas and a world to put the canvas into the world.

@@ -65,8 +65,8 @@ public class Main {
 	 * This Method sets the IP for the server taken from the input via the User Interface
 	 * @param ip
 	 */
-	public void setIP(String ip){
-		this.ipAddress = ip;
+	public static void setIP(String ip){
+		ipAddress = ip;
 	}
 
 	/**
