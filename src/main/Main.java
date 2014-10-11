@@ -6,6 +6,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.swing.JFrame;
+
+import userInterface.MainFrame;
 import clientServer.Client;
 import clientServer.ClientThread;
 import clientServer.Server;
@@ -31,6 +34,20 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
+		JFrame loadFrame = MainFrame.createLoadingFrame();
+		loadFrame.setVisible(true);
+
+		try {
+			Thread.sleep(0);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		loadFrame.dispose();
+		MainFrame mainFrame = new MainFrame();
+
 		Server server = new Server(numberOfPlayers);
 		Client client = new Client();
 

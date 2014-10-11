@@ -21,6 +21,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -46,7 +47,7 @@ public class MainMenuPanel extends JPanel {
 	private JButton storyButton;
 	private JButton controlsButton;
 	private JButton optionsButton;
- 	private JButton exitButton;
+	private JButton exitButton;
 
 	/**
 	 * The main menu has 6 buttons: New Game, Load, Story, Controls, Options and
@@ -166,7 +167,7 @@ public class MainMenuPanel extends JPanel {
 			d.setLayout(new BorderLayout());
 
 			JPanel moveControls = new JPanel();
-			moveControls.setLayout(new GridLayout(3,1));
+			moveControls.setLayout(new GridLayout(3, 1));
 
 			JLabel moveLabel = new JLabel("Server Options:");
 			moveLabel.setFont(moveLabel.getFont().deriveFont(15.f));
@@ -197,6 +198,8 @@ public class MainMenuPanel extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					moveType = moveButtons.getSelection().getActionCommand();
 					d.dispose();
+
+					String input = JOptionPane.showInputDialog("Enter Input:");
 				}
 			});
 
@@ -212,7 +215,6 @@ public class MainMenuPanel extends JPanel {
 			d.add(buttonsPanel, BorderLayout.SOUTH);
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
-
 
 			currentFrame.getContentPane().removeAll();
 			currentFrame.getContentPane().validate();
@@ -324,14 +326,16 @@ public class MainMenuPanel extends JPanel {
 			d.setLayout(new BorderLayout());
 
 			JPanel moveControls = new JPanel();
-			moveControls.setLayout(new GridLayout(3,1));
+			moveControls.setLayout(new GridLayout(3, 1));
 
 			JLabel moveLabel = new JLabel("Player Move Controls:");
 			moveLabel.setFont(moveLabel.getFont().deriveFont(15.f));
 
-			JRadioButton arrows = new JRadioButton("Use arrows to move the player.");
+			JRadioButton arrows = new JRadioButton(
+					"Use arrows to move the player.");
 			arrows.setActionCommand("arrows");
-			JRadioButton letters = new JRadioButton("Use alphabets(W,A,S,D) to move the player.");
+			JRadioButton letters = new JRadioButton(
+					"Use alphabets(W,A,S,D) to move the player.");
 			letters.setActionCommand("letters");
 			arrows.setSelected(true);
 			final ButtonGroup moveButtons = new ButtonGroup();
