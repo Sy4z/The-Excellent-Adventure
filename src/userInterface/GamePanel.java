@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -27,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * This class contains the main canvas displaying the gameplay and other
@@ -77,20 +80,34 @@ public class GamePanel extends JPanel implements MouseListener {
 		controls.addActionListener(new ControlsGameListener());
 		add(controls);
 
-		String[] columnNames = { "First Name", "Last Name", "Sport",
-				"# of Years", "Vegetarian" };
-		Object[][] data = {
-				{ "Kathy", "Smith", "Snowboarding", new Integer(5),
-						new Boolean(false) },
-				{ "John", "Doe", "Rowing", new Integer(3), new Boolean(true) },
-				{ "Sue", "Black", "Knitting", new Integer(2),
-						new Boolean(false) },
-				{ "Jane", "White", "Speed reading", new Integer(20),
-						new Boolean(true) },
-				{ "Joe", "Brown", "Pool", new Integer(10), new Boolean(false) } };
+		ImageIcon horn = new ImageIcon("horn.jpg");
+		Image hornRe = horn.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		horn = new ImageIcon(hornRe);
+		ImageIcon sword = new ImageIcon("sword.png");
+		ImageIcon shuriken = new ImageIcon("shuriken.jpg");
+		ImageIcon trident = new ImageIcon("trident.jpg");
 
-		JTable table = new JTable(data, columnNames);
-		table.setBounds(10, 60, 500, 500);
+		String[] columnNames = { "Images" };
+		Object[][] data = {{horn, "Horn"}, {sword, "Sword"}, {shuriken, "Shuriken"}, {trident, "Trident"}};
+
+		DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+
+		JTable table = new JTable(model){
+            //  Returning the Class of each column will allow different
+            //  renderers to be used based on Class
+            public Class getColumnClass(int column)
+            {
+                return getValueAt(0, column).getClass();
+            }
+        };
+		//table.setValueAt(sword, 0, 0);
+		table.setRowHeight(0, 100);
+		table.setBounds(10, 550, 300, 200);
 		add(table);
 
 		// Creates a canvas and a world to put the canvas into the world.
