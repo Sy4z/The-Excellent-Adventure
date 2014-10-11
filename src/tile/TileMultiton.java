@@ -15,7 +15,7 @@ public class TileMultiton {
 	static Map<type,Tile> tiles = new HashMap<type, Tile>();
 
 	//enum of tile types
-	public static enum type{BLUE, FLOOR};
+	public static enum type{BLUE, FLOOR, DOOR};
 
 	/**
 	 * Takes an enum from TileMultiton.type, returns the associated tile
@@ -33,6 +33,10 @@ public class TileMultiton {
 			case BLUE:  tiles.put(type , new BlueTile(
 					new File("src" + File.separator + "tile" +
 							File.separator + "tower.png"),'b'));
+				break;
+			case DOOR:  tiles.put(type , new DoorTile(
+					new File("src" + File.separator + "tile" +
+							File.separator + "tower.png"),'b'));//This should get it's own picture
 				break;
 			}
 		}

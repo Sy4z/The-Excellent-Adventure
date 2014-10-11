@@ -7,6 +7,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import tile.DoorTile;
 import tile.TileMultiton.type;
 
 import com.sun.jmx.remote.internal.ArrayQueue;
@@ -55,8 +56,12 @@ public class World {
 	 */
 	private void populateWorldMape(type[][] tiles) {
 		for(int x = 0; x < tiles.length; x++)
-			for(int y = 0; y < tiles[0].length; y++)
+			for(int y = 0; y < tiles[0].length; y++){
+				//if(tiles[x][y].DOOR)
+				//	worldMap[x][y] = new LogicalTileDoor(tiles[x][y] != null);
+			//	else
 					worldMap[x][y] = new LogicalTile(tiles[x][y] != null);
+			}
 	}
 
 
