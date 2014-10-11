@@ -61,7 +61,8 @@ public class World {
 
 
 	/**
-	 *
+	 *Updates active player
+	 *Then re calculates possible movements
 	 */
 	public void checkPlayerStatus() {
 		if(activePlayer == null){
@@ -75,14 +76,8 @@ public class World {
 		calculatePossibleMovments(activePlayer.curLocation);
 		canvas.highlight(tilesToHightlight());
 
-
 	}
 
-	private int nextPlayerID() {
-		if(activePlayer.getID() == units.length-1)
-			return 0;
-		return activePlayer.getID() +1;
-	}
 
 	/**
 	 *	takes a mouse command and causes the active player to take the relevant action
@@ -115,7 +110,6 @@ public class World {
 		if(!activePlayer.getStandardAction())
 			return;
 		if(gameBoard[x][y] instanceof InteractiveObjectChest){
-			if(((InteractiveObjectChest)gameBoard[x][y]).isLocked())
 				if(!activePlayer.hasKey())
 					return;
 			//Call chest interaction POP up here.
@@ -123,23 +117,11 @@ public class World {
 
 	}
 
-	public void moveFromKeyBoard(int i){
-		//0 is up
-		//1 is down
-		//2 is left
-		//3 is right
-//		if(i==0)
-//			System.out.println("World.moveFromKeyBoard(): UP");
-//			move(activePlayer.getLocation().x,activePlayer.getLocation().y+1);
-//		if(i==1)
-//			System.out.println("World.moveFromKeyBoard(): DOWN");
-//			move(activePlayer.getLocation().x,activePlayer.getLocation().y-1);
-//		if(i==2)
-//			System.out.println("World.moveFromKeyBoard(): LEFT");
-//			move(activePlayer.getLocation().x-1,activePlayer.getLocation().y);
-//		if(i==3)
-//			System.out.println("World.moveFromKeyBoard(): RIGHT");
-//			move(activePlayer.getLocation().x+1,activePlayer.getLocation().y);
+	public void moveFromKeyBoard(int i) {
+		// 0 is up
+		// 1 is down
+		// 2 is left
+		// 3 is right
 
 		int x = cursor.getLocation().x;
 		int y = cursor.getLocation().y;
@@ -155,10 +137,11 @@ public class World {
 
 		if (inBounds(x, y))
 			if (worldMap[x][y].isIsTile()) {
-				//If it's a door only a player with a key can go through
-				if(worldMap[x][y] instanceof LogicalTileDoor)
-					if(!activePlayer.hasKey()) return;
-				//If the XY is within one movment of the active player
+				// If it's a door only a player with a key can go through
+				if (worldMap[x][y] instanceof LogicalTileDoor)
+					if (!activePlayer.hasKey())
+						return;
+				// If the XY is within one movment of the active player
 				if (worldMap[x][y].isReachableByActive()) {
 					ArrayDeque<Point> step = new ArrayDeque<Point>();
 					step.add(new Point(x, y));
@@ -197,6 +180,7 @@ public class World {
 				worldMap[x][y].setReachableByActive(false);
 			}
 
+		checkPlayerStatus();
 	}
 
 
@@ -276,7 +260,6 @@ public class World {
 	public boolean moveToCursor(){
 		if(move(cursor.curLocation)){
 			refresh();
-			calculatePossibleMovments();
 			return true;
 		}
 		return false;
@@ -350,5 +333,14 @@ public class World {
 	private void calculatePossibleMovments() {
 		calculatePossibleMovments(activePlayer.getLocation());
 	}
+
+
+	private int nextPlayerID() {
+		if(activePlayer.getID() == units.length-1)
+			return 0;
+		return activePlayer.getID() +1;
+	}
+
+	//Networking Methods--------------------------------------------------------------------------------------------
 
 }

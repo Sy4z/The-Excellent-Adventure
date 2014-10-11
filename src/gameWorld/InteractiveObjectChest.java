@@ -1,10 +1,11 @@
 package gameWorld;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 public class InteractiveObjectChest extends InteractiveObject{
 
-	private boolean locked;
+	private ArrayList<Item> contents = new ArrayList<Item>();
 
 	@Override
 	void draw(Graphics2D g, int dx, int dy) {
@@ -24,19 +25,7 @@ public class InteractiveObjectChest extends InteractiveObject{
 		return s + "\n" + append.substring(2) + "}";
 	}
 
-	/**
-	 * @return the locked
-	 */
-	public boolean isLocked() {
-		return locked;
-	}
 
-	/**
-	 * @param locked the locked to set
-	 */
-	public void setLocked(boolean locked) {
-		this.locked = locked;
-	}
 
 
 
