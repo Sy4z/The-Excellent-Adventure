@@ -49,7 +49,7 @@ public class IsoCanvas extends JPanel{
 	 *
 	 */
 	public IsoCanvas(int Width, int Height){
-		cursor = new UnitCursor(new Point(3,3), 1234);
+		cursor = null;
 		Tuple t = Data.testSet(null);
 		map = t.tiles;
 		this.width = Width;
