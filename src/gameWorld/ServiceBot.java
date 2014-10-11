@@ -24,7 +24,7 @@ public class ServiceBot extends Unit {
 		super(loc, ID,new Inventory());
 		this.filePath = null;//Replace with File once image is aqquired
 		try {
-			img = ImageIO.read(new File("src/tile/orb.png"));
+			img = ImageIO.read(new File("src/tile/wastelander0.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

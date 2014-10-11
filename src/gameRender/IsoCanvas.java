@@ -92,8 +92,8 @@ public class IsoCanvas extends JPanel{
 			i++;
 		}
 	}
-	public void moveCursor(int x, int y){
-
+	public void moveCursor(UnitCursor cursor, int x, int y){
+		this.cursor = cursor;
 		this.repaint();
 	}
 
