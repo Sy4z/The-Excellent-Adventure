@@ -78,10 +78,10 @@ public class Main {
 	public static void runServer(Server runServer, Client runClient){
 
 		if(isServer == false){ //Sets whether this instance of the program is client or server from a boolean
-			runClient.runClient(ipAddress, 29596);
+			runClient.runClient(ipAddress, 29597);
 		}
 		else{
-			runServer.runServer(ipAddress, 29596);
+			runServer.runServer(ipAddress, 29597);
 
 
 		}
