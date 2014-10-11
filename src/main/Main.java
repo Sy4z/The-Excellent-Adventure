@@ -23,7 +23,7 @@ public class Main {
 
 	private static int numberOfPlayers = 3; //Variable for the number of players in the game
 	private static boolean isServer = true; //Is this instance of the program a server
-
+	private static String ipAddress = "127.0.0.1";
 
 	/**
 	 * Main Method to tie the whole program together.
@@ -35,14 +35,21 @@ public class Main {
 		Client client = new Client();
 
 		if(isServer == false){ //Sets whether this instance of the program is client or server from a boolean
-			client.runClient("127.0.0.1", 29596);
+			client.runClient(ipAddress, 29596);
 		}
 		else{
-			server.runServer("127.0.0.1", 29596);
+			server.runServer(ipAddress, 29596);
 
 
 		}
 	}
+
+
+	public void setIP(String ip){
+	this.ipAddress = ip;
+	}
+
+
 
 }
 
@@ -52,4 +59,3 @@ public class Main {
 
 
 
-	
