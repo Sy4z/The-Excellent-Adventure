@@ -28,6 +28,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
+import main.Main;
+
 /**
  * This class contains all the necessary buttons for the main menu of the game.
  *
@@ -199,7 +201,8 @@ public class MainMenuPanel extends JPanel {
 					moveType = moveButtons.getSelection().getActionCommand();
 					d.dispose();
 
-					String input = JOptionPane.showInputDialog("Enter Input:");
+					String input = JOptionPane.showInputDialog("Enter IP Address:");
+					//main.setIP(input);
 				}
 			});
 

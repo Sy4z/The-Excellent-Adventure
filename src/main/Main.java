@@ -25,8 +25,15 @@ import clientServer.ServerThread;
 public class Main {
 
 	private static int numberOfPlayers = 3; //Variable for the number of players in the game
+<<<<<<< HEAD
 	private static boolean isServer = false; //Is this instance of the program a server
 	private static String ipAddress = "127.0.0.1";
+=======
+	private static boolean isServer = true; //Is this instance of the program a server
+	public static String ipAddress = "127.0.0.1";
+	public static Server server;
+	public static Client client;
+>>>>>>> 722c177c35dec47329fd2287e3f120f3de50aeb7
 
 	/**
 	 * Main Method to tie the whole program together.
@@ -41,32 +48,63 @@ public class Main {
 		try {
 			Thread.sleep(0);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
 		loadFrame.dispose();
 		MainFrame mainFrame = new MainFrame();
 
-		Server server = new Server(numberOfPlayers);
-		Client client = new Client();
+		//The following block deals with starting the server
+		server = new Server(numberOfPlayers);
+		client = new Client();
+		runServer(server, client);
+
+	}
+
+
+
+	/**
+	 * This Method sets the IP for the server taken from the input via the User Interface
+	 * @param ip
+	 */
+	public void setIP(String ip){
+		this.ipAddress = ip;
+	}
+
+	/**
+	 * This method runs the server based on IP input from the User Interface
+	 * It assumes localhost if no IP is input
+	 * @param runServer - the Instance of Server
+	 * @param runClient - the Instance of Client
+	 */
+	public static void runServer(Server runServer, Client runClient){
 
 		if(isServer == false){ //Sets whether this instance of the program is client or server from a boolean
-			client.runClient(ipAddress, 29596);
+			runClient.runClient(ipAddress, 29596);
 		}
 		else{
-			server.runServer(ipAddress, 29596);
+			runServer.runServer(ipAddress, 29596);
 
 
 		}
 	}
 
+	/**
+	 * This method sets from the UI whether to start server or client
+	 * @param serverTrue - True if this should start server, false if this should start client
+	 */
+	public static void isServer(boolean serverTrue){
 
-	public void setIP(String ip){
-	this.ipAddress = ip;
+
+	if(serverTrue){
+		isServer = true;
+	}
+	else{
+		isServer = false;
 	}
 
-
+	}
 
 }
 
