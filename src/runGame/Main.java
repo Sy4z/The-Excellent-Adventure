@@ -26,7 +26,7 @@ public class Main {
 
 	private static int numberOfPlayers = 3; //Variable for the number of players in the game
 
-	private static boolean isServer = false; //Is this instance of the program a server
+	private static boolean isServer = true; //Is this instance of the program a server
 	public static String ipAddress = "127.0.0.1";
 	public static Server server;
 	public static Client client;
@@ -65,8 +65,8 @@ public class Main {
 	 * This Method sets the IP for the server taken from the input via the User Interface
 	 * @param ip
 	 */
-	public void setIP(String ip){
-		this.ipAddress = ip;
+	public static void setIP(String ip){
+		ipAddress = ip;
 	}
 
 	/**
