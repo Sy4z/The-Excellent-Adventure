@@ -190,9 +190,7 @@ public class MainMenuPanel extends JPanel {
 			JPanel buttonsPanel = new JPanel();
 			buttonsPanel.setLayout(new FlowLayout());
 			JButton okButton = new JButton("OK");
-			JButton cancelButton = new JButton("Cancel");
 			buttonsPanel.add(okButton);
-			buttonsPanel.add(cancelButton);
 
 			okButton.addActionListener(new ActionListener() {
 
@@ -202,15 +200,7 @@ public class MainMenuPanel extends JPanel {
 					d.dispose();
 
 					String input = JOptionPane.showInputDialog("Enter IP Address:");
-					//main.setIP(input);
-				}
-			});
-
-			cancelButton.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					d.dispose();
+					Main.ipAddress = input;
 				}
 			});
 
