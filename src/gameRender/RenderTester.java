@@ -54,10 +54,10 @@ public class RenderTester extends JFrame implements KeyListener{
 		testCanvas.north();
 		break;
 		case 40://down
-			Point pD = new Point(entity.getLocation().x+1,entity.getLocation().y-1);
-			Stack<Point> down = new Stack<Point>();
-			down.add(pD);
-			testCanvas.moveUnit(entity,down);
+			//Point pD = new Point(entity.getLocation().x+1,entity.getLocation().y-1);
+			//Stack<Point> down = new Stack<Point>();
+			//down.add(pD);
+			//testCanvas.moveUnit(entity,down);
 
 			break;
 

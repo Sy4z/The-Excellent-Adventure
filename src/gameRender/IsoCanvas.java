@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import dataStorage.*;
 import sun.management.counter.Units;
+import sun.net.www.content.text.Generic;
 import tile.Tile;
 import tile.TileMultiton;
 
@@ -93,7 +94,7 @@ public class IsoCanvas extends JPanel{
 			i++;
 		}
 	}
-	public void moveCursor(UnitCursor cursor, int x, int y){
+	public void moveCursor(UnitCursor cursor){
 		this.cursor = cursor;
 		this.repaint();
 	}
