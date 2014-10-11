@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import runGame.Main;
+
 /**
  * This class represents the main window of the game.
  *
@@ -108,6 +110,7 @@ public class MainFrame extends JFrame implements WindowListener {
 				.showConfirmDialog(null, "Are you sure you want to quit?", "",
 						JOptionPane.YES_NO_OPTION);
 		if (confirmed == JOptionPane.YES_OPTION) {
+			Main.server.stopServer();
 			dispose();
 			System.exit(0);
 		}

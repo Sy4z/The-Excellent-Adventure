@@ -400,6 +400,7 @@ public class MainMenuPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Main.server.stopServer();
 			System.exit(0);
 		}
 
