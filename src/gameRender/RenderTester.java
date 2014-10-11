@@ -1,7 +1,9 @@
 package gameRender;
 
+import gameWorld.UnitCursor;
 import gameWorld.UnitPlayer;
 import gameWorld.Unit;
+import gameWorld.World;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -19,6 +21,8 @@ import tile.Tile;
 public class RenderTester extends JFrame implements KeyListener{
 	private Unit entity;
 	private IsoCanvas testCanvas;
+	private World w;
+	Point c = new Point(1,0);
 	public RenderTester(int width, int height){
 		super("Render Tester");
 		System.out.println("Intitialising RenderTester..");
@@ -33,32 +37,37 @@ public class RenderTester extends JFrame implements KeyListener{
 		addKeyListener(this);
 		this.entity = new UnitPlayer(new Point(1,0), 32);
 		testCanvas.initEntity(entity);
+		 w = new World("",-1,-1, testCanvas);
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//System.out.println(e.getKeyCode());
+		System.out.println(e.getKeyCode());
 		switch(e.getKeyCode()){
 		case 37://left
 			//Point pL = new Point(entity.getLocation().x-1,entity.getLocation().y-1);
 			//ArrayDeque<Point> left = new ArrayDeque<Point>();
 			//left.add(pL);
 			//testCanvas.moveUnit(entity,left);
-
+			//c.setLocation(c.getX()-1, c.getY());
+			//UnitCursor cur = new UnitCursor(c, 1234);
+			//testCanvas.moveCursor(cur);
+			w.moveFromKeyBoard(2);
 		break;
 		case 38://up
 		//Point pU = new Point(entity.getLocation().x-1,entity.getLocation().y+1);
 		//ArrayDeque<Point> up = new ArrayDeque<Point>();
 		//up.add(pU);
 		//testCanvas.moveUnit(entity,up);
-		testCanvas.north();
+		//testCanvas.north();
+			w.moveFromKeyBoard(0);
 		break;
 		case 40://down
 			//Point pD = new Point(entity.getLocation().x+1,entity.getLocation().y-1);
 			//Stack<Point> down = new Stack<Point>();
 			//down.add(pD);
 			//testCanvas.moveUnit(entity,down);
-
+			w.moveFromKeyBoard(1);
 			break;
 
 
@@ -67,8 +76,15 @@ public class RenderTester extends JFrame implements KeyListener{
 			//ArrayDeque<Point> right = new ArrayDeque<Point>();
 			//right.add(pR);
 			//testCanvas.moveUnit(entity,right);
-			testCanvas.west();
+			//testCanvas.west();
+			//c.setLocation(c.getX()+1, c.getY());
+			//UnitCursor curR = new UnitCursor(c, 1234);
+			//testCanvas.moveCursor(curR);
+			w.moveFromKeyBoard(3);
 			break;
+		case 10: 
+		w.moveToCursor();
+		break;
 		}
 	}
 

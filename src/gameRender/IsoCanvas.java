@@ -50,6 +50,9 @@ public class IsoCanvas extends JPanel{
 	 */
 	public IsoCanvas(int Width, int Height){
 		cursor = null;
+		highLight = null;
+		HIGHLIGHTED_TILES = null;
+		cursor = new UnitCursor(new Point(1,0),1234);
 		Tuple t = Data.testSet(null);
 		map = t.tiles;
 		this.width = Width;
