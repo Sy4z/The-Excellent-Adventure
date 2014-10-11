@@ -3,12 +3,10 @@ package dataStorage;
 import gameRender.IsoCanvas;
 import gameWorld.GameObject;
 import gameWorld.Inventory;
-import gameWorld.Item;
 import gameWorld.UnitPlayer;
 import gameWorld.Unit;
 
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,14 +20,11 @@ import java.util.Scanner;
 import javax.swing.JFrame;
 
 import org.jdom2.Attribute;
-import org.jdom2.Comment;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-import sun.reflect.Reflection;
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 import tile.*;
 import tile.TileMultiton.type;
 
@@ -46,7 +41,7 @@ public class Data {
 	public Data(){}
 
 	private static void error(String s){
-//		System.err.println(s);
+		System.err.println(s);
 	}
 
 	public static Tuple load(File f){
@@ -62,10 +57,9 @@ public class Data {
 	 * @return True is successful, else false.
 	 * @throws UnexpectedException
 	 */
-	public static boolean save(String fileName, TileMultiton.type[][] types, Unit[] units, Item[] items) throws UnexpectedException{
+	public static boolean save(String fileName, TileMultiton.type[][] types, Unit[] units) throws UnexpectedException{
 		assert(types 	!= 	null);
 		assert(units 	!= 	null);
-		assert(items 	!= 	null);
 		assert(fileName != 	null);
 
 		//Initialise the document
@@ -116,7 +110,7 @@ public class Data {
 		PrintStream print = null;
 		try {
 			print = new PrintStream(tileMapPath);
-			//print.print(tileMap);
+//			print.print(tileMap);
 		} catch (FileNotFoundException e) {
 			try {
 				tileMapPath.createNewFile();
@@ -130,7 +124,7 @@ public class Data {
 
 		//---------Handle Units---------
 		subRoot = new Element("Units");
-		subRoot.setAttribute("Size", Integer.toString(units.length));
+		subRoot.setAttribute("Size",units.length+"");
 		//for each unit, create a new element, tie everything about the unit to it, and add it to the tree
 		Scanner scan = null;
 		Scanner curLine = null;
@@ -139,13 +133,15 @@ public class Data {
 //		Class[] classList = new Class[10];
 		Element fieldElem = null;
 		List<Class> classList = new ArrayList<Class>();
+
 		for(Unit e : units){
-			elem = new Element(e.getClass().getSimpleName());
+			elem = new Element(e.getClass().getSimpleName() + e.getID());
 			classList.add(e.getClass());
 
 			while(classList.get(classList.size()-1).getSuperclass() != (Object.class)){
 				classList.add(classList.get(classList.size()-1).getSuperclass());
 			}
+			error(classList.toString());
 
 			for(Class c : classList){
 				error("---Iterating " + c.getCanonicalName()+ "---");
@@ -153,9 +149,9 @@ public class Data {
 					fieldElem = null;
 					accesible = f.isAccessible();
 					f.setAccessible(true);
-					Object o = f;
-//					error(f.getName() +" " + f.getType().getSimpleName());
+
 					switch(f.getType().getSimpleName()){
+
 					case "BufferedImage": break;
 					case "int": fieldElem = handleIntField(f,e); break;
 					case "Inventory": fieldElem = handleInventoryField(f,e);break;
@@ -163,31 +159,24 @@ public class Data {
 					case "File": fieldElem = handleFileField(f,e); break;
 					case "boolean":fieldElem = handlebooleanField(f,e); break;
 					case "String" : fieldElem = handleStringField(f,e); break;
-					default:throw new UnexpectedException("SAVING: Unexpected field type in unit: +"+ f.getName() + " " + f.getType().getSimpleName());
+
+					default:
+						throw new UnexpectedException("SAVING: Unexpected field type in unit: +"+ f.getName() + " " + f.getType().getSimpleName());
 					}
+
 					if(fieldElem != null){
 						elem.addContent(fieldElem);
 					}
 
 					f.setAccessible(accesible);
 				}
+
+
 			}
+			subRoot.addContent(elem);
+			classList = new ArrayList<Class>();
 		}
 		root.addContent(subRoot);
-
-
-		//----------Handle Items--------
-//		subRoot = new Element("Items");
-//		subRoot.setAttribute("Size", Integer.toString(items.length));
-//
-//		for(Item e : items){
-//			elem = new Element(e.getClass().getSimpleName());
-//			for(Object o : e.save()){
-//				elem.setAttribute(o.getClass().getSimpleName(), o.toString());
-//			}
-//			subRoot.addContent(elem);
-//		}
-//		root.addContent(subRoot);
 
 		//----------Output the XML--------
 		XMLOutputter xmlOut = new XMLOutputter();
@@ -258,9 +247,18 @@ public class Data {
 
 	private static Element handleInventoryField(Field f, GameObject instance) {
 		Element elem = new Element(f.getName());
+
 		try {
 			Inventory i = (Inventory) f.get(instance);
-			//TODO
+
+			Element subElement = null;
+			for(Inventory.itemTypes type : Inventory.itemTypes.values()){
+
+				subElement = new Element(type.name());
+				subElement.addContent(i.numberOfItem(type)+"");
+				elem.addContent(subElement);
+
+			}
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -373,7 +371,7 @@ public class Data {
 	public static void main(String args[]){
 		Tuple t = testSet(null);
 		try {
-			save("test",t.tiles, t.units, new Item[0]);
+			save("test",t.tiles, t.units);
 		} catch (UnexpectedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

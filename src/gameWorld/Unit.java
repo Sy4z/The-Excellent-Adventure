@@ -15,7 +15,6 @@ import sun.net.util.IPAddressUtil;
 public abstract class Unit extends GameObject {
 	protected Inventory inventory;
 	protected Point curLocation;
-	protected File filePath;
 	private boolean isActiveUnit;
 	private boolean standardAction;
 	private boolean moveAction;
