@@ -36,7 +36,7 @@ public class DrawMapWest implements IsoCanvas.DrawMap {
 		Point entityPos;
 		Point cursorPos;
 		int cx = 1;
-		int cy = 1;
+		int cy = 0;
 		int tX;
 		int tY;
 		int eX;

@@ -3,6 +3,7 @@ package gameRender;
 import gameWorld.GameObject;
 import gameWorld.Unit;
 import gameWorld.UnitCursor;
+import gameWorld.UnitPlayer;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -81,7 +82,7 @@ public class IsoCanvas extends JPanel{
 	 * @param unit
 	 */
 
-	public void moveUnit(Unit unit, ArrayDeque<Point> arrayDeque){
+	public void moveUnit(UnitPlayer unit, ArrayDeque<Point> arrayDeque){
 		int i = 0;
 		this.entity = unit;
 		while(!arrayDeque.isEmpty()){
