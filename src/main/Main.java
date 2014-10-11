@@ -25,15 +25,12 @@ import clientServer.ServerThread;
 public class Main {
 
 	private static int numberOfPlayers = 3; //Variable for the number of players in the game
-<<<<<<< HEAD
+
 	private static boolean isServer = false; //Is this instance of the program a server
-	private static String ipAddress = "127.0.0.1";
-=======
-	private static boolean isServer = true; //Is this instance of the program a server
 	public static String ipAddress = "127.0.0.1";
 	public static Server server;
 	public static Client client;
->>>>>>> 722c177c35dec47329fd2287e3f120f3de50aeb7
+
 
 	/**
 	 * Main Method to tie the whole program together.
