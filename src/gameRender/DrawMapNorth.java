@@ -42,6 +42,9 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 		Tile tile;
 		Point tilePos;
 		Point entityPos;
+		Point cursorPos;
+		int cx = 1;
+		int cy = 0;
 		
 		int tX;
 		int tY;
@@ -56,6 +59,10 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 				tY = (tilePos.y);
 				//System.out.println("DrawMapNorth.draw current tile : " + tile );
 				tile.draw(g2d, tX,tY);
+				if(cx==x && cy==y){
+					cursorPos = toIso(x,y);
+					cursor.draw(g2d, cursorPos.x, cursorPos.y);
+				}
 				if(entity != null){
 					eX = entity.getLocation().x;
 					eY = entity.getLocation().y;

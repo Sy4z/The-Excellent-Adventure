@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
  */
 public class UnitCursor extends Unit{
 	private BufferedImage img;
-	private float alpha_level = 0.2f;
+	private float alpha_level = 0.4f;
 	public UnitCursor(Point loc, int ID) {
 		super(loc, ID, null);
 		try {

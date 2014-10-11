@@ -28,7 +28,7 @@ public class TileMultiton {
 			switch(type){
 			case FLOOR: tiles.put(type, new FloorTile(
 					new File("src" + File.separator + "tile" +
-							File.separator + "tile.png"),'f'));
+							File.separator + "tileD1.png"),'f'));
 				break;
 			case BLUE:  tiles.put(type , new BlueTile(
 					new File("src" + File.separator + "tile" +
