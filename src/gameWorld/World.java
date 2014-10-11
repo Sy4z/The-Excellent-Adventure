@@ -149,7 +149,7 @@ public class World {
 				// If the XY is within one movement of the active player
 				if (worldMap[x][y].isReachableByActive()) {
 					cursor.setLocation(x,y);
-					//canvas.moveCursor(cursor);
+					canvas.moveCursor(cursor);
 
 				}
 			}
