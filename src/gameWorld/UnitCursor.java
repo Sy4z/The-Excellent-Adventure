@@ -26,12 +26,12 @@ public class UnitCursor extends Unit{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	/**
 	 * Draw cursor with transparency specified by alpha_level
-	 * 
+	 *
 	 */
 	@Override
 	public void draw(Graphics2D g2d, int dx, int dy) {
@@ -46,6 +46,10 @@ public class UnitCursor extends Unit{
 	public String toString(String append) {
 
 		return null;
+	}
+
+	public void setLocation(int x, int y) {
+		this.curLocation = new Point(x, y);
 	}
 
 }

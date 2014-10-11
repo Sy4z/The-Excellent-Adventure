@@ -146,10 +146,12 @@ public class World {
 				if (worldMap[x][y] instanceof LogicalTileDoor)
 					if (!activePlayer.hasKey())
 						return;
-				// If the XY is within one movment of the active player
+				// If the XY is within one movement of the active player
 				if (worldMap[x][y].isReachableByActive()) {
 					ArrayDeque<Point> step = new ArrayDeque<Point>();
 					step.add(new Point(x, y));
+					//cursor.setLocation(x,y);
+					//canvas.moveCursor(cursor, x, y);//
 					canvas.moveUnit(cursor, step);
 
 				}
