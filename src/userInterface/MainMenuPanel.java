@@ -168,24 +168,24 @@ public class MainMenuPanel extends JPanel {
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
 
-			JPanel moveControls = new JPanel();
-			moveControls.setLayout(new GridLayout(3, 1));
+			JPanel serverOptions = new JPanel();
+			serverOptions.setLayout(new GridLayout(3, 1));
 
-			JLabel moveLabel = new JLabel("Server Options:");
-			moveLabel.setFont(moveLabel.getFont().deriveFont(15.f));
+			JLabel serverLabel = new JLabel("Server Options:");
+			serverLabel.setFont(serverLabel.getFont().deriveFont(15.f));
 
 			JRadioButton server = new JRadioButton("Connect To Server");
 			server.setActionCommand("server");
-			JRadioButton non_server = new JRadioButton("Local Game");
-			non_server.setActionCommand("non_server");
-			non_server.setSelected(true);
-			final ButtonGroup moveButtons = new ButtonGroup();
-			moveButtons.add(server);
-			moveButtons.add(non_server);
+			JRadioButton localGame = new JRadioButton("Local Game");
+			localGame.setActionCommand("local");
+			localGame.setSelected(true);
+			final ButtonGroup serverButtons = new ButtonGroup();
+			serverButtons.add(server);
+			serverButtons.add(localGame);
 
-			moveControls.add(moveLabel);
-			moveControls.add(server);
-			moveControls.add(non_server);
+			serverOptions.add(serverLabel);
+			serverOptions.add(server);
+			serverOptions.add(localGame);
 
 			JPanel buttonsPanel = new JPanel();
 			buttonsPanel.setLayout(new FlowLayout());
@@ -196,15 +196,19 @@ public class MainMenuPanel extends JPanel {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					moveType = moveButtons.getSelection().getActionCommand();
+					String option = serverButtons.getSelection()
+							.getActionCommand();
 					d.dispose();
 
-					String input = JOptionPane.showInputDialog("Enter IP Address:");
-					Main.ipAddress = input;
+					if (option.equals("server")) {
+						String input = JOptionPane
+								.showInputDialog("Enter IP Address:");
+						Main.ipAddress = input;
+					}
 				}
 			});
 
-			d.add(moveControls, BorderLayout.CENTER);
+			d.add(serverOptions, BorderLayout.CENTER);
 			d.add(buttonsPanel, BorderLayout.SOUTH);
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
