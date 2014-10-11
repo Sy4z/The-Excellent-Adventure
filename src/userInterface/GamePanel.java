@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -87,8 +88,8 @@ public class GamePanel extends JPanel implements MouseListener {
 		ImageIcon shuriken = new ImageIcon("shuriken.jpg");
 		ImageIcon trident = new ImageIcon("trident.jpg");
 
-		String[] columnNames = { "Images" };
-		Object[][] data = {{horn, "Horn"}, {sword, "Sword"}, {shuriken, "Shuriken"}, {trident, "Trident"}};
+		String[] columnNames = { "C1", "C2" };
+		Object[][] data = {{horn, sword}, {sword, shuriken}};
 
 		DefaultTableModel model = new DefaultTableModel(data, columnNames) {
 			@Override
@@ -105,7 +106,15 @@ public class GamePanel extends JPanel implements MouseListener {
                 return getValueAt(0, column).getClass();
             }
         };
-		//table.setValueAt(sword, 0, 0);
+
+        table.setOpaque(false);
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+        	{
+        		setOpaque(false);
+        	}
+        });
+
+        table.setCellSelectionEnabled(true);
 		table.setRowHeight(0, 100);
 		table.setBounds(10, 550, 300, 200);
 		add(table);
