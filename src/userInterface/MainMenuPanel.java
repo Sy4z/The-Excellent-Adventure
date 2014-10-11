@@ -28,7 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-import main.Main;
+import runGame.Main;
 
 /**
  * This class contains all the necessary buttons for the main menu of the game.

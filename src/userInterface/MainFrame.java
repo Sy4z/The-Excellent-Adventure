@@ -12,8 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import main.Main;
-
 /**
  * This class represents the main window of the game.
  *
