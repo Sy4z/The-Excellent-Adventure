@@ -16,7 +16,6 @@ import dataStorage.Tuple;
  *
  */
 public class World {
-	//private UnitPlayer[] units;
 	private boolean isActive;
 	private GameObject[][] gameBoard;
 	private LogicalTile[][] worldMap;
@@ -136,6 +135,7 @@ public class World {
 				if (worldMap[x][y] instanceof LogicalTileDoor)
 					if (!avatar.hasKey())
 						return;
+				avatar.useKey();
 				// If the XY is within one movement of the active player
 				if (worldMap[x][y].isReachableByActive()) {
 					cursor.setLocation(x,y);

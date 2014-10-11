@@ -45,4 +45,10 @@ public class Inventory {
 			items[i] += chestContents[i];
 
 	}
+
+
+	public void useKey() {
+		items[itemTypes.KEY.ordinal()] = Math.max(0, items[itemTypes.KEY.ordinal()]-1);
+
+	}
 }

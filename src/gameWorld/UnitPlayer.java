@@ -105,5 +105,11 @@ public class UnitPlayer extends Unit {
 	}
 
 
+	public void useKey() {
+		inventory.useKey();
+
+	}
+
+
 
 }
