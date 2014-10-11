@@ -190,7 +190,7 @@ public class World {
 	 * Resets information about what can move where.
 	 * @param u
 	 */
-	private void refresh(Unit u) {
+	private void refresh() {
 		for(int x = 0; x < worldMap.length; x++)
 			for(int y =0; y < worldMap[0].length; y++){
 				worldMap[x][y].setPath(null);
@@ -204,8 +204,8 @@ public class World {
 
 	private void calculatePossibleMovments(Point curLocation) {
 		checkMoveFrom(curLocation.x, curLocation.y, 6, new ArrayDeque<Point>());
-
 	}
+
 
 	private void checkMoveFrom(int x, int y, int numMoves, ArrayDeque<Point> path){
 		path.add(new Point(x, y));
@@ -274,7 +274,12 @@ public class World {
 	 * @return
 	 */
 	public boolean moveToCursor(){
-		return (move(cursor.curLocation));
+		if(move(cursor.curLocation)){
+			refresh();
+			calculatePossibleMovments();
+			return true;
+		}
+		return false;
 	}
 
 
@@ -340,6 +345,10 @@ public class World {
 
 	private void calculatePossibleMovments(int x, int y) {
 		calculatePossibleMovments(new Point(x,y));
+	}
+
+	private void calculatePossibleMovments() {
+		calculatePossibleMovments(activePlayer.getLocation());
 	}
 
 }
