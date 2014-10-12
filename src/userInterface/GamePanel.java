@@ -1,6 +1,7 @@
 package userInterface;
 
 import gameRender.IsoCanvas;
+import gameWorld.Inventory;
 import gameWorld.World;
 
 import java.awt.BorderLayout;
@@ -81,13 +82,13 @@ public class GamePanel extends JPanel implements MouseListener {
 		controls.addActionListener(new ControlsGameListener());
 		add(controls);
 
-		setInventory();
-
 		// Creates a canvas and a world to put the canvas into the world.
 		canvas = new IsoCanvas(currentFrame.getWidth(),
 				currentFrame.getHeight());
 		world = new World("", currentFrame.getWidth(),
 				currentFrame.getHeight(), canvas);
+
+		setInventory();
 
 		canvas.setBounds(0, 0, currentFrame.getWidth(),
 				currentFrame.getHeight());
@@ -152,8 +153,12 @@ public class GamePanel extends JPanel implements MouseListener {
 		JTable tableNums1 = new JTable(model2);
 		tableNums1.setOpaque(false);
 
-		tableNums1.setValueAt("0", 0, 0);
-		tableNums1.setValueAt("0", 0, 1);
+		int[] inventory = world.getInventory();
+		int katanas = inventory[Inventory.itemTypes.KATANA.ordinal()];
+		int keys = inventory[Inventory.itemTypes.KEY.ordinal()];
+
+		tableNums1.setValueAt(Integer.toString(katanas), 0, 0);
+		tableNums1.setValueAt(Integer.toString(keys), 0, 1);
 
 		tableNums1.setCellSelectionEnabled(false);
 		tableNums1.setRowSelectionAllowed(false);
@@ -216,8 +221,11 @@ public class GamePanel extends JPanel implements MouseListener {
 		JTable tableNums2 = new JTable(model4);
 		tableNums2.setOpaque(false);
 
-		tableNums2.setValueAt("0", 0, 0);
-		tableNums2.setValueAt("0", 0, 1);
+		int pups = inventory[Inventory.itemTypes.PUPPY.ordinal()];
+		int rustyNails = inventory[Inventory.itemTypes.RUSTY_NAIL.ordinal()];
+
+		tableNums2.setValueAt(Integer.toString(pups), 0, 0);
+		tableNums2.setValueAt(Integer.toString(rustyNails), 0, 1);
 
 		tableNums2.setCellSelectionEnabled(false);
 		tableNums2.setRowSelectionAllowed(false);
@@ -364,17 +372,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
 					KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-					KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "down");// Hey
-																			// chet
-																			// I
-																			// changed
-																			// this
-																			// to
-																			// down
-																			// so
-																			// it
-																			// works
-																			// now
+					KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "down");
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
 					KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
@@ -384,8 +382,8 @@ public class GamePanel extends JPanel implements MouseListener {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(0);
-					// System.out.println("test");
 					repaint();
+					setInventory();
 				}
 			});
 			this.getActionMap().put("down", new AbstractAction() {
@@ -393,6 +391,7 @@ public class GamePanel extends JPanel implements MouseListener {
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(1);
 					repaint();
+					setInventory();
 				}
 			});
 			this.getActionMap().put("left", new AbstractAction() {
@@ -400,6 +399,7 @@ public class GamePanel extends JPanel implements MouseListener {
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(2);
 					repaint();
+					setInventory();
 				}
 			});
 			this.getActionMap().put("right", new AbstractAction() {
@@ -407,22 +407,14 @@ public class GamePanel extends JPanel implements MouseListener {
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(3);
 					repaint();
+					setInventory();
 				}
 			});
 		} else {
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
 					KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), "up");
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-					KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), "down");// Hey
-																		// chet
-																		// I
-																		// changed
-																		// this
-																		// to
-																		// down
-																		// so it
-																		// works
-																		// now
+					KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), "down");
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
 					KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "left");
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
@@ -432,8 +424,8 @@ public class GamePanel extends JPanel implements MouseListener {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(0);
-					System.out.println("test");
 					repaint();
+					setInventory();
 				}
 			});
 			this.getActionMap().put("down", new AbstractAction() {
@@ -441,6 +433,7 @@ public class GamePanel extends JPanel implements MouseListener {
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(1);
 					repaint();
+					setInventory();
 				}
 			});
 			this.getActionMap().put("left", new AbstractAction() {
@@ -448,6 +441,7 @@ public class GamePanel extends JPanel implements MouseListener {
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(2);
 					repaint();
+					setInventory();
 				}
 			});
 			this.getActionMap().put("right", new AbstractAction() {
@@ -455,6 +449,7 @@ public class GamePanel extends JPanel implements MouseListener {
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(3);
 					repaint();
+					setInventory();
 				}
 			});
 		}
