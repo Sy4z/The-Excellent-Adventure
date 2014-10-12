@@ -236,8 +236,10 @@ public class World {
 		if(!worldMap[x][y].isIsTile())
 			return false;
 		if(worldMap[x][y].getPath() == null)
-			return true;
+			return false;
 		if(worldMap[x][y].getPath().size() < path.size())
+			return false;
+		if(gameBoard[x][y] instanceof UnitPlayer)
 			return false;
 		return true;
 	}
@@ -366,7 +368,7 @@ public class World {
 
 	//Networking Methods--------------------------------------------------------------------------------------------
 
-	
+
 	/**
 	 * Returns UnitPlayer because i needed it - Sorry Chris
 	 * @return Local Player

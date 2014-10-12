@@ -1,5 +1,7 @@
 package runGame;
 
+import gameWorld.World;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -31,6 +33,7 @@ public  class Main {
 	public static Server server;
 	public static Client client;
 	public static MainFrame mainFrame;
+	public static World world;
 
 
 	/**
@@ -61,6 +64,7 @@ public  class Main {
 	}
 
 	private boolean turn(){
+
 		return false;
 
 	}

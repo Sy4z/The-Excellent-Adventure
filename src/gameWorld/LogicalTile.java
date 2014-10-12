@@ -58,7 +58,7 @@ public class LogicalTile implements Serializable{
 	}
 
 	/**
-	 * Clears all movment infomation
+	 * Clears all movement information
 	 */
 	public void clearMoveInfo(){
 		path = null;
