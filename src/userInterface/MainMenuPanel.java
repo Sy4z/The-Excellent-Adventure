@@ -150,7 +150,7 @@ public class MainMenuPanel extends JPanel {
 		// This helps make the panel transparent.
 		setOpaque(false);
 		
-		gamePanel = new GamePanel(currentFrame, currentPanel, moveType);
+		
 	}
 
 	// Action listeners for each of the buttons can go down here.
@@ -219,6 +219,7 @@ public class MainMenuPanel extends JPanel {
 					currentFrame.getContentPane().removeAll();
 					currentFrame.getContentPane().validate();
 					currentFrame.getContentPane().repaint();
+					gamePanel = new GamePanel(currentFrame, currentPanel, moveType); //moved here to fix problem of the panel being overwritten
 					currentFrame.getContentPane().add(
 							gamePanel, //Changed this chet, needed public access to game panel. Good practise to do it this way if you're instantiating game objects in the UI
 							BorderLayout.CENTER);
