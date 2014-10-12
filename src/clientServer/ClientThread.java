@@ -1,15 +1,20 @@
 package clientServer;
 
+import gameWorld.UnitPlayer;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+
+import runGame.Main;
 
 /**
  * CLIENTSIDE CLASS
@@ -23,6 +28,7 @@ public class ClientThread extends Thread {
 	private final Socket sock;
 	private ObjectOutputStream charToServer;
 	private ObjectInputStream charFromServer;
+	private UnitPlayer localPlayer;
 	public ClientThread(Socket socket){
 		this.sock = socket;
 		System.out.println("Client is Constructed");
@@ -48,7 +54,14 @@ public class ClientThread extends Thread {
 			toServer.writeBytes(sentence + '\n'); //Apparantly, writeBytes converts a string to bytes automatically
 			//End Data Transfer Block
 			
-			
+
+			while(true){
+				localPlayer = new UnitPlayer(Main.mainFrame.mainPanel.gamePanel.getWorld().avatar);
+				
+				
+				
+				
+			}
 			
 			toServer.flush();
 			sock.close(); //Closes Socket - Important to do this but this closes the client thread completely, which might be a bad idea until the data beings being sent via a loop w/ exit clause
