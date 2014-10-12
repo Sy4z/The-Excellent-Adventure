@@ -1,10 +1,13 @@
 package gameWorld;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Stack;
 
-public class LogicalTile {
+public class LogicalTile implements Serializable{
+
+	private static final long serialVersionUID = -3331705665252979162L;
 	private boolean isTile;
 	private ArrayDeque<Point> path;
 	private boolean reachableByActive;
