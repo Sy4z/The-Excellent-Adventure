@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Inventory {
 
 	public static enum itemTypes{KEY, RUSTY_NAIL, KATANA, PUPPY};
-	int[] items;
+	private int[] items;
 
 
 	/**
@@ -50,5 +50,9 @@ public class Inventory {
 	public void useKey() {
 		items[itemTypes.KEY.ordinal()] = Math.max(0, items[itemTypes.KEY.ordinal()]-1);
 
+	}
+
+	public Inventory getInventroy(){
+		return this;
 	}
 }

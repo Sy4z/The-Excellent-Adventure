@@ -74,6 +74,7 @@ public class World {
 
 	public void startTurn(){
 		avatar.activate();
+		isActive = true;
 		calculatePossibleMovments(avatar.curLocation);
 	}
 
@@ -330,6 +331,9 @@ public class World {
 		calculatePossibleMovments(avatar.getLocation());
 	}
 
+	public Inventory getInventory(){
+		return avatar.getInventory();
+	}
 
 
 	//Networking Methods--------------------------------------------------------------------------------------------

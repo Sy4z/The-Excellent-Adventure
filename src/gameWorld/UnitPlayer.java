@@ -110,6 +110,10 @@ public class UnitPlayer extends Unit {
 
 	}
 
+	public Inventory getInventory(){
+		return this.inventory;
+	}
+
 
 
 }
