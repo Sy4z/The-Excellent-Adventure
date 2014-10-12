@@ -119,11 +119,14 @@ public class World {
 
 	}
 
+	/**
+	 * Tests that inventory updates
+	 */
 	private void invinTest(){
 		int id[] = new int[4];
 		for (int j =0; j <4; j++)
-			id[j] = (int)(Math.random()*93);
-		getInventory().add(id);
+			getInventory()[j] += (int)(Math.random()*93);
+
 	}
 
 	public void moveFromKeyBoard(int i) {
