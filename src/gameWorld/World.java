@@ -119,22 +119,11 @@ public class World {
 
 	}
 
-	/**
-	 * Tests that inventory updates
-	 */
-	private void invinTest(){
-		int id[] = new int[4];
-		for (int j =0; j <4; j++)
-			getInventory()[j] += (int)(Math.random()*93);
-
-	}
-
 	public void moveFromKeyBoard(int i) {
 		// 0 is up
 		// 1 is down
 		// 2 is left
 		// 3 is right
-		invinTest();
 
 		int x = cursor.getLocation().x;
 		int y = cursor.getLocation().y;

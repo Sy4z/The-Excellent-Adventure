@@ -48,6 +48,11 @@ public class GamePanel extends JPanel implements MouseListener {
 	private IsoCanvas canvas;
 	private String moveType;
 
+	private JTable tableItems1;
+	private JTable tableNums1;
+	private JTable tableItems2;
+	private JTable tableNums2;
+
 	public GamePanel(JFrame frame, JPanel menuPanel, String moveType) {
 		currentFrame = frame;
 		oldPanel = menuPanel;
@@ -116,7 +121,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			}
 		};
 
-		JTable tableItems1 = new JTable(model1) {
+		tableItems1 = new JTable(model1) {
 			// Returning the Class of each column will allow different
 			// renderers to be used based on Class
 			public Class getColumnClass(int column) {
@@ -150,7 +155,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			}
 		};
 
-		JTable tableNums1 = new JTable(model2);
+		tableNums1 = new JTable(model2);
 		tableNums1.setOpaque(false);
 
 		int[] inventory = world.getInventory();
@@ -184,7 +189,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			}
 		};
 
-		JTable tableItems2 = new JTable(model3) {
+		tableItems2 = new JTable(model3) {
 			// Returning the Class of each column will allow different
 			// renderers to be used based on Class
 			public Class getColumnClass(int column) {
@@ -218,7 +223,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			}
 		};
 
-		JTable tableNums2 = new JTable(model4);
+		tableNums2 = new JTable(model4);
 		tableNums2.setOpaque(false);
 
 		int pups = inventory[Inventory.itemTypes.PUPPY.ordinal()];
@@ -231,6 +236,21 @@ public class GamePanel extends JPanel implements MouseListener {
 		tableNums2.setRowSelectionAllowed(false);
 		tableNums2.setBounds(670, 700, 450, 15);
 		add(tableNums2);
+	}
+
+	private void updateInventory() {
+		int[] inventory = world.getInventory();
+		int katanas = inventory[Inventory.itemTypes.KATANA.ordinal()];
+		int keys = inventory[Inventory.itemTypes.KEY.ordinal()];
+
+		tableNums1.setValueAt(Integer.toString(katanas), 0, 0);
+		tableNums1.setValueAt(Integer.toString(keys), 0, 1);
+
+		int pups = inventory[Inventory.itemTypes.PUPPY.ordinal()];
+		int rustyNails = inventory[Inventory.itemTypes.RUSTY_NAIL.ordinal()];
+
+		tableNums2.setValueAt(Integer.toString(pups), 0, 0);
+		tableNums2.setValueAt(Integer.toString(rustyNails), 0, 1);
 	}
 
 	/**
@@ -382,32 +402,32 @@ public class GamePanel extends JPanel implements MouseListener {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(0);
+					updateInventory();
 					repaint();
-					setInventory();
 				}
 			});
 			this.getActionMap().put("down", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(1);
+					updateInventory();
 					repaint();
-					setInventory();
 				}
 			});
 			this.getActionMap().put("left", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(2);
+					updateInventory();
 					repaint();
-					setInventory();
 				}
 			});
 			this.getActionMap().put("right", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(3);
+					updateInventory();
 					repaint();
-					setInventory();
 				}
 			});
 		} else {
@@ -424,43 +444,43 @@ public class GamePanel extends JPanel implements MouseListener {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(0);
+					updateInventory();
 					repaint();
-					setInventory();
 				}
 			});
 			this.getActionMap().put("down", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(1);
+					updateInventory();
 					repaint();
-					setInventory();
 				}
 			});
 			this.getActionMap().put("left", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(2);
+					updateInventory();
 					repaint();
-					setInventory();
 				}
 			});
 			this.getActionMap().put("right", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					world.moveFromKeyBoard(3);
+					updateInventory();
 					repaint();
-					setInventory();
 				}
 			});
 		}
 	}
-	
+
 	/**
-	 * This method gets world for the network code to deal with
-	 * Written by Jarred - Sorry chet, i needed access to world
+	 * This method gets world for the network code to deal with Written by
+	 * Jarred - Sorry chet, i needed access to world
 	 */
-	public World getWorld(){
-	return this.world;
+	public World getWorld() {
+		return this.world;
 	}
 
 }
