@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
@@ -20,8 +21,8 @@ import java.net.UnknownHostException;
  */
 public class ClientThread extends Thread {
 	private final Socket sock;
-	private DataOutputStream toServer;
-	private DataInputStream fromServer;
+	private ObjectOutputStream charToServer;
+	private ObjectInputStream charFromServer;
 	public ClientThread(Socket socket){
 		this.sock = socket;
 		System.out.println("Client is Constructed");
@@ -31,8 +32,8 @@ public class ClientThread extends Thread {
 	public void run(){
 		System.out.println("Trying Connection");
 		try {
-			BufferedReader fromServer = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			toServer = new DataOutputStream(sock.getOutputStream());
+			fromServer = new ObjectInputStream(sock.getInputStream());
+			toServer = new ObjectOutputStream(sock.getOutputStream());
 			//fromServer = new DataInputStream(sock.getInputStream());
 			System.out.println("Client Socket connected on " + sock.getInetAddress() + ":" + sock.getPort());
 			
@@ -43,6 +44,7 @@ public class ClientThread extends Thread {
 			 * Helper methods incoming
 			 */
 			String sentence = "Hi Server, From Client"; //Thus is the string that gets sent to the server
+			
 			toServer.writeBytes(sentence + '\n'); //Apparantly, writeBytes converts a string to bytes automatically
 			//End Data Transfer Block
 			

@@ -50,6 +50,7 @@ public class MainMenuPanel extends JPanel {
 	private JButton controlsButton;
 	private JButton optionsButton;
 	private JButton exitButton;
+	public GamePanel gamePanel; //Added this here chet
 
 	/**
 	 * The main menu has 6 buttons: New Game, Load, Story, Controls, Options and
@@ -148,6 +149,8 @@ public class MainMenuPanel extends JPanel {
 
 		// This helps make the panel transparent.
 		setOpaque(false);
+		
+		gamePanel = new GamePanel(currentFrame, currentPanel, moveType);
 	}
 
 	// Action listeners for each of the buttons can go down here.
@@ -212,16 +215,16 @@ public class MainMenuPanel extends JPanel {
 			d.add(buttonsPanel, BorderLayout.SOUTH);
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
+			
+					currentFrame.getContentPane().removeAll();
+					currentFrame.getContentPane().validate();
+					currentFrame.getContentPane().repaint();
+					currentFrame.getContentPane().add(
+							gamePanel, //Changed this chet, needed public access to game panel. Good practise to do it this way if you're instantiating game objects in the UI
+							BorderLayout.CENTER);
 
-			currentFrame.getContentPane().removeAll();
-			currentFrame.getContentPane().validate();
-			currentFrame.getContentPane().repaint();
-			currentFrame.getContentPane().add(
-					new GamePanel(currentFrame, currentPanel, moveType),
-					BorderLayout.CENTER);
-
-			currentFrame.getContentPane().validate();
-			currentFrame.getContentPane().repaint();
+					currentFrame.getContentPane().validate();
+					currentFrame.getContentPane().repaint();
 		}
 
 	}
@@ -242,12 +245,12 @@ public class MainMenuPanel extends JPanel {
 			d.setLayout(new BorderLayout());
 
 			DefaultListModel<String> model = new DefaultListModel<String>(); // Add
-																				// saved
-																				// game
-																				// names
-																				// to
-																				// this
-																				// model.
+			// saved
+			// game
+			// names
+			// to
+			// this
+			// model.
 			JList<String> list = new JList<String>(model);
 			JScrollPane scrollPane = new JScrollPane(list);
 			d.add(scrollPane, BorderLayout.CENTER);
@@ -292,7 +295,7 @@ public class MainMenuPanel extends JPanel {
 			story.setEditable(false);
 			JScrollPane scrollPane = new JScrollPane(story);
 			scrollPane
-					.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+			.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			d.add(scrollPane, BorderLayout.CENTER);
 
 			JPanel buttonPanel = new JPanel();

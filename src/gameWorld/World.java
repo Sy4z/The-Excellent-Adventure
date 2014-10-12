@@ -361,5 +361,12 @@ public class World {
 
 
 	//Networking Methods--------------------------------------------------------------------------------------------
-
+	
+	/**
+	 * Returns UnitPlayer because i needed it - Sorry Chris
+	 * @return Local Player
+	 */
+ public UnitPlayer getAvatar(){
+	 return avatar;
+ }
 }
