@@ -5,6 +5,8 @@ import gameRender.IsoCanvas;
 import java.awt.Point;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+
+import sun.text.normalizer.UBiDiProps;
 import tile.TileMultiton.type;
 import dataStorage.Data;
 import dataStorage.Tuple;
@@ -93,7 +95,7 @@ public class World {
 			return;
 		if (gameBoard[x][y] instanceof InteractiveObject)
 			if(nextTo(x,y,avatar.curLocation.x, avatar.curLocation.y))
-				interactWith(x,y);
+				interactWith((InteractiveObject)gameBoard[x][y]);
 	}
 
 	/**
@@ -101,14 +103,17 @@ public class World {
 	 * @param x
 	 * @param y
 	 */
-	private void interactWith(int x, int y) {
-		//If a player does not have a standard action left they may not interact with an object
-		if(!avatar.getStandardAction())
-			return;
-		if(gameBoard[x][y] instanceof InteractiveObjectChest){
-			avatar.addToInventory(((InteractiveObjectChest)gameBoard[x][y]).takeContents());
-
-		}
+	private void interactWith(InteractiveObject obj) {
+//		//If a player does not have a standard action left they may not interact with an object
+//		if(!avatar.getStandardAction())
+//			return;
+//		if(gameBoard[x][y] instanceof InteractiveObjectChest){
+//			avatar.addToInventory(((InteractiveObjectChest)gameBoard[x][y]).takeContents());
+//
+//		}
+//
+	if(obj instanceof InteractiveObjectChest)
+		avatar.addToInventory(((InteractiveObjectChest)obj).takeContents());
 
 	}
 
@@ -157,7 +162,7 @@ public class World {
 		ArrayList<Point> highPoints = new ArrayList<Point>();
 		for(int x = 0; x < worldMap.length; x++)
 			for(int y = 0; y < worldMap[0].length; y++)
-				if(worldMap[x][y].isReachableByActive())
+				if(worldMap[x][y].isReachableByActive() && !(gameBoard[x][y] instanceof StationaryObject))
 					highPoints.add(new Point(x, y));
 		return highPoints;
 	}
@@ -231,11 +236,16 @@ public class World {
 			return false;
 		if(worldMap[x][y].isIsTile())
 			if(worldMap[x][y].isReachableByActive()){
+				GameObject currentContents = gameBoard[x][y];
+
+				gameBoard[avatar.getLocation().x][avatar.getLocation().y] = null;
 				canvas.moveUnit(avatar, worldMap[x][y].getPath());
 				avatar.depleateMoves();
 				gameBoard[x][y] = avatar;
-				gameBoard[avatar.getLocation().x][avatar.getLocation().y] = null;
+				avatar.upDateLocation(new Point(x,y));
 				calculatePossibleMovments(x,y);
+				if(currentContents instanceof InteractiveObject)
+					interactWith((InteractiveObject)currentContents);
 				return true;
 			}
 		return false;
