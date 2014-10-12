@@ -81,43 +81,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		controls.addActionListener(new ControlsGameListener());
 		add(controls);
 
-		ImageIcon horn = new ImageIcon("horn.jpg");
-		Image hornRe = horn.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		horn = new ImageIcon(hornRe);
-		ImageIcon sword = new ImageIcon("sword.png");
-		ImageIcon shuriken = new ImageIcon("shuriken.jpg");
-		ImageIcon trident = new ImageIcon("trident.jpg");
-
-		String[] columnNames = { "C1", "C2" };
-		Object[][] data = {{horn, sword}, {sword, shuriken}};
-
-		DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-
-		JTable table = new JTable(model){
-            //  Returning the Class of each column will allow different
-            //  renderers to be used based on Class
-            public Class getColumnClass(int column)
-            {
-                return getValueAt(0, column).getClass();
-            }
-        };
-
-        table.setOpaque(false);
-        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
-        	{
-        		setOpaque(false);
-        	}
-        });
-
-        table.setCellSelectionEnabled(true);
-		table.setRowHeight(0, 100);
-		table.setBounds(10, 550, 450, 1000);
-		add(table);
+		setInventory();
 
 		// Creates a canvas and a world to put the canvas into the world.
 		canvas = new IsoCanvas(currentFrame.getWidth(),
@@ -128,6 +92,69 @@ public class GamePanel extends JPanel implements MouseListener {
 		canvas.setBounds(0, 0, currentFrame.getWidth(),
 				currentFrame.getHeight());
 		add(canvas);
+	}
+
+	private void setInventory() {
+		ImageIcon katana = new ImageIcon("ImageKatana.jpg");
+		katana = new ImageIcon(katana.getImage().getScaledInstance(250, 100,
+				Image.SCALE_SMOOTH));
+		ImageIcon key = new ImageIcon("imageKey.jpg");
+		ImageIcon puppies = new ImageIcon("ImagePuppies07.jpg");
+		ImageIcon nails = new ImageIcon("ImageRustyNails.jpg");
+
+		String[] columns1 = { "C1", "C2" };
+		Object[][] data1 = { { katana, key } };
+
+		DefaultTableModel model1 = new DefaultTableModel(data1, columns1) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+
+		JTable tableItems1 = new JTable(model1) {
+			// Returning the Class of each column will allow different
+			// renderers to be used based on Class
+			public Class getColumnClass(int column) {
+				return getValueAt(0, column).getClass();
+			}
+		};
+
+		tableItems1.setOpaque(false);
+		tableItems1.setDefaultRenderer(Object.class,
+				new DefaultTableCellRenderer() {
+					{
+						setOpaque(false);
+					}
+				});
+
+		tableItems1.setCellSelectionEnabled(true);
+		tableItems1.setRowHeight(0, 100);
+		tableItems1.setBounds(10, 600, 450, 1000);
+		add(tableItems1);
+
+		// Next
+
+		String[] columns2 = { "C1", "C2" };
+		Object[][] data2 = { { "1", "1" } };
+
+		DefaultTableModel model2 = new DefaultTableModel(data1, columns1) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+
+		JTable tableNums1 = new JTable(model2);
+		tableNums1.setOpaque(false);
+
+		tableNums1.setValueAt("0", 0, 0);
+		tableNums1.setValueAt("0", 0, 1);
+
+		tableNums1.setCellSelectionEnabled(false);
+		tableNums1.setRowSelectionAllowed(false);
+		tableNums1.setBounds(10, 700, 450, 1000);
+		add(tableNums1);
 	}
 
 	/**
