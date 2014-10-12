@@ -1,8 +1,12 @@
 package clientServer;
 
+import gameWorld.UnitPlayer;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * SERVERSIDE Class
  * This Class Deals with accepting connections from clients and passing them off to their own specific thread
@@ -26,11 +30,13 @@ public Server(int numberPlayers){
 		try{
 			ServerThread[] serverThreads = new ServerThread[numPlayers]; //Can use this for the number of possible players to accept, and store their threads. Unused currently
 			serverSock = new ServerSocket(port);
+			List<UnitPlayer> playerList = new ArrayList<UnitPlayer>();
 			while(true){
 				System.err.println("Waiting for Connection");
 				accept = serverSock.accept();
 				//Will only reach this point if the socket actually accepts a connection - considering accept() blocks until it receives input
 				System.out.println("Accepted Connection from: " + accept.getInetAddress());
+				playerList.add(arg0)
 				ServerThread server = new ServerThread(accept);
 				server.start();
 

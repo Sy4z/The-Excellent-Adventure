@@ -454,5 +454,13 @@ public class GamePanel extends JPanel implements MouseListener {
 			});
 		}
 	}
+	
+	/**
+	 * This method gets world for the network code to deal with
+	 * Written by Jarred - Sorry chet, i needed access to world
+	 */
+	public World getWorld(){
+	return this.world;
+	}
 
 }
