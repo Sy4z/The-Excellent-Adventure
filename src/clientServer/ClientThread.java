@@ -1,14 +1,20 @@
 package clientServer;
 
+import gameWorld.UnitPlayer;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+
+import runGame.Main;
 
 /**
  * CLIENTSIDE CLASS
@@ -20,8 +26,9 @@ import java.net.UnknownHostException;
  */
 public class ClientThread extends Thread {
 	private final Socket sock;
-	private DataOutputStream toServer;
-	private DataInputStream fromServer;
+	private ObjectOutputStream charToServer;
+	private ObjectInputStream charFromServer;
+	private UnitPlayer localPlayer;
 	public ClientThread(Socket socket){
 		this.sock = socket;
 		System.out.println("Client is Constructed");
@@ -31,8 +38,8 @@ public class ClientThread extends Thread {
 	public void run(){
 		System.out.println("Trying Connection");
 		try {
-			BufferedReader fromServer = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			toServer = new DataOutputStream(sock.getOutputStream());
+			charFromServer = new ObjectInputStream(sock.getInputStream());
+			charToServer = new ObjectOutputStream(sock.getOutputStream());
 			//fromServer = new DataInputStream(sock.getInputStream());
 			System.out.println("Client Socket connected on " + sock.getInetAddress() + ":" + sock.getPort());
 			
@@ -43,12 +50,38 @@ public class ClientThread extends Thread {
 			 * Helper methods incoming
 			 */
 			String sentence = "Hi Server, From Client"; //Thus is the string that gets sent to the server
-			toServer.writeBytes(sentence + '\n'); //Apparantly, writeBytes converts a string to bytes automatically
+			
+			charToServer.writeBytes(sentence + '\n'); //Apparantly, writeBytes converts a string to bytes automatically
 			//End Data Transfer Block
 			
+            //This should probably be made to go once a tick
+			while(true){
+				//Receive State of Other Players 
+				
+				
+				//Receive State of LogicalTiles
+				
+				
+				
+				
+				//Send the Local Player to the Server
+				localPlayer = Main.mainFrame.mainPanel.gamePanel.getWorld().getAvatar(); //Get most updated version of the local player
+				charToServer.writeObject(localPlayer); //Sends the current version of the local avatar to the server
+				
+				//Send the Array of LogicalTiles to the server - Can Just Override the servers version
+				
+				
+				
+				charToServer.flush();
+				
+				if(charToServer == null){ //Placeholder for now
+					break;
+				}
+				
+				
+			}
 			
 			
-			toServer.flush();
 			sock.close(); //Closes Socket - Important to do this but this closes the client thread completely, which might be a bad idea until the data beings being sent via a loop w/ exit clause
 		} catch (IOException e) {
 			e.printStackTrace();

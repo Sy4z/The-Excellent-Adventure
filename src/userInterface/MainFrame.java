@@ -25,6 +25,7 @@ public class MainFrame extends JFrame implements WindowListener {
 	private static final long serialVersionUID = 1L;
 	private ImageIcon background = new ImageIcon("post-apoc.jpg");
 	private static ImageIcon loadBackground = new ImageIcon("robot.png");
+	public MainMenuPanel mainPanel; //Had to add this here chet, needed public access to the panel
 
 	public MainFrame() {
 		super.addWindowListener(this);
@@ -36,7 +37,7 @@ public class MainFrame extends JFrame implements WindowListener {
 		super.setLayout(new BorderLayout());
 
 		JPanel backgroundPanel = createMainPanel();
-		MainMenuPanel mainPanel = new MainMenuPanel(this, backgroundPanel);
+		mainPanel = new MainMenuPanel(this, backgroundPanel);
 		backgroundPanel.setLayout(null);
 		mainPanel.setBounds(100, 100, 300, 350); // Position the main panel at
 													// (100,100) with width 300

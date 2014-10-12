@@ -3,6 +3,9 @@ package gameWorld;
 import gameRender.IsoCanvas;
 
 import java.awt.Point;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
@@ -56,8 +59,8 @@ public class World {
 			for(int y = 0; y < tiles[0].length; y++){
 				//if(tiles[x][y].DOOR)
 				//	worldMap[x][y] = new LogicalTileDoor(tiles[x][y] != null);
-			//	else
-					worldMap[x][y] = new LogicalTile(tiles[x][y] != null);
+				//	else
+				worldMap[x][y] = new LogicalTile(tiles[x][y] != null);
 			}
 	}
 
@@ -106,16 +109,16 @@ public class World {
 	 * @param y
 	 */
 	private void interactWith(InteractiveObject obj) {
-//		//If a player does not have a standard action left they may not interact with an object
-//		if(!avatar.getStandardAction())
-//			return;
-//		if(gameBoard[x][y] instanceof InteractiveObjectChest){
-//			avatar.addToInventory(((InteractiveObjectChest)gameBoard[x][y]).takeContents());
-//
-//		}
-//
-	if(obj instanceof InteractiveObjectChest)
-		avatar.addToInventory(((InteractiveObjectChest)obj).takeContents());
+		//		//If a player does not have a standard action left they may not interact with an object
+		//		if(!avatar.getStandardAction())
+		//			return;
+		//		if(gameBoard[x][y] instanceof InteractiveObjectChest){
+		//			avatar.addToInventory(((InteractiveObjectChest)gameBoard[x][y]).takeContents());
+		//
+		//		}
+		//
+		if(obj instanceof InteractiveObjectChest)
+			avatar.addToInventory(((InteractiveObjectChest)obj).takeContents());
 
 	}
 
@@ -145,7 +148,7 @@ public class World {
 						return;
 					avatar.useKey();
 				}
-			// If the XY is within one movement of the active player
+				// If the XY is within one movement of the active player
 				if (worldMap[x][y].isReachableByActive()) {
 					cursor.setLocation(x,y);
 					canvas.moveCursor(cursor);
@@ -221,8 +224,10 @@ public class World {
 		if(!worldMap[x][y].isIsTile())
 			return false;
 		if(worldMap[x][y].getPath() == null)
-			return true;
+			return false;
 		if(worldMap[x][y].getPath().size() < path.size())
+			return false;
+		if(gameBoard[x][y] instanceof UnitPlayer)
 			return false;
 		return true;
 	}
@@ -350,5 +355,64 @@ public class World {
 
 
 	//Networking Methods--------------------------------------------------------------------------------------------
+
+
+	/**
+	 * Returns UnitPlayer because i needed it - Sorry Chris
+	 * @return Local Player
+	 */
+	public UnitPlayer getAvatar(){
+		return avatar;
+	}
+
+
+
+	public byte[] getGameBoard(){
+		try {
+			return toByteArray(gameBoard);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public byte[] getWorldMap(){
+		try {
+			return toByteArray(worldMap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * Taken From: http://www.java2s.com/Code/Java/File-Input-Output/Convertobjecttobytearrayandconvertbytearraytoobject.htm
+	 * @param obj
+	 * @return
+	 * @throws IOException
+	 */
+	public static byte[] toByteArray(Object obj) throws IOException {
+		byte[] bytes = null;
+		ByteArrayOutputStream bos = null;
+		ObjectOutputStream oos = null;
+		try {
+			bos = new ByteArrayOutputStream();
+			oos = new ObjectOutputStream(bos);
+			oos.writeObject(obj);
+			oos.flush();
+			bytes = bos.toByteArray();
+		} finally {
+			if (oos != null) {
+				oos.close();
+			}
+			if (bos != null) {
+				bos.close();
+			}
+		}
+		return bytes;
+	}
+
 
 }

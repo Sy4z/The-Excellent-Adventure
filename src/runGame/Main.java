@@ -1,5 +1,7 @@
 package runGame;
 
+import gameWorld.World;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -22,7 +24,7 @@ import clientServer.ServerThread;
 
 
 
-public class Main {
+public  class Main {
 
 	private static int numberOfPlayers = 3; //Variable for the number of players in the game
 
@@ -30,6 +32,8 @@ public class Main {
 	public static String ipAddress = "127.0.0.1";
 	public static Server server;
 	public static Client client;
+	public static MainFrame mainFrame;
+	public static World world;
 
 
 	/**
@@ -50,16 +54,17 @@ public class Main {
 		}
 
 		loadFrame.dispose();
-		MainFrame mainFrame = new MainFrame();
+		mainFrame = new MainFrame();
 
 		//The following block deals with starting the server
-		server = new Server(numberOfPlayers);
+		server = new Server(getNumberOfPlayers());
 		client = new Client();
 		runServer(server, client);
 
 	}
 
 	private boolean turn(){
+
 		return false;
 
 	}
@@ -106,6 +111,14 @@ public class Main {
 		isServer = false;
 	}
 
+	}
+
+	public static int getNumberOfPlayers() {
+		return numberOfPlayers;
+	}
+
+	public static void setNumberOfPlayers(int numberOfPlayers) {
+		Main.numberOfPlayers = numberOfPlayers;
 	}
 
 }

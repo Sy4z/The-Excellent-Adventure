@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
@@ -16,7 +17,8 @@ import javax.imageio.ImageIO;
  *
  */
 
-public class UnitPlayer extends Unit {
+public class UnitPlayer extends Unit{
+
 	private int heightOffSet;
 
 	public UnitPlayer(Point loc, int ID) {
