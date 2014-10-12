@@ -52,7 +52,9 @@ public class Inventory {
 
 	}
 
-	public Inventory getInventroy(){
-		return this;
+	public int[] getInventroy(){
+		return items;
 	}
+
+
 }

@@ -110,8 +110,8 @@ public class UnitPlayer extends Unit {
 
 	}
 
-	public Inventory getInventory(){
-		return this.inventory;
+	public int[] getInventory(){
+		return this.inventory.getInventroy();
 	}
 
 

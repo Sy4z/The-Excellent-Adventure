@@ -119,12 +119,19 @@ public class World {
 
 	}
 
+	private void invinTest(){
+		int id[] = new int[4];
+		for (int j =0; j <4; j++)
+			id[j] = (int)(Math.random()*93);
+		getInventory().add(id);
+	}
+
 	public void moveFromKeyBoard(int i) {
 		// 0 is up
 		// 1 is down
 		// 2 is left
 		// 3 is right
-
+		invinTest();
 
 		int x = cursor.getLocation().x;
 		int y = cursor.getLocation().y;
@@ -345,7 +352,7 @@ public class World {
 		calculatePossibleMovments(avatar.getLocation());
 	}
 
-	public Inventory getInventory(){
+	public int[] getInventory(){
 		return avatar.getInventory();
 	}
 
