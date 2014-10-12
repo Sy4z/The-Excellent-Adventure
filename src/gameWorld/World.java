@@ -6,6 +6,8 @@ import java.awt.Point;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
+import com.sun.accessibility.internal.resources.accessibility;
+
 import sun.text.normalizer.UBiDiProps;
 import tile.TileMultiton.type;
 import dataStorage.Data;
@@ -25,7 +27,6 @@ public class World {
 	private UnitCursor cursor;
 	private IsoCanvas canvas;
 
-
 	/**
 	 * Constructor
 	 *
@@ -41,6 +42,7 @@ public class World {
 		avatar = (UnitPlayer) t.units[0];
 		cursor = new UnitCursor(avatar.curLocation, -1);
 		checkPlayerStatus();
+		startTurn();
 
 	}
 
@@ -69,15 +71,15 @@ public class World {
 		if(!avatar.isNotTurnEnd()){
 			return isActive = false;
 		}
-		//Otherwise refresh movment and return true
-		calculatePossibleMovments(avatar.curLocation);
+		//Otherwise refresh moevment and return true
+		calculatePossibleMovments();
 		return true;
 	}
 
 	public void startTurn(){
 		avatar.activate();
 		isActive = true;
-		calculatePossibleMovments(avatar.curLocation);
+		calculatePossibleMovments();
 	}
 
 
@@ -123,6 +125,7 @@ public class World {
 		// 2 is left
 		// 3 is right
 
+
 		int x = cursor.getLocation().x;
 		int y = cursor.getLocation().y;
 
@@ -138,11 +141,12 @@ public class World {
 		if (inBounds(x, y))
 			if (worldMap[x][y].isIsTile()) {
 				// If it's a door only a player with a key can go through
-				if (worldMap[x][y] instanceof LogicalTileDoor)
+				if (worldMap[x][y] instanceof LogicalTileDoor) {
 					if (!avatar.hasKey())
 						return;
-				avatar.useKey();
-				// If the XY is within one movement of the active player
+					avatar.useKey();
+				}
+			// If the XY is within one movement of the active player
 				if (worldMap[x][y].isReachableByActive()) {
 					cursor.setLocation(x,y);
 					canvas.moveCursor(cursor);
@@ -264,8 +268,8 @@ public class World {
 	 * Moves the active player to the cursor
 	 * @return
 	 */
-	public boolean moveToCursor(){
-		if(move(cursor.curLocation)){
+	public boolean moveToCursor() {
+		if (move(cursor.curLocation)) {
 			refresh();
 			return true;
 		}

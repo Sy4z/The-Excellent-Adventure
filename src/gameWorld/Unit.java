@@ -48,7 +48,7 @@ public abstract class Unit extends GameObject {
 	public void activate() {
 		moveAction = true;
 		standardAction = true;
-		this.notTurnEnd = true;
+		notTurnEnd = true;
 
 	}
 
@@ -74,9 +74,13 @@ public abstract class Unit extends GameObject {
 
 	public void depleateMoves() {
 
-		if(moveAction == false)
+		if(moveAction == false){
 			standardAction = false;
-		else moveAction = false;
+			notTurnEnd = false;
+		}
+		else {
+			moveAction = false;
+		}
 	}
 
 
