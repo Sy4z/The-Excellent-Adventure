@@ -59,8 +59,8 @@ public class World {
 			for(int y = 0; y < tiles[0].length; y++){
 				//if(tiles[x][y].DOOR)
 				//	worldMap[x][y] = new LogicalTileDoor(tiles[x][y] != null);
-			//	else
-					worldMap[x][y] = new LogicalTile(tiles[x][y] != null);
+				//	else
+				worldMap[x][y] = new LogicalTile(tiles[x][y] != null);
 			}
 	}
 
@@ -109,16 +109,16 @@ public class World {
 	 * @param y
 	 */
 	private void interactWith(InteractiveObject obj) {
-//		//If a player does not have a standard action left they may not interact with an object
-//		if(!avatar.getStandardAction())
-//			return;
-//		if(gameBoard[x][y] instanceof InteractiveObjectChest){
-//			avatar.addToInventory(((InteractiveObjectChest)gameBoard[x][y]).takeContents());
-//
-//		}
-//
-	if(obj instanceof InteractiveObjectChest)
-		avatar.addToInventory(((InteractiveObjectChest)obj).takeContents());
+		//		//If a player does not have a standard action left they may not interact with an object
+		//		if(!avatar.getStandardAction())
+		//			return;
+		//		if(gameBoard[x][y] instanceof InteractiveObjectChest){
+		//			avatar.addToInventory(((InteractiveObjectChest)gameBoard[x][y]).takeContents());
+		//
+		//		}
+		//
+		if(obj instanceof InteractiveObjectChest)
+			avatar.addToInventory(((InteractiveObjectChest)obj).takeContents());
 
 	}
 
@@ -160,7 +160,7 @@ public class World {
 						return;
 					avatar.useKey();
 				}
-			// If the XY is within one movement of the active player
+				// If the XY is within one movement of the active player
 				if (worldMap[x][y].isReachableByActive()) {
 					cursor.setLocation(x,y);
 					canvas.moveCursor(cursor);
@@ -366,14 +366,14 @@ public class World {
 
 	//Networking Methods--------------------------------------------------------------------------------------------
 
-	
+
 	/**
 	 * Returns UnitPlayer because i needed it - Sorry Chris
 	 * @return Local Player
 	 */
- public UnitPlayer getAvatar(){
-	 return avatar;
- }
+	public UnitPlayer getAvatar(){
+		return avatar;
+	}
 
 
 
