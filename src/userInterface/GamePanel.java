@@ -6,6 +6,7 @@ import gameWorld.World;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -20,15 +21,19 @@ import java.awt.event.MouseListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -38,9 +43,9 @@ import runGame.Main;
 /**
  * This class contains the main canvas displaying the gameplay and other
  * controls required for playing the game.
- *
+ * 
  * @author Venkata Peesapati
- *
+ * 
  */
 public class GamePanel extends JPanel implements MouseListener {
 
@@ -86,7 +91,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		controls.setBounds(965, 60, 170, 40);
 		controls.addActionListener(new ControlsGameListener());
 		add(controls);
-		
+
 		JButton saveGame = new JButton("Save Game");
 		saveGame.setOpaque(false);
 		saveGame.setContentAreaFilled(false);
@@ -94,8 +99,9 @@ public class GamePanel extends JPanel implements MouseListener {
 		saveGame.setFont(new Font("Arial", Font.PLAIN, 35));
 		saveGame.setFocusPainted(false);
 		saveGame.setForeground(Color.GREEN);
-		
+
 		saveGame.setBounds(10, 20, 250, 40);
+		saveGame.addActionListener(new SaveGameListener());
 		add(saveGame);
 
 		setInventory();
@@ -261,9 +267,9 @@ public class GamePanel extends JPanel implements MouseListener {
 	/**
 	 * This is the listener class used for the quit button. It returns to the
 	 * main menu by replacing the game panel with the main menu's panel.
-	 *
+	 * 
 	 * @author Venkata Peesapati
-	 *
+	 * 
 	 */
 	class QuitGameListener implements ActionListener {
 
@@ -285,9 +291,9 @@ public class GamePanel extends JPanel implements MouseListener {
 	/**
 	 * This is the listener class used for the controls button. It allows the
 	 * user to change the keyboard controls during the gameplay.
-	 *
+	 * 
 	 * @author Venkata Peesapati
-	 *
+	 * 
 	 */
 	class ControlsGameListener implements ActionListener {
 
@@ -346,6 +352,59 @@ public class GamePanel extends JPanel implements MouseListener {
 
 			d.add(moveControls, BorderLayout.CENTER);
 			d.add(buttonsPanel, BorderLayout.SOUTH);
+			d.setLocationRelativeTo(null);
+			d.setVisible(true);
+		}
+
+	}
+
+	class SaveGameListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			final JDialog d = new JDialog(currentFrame, "Save Game", true);
+			d.setSize(400, 300);
+			d.setLayout(new BorderLayout());
+
+			DefaultListModel<String> model = new DefaultListModel<String>(); // Add
+			// saved
+			// game
+			// names
+			// to
+			// this
+			// model.
+			JList<String> list = new JList<String>(model);
+			JScrollPane scrollPane = new JScrollPane(list);
+			d.add(scrollPane, BorderLayout.CENTER);
+
+			JPanel savePanel = new JPanel();
+			savePanel.setLayout(new BorderLayout());
+			
+			JPanel namePanel = new JPanel();
+			namePanel.setLayout(new FlowLayout());
+			namePanel.add(new JLabel("Name: "));
+			JTextField nameField = new JTextField();
+			nameField.setPreferredSize(new Dimension(110 ,20));
+			namePanel.add(nameField);
+			
+			JPanel buttonPanel = new JPanel();
+			buttonPanel.setLayout(new FlowLayout());
+			JButton cancelButton = new JButton("Cancel");
+			cancelButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					d.dispose();
+				}
+			});
+			buttonPanel.add(new JButton("OK"));
+			buttonPanel.add(cancelButton);
+			buttonPanel.add(new JButton("Delete"));
+			
+			savePanel.add(namePanel, BorderLayout.CENTER);
+			savePanel.add(buttonPanel, BorderLayout.SOUTH);
+			d.add(savePanel, BorderLayout.SOUTH);
+
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
 		}
