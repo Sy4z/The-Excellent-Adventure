@@ -1,5 +1,7 @@
 package gameWorld;
 
+import gameWorld.Inventory.itemTypes;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -114,6 +116,12 @@ public class UnitPlayer extends Unit{
 
 	public int[] getInventory(){
 		return this.inventory.getInventroy();
+	}
+
+
+	public void addToInventory(itemTypes type, int i) {
+		this.inventory.add(type, i);
+
 	}
 
 

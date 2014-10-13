@@ -358,6 +358,10 @@ public class World {
 
 	//Networking Methods--------------------------------------------------------------------------------------------
 
+	public void setGameBoard(GameObject[][] updatedGameBoard){
+		this.gameBoard = updatedGameBoard;
+	}
+
 
 	/**
 	 * Returns UnitPlayer because i needed it - Sorry Chris

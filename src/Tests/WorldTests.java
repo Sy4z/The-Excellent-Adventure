@@ -2,11 +2,13 @@ package Tests;
 import static org.junit.Assert.*;
 
 import java.awt.Canvas;
+import java.awt.Point;
 
 import org.junit.*;
 
 import gameRender.IsoCanvas;
 import gameWorld.*;
+import gameWorld.Inventory.itemTypes;
 
 public class WorldTests {
 	@Test
@@ -23,6 +25,7 @@ public class WorldTests {
 		assertTrue(w.isTurn());
 		assertTrue(w.getAvatar().getMoveAction());
 		assertTrue(w.getAvatar().getStandardAction());
+		assertTrue(w.getAvatar() instanceof UnitPlayer);
 	}
 	@Test
 	public void testMovement_001(){
@@ -58,5 +61,39 @@ public class WorldTests {
 		assertTrue(t.isReachableByActive());
 		t.clearMoveInfo();
 		assertFalse(t.isReachableByActive());
+	}
+
+	@Test
+	public void testInvientory_001(){
+		UnitPlayer p = new UnitPlayer(new Point(), 0);
+
+		assertTrue(p.getInventory()[0] == 0);
+		assertTrue(p.getInventory()[1] == 0);
+		assertTrue(p.getInventory()[2] == 0);
+		assertTrue(p.getInventory()[3] == 0);
+
+		int[] ints = {1,2,3,4};
+
+		p.addToInventory(ints);
+
+		assertTrue(p.getInventory()[0] == 1);
+		assertTrue(p.getInventory()[1] == 2);
+		assertTrue(p.getInventory()[2] == 3);
+		assertTrue(p.getInventory()[3] == 4);
+		assertTrue(p.hasKey());
+		p.useKey();
+
+		assertTrue(p.getInventory()[0] == 0);
+		assertTrue(p.getInventory()[1] == 2);
+		assertTrue(p.getInventory()[2] == 3);
+		assertTrue(p.getInventory()[3] == 4);
+		assertFalse(p.hasKey());
+
+		p.addToInventory(itemTypes.KEY, 5);
+
+		assertTrue(p.getInventory()[0] == 5);
+
+
+
 	}
 }

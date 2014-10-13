@@ -47,9 +47,10 @@ public class Inventory {
 	}
 
 
-	public void useKey() {
+	public boolean useKey() {
+		boolean b = items[itemTypes.KEY.ordinal()] > 0;
 		items[itemTypes.KEY.ordinal()] = Math.max(0, items[itemTypes.KEY.ordinal()]-1);
-
+		return b;
 	}
 
 	public int[] getInventroy(){
