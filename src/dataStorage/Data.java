@@ -31,6 +31,8 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.xml.sax.SAXException;
 
+import runGame.Main;
+import sun.security.jca.GetInstance;
 import tile.*;
 import tile.TileMultiton.type;
 
@@ -63,6 +65,7 @@ public class Data {
 		}
 		
 		
+		
 		return new Tuple(null, null);
 	}
 
@@ -75,9 +78,8 @@ public class Data {
 	 * @return True is successful, else false.
 	 * @throws UnexpectedException
 	 */
-	public static boolean save(String fileName, TileMultiton.type[][] types,World world) throws UnexpectedException{
+	public static boolean save(String fileName, TileMultiton.type[][] types) throws UnexpectedException{
 		assert(types 	!= 	null);
-		assert(world 	!= 	null);
 		assert(fileName != 	null);
 
 		//Initialise the document
@@ -142,7 +144,7 @@ public class Data {
 		}
 
 		GameObject[][] gameObjs = null;
-
+		World world = Main.world;
 		try {
 			Field gameObjsField = world.getClass().getDeclaredField("gameBoard");
 			gameObjsField.setAccessible(true);
@@ -387,7 +389,7 @@ public class Data {
 	public static void main(String args[]){
 		Tuple t = testSet(null);
 		try {
-			save("test",t.tiles, new World("test", 8, 8, new IsoCanvas(8, 8)));
+			save("test",t.tiles);
 		} catch (UnexpectedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
