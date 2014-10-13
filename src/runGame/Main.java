@@ -64,9 +64,17 @@ public  class Main {
 	}
 
 	private boolean turn(){
+		world.startTurn();
 
-		return false;
-
+		while(world.checkPlayerStatus()){
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return true;
 	}
 
 
