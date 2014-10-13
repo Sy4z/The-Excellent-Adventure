@@ -63,7 +63,7 @@ public  class Main {
 
 	}
 
-	private boolean turn(){
+	public boolean turn(){
 		world.startTurn();
 
 		while(world.checkPlayerStatus()){
