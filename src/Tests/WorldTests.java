@@ -47,4 +47,16 @@ public class WorldTests {
 		assertFalse(w.getAvatar().getStandardAction());
 
 	}
+
+	@Test
+	public void testLogicalTile_001(){
+		LogicalTile t = new LogicalTile(false);
+		assertFalse(t.isIsTile());
+		t.setIsTile(true);
+		assertTrue(t.isIsTile());
+		t.setReachableByActive(true);
+		assertTrue(t.isReachableByActive());
+		t.clearMoveInfo();
+		assertFalse(t.isReachableByActive());
+	}
 }

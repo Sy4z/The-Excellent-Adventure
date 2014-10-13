@@ -51,8 +51,6 @@ public  class Main {
 		JFrame loadFrame = MainFrame.createLoadingFrame();
 		loadFrame.setVisible(true);
 
-		cvs = new IsoCanvas(mainFrame.getWidth(), mainFrame.getHeight());
-		world = new World(null, -1, -1, cvs);
 
 		try {
 			Thread.sleep(0);
@@ -63,6 +61,9 @@ public  class Main {
 
 		loadFrame.dispose();
 		mainFrame = new MainFrame();
+
+		cvs = new IsoCanvas(mainFrame.getWidth(), mainFrame.getHeight());
+		world = new World(null, -1, -1, cvs);
 
 
 		//The following block deals with starting the server
