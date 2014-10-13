@@ -223,11 +223,11 @@ public class World {
 			return false;
 		if(!worldMap[x][y].isIsTile())
 			return false;
-		if(worldMap[x][y].getPath() == null)
-			return false;
-		if(worldMap[x][y].getPath().size() < path.size())
-			return false;
 		if(gameBoard[x][y] instanceof UnitPlayer)
+			return false;
+		if(worldMap[x][y].getPath() == null)
+			return true;
+		if(worldMap[x][y].getPath().size() < path.size())
 			return false;
 		return true;
 	}
