@@ -3,6 +3,7 @@ package dataStorage;
 import gameRender.IsoCanvas;
 import gameWorld.GameObject;
 import gameWorld.Inventory;
+import gameWorld.LogicalTile;
 import gameWorld.UnitPlayer;
 import gameWorld.Unit;
 import gameWorld.World;
@@ -18,12 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.swing.JFrame;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.DOMBuilder;
@@ -32,7 +31,6 @@ import org.jdom2.output.XMLOutputter;
 import org.xml.sax.SAXException;
 
 import runGame.Main;
-import sun.security.jca.GetInstance;
 import tile.*;
 import tile.TileMultiton.type;
 
@@ -51,9 +49,10 @@ public class Data {
 		System.err.println(s);
 	}
 
-	public static Tuple load(File f){
+	public static Tuple load(String f){
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		Document doc = null;
+		
 		try {
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			org.w3c.dom.Document w3cDoc = dBuilder.parse(f);
@@ -63,7 +62,39 @@ public class Data {
 			// TODO Auto-generated catch block
 			throw new IllegalArgumentException("File not found");
 		}
+
 		
+		Element root = doc.getRootElement();
+		Element tilesNode = root.getChild("Tiles");
+		
+		int i = Integer.parseInt(tilesNode.getAttributeValue("X"));
+		int j = Integer.parseInt(tilesNode.getAttributeValue("Y"));
+		
+		LogicalTile[][] lTiles = new LogicalTile[i][j];
+		TileMultiton.type[][] tiles = new TileMultiton.type[i][j]; 
+		
+		
+		i = 0;
+		j = 0;
+		
+		try {
+			Scanner tileMapScanner = new Scanner(new File(f + File.separatorChar + "map"));
+			String curChar = "";
+			Tile curTile = null;
+			while(tileMapScanner.hasNext()){
+				curChar = tileMapScanner.next();
+				while(curChar != ";"){
+					curTile = TileMultiton.getByRepresentation(curChar.charAt(0));
+//					tiles[i][j] = curTile;
+					j++;
+				}
+				i++;
+				j = 0;
+			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			return null;
+		}
 		
 		
 		return new Tuple(null, null);
@@ -118,8 +149,6 @@ public class Data {
 
 		Element elem;
 		String tileMap = "";
-		
-		
 		
 		//For each element in tiles, if the tiles are not already in the tree, add them,
 		//else add the char for the tile to the tileMap, and continue onwards
@@ -205,15 +234,15 @@ public class Data {
 							switch(f.getType().getSimpleName()){
 		
 							case "BufferedImage": break;
-							case "int": fieldElem = handleIntField(f,e); break;
-							case "Inventory": fieldElem = handleInventoryField(f,e);break;
-							case "Point": fieldElem = handlePointField(f,e); break;
-							case "File": fieldElem = handleFileField(f,e); break;
-							case "boolean":fieldElem = handlebooleanField(f,e); break;
-							case "String" : fieldElem = handleStringField(f,e); break;
-		
+							case "int": 		fieldElem = handleIntField(f,e); break;
+							case "Inventory": 	fieldElem = handleInventoryField(f,e);break;
+							case "Point": 		fieldElem = handlePointField(f,e); break;
+							case "File": 		fieldElem = handleFileField(f,e); break;
+							case "boolean":		fieldElem = handlebooleanField(f,e); break;
+							case "String" : 	fieldElem = handleStringField(f,e); break;
 							default:
-								throw new UnexpectedException("SAVING: Unexpected field type in unit: +"+ f.getName() + " " + f.getType().getSimpleName());
+								error("No saving controls found for objects of type: " + f.getType().getSimpleName() + "\n\tField will not be saved");
+								break;
 							}
 		
 							if(fieldElem != null){
@@ -241,7 +270,7 @@ public class Data {
 		File XMLPath = new File(savePath.toString() + File.separator + "data");
 		try {
 			print = new PrintStream(XMLPath);
-			print.print(tileMap);
+			print.print(xmlOut.outputString(document));
 		} catch (FileNotFoundException e) {
 			try {
 				XMLPath.createNewFile();
