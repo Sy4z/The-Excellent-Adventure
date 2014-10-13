@@ -29,8 +29,8 @@ import runGame.Main;
  */
 public class ClientThread extends Thread {
 	private final Socket sock;
-	private ObjectOutputStream charToServer;
-	private ObjectInputStream charFromServer;
+	private ObjectOutputStream boardToServer;
+	private ObjectInputStream boardFromServer;
 	private UnitPlayer localPlayer;
 	GameObject[][] localGameMap;
 	public ClientThread(Socket socket){
@@ -42,8 +42,8 @@ public class ClientThread extends Thread {
 	public void run(){
 		System.out.println("Trying Connection");
 		try {
-			charFromServer = new ObjectInputStream(sock.getInputStream());
-			charToServer = new ObjectOutputStream(sock.getOutputStream());
+			boardFromServer = new ObjectInputStream(sock.getInputStream());
+			boardToServer = new ObjectOutputStream(sock.getOutputStream());
 			//fromServer = new DataInputStream(sock.getInputStream());
 			System.out.println("Client Socket connected on " + sock.getInetAddress() + ":" + sock.getPort());
 
@@ -55,7 +55,7 @@ public class ClientThread extends Thread {
 			 */
 			String sentence = "Hi Server, From Client"; //Thus is the string that gets sent to the server
 
-			charToServer.writeBytes(sentence + '\n'); //Apparantly, writeBytes converts a string to bytes automatically
+			boardToServer.writeBytes(sentence + '\n'); //Apparantly, writeBytes converts a string to bytes automatically
 			//End Data Transfer Block
 
 
@@ -67,7 +67,7 @@ public class ClientThread extends Thread {
 
 					//Receive the GameBoard from the Server and update current game world
 					try {
-						Object gameBoardGeneric = charFromServer.readObject(); //Read into  Generic Object Type
+						Object gameBoardGeneric = boardFromServer.readObject(); //Read into  Generic Object Type
 						if(gameBoardGeneric instanceof GameObject[][]){ //Check that the generic object is an arraylist - Cant check further than this because nested generics get erased at runtime but at least theres some safeguard to typechecking
 							localGameMap = (GameObject[][])gameBoardGeneric; //Set the board as a local variable
 							Main.world.setGameBoard(localGameMap); //Update the local copy of the gameMap
@@ -80,12 +80,26 @@ public class ClientThread extends Thread {
 						e.printStackTrace();
 					}
 
+					//Receive LogicalTiles Here
+
+
+
+
+
+
 					//Wait for end turn phase then send server local gameBoard
+					while(Main.tw.startOfEndPhase == false); //Loop around, then when it is not false, go to the instruction
+
+
+					//End Phase started so:
+
+					boardToServer.writeObject(Main.world.getGameBoard());//Send current state of Local GameBoard to Server
+					//Send the Array of LogicalTiles to the server - Can Just Override the servers version
 
 
 
 
-
+					Main.tw.endOfEndPhase = true;//End end Phase
 
 
 
@@ -97,13 +111,13 @@ public class ClientThread extends Thread {
 
 
 
-				//Send the Array of LogicalTiles to the server - Can Just Override the servers version
 
 
 
-				charToServer.flush();
 
-				if(charToServer == null){ //Placeholder for now
+				boardToServer.flush();
+
+				if(boardToServer == null){ //Placeholder for now
 					break;
 				}
 

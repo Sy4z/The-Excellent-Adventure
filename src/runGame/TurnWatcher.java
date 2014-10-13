@@ -14,6 +14,7 @@ import gameWorld.World;
 public class TurnWatcher {
 	public World world;
 	public static boolean endOfEndPhase = false; //Signifies end of end Phase, so the next turn can switch
+	public static boolean startOfEndPhase = false;
 	public TurnWatcher(World world){
 		this.world = world;
 	}
@@ -36,9 +37,9 @@ public class TurnWatcher {
 				e.printStackTrace();
 			}
 		}
-
+		startOfEndPhase = true;
 		while(!endPhase()); //This is just to make the turn stop until the client decides to send the data to the server
-		endOfEndPhase = false; //Change to false to that next time turn is called, its going to start the end phase again
+		endOfEndPhase = false; //Change to null so that next time turn is called, its going to start the end phase again
 		return true; //All the networking data has now been sent, the ClientThread has given the OK, end the turn properly.
 	}
 
