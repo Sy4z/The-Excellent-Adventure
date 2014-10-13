@@ -22,4 +22,8 @@ public World world;
 		}
 		return true;
 	}
+
+	public boolean isTurn(){
+		return world.isTurn();
+	}
 }

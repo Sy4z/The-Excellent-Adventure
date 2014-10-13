@@ -414,5 +414,9 @@ public class World {
 		return bytes;
 	}
 
+	public boolean isTurn() {
+		return isActive;
+	}
+
 
 }
