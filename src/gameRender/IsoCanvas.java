@@ -40,12 +40,12 @@ public class IsoCanvas extends JPanel{
 	private int height;
 	public int tile_width = 64;
 	public int tile_height = 32;
-	
+
 	private String orientation;
 	private ArrayList<Point> HIGHLIGHTED_TILES;
 	private UnitCursor  cursor;
 	private BufferedImage highLight;
-	
+
 	/**
 	 *
 	 */
@@ -59,7 +59,7 @@ public class IsoCanvas extends JPanel{
 		this.height = Height;
 		this.render = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,map.length);
 	}
-	
+
 	/**
 	 *
 	 */
@@ -169,5 +169,10 @@ public class IsoCanvas extends JPanel{
 			}
 		}
 		System.out.println("==============================================");
+	}
+
+	public void updateGameBoardGraphics(ArrayList<GameObject> t) {
+		// TODO Auto-generated method stub
+
 	}
 }
