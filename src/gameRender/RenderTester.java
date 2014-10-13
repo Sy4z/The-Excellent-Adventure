@@ -30,8 +30,8 @@ public class RenderTester extends JFrame implements KeyListener{
 		setSize(width,height);
 		testCanvas = new IsoCanvas(this.getWidth(),this.getHeight());
 		add(testCanvas);
-		pack();
-		setResizable(true);
+		
+		setResizable(false);
 
 		setVisible(true);
 		addKeyListener(this);
