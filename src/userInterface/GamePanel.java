@@ -33,6 +33,8 @@ import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import runGame.Main;
+
 /**
  * This class contains the main canvas displaying the gameplay and other
  * controls required for playing the game.
@@ -44,8 +46,6 @@ public class GamePanel extends JPanel implements MouseListener {
 
 	private JFrame currentFrame;
 	private JPanel oldPanel;
-	private World world; // The game world.
-	private IsoCanvas canvas;
 	private String moveType;
 
 	private JTable tableItems1;
@@ -98,17 +98,11 @@ public class GamePanel extends JPanel implements MouseListener {
 		saveGame.setBounds(10, 20, 250, 40);
 		add(saveGame);
 
-		// Creates a canvas and a world to put the canvas into the world.
-		canvas = new IsoCanvas(currentFrame.getWidth(),
-				currentFrame.getHeight());
-		world = new World("", currentFrame.getWidth(),
-				currentFrame.getHeight(), canvas);
-
 		setInventory();
 
-		canvas.setBounds(0, 0, currentFrame.getWidth(),
+		Main.cvs.setBounds(0, 0, currentFrame.getWidth(),
 				currentFrame.getHeight());
-		add(canvas);
+		add(Main.cvs);
 	}
 
 	/**
@@ -169,7 +163,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		tableNums1 = new JTable(model2);
 		tableNums1.setOpaque(false);
 
-		int[] inventory = world.getInventory();
+		int[] inventory = Main.world.getInventory();
 		int katanas = inventory[Inventory.itemTypes.KATANA.ordinal()];
 		int keys = inventory[Inventory.itemTypes.KEY.ordinal()];
 
@@ -250,7 +244,7 @@ public class GamePanel extends JPanel implements MouseListener {
 	}
 
 	private void updateInventory() {
-		int[] inventory = world.getInventory();
+		int[] inventory = Main.world.getInventory();
 		int katanas = inventory[Inventory.itemTypes.KATANA.ordinal()];
 		int keys = inventory[Inventory.itemTypes.KEY.ordinal()];
 
@@ -394,7 +388,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		this.getActionMap().put("Enter", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				world.moveToCursor();
+				Main.world.moveToCursor();
 				repaint();
 			}
 		});
@@ -412,7 +406,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			this.getActionMap().put("up", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					world.moveFromKeyBoard(0);
+					Main.world.moveFromKeyBoard(0);
 					updateInventory();
 					repaint();
 				}
@@ -420,7 +414,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			this.getActionMap().put("down", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					world.moveFromKeyBoard(1);
+					Main.world.moveFromKeyBoard(1);
 					updateInventory();
 					repaint();
 				}
@@ -428,7 +422,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			this.getActionMap().put("left", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					world.moveFromKeyBoard(2);
+					Main.world.moveFromKeyBoard(2);
 					updateInventory();
 					repaint();
 				}
@@ -436,7 +430,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			this.getActionMap().put("right", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					world.moveFromKeyBoard(3);
+					Main.world.moveFromKeyBoard(3);
 					updateInventory();
 					repaint();
 				}
@@ -454,7 +448,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			this.getActionMap().put("up", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					world.moveFromKeyBoard(0);
+					Main.world.moveFromKeyBoard(0);
 					updateInventory();
 					repaint();
 				}
@@ -462,7 +456,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			this.getActionMap().put("down", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					world.moveFromKeyBoard(1);
+					Main.world.moveFromKeyBoard(1);
 					updateInventory();
 					repaint();
 				}
@@ -470,7 +464,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			this.getActionMap().put("left", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					world.moveFromKeyBoard(2);
+					Main.world.moveFromKeyBoard(2);
 					updateInventory();
 					repaint();
 				}
@@ -478,20 +472,12 @@ public class GamePanel extends JPanel implements MouseListener {
 			this.getActionMap().put("right", new AbstractAction() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					world.moveFromKeyBoard(3);
+					Main.world.moveFromKeyBoard(3);
 					updateInventory();
 					repaint();
 				}
 			});
 		}
-	}
-
-	/**
-	 * This method gets world for the network code to deal with Written by
-	 * Jarred - Sorry chet, i needed access to world
-	 */
-	public World getWorld() {
-		return this.world;
 	}
 
 }
