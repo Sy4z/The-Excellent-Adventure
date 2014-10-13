@@ -8,9 +8,11 @@
 
 package tile;
 
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
 import java.io.File;
 import java.io.IOException;
 
@@ -69,6 +71,7 @@ public abstract class Tile {
 
 
 	public boolean draw(Graphics2D g, int dx, int dy){
+
 		return g.drawImage(img, dx, dy-heightOffSet,null);
 
 	}
