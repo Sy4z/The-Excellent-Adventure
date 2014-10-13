@@ -5,6 +5,7 @@ import gameWorld.GameObject;
 import gameWorld.Inventory;
 import gameWorld.UnitPlayer;
 import gameWorld.Unit;
+import gameWorld.World;
 
 import java.awt.Point;
 import java.io.File;
@@ -18,12 +19,17 @@ import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.input.DOMBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.xml.sax.SAXException;
 
 import tile.*;
 import tile.TileMultiton.type;
@@ -38,13 +44,25 @@ import tile.TileMultiton.type;
  */
 public class Data {
 	static int b = 0;
-	public Data(){}
 
 	private static void error(String s){
 		System.err.println(s);
 	}
 
 	public static Tuple load(File f){
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		Document doc = null;
+		try {
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			org.w3c.dom.Document w3cDoc = dBuilder.parse(f);
+			DOMBuilder domBuilder = new DOMBuilder();
+			doc = domBuilder.build(w3cDoc);
+		} catch (ParserConfigurationException | SAXException | IOException e1) {
+			// TODO Auto-generated catch block
+			throw new IllegalArgumentException("File not found");
+		}
+		
+		
 		return new Tuple(null, null);
 	}
 
@@ -57,9 +75,9 @@ public class Data {
 	 * @return True is successful, else false.
 	 * @throws UnexpectedException
 	 */
-	public static boolean save(String fileName, TileMultiton.type[][] types, Unit[] units) throws UnexpectedException{
+	public static boolean save(String fileName, TileMultiton.type[][] types,World world) throws UnexpectedException{
 		assert(types 	!= 	null);
-		assert(units 	!= 	null);
+		assert(world 	!= 	null);
 		assert(fileName != 	null);
 
 		//Initialise the document
@@ -102,7 +120,8 @@ public class Data {
 				//Add the tile key to the map
 				tileMap += tileRepresentation + " ";
 			}
-			tileMap += "\n";
+			tileMap += ";"
+					+ "";
 		}
 		root.addContent(subRoot);
 
@@ -110,7 +129,7 @@ public class Data {
 		PrintStream print = null;
 		try {
 			print = new PrintStream(tileMapPath);
-//			print.print(tileMap);
+			print.print(tileMap);
 		} catch (FileNotFoundException e) {
 			try {
 				tileMapPath.createNewFile();
@@ -122,9 +141,22 @@ public class Data {
 			print.close();
 		}
 
-		//---------Handle Units---------
-		subRoot = new Element("Units");
-		subRoot.setAttribute("Size",units.length+"");
+		GameObject[][] gameObjs = null;
+
+		try {
+			Field gameObjsField = world.getClass().getDeclaredField("gameBoard");
+			gameObjsField.setAccessible(true);
+			gameObjs = (GameObject[][]) gameObjsField.get(world);
+//			world.getClass().getDeclaredField("gameBoard").setAccessible(false);
+		} catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+
+
+		//---------Handle GameObjects---------
+		subRoot = new Element("GameObject");
+		subRoot.setAttribute("Size",gameObjs.length+"");
 		//for each unit, create a new element, tie everything about the unit to it, and add it to the tree
 		Scanner scan = null;
 		Scanner curLine = null;
@@ -133,48 +165,54 @@ public class Data {
 //		Class[] classList = new Class[10];
 		Element fieldElem = null;
 		List<Class> classList = new ArrayList<Class>();
-
-		for(Unit e : units){
-			elem = new Element(e.getClass().getSimpleName() + e.getID());
-			classList.add(e.getClass());
-
-			while(classList.get(classList.size()-1).getSuperclass() != (Object.class)){
-				classList.add(classList.get(classList.size()-1).getSuperclass());
-			}
-			error(classList.toString());
-
-			for(Class c : classList){
-				error("---Iterating " + c.getCanonicalName()+ "---");
-				for(Field f : c.getDeclaredFields()){
-					fieldElem = null;
-					accesible = f.isAccessible();
-					f.setAccessible(true);
-
-					switch(f.getType().getSimpleName()){
-
-					case "BufferedImage": break;
-					case "int": fieldElem = handleIntField(f,e); break;
-					case "Inventory": fieldElem = handleInventoryField(f,e);break;
-					case "Point": fieldElem = handlePointField(f,e); break;
-					case "File": fieldElem = handleFileField(f,e); break;
-					case "boolean":fieldElem = handlebooleanField(f,e); break;
-					case "String" : fieldElem = handleStringField(f,e); break;
-
-					default:
-						throw new UnexpectedException("SAVING: Unexpected field type in unit: +"+ f.getName() + " " + f.getType().getSimpleName());
+		
+		for(GameObject[] objs : gameObjs){
+			for(GameObject e : objs){
+//				error(e+"");
+				
+				if(e != null){
+					elem = new Element(e.getClass().getSimpleName());
+					classList.add(e.getClass());
+		
+					while(classList.get(classList.size()-1).getSuperclass() != (Object.class)){
+						classList.add(classList.get(classList.size()-1).getSuperclass());
 					}
-
-					if(fieldElem != null){
-						elem.addContent(fieldElem);
+					error(classList.toString());
+		
+					for(Class c : classList){
+						error("---Iterating " + c.getCanonicalName()+ "---");
+						for(Field f : c.getDeclaredFields()){
+							fieldElem = null;
+							accesible = f.isAccessible();
+							f.setAccessible(true);
+		
+							switch(f.getType().getSimpleName()){
+		
+							case "BufferedImage": break;
+							case "int": fieldElem = handleIntField(f,e); break;
+							case "Inventory": fieldElem = handleInventoryField(f,e);break;
+							case "Point": fieldElem = handlePointField(f,e); break;
+							case "File": fieldElem = handleFileField(f,e); break;
+							case "boolean":fieldElem = handlebooleanField(f,e); break;
+							case "String" : fieldElem = handleStringField(f,e); break;
+		
+							default:
+								throw new UnexpectedException("SAVING: Unexpected field type in unit: +"+ f.getName() + " " + f.getType().getSimpleName());
+							}
+		
+							if(fieldElem != null){
+								elem.addContent(fieldElem);
+							}
+		
+							f.setAccessible(accesible);
+						}
+		
+		
 					}
-
-					f.setAccessible(accesible);
+					subRoot.addContent(elem);
+					classList = new ArrayList<Class>();
 				}
-
-
 			}
-			subRoot.addContent(elem);
-			classList = new ArrayList<Class>();
 		}
 		root.addContent(subRoot);
 
@@ -184,11 +222,36 @@ public class Data {
 		document.addContent(root);
 
 		System.out.println(xmlOut.outputString(document));
+		File XMLPath = new File(savePath.toString() + File.separator + "data");
+		try {
+			print = new PrintStream(XMLPath);
+			print.print(tileMap);
+		} catch (FileNotFoundException e) {
+			try {
+				XMLPath.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+		finally{
+			print.close();
+		}
 		System.out.println("Saving over");
 		return true;
 	}
 
 
+	private static Element handleFieldField(Field f, GameObject instance){
+		Element elem = new Element(f.getName());
+		try {
+			elem.addContent(f.get(instance) + "");
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return elem;
+	}
 
 	private static Element handleFileField(Field f, GameObject instance) {
 		Element elem = new Element(f.getName());
@@ -279,53 +342,6 @@ public class Data {
 		return elem;
 	}
 
-
-	private static String parseUnitString(String unitdata) {
-		Scanner scan = new Scanner(unitdata);
-		Element e = new Element(scan.next());
-
-		while(scan.hasNext()){
-			switch(scan.next()){
-			case "{":scan.next();continue;
-			case "}":scan.next();continue;
-			case ":":scan.next();continue;
-			case "|":scan.next();continue;
-			case "Inventory" : parseInventory(e,scan);continue;
-			default: parseUnitLine(e,scan.nextLine());continue;
-			}
-		}
-		return null;
-	}
-
-	private static void parseInventory(Element e, Scanner scan) {
-
-
-	}
-
-	private static void parseUnitLine(Element e, String ln){
-		int idx = 0;
-		int lookahead = 0;
-		while(!Character.isAlphabetic(ln.charAt(idx))){
-			idx++;
-		}
-
-		lookahead = idx;
-		while(ln.charAt(lookahead) != ':'){
-			lookahead++;
-		}
-
-		String attribName = ln.substring(idx, lookahead);
-		lookahead += 2;
-		idx = lookahead;
-
-		while(ln.charAt(lookahead) != '\n'){
-			lookahead++;
-		}
-
-		String attribValue = ln.substring(idx, lookahead);
-		e.setAttribute(new Attribute(attribName, attribValue));
-	}
-
 	/**
 	 * -----STANDIN WHILE I STUDY XML------
 	 * @param fi Use null the File shall be ignored
@@ -371,7 +387,7 @@ public class Data {
 	public static void main(String args[]){
 		Tuple t = testSet(null);
 		try {
-			save("test",t.tiles, t.units);
+			save("test",t.tiles, new World("test", 8, 8, new IsoCanvas(8, 8)));
 		} catch (UnexpectedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
