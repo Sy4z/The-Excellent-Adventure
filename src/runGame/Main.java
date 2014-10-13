@@ -57,10 +57,11 @@ public  class Main {
 		loadFrame.dispose();
 		mainFrame = new MainFrame();
 
-		tw = new TurnWatcher(mainFrame.mainPanel.gamePanel.getWorld());
+
 		//The following block deals with starting the server
 		server = new Server(getNumberOfPlayers());
 		client = new Client();
+		tw = new TurnWatcher(mainFrame.mainPanel.gamePanel.getWorld());
 		runServer(server, client);
 
 
