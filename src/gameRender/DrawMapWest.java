@@ -70,12 +70,12 @@ public class DrawMapWest implements IsoCanvas.DrawMap {
 	 */
 	@Override
 	public Point toIso(int x, int y) {
-		Point point = new Point();
-		int dx = x*(this.tile_width/2);
-		int dy = y*(this.tile_height);
-		point.x = ((dy - dx))+center_offset_x;
-		point.y = ((dy + dx)/2)+center_offset_y;
-		return point;
+		Point isoPoint = new Point();
+		int tileOffsetX = x*(this.tile_width/2);
+		int tileOffsetY = y*(this.tile_height);
+		isoPoint.x = ((tileOffsetY - tileOffsetX))+center_offset_x;
+		isoPoint.y = ((tileOffsetY + tileOffsetX)/2)+center_offset_y;
+		return isoPoint;
 	}
 	/**
 	 * 
