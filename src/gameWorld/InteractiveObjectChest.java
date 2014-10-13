@@ -7,6 +7,10 @@ public class InteractiveObjectChest extends InteractiveObject{
 
 //	private ArrayList<Item> contents = new ArrayList<Item>();
 	private int[] contents;
+	
+	public InteractiveObjectChest(int[] contents){
+		this.contents = contents;
+	}
 
 	public int[] takeContents(){
 		return contents = null;

@@ -7,6 +7,11 @@ public class InteractiveObjectMonster extends InteractiveObject{
 	private int[] contents;
 	private int str;
 	
+	public InteractiveObjectMonster(int[] loot, int strength){
+		contents = loot;
+		str = strength;
+	}
+	
 	/**
 	 * Fight a monster if your power is greater you get it's loot
 	 * Otherwise null is returned and the player will deal 
