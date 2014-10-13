@@ -15,7 +15,7 @@ public class WorldTests {
 	 */
 	public void test_001(){
 		World w = new World(null, -1, -1, new IsoCanvas(500, 500));
-		assertTrue(w.checkPlayerStatus() == true);
+		assertTrue(w.checkPlayerStatus());
 		assertTrue(w.getInventory()[0] == 0);
 		assertTrue(w.getInventory()[1] == 0);
 		assertTrue(w.getInventory()[2] == 0);
@@ -23,5 +23,28 @@ public class WorldTests {
 		assertTrue(w.isTurn());
 		assertTrue(w.getAvatar().getMoveAction());
 		assertTrue(w.getAvatar().getStandardAction());
+	}
+	@Test
+	public void testMovement_001(){
+		World w = new World(null, -1, -1, new IsoCanvas(500, 500));
+		assertTrue(w.checkPlayerStatus());
+		assertTrue(w.isTurn());
+		assertTrue(w.getAvatar().getMoveAction());
+		assertTrue(w.getAvatar().getStandardAction());
+
+		w.getAvatar().depleateMoves();
+
+		assertTrue(w.checkPlayerStatus());
+		assertTrue(w.isTurn());
+		assertFalse(w.getAvatar().getMoveAction());
+		assertTrue(w.getAvatar().getStandardAction());
+
+		w.getAvatar().depleateMoves();
+
+		assertFalse(w.checkPlayerStatus());
+		assertFalse(w.isTurn());
+		assertFalse(w.getAvatar().getMoveAction());
+		assertFalse(w.getAvatar().getStandardAction());
+
 	}
 }

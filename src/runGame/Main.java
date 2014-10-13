@@ -1,5 +1,6 @@
 package runGame;
 
+import gameRender.IsoCanvas;
 import gameWorld.World;
 
 import java.io.IOException;
@@ -33,6 +34,8 @@ public  class Main {
 	public static Server server;
 	public static Client client;
 	public static MainFrame mainFrame;
+	public static World world;
+	public static IsoCanvas cvs;
 	public static TurnWatcher tw;
 
 
@@ -44,8 +47,12 @@ public  class Main {
 	 */
 	public static void main(String[] args) {
 
+
 		JFrame loadFrame = MainFrame.createLoadingFrame();
 		loadFrame.setVisible(true);
+
+		cvs = new IsoCanvas(loadFrame.getWidth(), loadFrame.getHeight());
+		world = new World(null, -1, -1, cvs);
 
 		try {
 			Thread.sleep(0);
