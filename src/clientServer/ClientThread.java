@@ -59,11 +59,18 @@ public class ClientThread extends Thread {
 
 
 
+				if(Main.tw.isTurn()== true){
+					//Send the Local Player to the Server
+					localPlayer = Main.mainFrame.mainPanel.gamePanel.getWorld().getAvatar(); //Get most updated version of the local player
+					charToServer.writeObject(localPlayer); //Sends the current version of the local avatar to the server
 
 
-				//Send the Local Player to the Server
-				localPlayer = Main.mainFrame.mainPanel.gamePanel.getWorld().getAvatar(); //Get most updated version of the local player
-				charToServer.writeObject(localPlayer); //Sends the current version of the local avatar to the server
+
+
+
+				}
+
+
 
 				//Send the Array of LogicalTiles to the server - Can Just Override the servers version
 
