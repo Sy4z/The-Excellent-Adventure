@@ -154,8 +154,7 @@ public class GamePanel extends JPanel implements MouseListener {
 					}
 				});
 
-		tableItems1.setCellSelectionEnabled(false);
-		tableItems1.setRowSelectionAllowed(false);
+		tableItems1.setFocusable(false);
 		tableItems1.setRowHeight(0, 100);
 		tableItems1.setBounds(10, 600, 450, 1000);
 		add(tableItems1);
@@ -182,8 +181,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		tableNums1.setValueAt(Integer.toString(katanas), 0, 0);
 		tableNums1.setValueAt(Integer.toString(keys), 0, 1);
 
-		tableNums1.setCellSelectionEnabled(false);
-		tableNums1.setRowSelectionAllowed(false);
+		tableNums1.setFocusable(false);
 		tableNums1.setBounds(10, 700, 450, 1000);
 		add(tableNums1);
 
@@ -222,8 +220,7 @@ public class GamePanel extends JPanel implements MouseListener {
 					}
 				});
 
-		tableItems2.setCellSelectionEnabled(false);
-		tableItems2.setRowSelectionAllowed(false);
+		tableItems2.setFocusable(false);
 		tableItems2.setRowHeight(0, 100);
 		tableItems2.setBounds(670, 600, 450, 1000);
 		add(tableItems2);
@@ -249,8 +246,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		tableNums2.setValueAt(Integer.toString(pups), 0, 0);
 		tableNums2.setValueAt(Integer.toString(rustyNails), 0, 1);
 
-		tableNums2.setCellSelectionEnabled(false);
-		tableNums2.setRowSelectionAllowed(false);
+		tableNums2.setFocusable(false);
 		tableNums2.setBounds(670, 700, 450, 15);
 		add(tableNums2);
 	}
