@@ -35,7 +35,7 @@ public class RenderTester extends JFrame implements KeyListener{
 
 		setVisible(true);
 		addKeyListener(this);
-		this.entity = new UnitPlayer(new Point(1,0), 32);
+		this.entity = new UnitPlayer(new Point(25,8), 32);
 		testCanvas.initEntity(entity);
 		 w = new World("",-1,-1, testCanvas);
 	}

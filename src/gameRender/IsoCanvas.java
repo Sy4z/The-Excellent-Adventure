@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import dataStorage.*;
 import sun.management.counter.Units;
 import sun.net.www.content.text.Generic;
+import tile.DoorTile;
 import tile.Tile;
 import tile.TileMultiton;
 
@@ -39,8 +40,7 @@ public class IsoCanvas extends JPanel{
 	private int height;
 	public int tile_width = 64;
 	public int tile_height = 32;
-	public int veiwport_x = 0;
-	public int veiwport_y = 0;
+	
 	private String orientation;
 	private ArrayList<Point> HIGHLIGHTED_TILES;
 	private UnitCursor  cursor;
@@ -52,7 +52,6 @@ public class IsoCanvas extends JPanel{
 		cursor = null;
 		highLight = null;
 		HIGHLIGHTED_TILES = null;
-		cursor = new UnitCursor(new Point(1,0),1234);
 		Tuple t = Data.testSet(null);
 		map = t.tiles;
 		this.width = Width;
@@ -68,19 +67,19 @@ public class IsoCanvas extends JPanel{
 		g2d.fillRect(0,0,width,height);
 		render.draw(g2d, map, entity, cursor);
 		//g2d.fillRect((width/2)-5,(height/2-5),10,10); //center of canvas.
-		
+
 	}
 	/**
 	 *
 	 * @param updatedMap
 	 */
 	public void update(Tuple t){
-		this.map = t.tiles;
+		//this.map = t.tiles;
 		//entities = t.units;
-		this.repaint();
+		//this.repaint();
 	}
 
-	
+
 	/**
 	 *
 	 * @param unit
@@ -115,10 +114,16 @@ public class IsoCanvas extends JPanel{
 	public void spawnObject(GameObject ob){
 
 	}
-	public void getMapLocation(int x, int i){
-
+	public void openDoor(int x, int y){
+		if(map[x][y].equals(TileMultiton.type.CLOSEDOOR)){
+			this.map[x][y] = TileMultiton.type.OPENDOOR;
+		}
 	}
-	
+	public void closeDoor(int x, int y){
+		if(map[x][y].equals(TileMultiton.type.OPENDOOR)){
+			this.map[x][y] = TileMultiton.type.CLOSEDOOR;
+		}
+	}
 	public void north(){
 		this.render = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,map.length);
 		this.repaint();
@@ -127,12 +132,15 @@ public class IsoCanvas extends JPanel{
 		this.render = new DrawMapWest(this.tile_width,this.tile_height,this.width,this.height,map.length);
 		this.repaint();
 	}
-	
+
 	public interface DrawMap {
 		public int center_offset_x = 0;
 		public int center_offset_y = 0;
 		public int tile_width = 64;
 		public int tile_height = 32;
+		public int veiwport_x = 0;
+		public int veiwport_y = 0;
+		public int veiwport_size = 11;
 		public void calculateOffset(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int mapSize);
 		public Point toIso(int x, int y);
 		public void draw(Graphics2D g2d, TileMultiton.type[][] map, Unit entity, UnitCursor cursor);

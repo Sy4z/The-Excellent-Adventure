@@ -15,7 +15,7 @@ public class TileMultiton {
 	static Map<type,Tile> tiles = new HashMap<type, Tile>();
 
 	//enum of tile types
-	public static enum type{BLUE, FLOOR, DOOR};
+	public static enum type{BLUE, FLOOR, DOOR, OPENDOOR, CLOSEDOOR};
 
 	/**
 	 * Takes an enum from TileMultiton.type, returns the associated tile

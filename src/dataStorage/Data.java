@@ -368,10 +368,10 @@ public class Data {
 	 */
 	public static Tuple testSet(File fi){
 
-		int sizeX = 11;
-		int sizeY = 11;
-		int entityX = 0;
-		int entityY = 0;
+		int sizeX = 100;
+		int sizeY = 100;
+		int entityX = 6;
+		int entityY = 6;
 		error("Beginning test");
 		TileMultiton.type[][] t = new TileMultiton.type[sizeY][sizeX];
 
@@ -379,7 +379,7 @@ public class Data {
 
 		for(int y = 0;y<sizeY;y++){
 			for(int x = 0;x<sizeX;x++){
-				if(y == x + b ){
+				if(y == entityY && x == entityX  ){
 					t[y][x] = TileMultiton.type.BLUE;
 				}
 				else{
