@@ -86,6 +86,17 @@ public class GamePanel extends JPanel implements MouseListener {
 		controls.setBounds(965, 60, 170, 40);
 		controls.addActionListener(new ControlsGameListener());
 		add(controls);
+		
+		JButton saveGame = new JButton("Save Game");
+		saveGame.setOpaque(false);
+		saveGame.setContentAreaFilled(false);
+		saveGame.setBorderPainted(false);
+		saveGame.setFont(new Font("Arial", Font.PLAIN, 35));
+		saveGame.setFocusPainted(false);
+		saveGame.setForeground(Color.GREEN);
+		
+		saveGame.setBounds(10, 20, 250, 40);
+		add(saveGame);
 
 		// Creates a canvas and a world to put the canvas into the world.
 		canvas = new IsoCanvas(currentFrame.getWidth(),
