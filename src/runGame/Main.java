@@ -33,7 +33,8 @@ public  class Main {
 	public static Server server;
 	public static Client client;
 	public static MainFrame mainFrame;
-	public static World world;
+	public static TurnWatcher tw;
+
 
 
 	/**
@@ -56,19 +57,14 @@ public  class Main {
 		loadFrame.dispose();
 		mainFrame = new MainFrame();
 
+		tw = new TurnWatcher(mainFrame.mainPanel.gamePanel.getWorld());
 		//The following block deals with starting the server
 		server = new Server(getNumberOfPlayers());
 		client = new Client();
 		runServer(server, client);
 
-	}
-
-	private boolean turn(){
-
-		return false;
 
 	}
-
 
 
 	/**

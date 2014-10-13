@@ -72,7 +72,8 @@ public class World {
 	public boolean checkPlayerStatus() {
 		//Return false if
 		if(!avatar.isNotTurnEnd()){
-			return isActive = false;
+			isActive = false;
+			return isActive;
 		}
 		//Otherwise refresh moevment and return true
 		calculatePossibleMovments();
@@ -128,6 +129,7 @@ public class World {
 		// 2 is left
 		// 3 is right
 
+		if(i > 3 || i < 0) return;
 		int x = cursor.getLocation().x;
 		int y = cursor.getLocation().y;
 
@@ -412,6 +414,10 @@ public class World {
 			}
 		}
 		return bytes;
+	}
+
+	public boolean isTurn() {
+		return isActive;
 	}
 
 
