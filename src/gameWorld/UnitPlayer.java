@@ -125,5 +125,10 @@ public class UnitPlayer extends Unit{
 	}
 
 
+	public void loseFight() {
+		inventory.loseFight();		
+	}
+
+
 
 }

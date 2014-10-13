@@ -14,16 +14,18 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 	private int center_offset_x;
 	public int tile_width = 64;
 	public int tile_height = 32;
-	
+	public int veiwport_origin_x = 5;
+	public int veiwport_origin_y = 2;
+	public int veiwport_size = 13;
 	public DrawMapNorth(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int mapSize){
 		calculateOffset(tile_width,tile_height,canvasWidth, canvasHeight, mapSize);
 	}
-	
+
 	@Override
 	public void calculateOffset(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int mapSize) {
-		this.center_offset_y = (int)((canvasHeight/2) - (tile_height)*1.5)+tile_height;//-tile_height;//spread this calculation out.
-		this.center_offset_x = (int)((canvasWidth/2) - ((tile_width)*mapSize)/2);//-tile_width;//this too.
-		
+		this.center_offset_y = (int)((canvasHeight/2) - (tile_height)*2);
+		this.center_offset_x = (int)((canvasWidth/2) - ((tile_width)*veiwport_size)/2);//-tile_width;//this too.
+
 	}
 
 	public Point toIso(int x, int y){
@@ -49,33 +51,38 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 		int eY;
 		int cX;
 		int cY;
-		for(int y = map.length-1;y >=0;y--){
-			for(int x = 0;x<map[y].length;x++){
-				tilePos = toIso((x),(y));//
+		int mapX; 
+		int mapY=veiwport_size-1; 
+		for(int y = (veiwport_size+veiwport_origin_y)-1;y >=veiwport_origin_y;y--){
+			mapX = 0;
+			for(int x = veiwport_origin_x;x<veiwport_size+veiwport_origin_x;x++){
+				tilePos = toIso(mapX,mapY);//
 				tile = TileMultiton.getTile(map[y][x]);
 				tX = (tilePos.x);
 				tY = (tilePos.y);
-				//System.out.println("DrawMapNorth.draw current tile : " + tile );
+				//System.out.println("DrawMapNorth.draw current tile : " +"("+ tX+":"+ tY+")");
 				tile.draw(g2d, tX,tY);
 				if(cursor != null){
 					cX = cursor.getLocation().x;
 					cY = cursor.getLocation().y;
-					if(cX == x && cY == y){
-					cursorPos = toIso(cX,cY);
-					cursor.draw(g2d, cursorPos.x, cursorPos.y);
-				}
+					if(cX == mapX && cY == mapY){
+						cursorPos = toIso(mapX,mapY);
+						cursor.draw(g2d, cursorPos.x, cursorPos.y);
+					}
 				}
 				if(entity != null){
 					eX = entity.getLocation().x;
 					eY = entity.getLocation().y;
-					if(eX==x && eY==y){
-						entityPos = toIso(eX,eY);
+					if(eX==mapX && eY==mapY){
+						entityPos = toIso(mapX,mapY);
 						entity.draw(g2d, entityPos.x, entityPos.y);
 					}
 				}
+			mapX++;
 			}
+		mapY--;
 		}
-		
+
 	}
 
 }

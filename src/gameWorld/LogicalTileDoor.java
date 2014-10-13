@@ -6,6 +6,7 @@ public class LogicalTileDoor extends LogicalTile{
 
 	public LogicalTileDoor(boolean canTouchThis) {
 		super(canTouchThis);
+		this.open = false;
 	}
 
 	/**
