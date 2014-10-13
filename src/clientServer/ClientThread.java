@@ -1,5 +1,6 @@
 package clientServer;
 
+import gameWorld.GameObject;
 import gameWorld.UnitPlayer;
 
 import java.io.BufferedReader;
@@ -13,6 +14,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import runGame.Main;
 
@@ -29,6 +32,7 @@ public class ClientThread extends Thread {
 	private ObjectOutputStream charToServer;
 	private ObjectInputStream charFromServer;
 	private UnitPlayer localPlayer;
+	GameObject[][] localGameMap;
 	public ClientThread(Socket socket){
 		this.sock = socket;
 		System.out.println("Client is Constructed");
@@ -60,9 +64,30 @@ public class ClientThread extends Thread {
 
 
 				if(Main.tw.isTurn()== true){
-					//Send the Local Player to the Server
-					localPlayer = Main.mainFrame.mainPanel.gamePanel.getWorld().getAvatar(); //Get most updated version of the local player
-					charToServer.writeObject(localPlayer); //Sends the current version of the local avatar to the server
+
+					//Receive the GameBoard from the Server and update current game world
+					try {
+						Object gameBoardGeneric = charFromServer.readObject(); //Read into  Generic Object Type
+						if(gameBoardGeneric instanceof GameObject[][]){ //Check that the generic object is an arraylist - Cant check further than this because nested generics get erased at runtime but at least theres some safeguard to typechecking
+							localGameMap = (GameObject[][])gameBoardGeneric; //Set the board as a local variable
+							Main.world.setGameBoard(localGameMap); //Update the local copy of the gameMap
+						}
+						else{
+							System.out.println("Client Expected the ArrayList of Players and Recieved Something that wasnt an ArrayList");
+						}
+					} catch (ClassNotFoundException e) {
+						System.out.println("ClientThread: Could not read CharacterList from Server");
+						e.printStackTrace();
+					}
+
+					//Wait for end turn phase then send server local gameBoard
+
+
+
+
+
+
+
 
 
 
