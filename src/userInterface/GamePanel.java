@@ -43,9 +43,9 @@ import runGame.Main;
 /**
  * This class contains the main canvas displaying the gameplay and other
  * controls required for playing the game.
- * 
+ *
  * @author Venkata Peesapati
- * 
+ *
  */
 public class GamePanel extends JPanel implements MouseListener {
 
@@ -267,9 +267,9 @@ public class GamePanel extends JPanel implements MouseListener {
 	/**
 	 * This is the listener class used for the quit button. It returns to the
 	 * main menu by replacing the game panel with the main menu's panel.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class QuitGameListener implements ActionListener {
 
@@ -291,9 +291,9 @@ public class GamePanel extends JPanel implements MouseListener {
 	/**
 	 * This is the listener class used for the controls button. It allows the
 	 * user to change the keyboard controls during the gameplay.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class ControlsGameListener implements ActionListener {
 
@@ -379,14 +379,14 @@ public class GamePanel extends JPanel implements MouseListener {
 
 			JPanel savePanel = new JPanel();
 			savePanel.setLayout(new BorderLayout());
-			
+
 			JPanel namePanel = new JPanel();
 			namePanel.setLayout(new FlowLayout());
 			namePanel.add(new JLabel("Name: "));
 			JTextField nameField = new JTextField();
 			nameField.setPreferredSize(new Dimension(110 ,20));
 			namePanel.add(nameField);
-			
+
 			JPanel buttonPanel = new JPanel();
 			buttonPanel.setLayout(new FlowLayout());
 			JButton cancelButton = new JButton("Cancel");
@@ -400,7 +400,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			buttonPanel.add(new JButton("OK"));
 			buttonPanel.add(cancelButton);
 			buttonPanel.add(new JButton("Delete"));
-			
+
 			savePanel.add(namePanel, BorderLayout.CENTER);
 			savePanel.add(buttonPanel, BorderLayout.SOUTH);
 			d.add(savePanel, BorderLayout.SOUTH);

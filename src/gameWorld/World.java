@@ -146,9 +146,12 @@ public class World {
 			if (worldMap[x][y].isIsTile()) {
 				// If it's a door only a player with a key can go through
 				if (worldMap[x][y] instanceof LogicalTileDoor) {
-					if (!avatar.hasKey())
-						return;
-					avatar.useKey();
+					if (!((LogicalTileDoor) worldMap[x][y]).isOpen()) {
+						if (!avatar.hasKey())
+							return;
+						avatar.useKey();
+						((LogicalTileDoor) worldMap[x][y]).setOpen(true);
+					}
 				}
 				// If the XY is within one movement of the active player
 				if (worldMap[x][y].isReachableByActive()) {
