@@ -49,9 +49,9 @@ import runGame.Main;
 /**
  * This class contains the main canvas displaying the gameplay and other
  * controls required for playing the game.
- *
+ * 
  * @author Venkata Peesapati
- *
+ * 
  */
 public class GamePanel extends JPanel implements MouseListener {
 
@@ -63,6 +63,8 @@ public class GamePanel extends JPanel implements MouseListener {
 	private JTable tableNums1;
 	private JTable tableItems2;
 	private JTable tableNums2;
+
+	private String mode;
 
 	public GamePanel(JFrame frame, JPanel menuPanel, String moveType) {
 		currentFrame = frame;
@@ -269,23 +271,33 @@ public class GamePanel extends JPanel implements MouseListener {
 	/**
 	 * This is the listener class used for the quit button. It returns to the
 	 * main menu by replacing the game panel with the main menu's panel.
-	 *
+	 * 
 	 * @author Venkata Peesapati
-	 *
+	 * 
 	 */
 	class QuitGameListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			moveType = "arrows";
-			currentFrame.getContentPane().removeAll();
-			currentFrame.getContentPane().validate();
-			currentFrame.getContentPane().repaint();
+			mode = "Quit";
 
-			currentFrame.getContentPane().add(oldPanel, BorderLayout.CENTER);
+			int option = JOptionPane.showConfirmDialog(null,
+					"Do you want to save before quitting?", "Choose",
+					JOptionPane.YES_NO_OPTION);
+			if (option == JOptionPane.YES_OPTION) {
+				saveGame();
+			} else {
+				moveType = "arrows";
+				currentFrame.getContentPane().removeAll();
+				currentFrame.getContentPane().validate();
+				currentFrame.getContentPane().repaint();
 
-			currentFrame.getContentPane().validate();
-			currentFrame.getContentPane().repaint();
+				currentFrame.getContentPane()
+						.add(oldPanel, BorderLayout.CENTER);
+
+				currentFrame.getContentPane().validate();
+				currentFrame.getContentPane().repaint();
+			}
 		}
 
 	}
@@ -293,9 +305,9 @@ public class GamePanel extends JPanel implements MouseListener {
 	/**
 	 * This is the listener class used for the controls button. It allows the
 	 * user to change the keyboard controls during the gameplay.
-	 *
+	 * 
 	 * @author Venkata Peesapati
-	 *
+	 * 
 	 */
 	class ControlsGameListener implements ActionListener {
 
@@ -364,80 +376,97 @@ public class GamePanel extends JPanel implements MouseListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			final JDialog d = new JDialog(currentFrame, "Save Game", true);
-			d.setSize(400, 300);
-			d.setLayout(new BorderLayout());
-
-			DefaultListModel<String> model = new DefaultListModel<String>(); // Add
-			// saved
-			// game
-			// names
-			// to
-			// this
-			// model.
-			JList<String> list = new JList<String>(model);
-			JScrollPane scrollPane = new JScrollPane(list);
-			d.add(scrollPane, BorderLayout.CENTER);
-
-			JPanel savePanel = new JPanel();
-			savePanel.setLayout(new BorderLayout());
-
-			JPanel namePanel = new JPanel();
-			namePanel.setLayout(new FlowLayout());
-			namePanel.add(new JLabel("Name: "));
-			final JTextField nameField = new JTextField();
-			nameField.setPreferredSize(new Dimension(110, 20));
-			namePanel.add(nameField);
-
-			JPanel buttonPanel = new JPanel();
-			buttonPanel.setLayout(new FlowLayout());
-			JButton cancelButton = new JButton("Cancel");
-			cancelButton.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					d.dispose();
-				}
-			});
-			JButton okButton = new JButton("OK");
-			okButton.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					String name = nameField.getText();
-					
-					Pattern alphaNumeric = Pattern.compile("^[a-zA-Z0-9]*$");
-					java.util.regex.Matcher match1 = alphaNumeric.matcher(name);
-					Pattern spaces = Pattern.compile("\\s");
-					java.util.regex.Matcher match2 = spaces.matcher(name);
-					if (match1.matches() && !match2.find()) {
-						try {
-							Data.save(name);
-						} catch (UnexpectedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						d.dispose();
-					}
-					else {
-						JOptionPane.showMessageDialog(GamePanel.this, "Name must alphanumric with no spaces!", "Warning",
-						        JOptionPane.WARNING_MESSAGE);
-					}
-				}
-			});
-
-			buttonPanel.add(okButton);
-			buttonPanel.add(cancelButton);
-			buttonPanel.add(new JButton("Delete"));
-
-			savePanel.add(namePanel, BorderLayout.CENTER);
-			savePanel.add(buttonPanel, BorderLayout.SOUTH);
-			d.add(savePanel, BorderLayout.SOUTH);
-
-			d.setLocationRelativeTo(null);
-			d.setVisible(true);
+			mode = "Save";
+			saveGame();
 		}
 
+	}
+
+	public void saveGame() {
+		final JDialog d = new JDialog(currentFrame, "Save Game", true);
+		d.setSize(400, 300);
+		d.setLayout(new BorderLayout());
+
+		DefaultListModel<String> model = new DefaultListModel<String>(); // Add
+		// saved
+		// game
+		// names
+		// to
+		// this
+		// model.
+		JList<String> list = new JList<String>(model);
+		JScrollPane scrollPane = new JScrollPane(list);
+		d.add(scrollPane, BorderLayout.CENTER);
+
+		JPanel savePanel = new JPanel();
+		savePanel.setLayout(new BorderLayout());
+
+		JPanel namePanel = new JPanel();
+		namePanel.setLayout(new FlowLayout());
+		namePanel.add(new JLabel("Name: "));
+		final JTextField nameField = new JTextField();
+		nameField.setPreferredSize(new Dimension(110, 20));
+		namePanel.add(nameField);
+
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new FlowLayout());
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				d.dispose();
+			}
+		});
+		JButton okButton = new JButton("OK");
+		okButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String name = nameField.getText();
+
+				Pattern alphaNumeric = Pattern.compile("^[a-zA-Z0-9]*$");
+				java.util.regex.Matcher match1 = alphaNumeric.matcher(name);
+				Pattern spaces = Pattern.compile("\\s");
+				java.util.regex.Matcher match2 = spaces.matcher(name);
+				if (match1.matches() && !match2.find()) {
+					try {
+						Data.save(name);
+					} catch (UnexpectedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					d.dispose();
+					if (mode.equals("Quit")) {
+						moveType = "arrows";
+						currentFrame.getContentPane().removeAll();
+						currentFrame.getContentPane().validate();
+						currentFrame.getContentPane().repaint();
+
+						currentFrame.getContentPane().add(oldPanel,
+								BorderLayout.CENTER);
+
+						currentFrame.getContentPane().validate();
+						currentFrame.getContentPane().repaint();
+					}
+				} else {
+					JOptionPane.showMessageDialog(GamePanel.this,
+							"Name must alphanumric with no spaces!", "Warning",
+							JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
+
+		buttonPanel.add(okButton);
+		buttonPanel.add(cancelButton);
+		buttonPanel.add(new JButton("Delete"));
+
+		savePanel.add(namePanel, BorderLayout.CENTER);
+		savePanel.add(buttonPanel, BorderLayout.SOUTH);
+		d.add(savePanel, BorderLayout.SOUTH);
+
+		d.setLocationRelativeTo(null);
+		d.setVisible(true);
 	}
 
 	@Override
