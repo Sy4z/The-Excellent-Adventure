@@ -18,6 +18,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.rmi.UnexpectedException;
+import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
@@ -29,6 +31,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -38,6 +41,9 @@ import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import com.sun.org.apache.xerces.internal.impl.xs.identity.Selector.Matcher;
+
+import dataStorage.Data;
 import runGame.Main;
 
 /**
@@ -383,8 +389,8 @@ public class GamePanel extends JPanel implements MouseListener {
 			JPanel namePanel = new JPanel();
 			namePanel.setLayout(new FlowLayout());
 			namePanel.add(new JLabel("Name: "));
-			JTextField nameField = new JTextField();
-			nameField.setPreferredSize(new Dimension(110 ,20));
+			final JTextField nameField = new JTextField();
+			nameField.setPreferredSize(new Dimension(110, 20));
 			namePanel.add(nameField);
 
 			JPanel buttonPanel = new JPanel();
@@ -397,7 +403,34 @@ public class GamePanel extends JPanel implements MouseListener {
 					d.dispose();
 				}
 			});
-			buttonPanel.add(new JButton("OK"));
+			JButton okButton = new JButton("OK");
+			okButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String name = nameField.getText();
+					
+					Pattern alphaNumeric = Pattern.compile("^[a-zA-Z0-9]*$");
+					java.util.regex.Matcher match1 = alphaNumeric.matcher(name);
+					Pattern spaces = Pattern.compile("\\s");
+					java.util.regex.Matcher match2 = spaces.matcher(name);
+					if (match1.matches() && !match2.find()) {
+						try {
+							Data.save(name);
+						} catch (UnexpectedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						d.dispose();
+					}
+					else {
+						JOptionPane.showMessageDialog(GamePanel.this, "Name must alphanumric with no spaces!", "Warning",
+						        JOptionPane.WARNING_MESSAGE);
+					}
+				}
+			});
+
+			buttonPanel.add(okButton);
 			buttonPanel.add(cancelButton);
 			buttonPanel.add(new JButton("Delete"));
 
