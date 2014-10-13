@@ -83,6 +83,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		quit.setFocusPainted(false);
 		quit.setForeground(Color.green);
 
+		quit.addMouseListener(new HoverButtonListener());
 		quit.addActionListener(new QuitGameListener());
 		quit.setBounds(1000, 20, 100, 40); // Sets the position of the quit
 											// button on the canvas.
@@ -97,6 +98,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		controls.setForeground(Color.green);
 
 		controls.setBounds(965, 60, 170, 40);
+		controls.addMouseListener(new HoverButtonListener());
 		controls.addActionListener(new ControlsGameListener());
 		add(controls);
 
@@ -109,6 +111,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		saveGame.setForeground(Color.GREEN);
 
 		saveGame.setBounds(10, 20, 250, 40);
+		saveGame.addMouseListener(new HoverButtonListener());
 		saveGame.addActionListener(new SaveGameListener());
 		add(saveGame);
 
@@ -595,6 +598,32 @@ public class GamePanel extends JPanel implements MouseListener {
 				}
 			});
 		}
+	}
+	
+	class HoverButtonListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			((JButton) e.getSource()).setForeground(Color.black);
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			((JButton) e.getSource()).setForeground(Color.green);
+		}
+
 	}
 
 }
