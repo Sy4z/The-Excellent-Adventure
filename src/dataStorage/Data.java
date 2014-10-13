@@ -78,8 +78,7 @@ public class Data {
 	 * @return True is successful, else false.
 	 * @throws UnexpectedException
 	 */
-	public static boolean save(String fileName, TileMultiton.type[][] types) throws UnexpectedException{
-		assert(types 	!= 	null);
+	public static boolean save(String fileName) throws UnexpectedException{
 		assert(fileName != 	null);
 
 		//Initialise the document
@@ -99,14 +98,29 @@ public class Data {
 		//-------Handle Tiles--------
 		//create the tile root
 		Element subRoot = new Element("Tiles");
-
+		
+		//Get the types array from isoCanvas via reflection
+		TileMultiton.type[][] types = null;
+		
+		try {
+			Field tileMapField = IsoCanvas.class.getDeclaredField("map");
+			tileMapField.setAccessible(true);
+			types =(TileMultiton.type[][]) tileMapField.get(Main.cvs);
+			tileMapField.setAccessible(false);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		
 		//give the subroot the dimensions of the tile array
 		subRoot.setAttribute("X", Integer.toString(types.length));
 		subRoot.setAttribute("Y", Integer.toString(types[1].length));
 
 		Element elem;
 		String tileMap = "";
-
+		
+		
+		
 		//For each element in tiles, if the tiles are not already in the tree, add them,
 		//else add the char for the tile to the tileMap, and continue onwards
 		char tileRepresentation;
@@ -384,36 +398,5 @@ public class Data {
 			b = -9;
 		}
 		return new Tuple(t,u);
-	}
-
-	public static void main(String args[]){
-		Tuple t = testSet(null);
-		try {
-			save("test",t.tiles);
-		} catch (UnexpectedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//		RenderingTest();
-
-	}
-
-	private static void RenderingTest(){
-		JFrame j = new JFrame();
-		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		j.setBounds(30, 20, 600	, 480);
-		IsoCanvas c = new IsoCanvas(j.getWidth(), j.getHeight());
-		j.add(c);
-		j.setVisible(true);
-
-		while(true){
-			c.update(testSet(null));
-			try{
-				Thread.sleep(300);
-			}
-			catch(InterruptedException e){
-				e.printStackTrace();
-			}
-		}
 	}
 }
