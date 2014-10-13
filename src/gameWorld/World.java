@@ -2,16 +2,13 @@ package gameWorld;
 
 import gameRender.IsoCanvas;
 import gameWorld.Inventory.itemTypes;
-
 import java.awt.Point;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-
 import com.sun.accessibility.internal.resources.accessibility;
-
 import sun.text.normalizer.UBiDiProps;
 import tile.TileMultiton.type;
 import dataStorage.Data;
@@ -30,6 +27,8 @@ public class World {
 	private UnitPlayer avatar;
 	private UnitCursor cursor;
 	private IsoCanvas canvas;
+
+
 
 	/**
 	 * Constructor
@@ -453,5 +452,14 @@ public class World {
 		return isActive;
 	}
 
+//Graphics methods
 
+	public void updateGameBoardGraphics(){
+		ArrayList<GameObject> t = new ArrayList<GameObject>();
+		for(int x =0; x < gameBoard.length; x++)
+			for(int y = 0; y < gameBoard[0].length; y++)
+				if(gameBoard[x][y] != null)
+					t.add(gameBoard[x][y]);
+		canvas.updateGameBoardGraphics(t);
+	}
 }

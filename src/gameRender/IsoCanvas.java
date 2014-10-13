@@ -45,6 +45,7 @@ public class IsoCanvas extends JPanel{
 	private ArrayList<Point> HIGHLIGHTED_TILES;
 	private UnitCursor  cursor;
 	private BufferedImage highLight;
+	
 	/**
 	 *
 	 */
@@ -58,6 +59,7 @@ public class IsoCanvas extends JPanel{
 		this.height = Height;
 		this.render = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,map.length);
 	}
+	
 	/**
 	 *
 	 */
