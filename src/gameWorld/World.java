@@ -1,6 +1,7 @@
 package gameWorld;
 
 import gameRender.IsoCanvas;
+import gameWorld.Inventory.itemTypes;
 
 import java.awt.Point;
 import java.io.ByteArrayOutputStream;
@@ -120,6 +121,14 @@ public class World {
 		//
 		if(obj instanceof InteractiveObjectChest)
 			avatar.addToInventory(((InteractiveObjectChest)obj).takeContents());
+		if(obj instanceof InteractiveObjectMonster){
+			//Fight the monster with all the Katanas you have
+			int[] loot = ((InteractiveObjectMonster)obj).fight(avatar.getInventory()[itemTypes.KATANA.ordinal()]);
+			if(loot == null)
+				avatar.loseFight();
+			else
+				avatar.addToInventory(loot);
+		}
 
 	}
 

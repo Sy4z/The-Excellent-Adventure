@@ -57,5 +57,13 @@ public class Inventory {
 		return items;
 	}
 
+	/**
+	 * If you lose a fight you lose all you puppies as the spoils of war.
+	 */
+	public void loseFight() {
+		items[itemTypes.PUPPY.ordinal()] = 0;
+		
+	}
+
 
 }
