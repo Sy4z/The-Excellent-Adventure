@@ -362,6 +362,19 @@ public class World {
 		this.gameBoard = updatedGameBoard;
 	}
 
+	public GameObject[][] getGameBoard(){
+		return this.gameBoard;
+	}
+
+	public LogicalTile[][] getWorldMap(){
+		return worldMap;
+	}
+
+	public void setWorldMap(LogicalTile[][] updatedMap){
+		this.worldMap = updatedMap;
+	}
+
+
 
 	/**
 	 * Returns UnitPlayer because i needed it - Sorry Chris
@@ -373,53 +386,57 @@ public class World {
 
 
 
-	public byte[] getGameBoard(){
-		try {
-			return toByteArray(gameBoard);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public byte[] getWorldMap(){
-		try {
-			return toByteArray(worldMap);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
+//	public byte[] getGameBoard(){
+//		try {
+//			return toByteArray(gameBoard);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
+//
+//	public byte[] getWorldMap(){
+//		try {
+//			return toByteArray(worldMap);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
+//
+//	/**
+//	 * Taken From: http://www.java2s.com/Code/Java/File-Input-Output/Convertobjecttobytearrayandconvertbytearraytoobject.htm
+//	 * @param obj
+//	 * @return
+//	 * @throws IOException
+//	 */
+//	public static byte[] toByteArray(Object obj) throws IOException {
+//		byte[] bytes = null;
+//		ByteArrayOutputStream bos = null;
+//		ObjectOutputStream oos = null;
+//		try {
+//			bos = new ByteArrayOutputStream();
+//			oos = new ObjectOutputStream(bos);
+//			oos.writeObject(obj);
+//			oos.flush();
+//			bytes = bos.toByteArray();
+//		} finally {
+//			if (oos != null) {
+//				oos.close();
+//			}
+//			if (bos != null) {
+//				bos.close();
+//			}
+//		}
+//		return bytes;
+//	}
 
 	/**
-	 * Taken From: http://www.java2s.com/Code/Java/File-Input-Output/Convertobjecttobytearrayandconvertbytearraytoobject.htm
-	 * @param obj
-	 * @return
-	 * @throws IOException
+	 * This method checks if player has finished the turn
+	 * @return if player is still active
 	 */
-	public static byte[] toByteArray(Object obj) throws IOException {
-		byte[] bytes = null;
-		ByteArrayOutputStream bos = null;
-		ObjectOutputStream oos = null;
-		try {
-			bos = new ByteArrayOutputStream();
-			oos = new ObjectOutputStream(bos);
-			oos.writeObject(obj);
-			oos.flush();
-			bytes = bos.toByteArray();
-		} finally {
-			if (oos != null) {
-				oos.close();
-			}
-			if (bos != null) {
-				bos.close();
-			}
-		}
-		return bytes;
-	}
-
 	public boolean isTurn() {
 		return isActive;
 	}
