@@ -51,7 +51,7 @@ public  class Main {
 		JFrame loadFrame = MainFrame.createLoadingFrame();
 		loadFrame.setVisible(true);
 
-		cvs = new IsoCanvas(loadFrame.getWidth(), loadFrame.getHeight());
+		cvs = new IsoCanvas(mainFrame.getWidth(), mainFrame.getHeight());
 		world = new World(null, -1, -1, cvs);
 
 		try {
@@ -68,7 +68,8 @@ public  class Main {
 		//The following block deals with starting the server
 		server = new Server(getNumberOfPlayers());
 		client = new Client();
-		tw = new TurnWatcher(mainFrame.mainPanel.gamePanel.getWorld());
+		//tw = new TurnWatcher(mainFrame.mainPanel.gamePanel.getWorld());
+		tw = new TurnWatcher(world);
 		runServer(server, client);
 
 
