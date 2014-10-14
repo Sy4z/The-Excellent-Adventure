@@ -3,6 +3,8 @@ import static org.junit.Assert.*;
 
 import java.awt.Canvas;
 import java.awt.Point;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.junit.*;
 
@@ -55,7 +57,7 @@ public class WorldTests {
 	public void testLogicalTile_001(){
 		LogicalTile t = new LogicalTile(false);
 		assertFalse(t.isIsTile());
-		t.setIsTile(true);
+		t = new LogicalTile(true);
 		assertTrue(t.isIsTile());
 		t.setReachableByActive(true);
 		assertTrue(t.isReachableByActive());
@@ -93,7 +95,61 @@ public class WorldTests {
 
 		assertTrue(p.getInventory()[0] == 5);
 
+	}
 
+	@Test
+	public void testObjectInteaction_001(){
+
+		World w = new World(null, -1, -1, new IsoCanvas(500, 500));
+		InteractiveObjectChest chst = new InteractiveObjectChest(null);
+		int keyIncreseC = chst.getContents()[itemTypes.KEY.ordinal()];
+		try {
+			Method m = null;
+			for(Method iterationM: w.getClass().getDeclaredMethods()){
+				if(iterationM.getName().equals("interactWith")){
+					m = iterationM;
+					break;
+				}
+			}
+			m.setAccessible(true);
+			m.invoke(w, chst);
+			assertTrue(w.getAvatar().numberOfItem(itemTypes.KEY)== keyIncreseC);
+		} catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
+
+	@Test
+	public void testObjectInteaction_002(){
+
+		World w = new World(null, -1, -1, new IsoCanvas(500, 500));
+		InteractiveObjectMonster mnstr = new InteractiveObjectMonster(null);
+		int keyIncreseM = mnstr.getContents()[itemTypes.KEY.ordinal()];
+		try {
+			Method m = null;
+			for(Method iterationM: w.getClass().getDeclaredMethods()){
+				if(iterationM.getName().equals("interactWith")){
+					m = iterationM;
+					break;
+				}
+			}
+			m.setAccessible(true);
+			m.invoke(w, mnstr);
+			assertTrue(w.getAvatar().numberOfItem(itemTypes.PUPPY)== 0);
+			w.getInventory()[itemTypes.KATANA.ordinal()] = 5000;
+			m.invoke(w, mnstr);
+			assertTrue(w.getAvatar().numberOfItem(itemTypes.PUPPY) == mnstr.getContents()[itemTypes.PUPPY.ordinal()]);
+
+		} catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+
 }
+
+

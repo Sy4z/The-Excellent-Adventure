@@ -12,8 +12,7 @@ import java.io.Serializable;
 import javax.imageio.ImageIO;
 
 /**
- * This is a generic robot and is the base unit type that the player will
- * control.
+ *This is the base unit that a player will be controlling in the game
  *
  * @author mcintochri1
  *
@@ -22,7 +21,11 @@ import javax.imageio.ImageIO;
 public class UnitPlayer extends Unit{
 
 	private int heightOffSet;
-
+	/**
+	 * Contructs a UnitPlayer given it's starting location and unique ID
+	 * @param loc
+	 * @param ID
+	 */
 	public UnitPlayer(Point loc, int ID) {
 		super(loc, ID,new Inventory());
 		try {
@@ -81,54 +84,64 @@ public class UnitPlayer extends Unit{
 		g.drawImage(img, dx, dy-heightOffSet, null);
 	}
 
-	public String toString(){
-		return toString("");
-	}
-
-	public String toString(String append){
-		StringBuilder s = new StringBuilder();
-		append = "|\t" + append;
-		s.append(UnitPlayer.class.getSimpleName()+"{");
-
-		s.append("\n"+append+"X: "+curLocation.x);
-		s.append("\n"+append+"Y: "+curLocation.y);
-		s.append("\n" +append + "ID: " + ID);
-		//s.append("\n"+append+"Image: " + ((filePath != null) ? filePath.toString() : "NULL") + "");
-		s.append("\n"+append+"isActive: "+isNotTurnEnd());
-		s.append("\n"+append+"StandardAction: "+getStandardAction());
-		s.append("\n"+append+"MoveAction: "+getMoveAction());
-		//s.append("\n"+append+""+inventory.toString(append));
-
-		return s +"\n" + append.substring(2) + "}";
-	}
 
 
+	/**
+	 * This method adds a int[] of items to the players inventory adding the
+	 * number stored in each index to the count of the itemType with the Ordinal
+	 * mathing the index
+	 *
+	 * @param chestContents
+	 */
 	public void addToInventory(int[] chestContents) {
 		inventory.add(chestContents);
 
 	}
 
-
+	/**
+	 * This uses a key from the players inventory reducing the number of keys
+	 * held by the player by one.
+	 */
 	public void useKey() {
 		inventory.useKey();
 
 	}
-
+	/**
+	 * Returns the contents of the players inventory
+	 * @return
+	 */
 	public int[] getInventory(){
-		return this.inventory.getInventroy();
+		return this.inventory.getInventory();
 	}
 
-
+	/**
+	 * adds a number (i) of items of a given type (type) to the players
+	 * inventory
+	 *
+	 * @param type
+	 * @param i
+	 */
 	public void addToInventory(itemTypes type, int i) {
 		this.inventory.add(type, i);
 
 	}
 
-
+	/**
+	 * This is called when a player loses a fight, this makes the player lose
+	 * all of their puppies as there opponent who has defeated them obsconds with them.
+	 */
 	public void loseFight() {
-		inventory.loseFight();		
+		inventory.loseFight();
 	}
 
+	/**
+	 *Returns the number of items of a given type a player has.
+	 * @param type
+	 * @return
+	 */
+	public int numberOfItem(itemTypes type) {
+		return inventory.numberOfItem(type);
+	}
 
 
 }

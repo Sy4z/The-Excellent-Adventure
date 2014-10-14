@@ -19,6 +19,13 @@ import javax.imageio.ImageIO;
 public class UnitCursor extends Unit{
 	private float alpha_level = 0.4f;
 
+	/**
+	 * Contrucsts a Cursor with it's location and an ID (This will be an
+	 * arbitrary ID as only one Cursor may exist at a time)
+	 *
+	 * @param loc
+	 * @param ID
+	 */
 	public UnitCursor(Point loc, int ID) {
 		super(loc, ID, null);
 		try {
@@ -42,12 +49,11 @@ public class UnitCursor extends Unit{
 		g2d.setComposite(initialAlpha);
 	}
 
-	@Override
-	public String toString(String append) {
-
-		return null;
-	}
-
+	/**
+	 * Moves the Cursor to a given location
+	 * @param x
+	 * @param y
+	 */
 	public void setLocation(int x, int y) {
 		this.curLocation = new Point(x, y);
 	}

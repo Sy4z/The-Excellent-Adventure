@@ -53,8 +53,10 @@ public class Data {
 		//initialise the document
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		Document doc = null;
+
 		File xmlFile = new File(f+ File.separatorChar + "data");
 		//load the XML file which represents the state of the game
+
 		try {
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			org.w3c.dom.Document w3cDoc = dBuilder.parse(xmlFile);
@@ -69,18 +71,22 @@ public class Data {
 
 		Element root = doc.getRootElement();
 		Element tilesNode = root.getChild("Tiles");
+
 		for(Element e : tilesNode.getChildren()){
 
 			TileMultiton.getTile(TileMultiton.getTypeByRepresentation(e.getName().charAt(0)));
 
 		}
 
+
 		int i = Integer.parseInt(tilesNode.getAttributeValue("X"));
 		int j = Integer.parseInt(tilesNode.getAttributeValue("Y"));
 
 		LogicalTile[][] lTiles = new LogicalTile[i][j];
 		TileMultiton.type[][] tiles = new TileMultiton.type[i][j];
+
 		GameObject[][] gObjs = new GameObject[i][j];
+
 
 		i = 0;
 		j = 0;
@@ -110,6 +116,7 @@ public class Data {
 			return null;
 		}
 
+
 		for(Element e: root.getChild("GameObject").getChildren()){
 			switch(e.getName()){
 			case "UnitPlayer": HandleLoadUnitPlayer(e);break;
@@ -118,6 +125,7 @@ public class Data {
 			default:throw new UnexpectedException("unexpected child found in XML tree" + e.getName());
 			}
 		}
+
 
 		return new Tuple(null, null);
 	}

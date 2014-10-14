@@ -16,13 +16,17 @@ import dataStorage.Tuple;
 
 
 /**
+ * This is the main class for controling what a player can do on their turn and
+ * how they interact with the world.
  *
  * @author ChrisMcIntosh
  *
  */
 public class World {
 	private boolean isActive;
+	//This contains all gameobjects in the world the player can interact with
 	private GameObject[][] gameBoard;
+	//This is the map of all the tile that make up the world
 	private LogicalTile[][] worldMap;
 	private UnitPlayer avatar;
 	private UnitCursor cursor;
@@ -50,8 +54,7 @@ public class World {
 	}
 
 	/**
-	 * This is very niaeve and may break will be fixed after discussing the Tuple class
-	 * with group members
+	 * This will be redoen once loading wroks.
 	 * @param tiles
 	 */
 	private void populateWorldMape(type[][] tiles) {
@@ -79,7 +82,9 @@ public class World {
 		calculatePossibleMovments();
 		return true;
 	}
-
+	/**
+	 * Resets turn infoamtion at the start of the turn
+	 */
 	public void startTurn(){
 		avatar.activate();
 		isActive = true;
@@ -88,8 +93,12 @@ public class World {
 
 
 	/**
-	 *	This is unlikely to function due to time constraints :(
+	 * This is the method for handling mouse based movment however due to
+	 * problems with translating mouse position to bored position all movement is
+	 * now keyboard based and this is left in deprecated for if we are able to
+	 * solve the problems with it and properly implement it.
 	 */
+	@Deprecated
 	public void intepretMouseCommand(Point coords){
 
 		int x = coords.x;
@@ -105,21 +114,15 @@ public class World {
 	}
 
 	/**
-	 * Handles interaction with InteractiveObjects
+	 * Handles interaction with InteractiveObjects by calling to their internal
+	 * methods
+	 *
 	 * @param x
 	 * @param y
 	 */
 	private void interactWith(InteractiveObject obj) {
-		//		//If a player does not have a standard action left they may not interact with an object
-		//		if(!avatar.getStandardAction())
-		//			return;
-		//		if(gameBoard[x][y] instanceof InteractiveObjectChest){
-		//			avatar.addToInventory(((InteractiveObjectChest)gameBoard[x][y]).takeContents());
-		//
-		//		}
-		//
 		if(obj instanceof InteractiveObjectChest)
-			avatar.addToInventory(((InteractiveObjectChest)obj).takeContents());
+			avatar.addToInventory(((InteractiveObjectChest)obj).getContents());
 		if(obj instanceof InteractiveObjectMonster){
 			//Fight the monster with all the Katanas you have
 			int[] loot = ((InteractiveObjectMonster)obj).fight(avatar.getInventory()[itemTypes.KATANA.ordinal()]);
@@ -130,7 +133,10 @@ public class World {
 		}
 
 	}
-
+	/**
+	 * Moves the Cursor based on keyboard imput and if the movment is valid.
+	 * @param i
+	 */
 	public void moveFromKeyBoard(int i) {
 		// 0 is up
 		// 1 is down
@@ -204,14 +210,28 @@ public class World {
 
 
 
-
+	/**
+	 * Calculates all possible movements the player can make and saves them into
+	 * tiles and then highlights squares reachable by one movement
+	 *
+	 * @param curLocation
+	 */
 	private void calculatePossibleMovments(Point curLocation) {
 		checkMoveFrom(curLocation.x, curLocation.y, 6, new ArrayDeque<Point>());
 		canvas.highlight(tilesToHightlight());
 
 	}
 
-
+	/**
+	 * Recursivly calculates all movements that can be made from a given XY with
+	 * remaining allotment of movement this is controled by the method
+	 * calculatePossibleMovments
+	 *
+	 * @param x
+	 * @param y
+	 * @param numMoves
+	 * @param path
+	 */
 	private void checkMoveFrom(int x, int y, int numMoves, ArrayDeque<Point> path){
 		path.add(new Point(x, y));
 		worldMap[x][y].setPath(path);
@@ -230,23 +250,36 @@ public class World {
 		if(validMove(x,y+1, path))
 			checkMoveFrom(x,y+1, numMoves-1,path.clone());
 	}
-
+	/**
+	 * Checks if a tile is valid to move to
+	 * @param x
+	 * @param y
+	 * @param path
+	 * @return
+	 */
 	private boolean validMove(int x, int y, ArrayDeque<Point> path){
+		//Return false if it out of bounds of the map array.
 		if(!inBounds(x,y))
 			return false;
+		//Returns false if the tile does not correspond to a accessible square
 		if(!worldMap[x][y].isIsTile())
 			return false;
+		//Return false if there is another player in that square
 		if(gameBoard[x][y] instanceof UnitPlayer)
 			return false;
+		//Return true if there is no path yet calculated for that square
 		if(worldMap[x][y].getPath() == null)
 			return true;
+		// Return false if the path calculated already for that square is more
+		// efficient than this one
 		if(worldMap[x][y].getPath().size() < path.size())
 			return false;
+		//Otherwise return true
 		return true;
 	}
 
 	/**
-	 * Gives a unit a new movement order by calling the find path method
+	 * Moves the player avatar to the given XY
 	 *
 	 * @param ID
 	 * @param destination
@@ -354,14 +387,27 @@ public class World {
 		return true;
 	}
 
+	/**
+	 * Calls the method of the same name converting XY to the required point
+	 * input
+	 *
+	 * @param x
+	 * @param y
+	 */
 	private void calculatePossibleMovments(int x, int y) {
 		calculatePossibleMovments(new Point(x,y));
 	}
-
+	/**
+	 * Calculates all possible movments from the active players current location
+	 */
 	private void calculatePossibleMovments() {
 		calculatePossibleMovments(avatar.getLocation());
 	}
 
+	/**
+	 * Returns the [] of counts of items in the players inventory
+	 * @return
+	 */
 	public int[] getInventory(){
 		return avatar.getInventory();
 	}
@@ -369,18 +415,32 @@ public class World {
 
 	//Networking Methods--------------------------------------------------------------------------------------------
 
+	/**
+	 * Replaces the game board with an updated one given by the network
+	 *
+	 * @param updatedGameBoard
+	 */
 	public void setGameBoard(GameObject[][] updatedGameBoard){
 		this.gameBoard = updatedGameBoard;
 	}
-
+	/**
+	 * Returns the current game board
+	 * @return
+	 */
 	public GameObject[][] getGameBoard(){
 		return this.gameBoard;
 	}
-
+	/**
+	 * Returns the current [][] of logical tiles.
+	 * @return
+	 */
 	public LogicalTile[][] getWorldMap(){
 		return worldMap;
 	}
-
+	/**
+	 * Replaces the current world map with an updated one from the server
+	 * @param updatedMap
+	 */
 	public void setWorldMap(LogicalTile[][] updatedMap){
 		this.worldMap = updatedMap;
 	}
@@ -453,7 +513,9 @@ public class World {
 	}
 
 //Graphics methods
-
+	/**
+	 * Gets the canvas to redraw all GameObjects on the gameBoard
+	 */
 	public void updateGameBoardGraphics(){
 		ArrayList<GameObject> t = new ArrayList<GameObject>();
 		for(int x =0; x < gameBoard.length; x++)
