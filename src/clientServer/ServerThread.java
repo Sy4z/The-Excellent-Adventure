@@ -37,13 +37,14 @@ public class ServerThread extends Thread{
 	public UnitPlayer clientPlayer; //Local player from client is stored here, gets updated every tick
 	GameObject[][] gameBoardServer;
 	Object tempStringTurn;
+	static int turnNumber; //The number for the Connected Clients turnorder
 
 
 	public ServerThread(Socket clientSocket){
 		System.out.println("New Server Thread Created");//debugging info
 		this.socket = clientSocket;
-		//start(); Not sure that i need this - I don't
-
+		Main.server.playerList.add(socket.getInetAddress());//Add this Client to the List of Clients in server - This means the Logic for starting turns can be addressed easily this way
+		turnNumber = Main.server.playerList.size(); //Since the value added will be in the last place in the list, just get the size to set the value
 	}
 
 
@@ -55,43 +56,45 @@ public class ServerThread extends Thread{
 
 			//Base this on ticks (Turns) - Send to every client on every turn. Whether you as a local player will have moved or not is based on game logic
 			while(true){
-				ObjectInputStream boardFromClient = new ObjectInputStream(socket.getInputStream()); //for receiving the character from the connected clientThread
-				ObjectOutputStream boardToClient = new ObjectOutputStream(socket.getOutputStream()); //for outputting all the other characters to the server
-
-				try {
-					tempStringTurn = boardFromClient.readObject(); //Wait for Incoming Token
-				} catch (ClassNotFoundException e1) {
-					System.out.println("Was a problem with server waiting for incoming token from client, to start logic loop");
-					e1.printStackTrace();
-				}
-				String isMyTurn = (String)tempStringTurn; //Cast the input String
-				if(isMyTurn instanceof String && isMyTurn.equals("myturn")){//Check if its the connected clients turn (Will receive notification from client)
-
-
-					//Send GameBoard current State to Client
-					gameBoardServer = Main.server.getMainGameBoard(); //Get the most updated recent copy of the gameBoard
-					boardToClient.writeObject(gameBoardServer);//Write the gameboard to the client
-
-
-
-
-
-					// Recieve updated GameBoard from client at end of turn - Should sit here waiting for the token to come in so no logic needed here
+				if(Main.server.currentTurn() == this.turnNumber){
+					ObjectInputStream boardFromClient = new ObjectInputStream(socket.getInputStream()); //for receiving the character from the connected clientThread
+					ObjectOutputStream boardToClient = new ObjectOutputStream(socket.getOutputStream()); //for outputting all the other characters to the server
+					String yourTurn = "yourturn";
+					boardToClient.writeObject(yourTurn);//Let Client Know its now his turn
 					try {
-						Object tempBoard = boardFromClient.readObject();
-						gameBoardServer = (GameObject[][]) tempBoard; //Reads the UnitPlayer from the temp object, casting it as correct type and stores it
-						Main.server.setMainGameBoard(gameBoardServer);//Update main board in Server so all threads can see it
-
-					} catch (ClassNotFoundException e) {
-						System.out.println("Problem In Serverthread: Something went wrong when receiving the gameboard from the client");
-						e.printStackTrace();
+						tempStringTurn = boardFromClient.readObject(); //Wait for Incoming Token
+					} catch (ClassNotFoundException e1) {
+						System.out.println("Was a problem with server waiting for incoming token from client, to start logic loop");
+						e1.printStackTrace();
 					}
+					String isMyTurn = (String)tempStringTurn; //Cast the input String
+					if(isMyTurn instanceof String && isMyTurn.equals("myturn")){//Check if its the connected clients turn (Will receive notification from client)
+
+
+						//Send GameBoard current State to Client
+						gameBoardServer = Main.server.getMainGameBoard(); //Get the most updated recent copy of the gameBoard
+						boardToClient.writeObject(gameBoardServer);//Write the gameboard to the client
+
+
+						boardToClient.flush();//Flush output buffer, making sure we dont get overloaded with info
+
+
+						// Recieve updated GameBoard from client at end of turn - Should sit here waiting for the token to come in so no logic needed here
+						try {
+							Object tempBoard = boardFromClient.readObject();
+							gameBoardServer = (GameObject[][]) tempBoard; //Reads the UnitPlayer from the temp object, casting it as correct type and stores it
+							Main.server.setMainGameBoard(gameBoardServer);//Update main board in Server so all threads can see it
+
+						} catch (ClassNotFoundException e) {
+							System.out.println("Problem In Serverthread: Something went wrong when receiving the gameboard from the client");
+							e.printStackTrace();
+						}
 
 
 
 
 
-					//Array of LogicalTiles - Receive Here
+						//Array of LogicalTiles - Receive Here
 
 
 
@@ -111,17 +114,18 @@ public class ServerThread extends Thread{
 
 
 
-					//Set next turn on
+						//Set next turn on
 
 
 
+					}
+					//Wrap up and wait for next looparound
+
+					if(socket == null){ //If client DC's? Im not sure how to check for this.
+						socket.close();
+					}
+					boardToClient.flush();
 				}
-				//Wrap up and wait for next looparound
-
-				if(socket == null){ //If client DC's? Im not sure how to check for this.
-					socket.close();
-				}
-
 			}
 
 
