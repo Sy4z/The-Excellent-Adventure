@@ -52,7 +52,7 @@ public class Data {
 	public static Tuple load(String f){
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		Document doc = null;
-		
+
 		try {
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			org.w3c.dom.Document w3cDoc = dBuilder.parse(f);
@@ -63,20 +63,20 @@ public class Data {
 			throw new IllegalArgumentException("File not found");
 		}
 
-		
+
 		Element root = doc.getRootElement();
 		Element tilesNode = root.getChild("Tiles");
-		
+
 		int i = Integer.parseInt(tilesNode.getAttributeValue("X"));
 		int j = Integer.parseInt(tilesNode.getAttributeValue("Y"));
-		
+
 		LogicalTile[][] lTiles = new LogicalTile[i][j];
-		TileMultiton.type[][] tiles = new TileMultiton.type[i][j]; 
-		
-		
+		TileMultiton.type[][] tiles = new TileMultiton.type[i][j];
+
+
 		i = 0;
 		j = 0;
-		
+
 		try {
 			Scanner tileMapScanner = new Scanner(new File(f + File.separatorChar + "map"));
 			String curChar = "";
@@ -95,8 +95,8 @@ public class Data {
 			// TODO Auto-generated catch block
 			return null;
 		}
-		
-		
+
+
 		return new Tuple(null, null);
 	}
 
@@ -129,10 +129,10 @@ public class Data {
 		//-------Handle Tiles--------
 		//create the tile root
 		Element subRoot = new Element("Tiles");
-		
+
 		//Get the types array from isoCanvas via reflection
 		TileMultiton.type[][] types = null;
-		
+
 		try {
 			Field tileMapField = IsoCanvas.class.getDeclaredField("map");
 			tileMapField.setAccessible(true);
@@ -142,14 +142,14 @@ public class Data {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();
 		}
-		
+
 		//give the subroot the dimensions of the tile array
 		subRoot.setAttribute("X", Integer.toString(types.length));
 		subRoot.setAttribute("Y", Integer.toString(types[1].length));
 
 		Element elem;
 		String tileMap = "";
-		
+
 		//For each element in tiles, if the tiles are not already in the tree, add them,
 		//else add the char for the tile to the tileMap, and continue onwards
 		char tileRepresentation;
@@ -210,29 +210,29 @@ public class Data {
 //		Class[] classList = new Class[10];
 		Element fieldElem = null;
 		List<Class> classList = new ArrayList<Class>();
-		
+
 		for(GameObject[] objs : gameObjs){
 			for(GameObject e : objs){
 //				error(e+"");
-				
+
 				if(e != null){
 					elem = new Element(e.getClass().getSimpleName());
 					classList.add(e.getClass());
-		
+
 					while(classList.get(classList.size()-1).getSuperclass() != (Object.class)){
 						classList.add(classList.get(classList.size()-1).getSuperclass());
 					}
 					error(classList.toString());
-		
+
 					for(Class c : classList){
 						error("---Iterating " + c.getCanonicalName()+ "---");
 						for(Field f : c.getDeclaredFields()){
 							fieldElem = null;
 							accesible = f.isAccessible();
 							f.setAccessible(true);
-		
+
 							switch(f.getType().getSimpleName()){
-		
+
 							case "BufferedImage": break;
 							case "int": 		fieldElem = handleIntField(f,e); break;
 							case "Inventory": 	fieldElem = handleInventoryField(f,e);break;
@@ -244,15 +244,15 @@ public class Data {
 								error("No saving controls found for objects of type: " + f.getType().getSimpleName() + "\n\tField will not be saved");
 								break;
 							}
-		
+
 							if(fieldElem != null){
 								elem.addContent(fieldElem);
 							}
-		
+
 							f.setAccessible(accesible);
 						}
-		
-		
+
+
 					}
 					subRoot.addContent(elem);
 					classList = new ArrayList<Class>();
@@ -401,7 +401,6 @@ public class Data {
 		int sizeY = 100;
 		int entityX = 6;
 		int entityY = 6;
-		error("Beginning test");
 		TileMultiton.type[][] t = new TileMultiton.type[sizeY][sizeX];
 
 		//Creates an array of tiles sizeX by sizeY if statement specifys what coordinate entity will be placed.

@@ -12,8 +12,8 @@ public class LogicalTile implements Serializable{
 	private ArrayDeque<Point> path;
 	private boolean reachableByActive;
 
-	public LogicalTile(boolean canTouchThis){
-		this.isTile = canTouchThis;
+	public LogicalTile(boolean isTile){
+		this.isTile = isTile;
 		reachableByActive = false;
 	}
 

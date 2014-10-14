@@ -3,6 +3,7 @@ package gameWorld;
 import gameWorld.Inventory.itemTypes;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.ArrayList;
 
 public class InteractiveObjectChest extends InteractiveObject{
@@ -10,11 +11,13 @@ public class InteractiveObjectChest extends InteractiveObject{
 //	private ArrayList<Item> contents = new ArrayList<Item>();
 	private int[] contents;
 
-	public InteractiveObjectChest(int[] contents){
+	public InteractiveObjectChest(int[] contents, Point p){
+		super(p);
 		this.contents = contents;
 	}
 
-	public InteractiveObjectChest(){
+	public InteractiveObjectChest(Point p){
+		super(p);
 		int[] itms = new int[itemTypes.values().length];
 		for(int i = 0; i < itms.length; i++)
 			itms[i] = (int) Math.max(0, Math.random()*15 -8);
@@ -22,7 +25,9 @@ public class InteractiveObjectChest extends InteractiveObject{
 	}
 
 	public int[] takeContents(){
-		return contents = null;
+		int[]  tempContents = contents;
+		contents = null;
+		return tempContents;
 	}
 	@Override
 	void draw(Graphics2D g, int dx, int dy) {
@@ -40,6 +45,10 @@ public class InteractiveObjectChest extends InteractiveObject{
 		append = "|\t" + append;
 
 		return s + "\n" + append.substring(2) + "}";
+	}
+
+	public int[] getContents() {
+		return contents;
 	}
 
 

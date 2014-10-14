@@ -53,7 +53,7 @@ public class Inventory {
 		return b;
 	}
 
-	public int[] getInventroy(){
+	public int[] getInventory(){
 		return items;
 	}
 
@@ -62,7 +62,7 @@ public class Inventory {
 	 */
 	public void loseFight() {
 		items[itemTypes.PUPPY.ordinal()] = 0;
-		
+
 	}
 
 

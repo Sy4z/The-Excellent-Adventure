@@ -1,8 +1,13 @@
 package gameWorld;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 public class StationaryObjectHatStand extends StationaryObject{
+
+	public StationaryObjectHatStand(Point p){
+		super(p);
+	}
 
 	@Override
 	void draw(Graphics2D g, int dx, int dy) {

@@ -14,14 +14,13 @@ import sun.net.util.IPAddressUtil;
  */
 public abstract class Unit extends GameObject {
 	protected Inventory inventory;
-	protected Point curLocation;
 	private boolean notTurnEnd;
 	private boolean standardAction;
 	private boolean moveAction;
 
 	protected int ID;
 	public Unit(Point loc, int ID, Inventory inventory) {
-		curLocation = loc;
+		super(loc);
 		this.ID = ID;
 		this.inventory = inventory;
 	}

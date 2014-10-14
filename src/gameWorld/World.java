@@ -90,6 +90,7 @@ public class World {
 	/**
 	 *	This is unlikely to function due to time constraints :(
 	 */
+	@Deprecated
 	public void intepretMouseCommand(Point coords){
 
 		int x = coords.x;

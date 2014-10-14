@@ -115,7 +115,7 @@ public class UnitPlayer extends Unit{
 	}
 
 	public int[] getInventory(){
-		return this.inventory.getInventroy();
+		return this.inventory.getInventory();
 	}
 
 
@@ -126,9 +126,12 @@ public class UnitPlayer extends Unit{
 
 
 	public void loseFight() {
-		inventory.loseFight();		
+		inventory.loseFight();
 	}
 
+	public int numberOfItem(itemTypes type){
+		return inventory.numberOfItem(type);
+	}
 
 
 }

@@ -42,11 +42,6 @@ public class UnitCursor extends Unit{
 		g2d.setComposite(initialAlpha);
 	}
 
-	@Override
-	public String toString(String append) {
-
-		return null;
-	}
 
 	public void setLocation(int x, int y) {
 		this.curLocation = new Point(x, y);
