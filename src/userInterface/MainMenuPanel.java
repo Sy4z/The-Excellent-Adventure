@@ -7,7 +7,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -16,6 +18,7 @@ import java.awt.event.MouseListener;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -31,7 +34,8 @@ import javax.swing.ScrollPaneConstants;
 import runGame.Main;
 
 /**
- * This class contains all the necessary buttons for the main menu of the game.
+ * This class displays the main menu and contains all the necessary buttons for
+ * the main menu of the game.
  *
  * @author Venkata Peesapati
  *
@@ -39,22 +43,23 @@ import runGame.Main;
 public class MainMenuPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JFrame currentFrame;
-	private JPanel currentPanel;
-	private String moveType;
+	private JFrame currentFrame; // Reference to the MainFrame.
+	private JPanel currentPanel; // Reference to current panel being used.
+	private String moveType; // This field is to indicate which controls are
+								// going to be used in the game.
 
 	private JLabel gameName;
 	private JButton newGameButton;
 	private JButton loadButton;
 	private JButton storyButton;
 	private JButton controlsButton;
-	private JButton optionsButton;
 	private JButton exitButton;
-	public GamePanel gamePanel; //Added this here chet
+	public GamePanel gamePanel;
+
+	private ImageIcon background = new ImageIcon("post-apoc.jpg");
 
 	/**
-	 * The main menu has 6 buttons: New Game, Load, Story, Controls, Options and
-	 * Exit.
+	 * The main menu has 6 buttons: New Game, Load, Story, Controls and Exit.
 	 *
 	 * @param currentFrame
 	 *            Takes the reference for the frame that the MainMenuPanel is
@@ -117,17 +122,6 @@ public class MainMenuPanel extends JPanel {
 		controlsButton.addMouseListener(new HoverButtonListener());
 		controlsButton.addActionListener(new ControlsButtonListener());
 
-		// Set game options.
-		optionsButton = new JButton("Options");
-		optionsButton.setOpaque(false);
-		optionsButton.setContentAreaFilled(false);
-		optionsButton.setBorderPainted(false);
-		optionsButton.setFont(new Font("Arial", Font.PLAIN, 35));
-		optionsButton.setFocusPainted(false);
-		optionsButton.setForeground(Color.black);
-		optionsButton.addMouseListener(new HoverButtonListener());
-		optionsButton.addActionListener(new OptionsButtonListener());
-
 		// Quit the game.
 		exitButton = new JButton("Exit");
 		exitButton.setOpaque(false);
@@ -144,13 +138,11 @@ public class MainMenuPanel extends JPanel {
 		add(loadButton);
 		add(storyButton);
 		add(controlsButton);
-		add(optionsButton);
 		add(exitButton);
 
 		// This helps make the panel transparent.
 		setOpaque(false);
-		
-		
+
 	}
 
 	// Action listeners for each of the buttons can go down here.
@@ -215,17 +207,15 @@ public class MainMenuPanel extends JPanel {
 			d.add(buttonsPanel, BorderLayout.SOUTH);
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
-			
-					currentFrame.getContentPane().removeAll();
-					currentFrame.getContentPane().validate();
-					currentFrame.getContentPane().repaint();
-					gamePanel = new GamePanel(currentFrame, currentPanel, moveType); //moved here to fix problem of the panel being overwritten
-					currentFrame.getContentPane().add(
-							gamePanel, //Changed this chet, needed public access to game panel. Good practise to do it this way if you're instantiating game objects in the UI
-							BorderLayout.CENTER);
 
-					currentFrame.getContentPane().validate();
-					currentFrame.getContentPane().repaint();
+			currentFrame.getContentPane().removeAll();
+			currentFrame.getContentPane().validate();
+			currentFrame.getContentPane().repaint();
+			gamePanel = new GamePanel(currentFrame, currentPanel, moveType);
+			currentFrame.getContentPane().add(gamePanel, BorderLayout.CENTER);
+
+			currentFrame.getContentPane().validate();
+			currentFrame.getContentPane().repaint();
 		}
 
 	}
@@ -241,6 +231,18 @@ public class MainMenuPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Image resizedImage = background.getImage().getScaledInstance(400,
+					300, Image.SCALE_SMOOTH);
+			background = new ImageIcon(resizedImage);
+
+			JPanel mainPanel = new JPanel() {
+				// Displays the background image on the panel.
+				@Override
+				public void paintComponent(Graphics g) {
+					g.drawImage(background.getImage(), 0, 0, null);
+				}
+			};
+
 			final JDialog d = new JDialog(currentFrame, "Load Game", true);
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
@@ -254,7 +256,6 @@ public class MainMenuPanel extends JPanel {
 			// model.
 			JList<String> list = new JList<String>(model);
 			JScrollPane scrollPane = new JScrollPane(list);
-			d.add(scrollPane, BorderLayout.CENTER);
 
 			JPanel buttonPanel = new JPanel();
 			buttonPanel.setLayout(new FlowLayout());
@@ -269,12 +270,18 @@ public class MainMenuPanel extends JPanel {
 			buttonPanel.add(new JButton("OK"));
 			buttonPanel.add(cancelButton);
 			buttonPanel.add(new JButton("Delete"));
-			d.add(buttonPanel, BorderLayout.SOUTH);
+
+			scrollPane.setOpaque(false);
+			buttonPanel.setOpaque(false);
+
+			mainPanel.setLayout(new BorderLayout());
+			mainPanel.add(scrollPane, BorderLayout.CENTER);
+			mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+			d.add(mainPanel, BorderLayout.CENTER);
 
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
 		}
-
 	}
 
 	/**
@@ -288,6 +295,18 @@ public class MainMenuPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Image resizedImage = background.getImage().getScaledInstance(400,
+					300, Image.SCALE_SMOOTH);
+			background = new ImageIcon(resizedImage);
+
+			JPanel mainPanel = new JPanel() {
+				// Displays the background image on the panel.
+				@Override
+				public void paintComponent(Graphics g) {
+					g.drawImage(background.getImage(), 0, 0, null);
+				}
+			};
+
 			final JDialog d = new JDialog(currentFrame, "Story", true);
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
@@ -296,8 +315,7 @@ public class MainMenuPanel extends JPanel {
 			story.setEditable(false);
 			JScrollPane scrollPane = new JScrollPane(story);
 			scrollPane
-			.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-			d.add(scrollPane, BorderLayout.CENTER);
+					.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 			JPanel buttonPanel = new JPanel();
 			buttonPanel.setLayout(new FlowLayout());
@@ -310,7 +328,14 @@ public class MainMenuPanel extends JPanel {
 				}
 			});
 			buttonPanel.add(closeButton);
-			d.add(buttonPanel, BorderLayout.SOUTH);
+
+			scrollPane.setOpaque(false);
+			buttonPanel.setOpaque(false);
+
+			mainPanel.setLayout(new BorderLayout());
+			mainPanel.add(scrollPane, BorderLayout.CENTER);
+			mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+			d.add(mainPanel, BorderLayout.CENTER);
 
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
@@ -318,10 +343,31 @@ public class MainMenuPanel extends JPanel {
 
 	}
 
+	/**
+	 * This is the listener class used for the controls button. It allows the
+	 * user to choose between two keyboard options for movement in the game. One
+	 * is using the alphabet keys(W,A,S,D) and the other is using the arrow
+	 * keys.
+	 *
+	 * @author Venkata Peesapati
+	 *
+	 */
 	class ControlsButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Image resizedImage = background.getImage().getScaledInstance(400,
+					300, Image.SCALE_SMOOTH);
+			background = new ImageIcon(resizedImage);
+
+			JPanel mainPanel = new JPanel() {
+				// Displays the background image on the panel.
+				@Override
+				public void paintComponent(Graphics g) {
+					g.drawImage(background.getImage(), 0, 0, null);
+				}
+			};
+
 			final JDialog d = new JDialog(currentFrame, "Controls", true);
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
@@ -371,21 +417,13 @@ public class MainMenuPanel extends JPanel {
 				}
 			});
 
-			d.add(moveControls, BorderLayout.CENTER);
-			d.add(buttonsPanel, BorderLayout.SOUTH);
-			d.setLocationRelativeTo(null);
-			d.setVisible(true);
-		}
+			moveControls.setOpaque(false);
+			buttonsPanel.setOpaque(false);
 
-	}
-
-	class OptionsButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			final JDialog d = new JDialog(currentFrame, "Options", true);
-			d.setSize(400, 300);
-			d.setLayout(new BorderLayout());
+			mainPanel.setLayout(new BorderLayout());
+			mainPanel.add(moveControls, BorderLayout.CENTER);
+			mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
+			d.add(mainPanel, BorderLayout.CENTER);
 
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);

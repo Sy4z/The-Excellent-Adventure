@@ -12,5 +12,6 @@ public class BlueTile extends Tile{
 	public BlueTile( File imgPath,Character key) {
 		super(imgPath,key);
 		type = "Blue_Tile";
+		this.canMove = false;
 	}
 }

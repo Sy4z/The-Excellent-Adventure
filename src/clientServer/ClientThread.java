@@ -53,13 +53,7 @@ public class ClientThread extends Thread {
 			 * The following block of code is where information can be sent to/from the server.
 			 * Helper methods incoming
 			 */
-			String sentence = "Hi Server, From Client"; //Thus is the string that gets sent to the server
-
-			boardToServer.writeBytes(sentence + '\n'); //Apparantly, writeBytes converts a string to bytes automatically
-			//End Data Transfer Block
-
-
-			while(true){
+			while(true){ //Main Loop
 
 
 

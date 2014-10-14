@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
@@ -49,28 +50,33 @@ import runGame.Main;
 /**
  * This class contains the main canvas displaying the gameplay and other
  * controls required for playing the game.
- * 
+ *
  * @author Venkata Peesapati
- * 
+ *
  */
-public class GamePanel extends JPanel implements MouseListener {
+public class GamePanel extends JPanel {
 
 	private JFrame currentFrame;
 	private JPanel oldPanel;
 	private String moveType;
 
+	// Inventory fields.
 	private JTable tableItems1;
 	private JTable tableNums1;
 	private JTable tableItems2;
 	private JTable tableNums2;
+	
+	private ImageIcon background = new ImageIcon("post-apoc.jpg");
 
+	// This field stores the mode which is either 'Quit' or 'Save' depending on
+	// whether the save dialog box opens when the user wants to quit or save
+	// during the game.
 	private String mode;
 
 	public GamePanel(JFrame frame, JPanel menuPanel, String moveType) {
 		currentFrame = frame;
 		oldPanel = menuPanel;
 		this.moveType = moveType;
-		addMouseListener(this);
 		addKeyBindings();
 		setLayout(null);
 
@@ -273,10 +279,11 @@ public class GamePanel extends JPanel implements MouseListener {
 
 	/**
 	 * This is the listener class used for the quit button. It returns to the
-	 * main menu by replacing the game panel with the main menu's panel.
-	 * 
+	 * main menu by replacing the game panel with the main menu's panel. It also
+	 * asks the user whether they want to save the game before quitting or not.
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class QuitGameListener implements ActionListener {
 
@@ -308,14 +315,26 @@ public class GamePanel extends JPanel implements MouseListener {
 	/**
 	 * This is the listener class used for the controls button. It allows the
 	 * user to change the keyboard controls during the gameplay.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class ControlsGameListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Image resizedImage = background.getImage().getScaledInstance(400,
+					300, Image.SCALE_SMOOTH);
+			background = new ImageIcon(resizedImage);
+			
+			JPanel mainPanel = new JPanel() {
+				// Displays the background image on the panel.
+				@Override
+				public void paintComponent(Graphics g) {
+					g.drawImage(background.getImage(), 0, 0, null);
+				}
+			};
+			
 			final JDialog d = new JDialog(currentFrame, "Controls", true);
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
@@ -366,15 +385,30 @@ public class GamePanel extends JPanel implements MouseListener {
 					d.dispose();
 				}
 			});
+			
+			moveControls.setOpaque(false);
+			buttonsPanel.setOpaque(false);
+			
+			mainPanel.setLayout(new BorderLayout());
+			mainPanel.add(moveControls, BorderLayout.CENTER);
+			mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
+			d.add(mainPanel, BorderLayout.CENTER);
 
-			d.add(moveControls, BorderLayout.CENTER);
-			d.add(buttonsPanel, BorderLayout.SOUTH);
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
 		}
 
 	}
 
+	/**
+	 * This is the listener class used for the Save Game button. It allows the
+	 * user to save the game and continue playing. Note that the mode is 'Save'
+	 * over here which means that the saveGame method will not quit after the
+	 * saving is done.
+	 *
+	 * @author Venkata Peesapati
+	 *
+	 */
 	class SaveGameListener implements ActionListener {
 
 		@Override
@@ -385,7 +419,22 @@ public class GamePanel extends JPanel implements MouseListener {
 
 	}
 
+	/**
+	 *
+	 */
 	public void saveGame() {
+		Image resizedImage = background.getImage().getScaledInstance(400,
+				300, Image.SCALE_SMOOTH);
+		background = new ImageIcon(resizedImage);
+		
+		JPanel mainPanel = new JPanel() {
+			// Displays the background image on the panel.
+			@Override
+			public void paintComponent(Graphics g) {
+				g.drawImage(background.getImage(), 0, 0, null);
+			}
+		};
+		
 		final JDialog d = new JDialog(currentFrame, "Save Game", true);
 		d.setSize(400, 300);
 		d.setLayout(new BorderLayout());
@@ -399,7 +448,6 @@ public class GamePanel extends JPanel implements MouseListener {
 		// model.
 		JList<String> list = new JList<String>(model);
 		JScrollPane scrollPane = new JScrollPane(list);
-		d.add(scrollPane, BorderLayout.CENTER);
 
 		JPanel savePanel = new JPanel();
 		savePanel.setLayout(new BorderLayout());
@@ -463,42 +511,22 @@ public class GamePanel extends JPanel implements MouseListener {
 		buttonPanel.add(okButton);
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(new JButton("Delete"));
+		
+		scrollPane.setOpaque(false);
+		namePanel.setOpaque(false);
+		buttonPanel.setOpaque(false);
+		savePanel.setOpaque(false);
 
 		savePanel.add(namePanel, BorderLayout.CENTER);
 		savePanel.add(buttonPanel, BorderLayout.SOUTH);
-		d.add(savePanel, BorderLayout.SOUTH);
+		
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.add(scrollPane, BorderLayout.CENTER);
+		mainPanel.add(savePanel, BorderLayout.SOUTH);
+		d.add(mainPanel, BorderLayout.CENTER);
 
 		d.setLocationRelativeTo(null);
 		d.setVisible(true);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		System.out.println(e.getX() + " " + e.getY());
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	private void addKeyBindings() {
@@ -599,7 +627,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			});
 		}
 	}
-	
+
 	class HoverButtonListener implements MouseListener {
 
 		@Override

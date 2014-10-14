@@ -16,7 +16,7 @@ public class TileMultiton {
 
 	//enum of tile types
 
-	public static enum type{BLUE, FLOOR, DOOR, OPENDOOR, CLOSEDOOR};
+	public static enum type{BLUE, FLOOR, OPENDOOR, CLOSEDOOR};
 
 	/**
 	 * Takes an enum from TileMultiton.type, returns the associated tile
@@ -26,7 +26,7 @@ public class TileMultiton {
 	 */
 	public static Tile getTile(type type){
 		/*To add a new tile to the game, add it's constructor to this switch statement with a unique ENUM and unique charactor
-		 * 
+		 *
 		 */
 		if(tiles.get(type) == null){
 			switch(type){
@@ -38,19 +38,27 @@ public class TileMultiton {
 					new File("src" + File.separator + "tile" +
 							File.separator + "tower.png"),'b'));
 				break;
-			case DOOR:  tiles.put(type , new DoorTile(
+			case OPENDOOR:  tiles.put(type , new DoorTile(
 					new File("src" + File.separator + "tile" +
 							File.separator + "tower.png"),'d'));//This should get it's own picture
 				break;
 			}
 		}
-
 		return tiles.get(type);
 	}
-	
+
 	public static Tile getByRepresentation(char ch){
 		for(Tile t : tiles.values()){
 			if(t.getRepresentation() == ch){
+				return t;
+			}
+		}
+		throw new IllegalArgumentException("Either an invalid char was entered or a tile was created with an invalid char type");
+	}
+
+	public static type getTypeByRepresentation(char ch){
+		for(type t : type.values()){
+			if(getTile(t).getRepresentation() == ch){
 				return t;
 			}
 		}
