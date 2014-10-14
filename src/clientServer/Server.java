@@ -4,6 +4,7 @@ import gameWorld.GameObject;
 import gameWorld.UnitPlayer;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -19,9 +20,9 @@ import runGame.Main;
 public class Server {
 	private static int numPlayers; //this is a static int for use in an array of threads
 	boolean serverIsOn = true;
-	List<UnitPlayer> playerList = new ArrayList<UnitPlayer>();
+	List<InetAddress> playerList = new ArrayList<InetAddress>(); //The list of players by their Unique IP. The order they are in tells the Server the turn order of Players
 	private static GameObject[][] mainGameBoard;
-
+	private int currentTurn = 1; //Index of the player in the list who currently has a turn. Assume it starts at 1.
 
 
 
@@ -123,6 +124,25 @@ public class Server {
 	}
 
 
+	// ------------------Methods for Controlling and getting the current turn--------------------
+
+
+	/**
+	 * this method gets the current turn index
+	 * @return int - the value of the current player who's turn it is
+	 */
+	public int currentTurn(){
+		return currentTurn;
+	}
+
+	public void setNextTurn(){
+		if((currentTurn+1) < playerList.size()){ //Make sure the next number doesnt tick over the max number of players
+			currentTurn++; //Increment the current turn
+		}
+		else{
+			currentTurn = 1; //Tick back around to 1, because we reached the end of the playerlist
+		}
+	}
 
 
 
