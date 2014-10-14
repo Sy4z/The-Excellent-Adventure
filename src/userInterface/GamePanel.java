@@ -131,6 +131,7 @@ public class GamePanel extends JPanel {
 		
 		northButton.setBounds(5, 20, 200, 40);
 		northButton.addMouseListener(new HoverButtonListener());
+		northButton.addActionListener(new NorthButtonListener());
 		add(northButton);
 		
 		JButton southButton = new JButton("South");
@@ -143,6 +144,7 @@ public class GamePanel extends JPanel {
 		
 		southButton.setBounds(5, 60, 200, 40);
 		southButton.addMouseListener(new HoverButtonListener());
+		southButton.addActionListener(new SouthButtonListener());
 		add(southButton);
 		
 		JButton eastButton = new JButton("East");
@@ -155,6 +157,7 @@ public class GamePanel extends JPanel {
 		
 		eastButton.setBounds(5, 100, 200, 40);
 		eastButton.addMouseListener(new HoverButtonListener());
+		eastButton.addActionListener(new EastButtonListener());
 		add(eastButton);
 		
 		JButton westButton = new JButton("West");
@@ -167,6 +170,7 @@ public class GamePanel extends JPanel {
 		
 		westButton.setBounds(5, 140, 200, 40);
 		westButton.addMouseListener(new HoverButtonListener());
+		westButton.addActionListener(new WestButtonListener());
 		add(westButton);
 
 		setInventory();
@@ -465,6 +469,43 @@ public class GamePanel extends JPanel {
 			saveGame();
 		}
 
+	}
+	
+	class NorthButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Main.cvs.north();
+			repaint();
+		}
+		
+	}
+	
+	class SouthButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//Main.cvs.west();
+		}
+		
+	}
+	
+	class EastButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//Main.cvs.north();
+		}
+		
+	}
+	
+	class WestButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Main.cvs.west();
+		}
+		
 	}
 
 	/**
