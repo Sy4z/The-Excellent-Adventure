@@ -49,12 +49,12 @@ public class Data {
 		System.err.println(s);
 	}
 
-	public static Tuple load(String f) throws UnexpectedException{
+	public static void load(String f) throws UnexpectedException{
 		//initialise the document
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		Document doc = null;
 
-		File xmlFile = new File(f+ File.separatorChar + "data");
+		File xmlFile = new File("saves"+ File.separatorChar+ f + File.separatorChar + "data");
 		//load the XML file which represents the state of the game
 
 		try {
@@ -78,7 +78,6 @@ public class Data {
 
 		}
 
-
 		int i = Integer.parseInt(tilesNode.getAttributeValue("X"));
 		int j = Integer.parseInt(tilesNode.getAttributeValue("Y"));
 
@@ -86,7 +85,6 @@ public class Data {
 		TileMultiton.type[][] tiles = new TileMultiton.type[i][j];
 
 		GameObject[][] gObjs = new GameObject[i][j];
-
 
 		i = 0;
 		j = 0;
@@ -113,31 +111,61 @@ public class Data {
 
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
-			return null;
+			return;
 		}
 
-
+		GameObject tempObj = null;
 		for(Element e: root.getChild("GameObject").getChildren()){
+			
 			switch(e.getName()){
-			case "UnitPlayer": HandleLoadUnitPlayer(e);break;
-			case "StationaryObjectWall": HandleLoadStationaryObjectWall(e); break;
-			case "StationaryObjectHatStand" : HandleLoadStationaryObjectHatStand(e);break;
+			case "UnitPlayer": tempObj = HandleLoadUnitPlayer(e);break;
+			case "StationaryObjectWall": tempObj = HandleLoadStationaryObjectWall(e); break;
+			case "StationaryObjectHatStand" : tempObj = HandleLoadStationaryObjectHatStand(e);break;
 			default:throw new UnexpectedException("unexpected child found in XML tree" + e.getName());
 			}
+			
+			
+			Field tempField;
+			try {
+				tempField = tempObj.getClass().getDeclaredField("curLocation");
+				tempField.setAccessible(true);
+			
+				Point p = (Point) tempField.get(tempObj);
+				tempField.setAccessible(false);
+				gObjs[p.x][p.y] = tempObj;
+			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 		}
-
-
-		return new Tuple(null, null);
-	}
-
-	private static void HandleLoadStationaryObjectHatStand(Element e) {
+		Main.cvs = new IsoCanvas(gObjs[1].length, gObjs.length);
 		
-
+		Field tempField;
+		try {
+			tempField = Main.cvs.getClass().getDeclaredField("map");
+			tempField.setAccessible(true);
+			tempField.set(Main.cvs, tiles);
+			tempField.setAccessible(false);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		World world = new World("This seems arbitrary", gObjs[1].length, gObjs.length, Main.cvs);
+		world.setGameBoard(gObjs);
+		world.setWorldMap(lTiles);
+		
+	}
+	private static GameObject HandleLoadStationaryObjectHatStand(Element e) {
+			
+		return null;
 	}
 
-	private static void HandleLoadStationaryObjectWall(Element e) {
+	private static GameObject HandleLoadStationaryObjectWall(Element e) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	private static GameObject HandleLoadUnitPlayer(Element e) throws UnexpectedException {
@@ -145,10 +173,11 @@ public class Data {
 							Integer.parseInt(e.getChild("curLocation").getChildText("Y")));
 		
 		UnitPlayer p = new UnitPlayer(point, Integer.parseInt(e.getChildText("ID")));
-
+		
 		for(Field f : e.getClass().getDeclaredFields()){
 			f.setAccessible(true);
 		}
+		
 
 		for(Element childNode : e.getChildren()){
 			try {
@@ -169,6 +198,9 @@ public class Data {
 				e1.printStackTrace();
 			}
 		}
+		for(Field f : e.getClass().getDeclaredFields()){
+			f.setAccessible(false);
+		}
 		return p;
 	}
 
@@ -181,6 +213,10 @@ public class Data {
 		return i;
 	}
 
+	public static String[] getLoadFiles(){
+		return new File("saves").list();
+	}
+	
 	/**
 	 * Converts the game data into an XML format, and saves that to the local directory
 	 *
