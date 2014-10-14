@@ -131,7 +131,7 @@ public class Data {
 	}
 
 	private static void HandleLoadStationaryObjectHatStand(Element e) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -140,41 +140,45 @@ public class Data {
 
 	}
 
-	private static GameObject HandleLoadUnitPlayer(Element e) {
+	private static GameObject HandleLoadUnitPlayer(Element e) throws UnexpectedException {
 		Point point = new Point(Integer.parseInt(e.getChild("curLocation").getChildText("X")),
 							Integer.parseInt(e.getChild("curLocation").getChildText("Y")));
+		
 		UnitPlayer p = new UnitPlayer(point, Integer.parseInt(e.getChildText("ID")));
 
 		for(Field f : e.getClass().getDeclaredFields()){
 			f.setAccessible(true);
-			if(f.getName() == "inventory"){
-				try {
-					f.set(p, HandleLoadInventory(e.getChild("inventory")));
-				} catch (IllegalArgumentException | IllegalAccessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-			if(f.getType() == Integer.TYPE){
-
-			}
-			f.setAccessible(false);
 		}
 
 		for(Element childNode : e.getChildren()){
-			try{
-			switch (e.getName()){
-			case "HeightOffSet":
-					p.getClass().getDeclaredField("heightOffSet");
+			try {
+				switch (childNode.getName()){
+				case "HeightOffSet"		: p.getClass().getDeclaredField("heightOffSet").setInt(p, Integer.parseInt(childNode.getText())); break;
+				case "inventory"   		: p.getClass().getDeclaredField("inventory").set(p, HandleLoadInventory(childNode)); break;
+				case "notTurnEnd"  		: p.getClass().getDeclaredField("notTurnEnd").setBoolean(p, (childNode.getText()=="true" ? true : false)); break;
+				case "standardAction"	: p.getClass().getDeclaredField("standardAction").setBoolean(p, (childNode.getText()=="true" ? true : false)); break;
+				case "moveAction"		: p.getClass().getDeclaredField("moveAction").setBoolean(p,(childNode.getText()=="true" ? true : false)); break;
+				case "ID"				: break;
+				case "curLocation"		: break;
+				default 				: throw new UnexpectedException("Unexpected field value in handleLoadUnitPlayer" + childNode.getName()); 
+				}
+			} catch (IllegalArgumentException
+					| IllegalAccessException | NoSuchFieldException
+					| SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-			}catch()
 		}
 		return p;
 	}
 
-	private static Object HandleLoadInventory(Element child) {
-		// TODO Auto-generated method stub
-		return null;
+	private static Inventory HandleLoadInventory(Element child) {
+		Inventory i = new Inventory();
+		i.add(Inventory.itemTypes.KATANA,Integer.parseInt(child.getChildText("KATANA")));
+		i.add(Inventory.itemTypes.KEY,Integer.parseInt(child.getChildText("KEY")));
+		i.add(Inventory.itemTypes.PUPPY,Integer.parseInt(child.getChildText("PUPPY")));
+		i.add(Inventory.itemTypes.RUSTY_NAIL,Integer.parseInt(child.getChildText("RUSTY_NAIL")));
+		return i;
 	}
 
 	/**
@@ -496,9 +500,9 @@ public class Data {
 
 		Unit[] u = new UnitPlayer[7];
 
-		for(int i = 0; i < 7; i++){
-			u[i] = new UnitPlayer(new Point(i,i),i);
-		}
+//		for(int i = 0; i < 7; i++){
+//			u[i] = new UnitPlayer(new Point(i,i),i);
+//		}
 
 		if(b++ > 9){
 			b = -9;

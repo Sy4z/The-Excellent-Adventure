@@ -1,14 +1,15 @@
 package dataStorage;
 
+import gameWorld.GameObject;
 import gameWorld.Unit;
 import tile.TileMultiton;
 
 
 public class Tuple{
 	public TileMultiton.type[][] tiles;
-	public Unit[] units;
+	public GameObject[] units;
 
-	public Tuple(TileMultiton.type[][] t, Unit[] u){
+	public Tuple(TileMultiton.type[][] t, GameObject[] u){
 		tiles = t;
 		units = u;
 	}
