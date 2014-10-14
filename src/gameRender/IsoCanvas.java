@@ -40,7 +40,9 @@ public class IsoCanvas extends JPanel{
 	private int height;
 	public int tile_width = 64;
 	public int tile_height = 32;
-
+	public int veiwport_x = 0;
+	public int veiwport_y = 0;
+	public int veiwport_size = 13;
 	private String orientation;
 	private ArrayList<Point> HIGHLIGHTED_TILES;
 	private UnitCursor  cursor;
@@ -57,7 +59,7 @@ public class IsoCanvas extends JPanel{
 		map = t.tiles;
 		this.width = Width;
 		this.height = Height;
-		this.render = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,map.length);
+		this.render = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 	}
 
 	/**
@@ -67,8 +69,9 @@ public class IsoCanvas extends JPanel{
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(new Color(50,50,60));
 		g2d.fillRect(0,0,width,height);
-//		g2d.rotate(Math.toRadians(45));
-		render.draw(g2d, map, entity, cursor);
+		//g2d.rotate(Math.toRadians(180),width/2,height/2);
+		TileMultiton.type[][] visibleTiles = loadVisibleTiles();
+		render.draw(g2d, visibleTiles, entity, cursor);
 		//g2d.fillRect((width/2)-5,(height/2-5),10,10); //center of canvas.
 
 	}
@@ -81,8 +84,20 @@ public class IsoCanvas extends JPanel{
 		//entities = t.units;
 		//this.repaint();
 	}
-
-
+	private TileMultiton.type[][] loadVisibleTiles(){
+		TileMultiton.type[][] visableTiles = new TileMultiton.type[veiwport_size][veiwport_size];
+		int mapX; 
+		int mapY=0; 
+		for(int y = veiwport_y;y<(veiwport_size+veiwport_y);y++){
+			mapX = 0;
+			for(int x = veiwport_y;x<veiwport_size+veiwport_x;x++){
+				visableTiles[mapY][mapX] = map[y][x];
+			mapX++;
+			}
+			mapY++;
+		}
+		return visableTiles;
+	}
 	/**
 	 *
 	 * @param unit
@@ -141,9 +156,6 @@ public class IsoCanvas extends JPanel{
 		public int center_offset_y = 0;
 		public int tile_width = 64;
 		public int tile_height = 32;
-		public int veiwport_x = 0;
-		public int veiwport_y = 0;
-		public int veiwport_size = 11;
 		public void calculateOffset(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int mapSize);
 		public Point toIso(int x, int y);
 		public void draw(Graphics2D g2d, TileMultiton.type[][] map, Unit entity, UnitCursor cursor);
