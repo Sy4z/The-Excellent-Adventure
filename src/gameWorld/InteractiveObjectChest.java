@@ -1,5 +1,7 @@
 package gameWorld;
 
+import gameWorld.Inventory.itemTypes;
+
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
@@ -7,9 +9,16 @@ public class InteractiveObjectChest extends InteractiveObject{
 
 //	private ArrayList<Item> contents = new ArrayList<Item>();
 	private int[] contents;
-	
+
 	public InteractiveObjectChest(int[] contents){
 		this.contents = contents;
+	}
+
+	public InteractiveObjectChest(){
+		int[] itms = new int[itemTypes.values().length];
+		for(int i = 0; i < itms.length; i++)
+			itms[i] = (int) Math.max(0, Math.random()*15 -8);
+		contents = itms;
 	}
 
 	public int[] takeContents(){
