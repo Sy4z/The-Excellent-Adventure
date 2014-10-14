@@ -50,9 +50,9 @@ import runGame.Main;
 /**
  * This class contains the main canvas displaying the gameplay and other
  * controls required for playing the game.
- *
+ * 
  * @author Venkata Peesapati
- *
+ * 
  */
 public class GamePanel extends JPanel {
 
@@ -65,7 +65,7 @@ public class GamePanel extends JPanel {
 	private JTable tableNums1;
 	private JTable tableItems2;
 	private JTable tableNums2;
-	
+
 	private ImageIcon background = new ImageIcon("post-apoc.jpg");
 
 	// This field stores the mode which is either 'Quit' or 'Save' depending on
@@ -120,7 +120,7 @@ public class GamePanel extends JPanel {
 		saveGame.addMouseListener(new HoverButtonListener());
 		saveGame.addActionListener(new SaveGameListener());
 		add(saveGame);
-		
+
 		JButton northButton = new JButton("North");
 		northButton.setOpaque(false);
 		northButton.setContentAreaFilled(false);
@@ -128,12 +128,12 @@ public class GamePanel extends JPanel {
 		northButton.setFont(new Font("Arial", Font.PLAIN, 35));
 		northButton.setFocusPainted(false);
 		northButton.setForeground(Color.GREEN);
-		
+
 		northButton.setBounds(5, 20, 200, 40);
 		northButton.addMouseListener(new HoverButtonListener());
 		northButton.addActionListener(new NorthButtonListener());
 		add(northButton);
-		
+
 		JButton southButton = new JButton("South");
 		southButton.setOpaque(false);
 		southButton.setContentAreaFilled(false);
@@ -141,12 +141,12 @@ public class GamePanel extends JPanel {
 		southButton.setFont(new Font("Arial", Font.PLAIN, 35));
 		southButton.setFocusPainted(false);
 		southButton.setForeground(Color.GREEN);
-		
+
 		southButton.setBounds(5, 60, 200, 40);
 		southButton.addMouseListener(new HoverButtonListener());
 		southButton.addActionListener(new SouthButtonListener());
 		add(southButton);
-		
+
 		JButton eastButton = new JButton("East");
 		eastButton.setOpaque(false);
 		eastButton.setContentAreaFilled(false);
@@ -154,12 +154,12 @@ public class GamePanel extends JPanel {
 		eastButton.setFont(new Font("Arial", Font.PLAIN, 35));
 		eastButton.setFocusPainted(false);
 		eastButton.setForeground(Color.GREEN);
-		
+
 		eastButton.setBounds(5, 100, 200, 40);
 		eastButton.addMouseListener(new HoverButtonListener());
 		eastButton.addActionListener(new EastButtonListener());
 		add(eastButton);
-		
+
 		JButton westButton = new JButton("West");
 		westButton.setOpaque(false);
 		westButton.setContentAreaFilled(false);
@@ -167,7 +167,7 @@ public class GamePanel extends JPanel {
 		westButton.setFont(new Font("Arial", Font.PLAIN, 35));
 		westButton.setFocusPainted(false);
 		westButton.setForeground(Color.GREEN);
-		
+
 		westButton.setBounds(5, 140, 200, 40);
 		westButton.addMouseListener(new HoverButtonListener());
 		westButton.addActionListener(new WestButtonListener());
@@ -333,9 +333,9 @@ public class GamePanel extends JPanel {
 	 * This is the listener class used for the quit button. It returns to the
 	 * main menu by replacing the game panel with the main menu's panel. It also
 	 * asks the user whether they want to save the game before quitting or not.
-	 *
+	 * 
 	 * @author Venkata Peesapati
-	 *
+	 * 
 	 */
 	class QuitGameListener implements ActionListener {
 
@@ -367,9 +367,9 @@ public class GamePanel extends JPanel {
 	/**
 	 * This is the listener class used for the controls button. It allows the
 	 * user to change the keyboard controls during the gameplay.
-	 *
+	 * 
 	 * @author Venkata Peesapati
-	 *
+	 * 
 	 */
 	class ControlsGameListener implements ActionListener {
 
@@ -378,7 +378,7 @@ public class GamePanel extends JPanel {
 			Image resizedImage = background.getImage().getScaledInstance(400,
 					300, Image.SCALE_SMOOTH);
 			background = new ImageIcon(resizedImage);
-			
+
 			JPanel mainPanel = new JPanel() {
 				// Displays the background image on the panel.
 				@Override
@@ -386,7 +386,7 @@ public class GamePanel extends JPanel {
 					g.drawImage(background.getImage(), 0, 0, null);
 				}
 			};
-			
+
 			final JDialog d = new JDialog(currentFrame, "Controls", true);
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
@@ -437,10 +437,10 @@ public class GamePanel extends JPanel {
 					d.dispose();
 				}
 			});
-			
+
 			moveControls.setOpaque(false);
 			buttonsPanel.setOpaque(false);
-			
+
 			mainPanel.setLayout(new BorderLayout());
 			mainPanel.add(moveControls, BorderLayout.CENTER);
 			mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
@@ -457,9 +457,9 @@ public class GamePanel extends JPanel {
 	 * user to save the game and continue playing. Note that the mode is 'Save'
 	 * over here which means that the saveGame method will not quit after the
 	 * saving is done.
-	 *
+	 * 
 	 * @author Venkata Peesapati
-	 *
+	 * 
 	 */
 	class SaveGameListener implements ActionListener {
 
@@ -470,7 +470,7 @@ public class GamePanel extends JPanel {
 		}
 
 	}
-	
+
 	class NorthButtonListener implements ActionListener {
 
 		@Override
@@ -478,44 +478,47 @@ public class GamePanel extends JPanel {
 			Main.cvs.north();
 			repaint();
 		}
-		
+
 	}
-	
+
 	class SouthButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//Main.cvs.west();
+			Main.cvs.south();
+			repaint();
 		}
-		
+
 	}
-	
+
 	class EastButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//Main.cvs.north();
+			Main.cvs.east();
+			repaint();
 		}
-		
+
 	}
-	
+
 	class WestButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Main.cvs.west();
+			repaint();
 		}
-		
+
 	}
 
 	/**
 	 *
 	 */
 	public void saveGame() {
-		Image resizedImage = background.getImage().getScaledInstance(400,
-				300, Image.SCALE_SMOOTH);
+		Image resizedImage = background.getImage().getScaledInstance(400, 300,
+				Image.SCALE_SMOOTH);
 		background = new ImageIcon(resizedImage);
-		
+
 		JPanel mainPanel = new JPanel() {
 			// Displays the background image on the panel.
 			@Override
@@ -523,7 +526,7 @@ public class GamePanel extends JPanel {
 				g.drawImage(background.getImage(), 0, 0, null);
 			}
 		};
-		
+
 		final JDialog d = new JDialog(currentFrame, "Save Game", true);
 		d.setSize(400, 300);
 		d.setLayout(new BorderLayout());
@@ -600,7 +603,7 @@ public class GamePanel extends JPanel {
 		buttonPanel.add(okButton);
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(new JButton("Delete"));
-		
+
 		scrollPane.setOpaque(false);
 		namePanel.setOpaque(false);
 		buttonPanel.setOpaque(false);
@@ -608,7 +611,7 @@ public class GamePanel extends JPanel {
 
 		savePanel.add(namePanel, BorderLayout.CENTER);
 		savePanel.add(buttonPanel, BorderLayout.SOUTH);
-		
+
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(scrollPane, BorderLayout.CENTER);
 		mainPanel.add(savePanel, BorderLayout.SOUTH);
