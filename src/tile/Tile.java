@@ -29,7 +29,7 @@ public abstract class Tile {
 	protected static boolean[] chars = new boolean[200]; //if this proves to be to few, extend it
 	protected Character key;
 	protected String type;
-
+	protected boolean canMove;
 	protected BufferedImage img;
 	protected int heightOffSet;
 
@@ -78,6 +78,10 @@ public abstract class Tile {
 
 	public Character getRepresentation(){
 		return key;
+	}
+
+	public boolean getCanMove(){
+		return canMove;
 	}
 
 }

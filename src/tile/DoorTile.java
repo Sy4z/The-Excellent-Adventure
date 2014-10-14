@@ -12,5 +12,6 @@ public class DoorTile extends Tile{
 	public DoorTile( File imgPath,Character key) {
 		super(imgPath,key);
 		type = "Door_Tile";
+		this.canMove = false;
 	}
 }

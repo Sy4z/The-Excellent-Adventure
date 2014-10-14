@@ -12,5 +12,6 @@ public class FloorTile extends Tile{
 	public FloorTile(File imgPath, Character key) {
 		super( imgPath, key);
 		type = "Floor_Tile";
+		this.canMove = true;
 	}
 }
