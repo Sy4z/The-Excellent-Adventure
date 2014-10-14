@@ -4,24 +4,16 @@ import gameWorld.GameObject;
 import gameWorld.Unit;
 import gameWorld.UnitCursor;
 import gameWorld.UnitPlayer;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageFilter;
-import java.awt.image.BufferedImageOp;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-
 import javax.swing.JPanel;
-
 import dataStorage.*;
 import sun.management.counter.Units;
-import sun.net.www.content.text.Generic;
-import tile.DoorTile;
-import tile.Tile;
 import tile.TileMultiton;
 
 /**
@@ -143,14 +135,21 @@ public class IsoCanvas extends JPanel{
 		}
 	}
 	public void north(){
-		this.render = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,map.length);
+		this.render = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 		this.repaint();
 	}
 	public void west(){
-		this.render = new DrawMapWest(this.tile_width,this.tile_height,this.width,this.height,map.length);
+		this.render = new DrawMapWest(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 		this.repaint();
 	}
-
+	public void east(){
+		this.render = new DrawMapEast(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
+		this.repaint();
+	}
+	public void south(){
+		this.render = new DrawMapSouth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
+		this.repaint();
+	}
 	public interface DrawMap {
 		public int center_offset_x = 0;
 		public int center_offset_y = 0;

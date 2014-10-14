@@ -56,14 +56,24 @@ public class ClientThread extends Thread {
 			while(true){ //Main Loop
 
 
-
-				if(Main.tw.isTurn()== true){
+				try {
+					Object turnToken = boardFromServer.readObject();
+					String castTurnToken = (String)turnToken;
+					if(castTurnToken.equals("yourturn")){ //If the toekn received was the server notification telling the client to start the turn,
+						Main.tw.turn(); //Start the turn on the local thread
+					}
+				} catch (ClassNotFoundException e1) {
+					System.out.println("Client: There was a problem Reading the first token (Accepting a turn notification from the server");
+					e1.printStackTrace();
+				}
+				if(Main.tw.isTurn()== true){ //If the local thread is set to isTurn = true, 
 
 					//Receive the GameBoard from the Server and update current game world
 					try {
 						String isMyTurn = "myturn";
 						boardToServer.writeObject(isMyTurn); //Tells the serverThread its this clients turn
 						Object gameBoardGeneric = boardFromServer.readObject(); //Read into  Generic Object Type
+						boardToServer.flush(); //Flush input buffer, just making sure it doesnt fill up
 						if(gameBoardGeneric instanceof GameObject[][]){ //Check that the generic object is an arraylist - Cant check further than this because nested generics get erased at runtime but at least theres some safeguard to typechecking
 							localGameMap = (GameObject[][])gameBoardGeneric; //Set the board as a local variable
 							Main.world.setGameBoard(localGameMap); //Update the local copy of the gameMap
@@ -83,9 +93,9 @@ public class ClientThread extends Thread {
 
 
 
-					
-					//Set endOfEndPhase on
-					//Wait for end turn phase then send server local gameBoard
+
+
+					//Wait for end turn phase then send server local gameBoard - Thread is now asleep for 1.5 seconds, for the network to wrap up everything else
 					while(Main.tw.startOfEndPhase == false); //Loop around, then when it is not false, go to the instruction
 
 
@@ -98,7 +108,7 @@ public class ClientThread extends Thread {
 
 
 					Main.tw.endOfEndPhase = true;//End end Phase
-
+					boardToServer.flush();//Flushing Input buffer, making sure it doesnt fill up
 
 
 

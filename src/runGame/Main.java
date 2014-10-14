@@ -71,7 +71,7 @@ public  class Main {
 		client = new Client();
 		//tw = new TurnWatcher(mainFrame.mainPanel.gamePanel.getWorld());
 		tw = new TurnWatcher(world);
-		runServer(server, client);
+		//runServer(server, client);
 
 
 	}
@@ -91,16 +91,16 @@ public  class Main {
 	 * @param runServer - the Instance of Server
 	 * @param runClient - the Instance of Client
 	 */
-	public static void runServer(Server runServer, Client runClient){
+	public static void runClientMain(Client clientTemp){
 
-		if(isServer == false){ //Sets whether this instance of the program is client or server from a boolean
-			runClient.runClient(ipAddress, 29599);
-		}
-		else{
-			runServer.runServer(ipAddress, 29599);
-
-
-		}
+		
+			clientTemp.runClient(ipAddress, 29599);
+		
+		
+	}
+	
+	public static void runServerMain(Server serverTemp){
+		serverTemp.runServer(ipAddress, 29599);
 	}
 
 	/**

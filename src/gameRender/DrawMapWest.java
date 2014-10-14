@@ -29,29 +29,33 @@ public class DrawMapWest implements IsoCanvas.DrawMap {
 	 * 
 	 */
 	@Override
-	public void draw(Graphics2D g2d, TileMultiton.type[][] map, Unit entity, UnitCursor cursor) {
+	public void draw(Graphics2D g2d, TileMultiton.type[][] visibleTiles, Unit entity, UnitCursor cursor) {
 		//System.out.println("DrawMapWest.draw");
 		Tile tile;
 		Point tilePos;
 		Point entityPos;
 		Point cursorPos;
-		int cx = 1;
-		int cy = 0;
+		int cX;
+		int cY;
 		int tX;
 		int tY;
 		int eX;
 		int eY;
-		for(int y = 0;y <map.length;y++){
-			for(int x = 0;x<map[y].length;x++){
+		for(int y = 0;y <visibleTiles.length;y++){
+			for(int x = 0;x<visibleTiles[y].length;x++){
 				tilePos = toIso((x),(y));//
-				tile = TileMultiton.getTile(map[y][x]);
+				tile = TileMultiton.getTile(visibleTiles[y][x]);
 				tX = (tilePos.x);
 				tY = (tilePos.y);
 				//System.out.println("DrawMapWest.draw current tile : " + tile );
 				tile.draw(g2d, tX,tY);
-				if(cx==x && cy==y){
-					cursorPos = toIso(x,y);
-					cursor.draw(g2d, cursorPos.x, cursorPos.y);
+				if(cursor != null){
+					cX = cursor.getLocation().x;
+					cY = cursor.getLocation().y;
+					if(cX == x && cY == y){
+						cursorPos = toIso(x,y);
+						cursor.draw(g2d, cursorPos.x, cursorPos.y);
+					}
 				}
 				if(entity != null){
 					eX = entity.getLocation().x;
