@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.rmi.UnexpectedException;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -29,16 +30,18 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
+import dataStorage.Data;
 import runGame.Main;
 
 /**
  * This class displays the main menu and contains all the necessary buttons for
  * the main menu of the game.
- * 
+ *
  * @author Venkata Peesapati
- * 
+ *
  */
 public class MainMenuPanel extends JPanel {
 
@@ -61,7 +64,7 @@ public class MainMenuPanel extends JPanel {
 
 	/**
 	 * The main menu has 6 buttons: New Game, Load, Story, Controls and Exit.
-	 * 
+	 *
 	 * @param currentFrame
 	 *            Takes the reference for the frame that the MainMenuPanel is
 	 *            contained in so that its content pane can be changed when
@@ -164,9 +167,9 @@ public class MainMenuPanel extends JPanel {
 	/**
 	 * This is the listener class used for the newGameButton. It opens a new
 	 * canvas.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class NewGameButtonListener implements ActionListener {
 
@@ -254,12 +257,12 @@ public class MainMenuPanel extends JPanel {
 			final JDialog d = new JDialog(currentFrame, "Server Running", true);
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
-			
+
 			JLabel label = new JLabel("Running Server...");
 			JButton exit = new JButton("Exit");
-			
+
 			exit.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Main.server.stopServer();
@@ -274,7 +277,7 @@ public class MainMenuPanel extends JPanel {
 
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
-			
+
 			Main.runServerMain(Main.server);
 		}
 
@@ -283,9 +286,9 @@ public class MainMenuPanel extends JPanel {
 	/**
 	 * This is the listener class used for the loadButton. It opens a list of
 	 * the games saved by the user and allows them to select one.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class LoadButtonListener implements ActionListener {
 
@@ -303,6 +306,8 @@ public class MainMenuPanel extends JPanel {
 				}
 			};
 
+			String[] loadNames = Data.getLoadFiles();
+
 			final JDialog d = new JDialog(currentFrame, "Load Game", true);
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
@@ -314,11 +319,53 @@ public class MainMenuPanel extends JPanel {
 			// to
 			// this
 			// model.
-			JList<String> list = new JList<String>(model);
+			for (String name : loadNames) {
+				model.addElement(name);
+			}
+			final JList<String> list = new JList<String>(model);
+			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Makes
+																		// sure
+																		// that
+																		// the
+																		// user
+																		// can
+																		// only
+																		// select
+																		// one
+																		// game
+																		// to
+																		// load.
 			JScrollPane scrollPane = new JScrollPane(list);
 
 			JPanel buttonPanel = new JPanel();
 			buttonPanel.setLayout(new FlowLayout());
+			JButton okButton = new JButton("OK");
+			okButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String name = list.getSelectedValue();
+					try {
+						Data.load(name);
+					} catch (UnexpectedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+					d.dispose();
+
+					currentFrame.getContentPane().removeAll();
+					currentFrame.getContentPane().validate();
+					currentFrame.getContentPane().repaint();
+					gamePanel = new GamePanel(currentFrame, currentPanel,
+							moveType);
+					currentFrame.getContentPane().add(gamePanel,
+							BorderLayout.CENTER);
+
+					currentFrame.getContentPane().validate();
+					currentFrame.getContentPane().repaint();
+				}
+			});
 			JButton cancelButton = new JButton("Cancel");
 			cancelButton.addActionListener(new ActionListener() {
 
@@ -327,7 +374,7 @@ public class MainMenuPanel extends JPanel {
 					d.dispose();
 				}
 			});
-			buttonPanel.add(new JButton("OK"));
+			buttonPanel.add(okButton);
 			buttonPanel.add(cancelButton);
 			buttonPanel.add(new JButton("Delete"));
 
@@ -347,9 +394,9 @@ public class MainMenuPanel extends JPanel {
 	/**
 	 * This is the listener class used for the story button. It opens a text
 	 * area which describes the background story of the game.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class StoryButtonListener implements ActionListener {
 
@@ -408,9 +455,9 @@ public class MainMenuPanel extends JPanel {
 	 * user to choose between two keyboard options for movement in the game. One
 	 * is using the alphabet keys(W,A,S,D) and the other is using the arrow
 	 * keys.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class ControlsButtonListener implements ActionListener {
 
@@ -494,9 +541,9 @@ public class MainMenuPanel extends JPanel {
 	/**
 	 * This is the listener class used for the exitButton. It quits the program
 	 * and closed the window.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class ExitButtonListener implements ActionListener {
 
@@ -511,9 +558,9 @@ public class MainMenuPanel extends JPanel {
 	/**
 	 * This MouseListener class is used to change the color of the text when
 	 * hovering over a button. It is used for all the buttons in the main menu.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class HoverButtonListener implements MouseListener {
 
