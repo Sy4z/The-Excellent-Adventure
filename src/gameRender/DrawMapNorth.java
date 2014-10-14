@@ -18,7 +18,7 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 	public DrawMapNorth(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int mapSize){
 		calculateOffset(tile_width,tile_height,canvasWidth, canvasHeight, mapSize);
 	}
-
+	
 	@Override
 	public void calculateOffset(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int veiwportSize) {
 		this.center_offset_y = (int)((canvasHeight/2) - (tile_height)*1.5)+tile_height;
@@ -35,6 +35,11 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 		return isoPoint;
 	}
 
+	/**
+	 * 
+	 * @param map
+	 * @return
+	 */
 	private TileMultiton.type[][] flipArray(TileMultiton.type[][] map){
 		TileMultiton.type[][] fliped = new TileMultiton.type[map.length][map[0].length];
 		int newX;

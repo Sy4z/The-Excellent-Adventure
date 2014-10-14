@@ -26,20 +26,20 @@ import tile.TileMultiton;
 public class IsoCanvas extends JPanel{
 	private static final long serialVersionUID = -1838809788973263253L;
 	private TileMultiton.type[][] map = null;
-	private DrawMap render;
+	private GameObject[][] objectMap = null;
+	private DrawMap renderStratagy;
 	private Unit entity;
 	private int width;
 	private int height;
-	public int tile_width = 64;
-	public int tile_height = 32;
-	public int veiwport_x = 0;
-	public int veiwport_y = 0;
-	public int veiwport_size = 13;
-	private String orientation;
+	private int tile_width = 64;
+	private int tile_height = 32;
+	private int veiwport_x = 0;
+	private int veiwport_y = 0;
+	private int veiwport_size = 13;
 	private ArrayList<Point> HIGHLIGHTED_TILES;
 	private UnitCursor  cursor;
 	private BufferedImage highLight;
-
+	
 	/**
 	 *
 	 */
@@ -51,7 +51,8 @@ public class IsoCanvas extends JPanel{
 		map = t.tiles;
 		this.width = Width;
 		this.height = Height;
-		this.render = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
+		System.out.println("height :"+height+"width :"+width);
+		this.renderStratagy = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 	}
 
 	/**
@@ -61,21 +62,15 @@ public class IsoCanvas extends JPanel{
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(new Color(50,50,60));
 		g2d.fillRect(0,0,width,height);
-		//g2d.rotate(Math.toRadians(180),width/2,height/2);
 		TileMultiton.type[][] visibleTiles = loadVisibleTiles();
-		render.draw(g2d, visibleTiles, entity, cursor);
+		renderStratagy.draw(g2d, visibleTiles, entity, cursor);
 		//g2d.fillRect((width/2)-5,(height/2-5),10,10); //center of canvas.
 
 	}
 	/**
-	 *
-	 * @param updatedMap
+	 * 
+	 * @return
 	 */
-	public void update(Tuple t){
-		//this.map = t.tiles;
-		//entities = t.units;
-		//this.repaint();
-	}
 	private TileMultiton.type[][] loadVisibleTiles(){
 		TileMultiton.type[][] visableTiles = new TileMultiton.type[veiwport_size][veiwport_size];
 		int mapX; 
@@ -94,27 +89,37 @@ public class IsoCanvas extends JPanel{
 	 *
 	 * @param unit
 	 */
-
 	public void moveUnit(UnitPlayer unit, ArrayDeque<Point> arrayDeque){
 		int i = 0;
 		this.entity = unit;
 		while(!arrayDeque.isEmpty()){
 			Point p = arrayDeque.pop();
-			System.out.println("IsoCanvas.MoveUnit(), StackPoint "+"("+i+"):"+p.x+","+p.y);
+			//System.out.println("IsoCanvas.MoveUnit(), StackPoint "+"("+i+"):"+p.x+","+p.y);
 			entity.upDateLocation(p);
 			this.repaint();
 			i++;
 		}
 	}
+	/**
+	 * 
+	 * @param cursor
+	 */
 	public void moveCursor(UnitCursor cursor){
 		this.cursor = cursor;
 		this.repaint();
 	}
-
+	/**
+	 * 
+	 * @param tiles
+	 */
 	public void highlight(ArrayList<Point> tiles){
 		this.HIGHLIGHTED_TILES = tiles;
 	}
 
+	public void updateGameBoardGraphics(ArrayList<GameObject> gObs) {
+		
+
+	}
 	public void initGameWorld(GameObject[][] obs, Units[][] units){
 
 	}
@@ -124,32 +129,59 @@ public class IsoCanvas extends JPanel{
 	public void spawnObject(GameObject ob){
 
 	}
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public void openDoor(int x, int y){
 		if(map[x][y].equals(TileMultiton.type.CLOSEDOOR)){
 			this.map[x][y] = TileMultiton.type.OPENDOOR;
 		}
 	}
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public void closeDoor(int x, int y){
 		if(map[x][y].equals(TileMultiton.type.OPENDOOR)){
 			this.map[x][y] = TileMultiton.type.CLOSEDOOR;
 		}
 	}
+	/**
+	 * 
+	 */
 	public void north(){
-		this.render = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
+		this.renderStratagy = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 		this.repaint();
 	}
+	/**
+	 * 
+	 */
 	public void west(){
-		this.render = new DrawMapWest(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
+		this.renderStratagy = new DrawMapWest(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 		this.repaint();
 	}
+	/**
+	 * 
+	 */
 	public void east(){
-		this.render = new DrawMapEast(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
+		this.renderStratagy = new DrawMapEast(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 		this.repaint();
 	}
+	/**
+	 * 
+	 */
 	public void south(){
-		this.render = new DrawMapSouth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
+		this.renderStratagy = new DrawMapSouth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 		this.repaint();
 	}
+	/**
+	 * 
+	 * @author gmos
+	 *
+	 */
 	public interface DrawMap {
 		public int center_offset_x = 0;
 		public int center_offset_y = 0;
@@ -160,9 +192,7 @@ public class IsoCanvas extends JPanel{
 		public void draw(Graphics2D g2d, TileMultiton.type[][] map, Unit entity, UnitCursor cursor);
 	}
 	/**
-	 * Was Reading some of the Commander keen source code
-	 * that was recently released and they did this, awesome idea
-	 * (the wrapper not debug statments they have always been so).
+	 * 
 	 * Nicely wrapped debug statements related to the tile map
 	 *                   WORK IN PROGRESS
 	 */
@@ -183,8 +213,4 @@ public class IsoCanvas extends JPanel{
 		System.out.println("==============================================");
 	}
 
-	public void updateGameBoardGraphics(ArrayList<GameObject> t) {
-		// TODO Auto-generated method stub
-
-	}
 }
