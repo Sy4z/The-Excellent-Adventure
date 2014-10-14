@@ -137,8 +137,36 @@ public class Data {
 							Integer.parseInt(e.getChild("curLocation").getChildText("Y")));
 		UnitPlayer p = new UnitPlayer(point, Integer.parseInt(e.getChildText("ID")));
 
+		for(Field f : e.getClass().getDeclaredFields()){
+			f.setAccessible(true);
+			if(f.getName() == "inventory"){
+				try {
+					f.set(p, HandleLoadInventory(e.getChild("inventory")));
+				} catch (IllegalArgumentException | IllegalAccessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			if(f.getType() == Integer.TYPE){
 
+			}
+			f.setAccessible(false);
+		}
 
+		for(Element childNode : e.getChildren()){
+			try{
+			switch (e.getName()){
+			case "HeightOffSet":
+					p.getClass().getDeclaredField("heightOffSet");
+			}
+			}catch()
+		}
+		return p;
+	}
+
+	private static Object HandleLoadInventory(Element child) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**

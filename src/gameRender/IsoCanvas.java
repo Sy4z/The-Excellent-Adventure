@@ -67,7 +67,7 @@ public class IsoCanvas extends JPanel{
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(new Color(50,50,60));
 		g2d.fillRect(0,0,width,height);
-		g2d.rotate(Math.toRadians(45));
+//		g2d.rotate(Math.toRadians(45));
 		render.draw(g2d, map, entity, cursor);
 		//g2d.fillRect((width/2)-5,(height/2-5),10,10); //center of canvas.
 

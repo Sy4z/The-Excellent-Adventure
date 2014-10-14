@@ -71,7 +71,7 @@ public abstract class Tile {
 
 
 	public boolean draw(Graphics2D g, int dx, int dy){
-
+		g.rotate(Math.toRadians(90));
 		return g.drawImage(img, dx, dy-heightOffSet,null);
 
 	}
