@@ -500,9 +500,9 @@ public class Data {
 
 		Unit[] u = new UnitPlayer[7];
 
-//		for(int i = 0; i < 7; i++){
-//			u[i] = new UnitPlayer(new Point(i,i),i);
-//		}
+		for(int i = 0; i < 7; i++){
+			u[i] = new UnitPlayer(new Point(i,i),i);
+		}
 
 		if(b++ > 9){
 			b = -9;
