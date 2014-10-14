@@ -27,27 +27,21 @@ import javax.imageio.ImageIO;
  */
 public abstract class Tile {
 	protected static boolean[] chars = new boolean[200]; //if this proves to be to few, extend it
-	protected Character key;
+	protected char key;
 	protected String type;
 	protected boolean canMove;
 	protected BufferedImage img;
 	protected int heightOffSet;
 
 
-	public Tile(File imgPath, Character key){
+	public Tile(File imgPath, char key){
 		try {
 			img = ImageIO.read(imgPath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		if(key < chars.length && !chars[key]){
-			this.key = key;
-			chars[key] = true;
-		}
-		else{
-			throw new IllegalArgumentException("Key already used, choose another up to char 200");
-		}
+		this.key = key;
 		//-----Build the height offset-----
 		heightOffSet = img.getHeight();
 		heightOffSet = Math.max(32 - heightOffSet, heightOffSet -32);
@@ -75,7 +69,7 @@ public abstract class Tile {
 
 	}
 
-	public Character getRepresentation(){
+	public char getRepresentation(){
 		return key;
 	}
 
