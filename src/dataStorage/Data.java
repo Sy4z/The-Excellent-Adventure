@@ -49,13 +49,18 @@ public class Data {
 		System.err.println(s);
 	}
 
-	public static Tuple load(String f){
+	public static Tuple load(String f) throws UnexpectedException{
+		//initialise the document
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		Document doc = null;
 
+		File xmlFile = new File(f+ File.separatorChar + "data");
+		//load the XML file which represents the state of the game
+
 		try {
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			org.w3c.dom.Document w3cDoc = dBuilder.parse(f);
+			org.w3c.dom.Document w3cDoc = dBuilder.parse(xmlFile);
+
 			DOMBuilder domBuilder = new DOMBuilder();
 			doc = domBuilder.build(w3cDoc);
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
@@ -67,11 +72,20 @@ public class Data {
 		Element root = doc.getRootElement();
 		Element tilesNode = root.getChild("Tiles");
 
+		for(Element e : tilesNode.getChildren()){
+
+			TileMultiton.getTile(TileMultiton.getTypeByRepresentation(e.getName().charAt(0)));
+
+		}
+
+
 		int i = Integer.parseInt(tilesNode.getAttributeValue("X"));
 		int j = Integer.parseInt(tilesNode.getAttributeValue("Y"));
 
 		LogicalTile[][] lTiles = new LogicalTile[i][j];
 		TileMultiton.type[][] tiles = new TileMultiton.type[i][j];
+
+		GameObject[][] gObjs = new GameObject[i][j];
 
 
 		i = 0;
@@ -79,25 +93,60 @@ public class Data {
 
 		try {
 			Scanner tileMapScanner = new Scanner(new File(f + File.separatorChar + "map"));
+
 			String curChar = "";
-			Tile curTile = null;
+			TileMultiton.type curTile = null;
+
 			while(tileMapScanner.hasNext()){
 				curChar = tileMapScanner.next();
 				while(curChar != ";"){
-					curTile = TileMultiton.getByRepresentation(curChar.charAt(0));
-//					tiles[i][j] = curTile;
+					curTile = TileMultiton.getTypeByRepresentation(curChar.charAt(0));
+
+					tiles[i][j] = curTile;
+					lTiles[i][j] = new LogicalTile(TileMultiton.getTile(curTile).getCanMove());
 					j++;
+					curChar = tileMapScanner.next();
 				}
 				i++;
 				j = 0;
 			}
+
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			return null;
 		}
 
 
+		for(Element e: root.getChild("GameObject").getChildren()){
+			switch(e.getName()){
+			case "UnitPlayer": HandleLoadUnitPlayer(e);break;
+			case "StationaryObjectWall": HandleLoadStationaryObjectWall(e); break;
+			case "StationaryObjectHatStand" : HandleLoadStationaryObjectHatStand(e);break;
+			default:throw new UnexpectedException("unexpected child found in XML tree" + e.getName());
+			}
+		}
+
+
 		return new Tuple(null, null);
+	}
+
+	private static void HandleLoadStationaryObjectHatStand(Element e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private static void HandleLoadStationaryObjectWall(Element e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private static GameObject HandleLoadUnitPlayer(Element e) {
+		Point point = new Point(Integer.parseInt(e.getChild("curLocation").getChildText("X")),
+							Integer.parseInt(e.getChild("curLocation").getChildText("Y")));
+		UnitPlayer p = new UnitPlayer(point, Integer.parseInt(e.getChildText("ID")));
+
+
+
 	}
 
 	/**
@@ -401,6 +450,7 @@ public class Data {
 		int sizeY = 100;
 		int entityX = 6;
 		int entityY = 6;
+
 		TileMultiton.type[][] t = new TileMultiton.type[sizeY][sizeX];
 
 		//Creates an array of tiles sizeX by sizeY if statement specifys what coordinate entity will be placed.

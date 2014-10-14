@@ -31,7 +31,8 @@ import javax.swing.ScrollPaneConstants;
 import runGame.Main;
 
 /**
- * This class contains all the necessary buttons for the main menu of the game.
+ * This class displays the main menu and contains all the necessary buttons for
+ * the main menu of the game.
  *
  * @author Venkata Peesapati
  *
@@ -39,9 +40,10 @@ import runGame.Main;
 public class MainMenuPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JFrame currentFrame;
-	private JPanel currentPanel;
-	private String moveType;
+	private JFrame currentFrame; // Reference to the MainFrame.
+	private JPanel currentPanel; // Reference to current panel being used.
+	private String moveType; // This field is to indicate which controls are
+								// going to be used in the game.
 
 	private JLabel gameName;
 	private JButton newGameButton;
@@ -50,7 +52,7 @@ public class MainMenuPanel extends JPanel {
 	private JButton controlsButton;
 	private JButton optionsButton;
 	private JButton exitButton;
-	public GamePanel gamePanel; //Added this here chet
+	public GamePanel gamePanel;
 
 	/**
 	 * The main menu has 6 buttons: New Game, Load, Story, Controls, Options and
@@ -149,8 +151,7 @@ public class MainMenuPanel extends JPanel {
 
 		// This helps make the panel transparent.
 		setOpaque(false);
-		
-		
+
 	}
 
 	// Action listeners for each of the buttons can go down here.
@@ -215,17 +216,15 @@ public class MainMenuPanel extends JPanel {
 			d.add(buttonsPanel, BorderLayout.SOUTH);
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
-			
-					currentFrame.getContentPane().removeAll();
-					currentFrame.getContentPane().validate();
-					currentFrame.getContentPane().repaint();
-					gamePanel = new GamePanel(currentFrame, currentPanel, moveType); //moved here to fix problem of the panel being overwritten
-					currentFrame.getContentPane().add(
-							gamePanel, //Changed this chet, needed public access to game panel. Good practise to do it this way if you're instantiating game objects in the UI
-							BorderLayout.CENTER);
 
-					currentFrame.getContentPane().validate();
-					currentFrame.getContentPane().repaint();
+			currentFrame.getContentPane().removeAll();
+			currentFrame.getContentPane().validate();
+			currentFrame.getContentPane().repaint();
+			gamePanel = new GamePanel(currentFrame, currentPanel, moveType);
+			currentFrame.getContentPane().add(gamePanel, BorderLayout.CENTER);
+
+			currentFrame.getContentPane().validate();
+			currentFrame.getContentPane().repaint();
 		}
 
 	}
@@ -296,7 +295,7 @@ public class MainMenuPanel extends JPanel {
 			story.setEditable(false);
 			JScrollPane scrollPane = new JScrollPane(story);
 			scrollPane
-			.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+					.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			d.add(scrollPane, BorderLayout.CENTER);
 
 			JPanel buttonPanel = new JPanel();
@@ -318,6 +317,15 @@ public class MainMenuPanel extends JPanel {
 
 	}
 
+	/**
+	 * This is the listener class used for the controls button. It allows the
+	 * user to choose between two keyboard options for movement in the game. One
+	 * is using the alphabet keys(W,A,S,D) and the other is using the arrow
+	 * keys.
+	 *
+	 * @author Venkata Peesapati
+	 *
+	 */
 	class ControlsButtonListener implements ActionListener {
 
 		@Override
@@ -379,6 +387,11 @@ public class MainMenuPanel extends JPanel {
 
 	}
 
+	/**
+	 *
+	 * @author Venkata Peesapati
+	 *
+	 */
 	class OptionsButtonListener implements ActionListener {
 
 		@Override

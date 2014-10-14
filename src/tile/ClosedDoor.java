@@ -6,7 +6,7 @@ public class ClosedDoor extends DoorTile {
 
 	public ClosedDoor(File imgPath, Character key) {
 		super(imgPath, key);
-		
+		this.canMove = false;
 	}
 
 }
