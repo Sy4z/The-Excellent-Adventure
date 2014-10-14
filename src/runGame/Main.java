@@ -91,16 +91,16 @@ public  class Main {
 	 * @param runServer - the Instance of Server
 	 * @param runClient - the Instance of Client
 	 */
-	public static void runClient(Client runClient){
+	public static void runClientMain(Client clientTemp){
 
 		
-			runClient.runClient(ipAddress, 29599);
+			clientTemp.runClient(ipAddress, 29599);
 		
 		
 	}
 	
-	public static void runServer(Server runServer){
-		runServer.runServer(ipAddress, 29599);
+	public static void runServerMain(Server serverTemp){
+		serverTemp.runServer(ipAddress, 29599);
 	}
 
 	/**
