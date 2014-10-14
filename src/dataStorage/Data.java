@@ -53,7 +53,7 @@ public class Data {
 		//initialise the document
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		Document doc = null;
-
+		error("Loading has begun");
 		File xmlFile = new File("saves"+ File.separatorChar+ f + File.separatorChar + "data");
 		//load the XML file which represents the state of the game
 
@@ -63,6 +63,7 @@ public class Data {
 
 			DOMBuilder domBuilder = new DOMBuilder();
 			doc = domBuilder.build(w3cDoc);
+			error("Doc built");
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
 			// TODO Auto-generated catch block
 			throw new IllegalArgumentException("File not found");
@@ -71,13 +72,13 @@ public class Data {
 
 		Element root = doc.getRootElement();
 		Element tilesNode = root.getChild("Tiles");
-
+		error("Got Tiles");
 		for(Element e : tilesNode.getChildren()){
 
 			TileMultiton.getTile(TileMultiton.getTypeByRepresentation(e.getName().charAt(0)));
 
 		}
-
+		error("Tiles loaded");
 		int i = Integer.parseInt(tilesNode.getAttributeValue("X"));
 		int j = Integer.parseInt(tilesNode.getAttributeValue("Y"));
 
@@ -88,16 +89,17 @@ public class Data {
 
 		i = 0;
 		j = 0;
-
+		error("Entering tileMap try-catch");
 		try {
-			Scanner tileMapScanner = new Scanner(new File(f + File.separatorChar + "map"));
+			Scanner tileMapScanner = new Scanner(new File("saves" + File.separatorChar + f + File.separatorChar + "map"));
 
 			String curChar = "";
 			TileMultiton.type curTile = null;
 
 			while(tileMapScanner.hasNext()){
 				curChar = tileMapScanner.next();
-				while(curChar != ";"){
+				while(curChar.charAt(0) != ';'){
+
 					curTile = TileMultiton.getTypeByRepresentation(curChar.charAt(0));
 
 					tiles[i][j] = curTile;
@@ -110,26 +112,31 @@ public class Data {
 			}
 
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
+			error("-----File Not found-----");
 			return;
 		}
+		error("Tilemap built");
 
 		GameObject tempObj = null;
 		for(Element e: root.getChild("GameObject").getChildren()){
-			
+
 			switch(e.getName()){
 			case "UnitPlayer": tempObj = HandleLoadUnitPlayer(e);break;
 			case "StationaryObjectWall": tempObj = HandleLoadStationaryObjectWall(e); break;
 			case "StationaryObjectHatStand" : tempObj = HandleLoadStationaryObjectHatStand(e);break;
 			default:throw new UnexpectedException("unexpected child found in XML tree" + e.getName());
 			}
-			
-			
+
+
 			Field tempField;
 			try {
-				tempField = tempObj.getClass().getDeclaredField("curLocation");
+				Class tempClass = tempObj.getClass();
+
+				for(;tempClass != GameObject.class;tempClass = tempClass.getSuperclass()){}
+
+				tempField = tempClass.getDeclaredField("curLocation");
 				tempField.setAccessible(true);
-			
+
 				Point p = (Point) tempField.get(tempObj);
 				tempField.setAccessible(false);
 				gObjs[p.x][p.y] = tempObj;
@@ -137,29 +144,19 @@ public class Data {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+
 		}
-		Main.cvs = new IsoCanvas(gObjs[1].length, gObjs.length);
-		
-		Field tempField;
-		try {
-			tempField = Main.cvs.getClass().getDeclaredField("map");
-			tempField.setAccessible(true);
-			tempField.set(Main.cvs, tiles);
-			tempField.setAccessible(false);
-		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
+
+		Main.cvs = new IsoCanvas(gObjs[1].length, gObjs.length,tiles);
+
 		World world = new World("This seems arbitrary", gObjs[1].length, gObjs.length, Main.cvs);
 		world.setGameBoard(gObjs);
 		world.setWorldMap(lTiles);
-		
+		Main.world = world;
+
 	}
 	private static GameObject HandleLoadStationaryObjectHatStand(Element e) {
-			
+
 		return null;
 	}
 
@@ -171,32 +168,32 @@ public class Data {
 	private static GameObject HandleLoadUnitPlayer(Element e) throws UnexpectedException {
 		Point point = new Point(Integer.parseInt(e.getChild("curLocation").getChildText("X")),
 							Integer.parseInt(e.getChild("curLocation").getChildText("Y")));
-		
-		UnitPlayer p = new UnitPlayer(point, Integer.parseInt(e.getChildText("ID")));
-		
-		for(Field f : e.getClass().getDeclaredFields()){
-			f.setAccessible(true);
-		}
-		
 
-		for(Element childNode : e.getChildren()){
+		UnitPlayer p = new UnitPlayer(point, Integer.parseInt(e.getChildText("ID")));
+
+		for(Field f : p.getClass().getDeclaredFields()){
+			f.setAccessible(true);
 			try {
-				switch (childNode.getName()){
-				case "HeightOffSet"		: p.getClass().getDeclaredField("heightOffSet").setInt(p, Integer.parseInt(childNode.getText())); break;
-				case "inventory"   		: p.getClass().getDeclaredField("inventory").set(p, HandleLoadInventory(childNode)); break;
-				case "notTurnEnd"  		: p.getClass().getDeclaredField("notTurnEnd").setBoolean(p, (childNode.getText()=="true" ? true : false)); break;
-				case "standardAction"	: p.getClass().getDeclaredField("standardAction").setBoolean(p, (childNode.getText()=="true" ? true : false)); break;
-				case "moveAction"		: p.getClass().getDeclaredField("moveAction").setBoolean(p,(childNode.getText()=="true" ? true : false)); break;
+				switch (f.getName()){
+				case "heightOffSet"		: f.setInt(p, Integer.parseInt(e.getChildText("heightOffSet")))				; break;
+				case "inventory"   		: f.set(p, HandleLoadInventory(e.getChild("inventory")))					; break;
+				case "notTurnEnd"  		: f.setBoolean(p, (e.getChildText("notTurnEnd"    )=="true" ? true : false)); break;
+				case "standardAction"	: f.setBoolean(p, (e.getChildText("standardAction")=="true" ? true : false)); break;
+				case "moveAction"		: f.setBoolean(p, (e.getChildText("moveAction"    )=="true" ? true : false)); break;
 				case "ID"				: break;
 				case "curLocation"		: break;
-				default 				: throw new UnexpectedException("Unexpected field value in handleLoadUnitPlayer" + childNode.getName()); 
+				default 				: throw new UnexpectedException("Unexpected field value in handleLoadUnitPlayer ");
 				}
 			} catch (IllegalArgumentException
-					| IllegalAccessException | NoSuchFieldException
-					| SecurityException e1) {
+					| IllegalAccessException | SecurityException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}
+
+
+		for(Element childNode : e.getChildren()){
+
 		}
 		for(Field f : e.getClass().getDeclaredFields()){
 			f.setAccessible(false);
@@ -216,7 +213,7 @@ public class Data {
 	public static String[] getLoadFiles(){
 		return new File("saves").list();
 	}
-	
+
 	/**
 	 * Converts the game data into an XML format, and saves that to the local directory
 	 *
@@ -518,7 +515,6 @@ public class Data {
 		int sizeY = 100;
 		int entityX = 0;
 		int entityY = 0;
-		error("Beginning test");
 		TileMultiton.type[][] t = new TileMultiton.type[sizeY][sizeX];
 
 		//Creates an array of tiles sizeX by sizeY if statement specifys what coordinate entity will be placed.

@@ -54,6 +54,23 @@ public class IsoCanvas extends JPanel{
 		this.render = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 	}
 
+
+	/**
+	 * Initialise the Isocanvas from a loaded map
+	 * @param Width The width of the map
+	 * @param Height The height of the map
+	 * @param Tiles The array of tiles to draw the map from
+	 */
+	public IsoCanvas(int Width, int Height, TileMultiton.type[][] Tiles){
+		cursor = null;
+		highLight = null;
+		HIGHLIGHTED_TILES = null;
+		map = Tiles;
+		this.width = Width;
+		this.height = Height;
+		this.render = new DrawMapNorth(this.tile_width, this.tile_height, this.width, this.height, veiwport_size);
+	}
+
 	/**
 	 *
 	 */
@@ -78,8 +95,8 @@ public class IsoCanvas extends JPanel{
 	}
 	private TileMultiton.type[][] loadVisibleTiles(){
 		TileMultiton.type[][] visableTiles = new TileMultiton.type[veiwport_size][veiwport_size];
-		int mapX; 
-		int mapY=0; 
+		int mapX;
+		int mapY=0;
 		for(int y = veiwport_y;y<(veiwport_size+veiwport_y);y++){
 			mapX = 0;
 			for(int x = veiwport_y;x<veiwport_size+veiwport_x;x++){

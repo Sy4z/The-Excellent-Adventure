@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.rmi.UnexpectedException;
 
 import javax.swing.JFrame;
 
@@ -16,6 +17,7 @@ import clientServer.Client;
 import clientServer.ClientThread;
 import clientServer.Server;
 import clientServer.ServerThread;
+import dataStorage.Data;
 
 /**
  * Main method, Ties the Program together
@@ -93,12 +95,12 @@ public  class Main {
 	 */
 	public static void runClientMain(Client clientTemp){
 
-		
+
 			clientTemp.runClient(ipAddress, 29599);
-		
-		
+
+
 	}
-	
+
 	public static void runServerMain(Server serverTemp){
 		serverTemp.runServer(ipAddress, 29599);
 	}
