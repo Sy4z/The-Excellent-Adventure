@@ -49,28 +49,31 @@ import runGame.Main;
 /**
  * This class contains the main canvas displaying the gameplay and other
  * controls required for playing the game.
- * 
+ *
  * @author Venkata Peesapati
- * 
+ *
  */
-public class GamePanel extends JPanel implements MouseListener {
+public class GamePanel extends JPanel {
 
 	private JFrame currentFrame;
 	private JPanel oldPanel;
 	private String moveType;
 
+	// Inventory fields.
 	private JTable tableItems1;
 	private JTable tableNums1;
 	private JTable tableItems2;
 	private JTable tableNums2;
 
+	// This field stores the mode which is either 'Quit' or 'Save' depending on
+	// whether the save dialog box opens when the user wants to quit or save
+	// during the game.
 	private String mode;
 
 	public GamePanel(JFrame frame, JPanel menuPanel, String moveType) {
 		currentFrame = frame;
 		oldPanel = menuPanel;
 		this.moveType = moveType;
-		addMouseListener(this);
 		addKeyBindings();
 		setLayout(null);
 
@@ -273,10 +276,11 @@ public class GamePanel extends JPanel implements MouseListener {
 
 	/**
 	 * This is the listener class used for the quit button. It returns to the
-	 * main menu by replacing the game panel with the main menu's panel.
-	 * 
+	 * main menu by replacing the game panel with the main menu's panel. It also
+	 * asks the user whether they want to save the game before quitting or not.
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class QuitGameListener implements ActionListener {
 
@@ -308,9 +312,9 @@ public class GamePanel extends JPanel implements MouseListener {
 	/**
 	 * This is the listener class used for the controls button. It allows the
 	 * user to change the keyboard controls during the gameplay.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class ControlsGameListener implements ActionListener {
 
@@ -375,6 +379,15 @@ public class GamePanel extends JPanel implements MouseListener {
 
 	}
 
+	/**
+	 * This is the listener class used for the Save Game button. It allows the
+	 * user to save the game and continue playing. Note that the mode is 'Save'
+	 * over here which means that the saveGame method will not quit after the
+	 * saving is done.
+	 *
+	 * @author Venkata Peesapati
+	 *
+	 */
 	class SaveGameListener implements ActionListener {
 
 		@Override
@@ -385,6 +398,9 @@ public class GamePanel extends JPanel implements MouseListener {
 
 	}
 
+	/**
+	 *
+	 */
 	public void saveGame() {
 		final JDialog d = new JDialog(currentFrame, "Save Game", true);
 		d.setSize(400, 300);
@@ -470,35 +486,6 @@ public class GamePanel extends JPanel implements MouseListener {
 
 		d.setLocationRelativeTo(null);
 		d.setVisible(true);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		System.out.println(e.getX() + " " + e.getY());
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	private void addKeyBindings() {
@@ -599,7 +586,7 @@ public class GamePanel extends JPanel implements MouseListener {
 			});
 		}
 	}
-	
+
 	class HoverButtonListener implements MouseListener {
 
 		@Override
