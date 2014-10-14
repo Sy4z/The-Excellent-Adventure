@@ -38,7 +38,8 @@ public class TurnWatcher {
 			}
 		}
 		startOfEndPhase = true;
-		while(!endPhase()); //This is just to make the turn stop until the client decides to send the data to the server
+		while(!endPhase())//This is just to make the turn stop until the client decides to send the data to the server
+
 		endOfEndPhase = false; //Change to null so that next time turn is called, its going to start the end phase again
 		return true; //All the networking data has now been sent, the ClientThread has given the OK, end the turn properly.
 	}
