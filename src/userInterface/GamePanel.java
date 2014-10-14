@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
@@ -64,6 +65,8 @@ public class GamePanel extends JPanel {
 	private JTable tableNums1;
 	private JTable tableItems2;
 	private JTable tableNums2;
+	
+	private ImageIcon background = new ImageIcon("post-apoc.jpg");
 
 	// This field stores the mode which is either 'Quit' or 'Save' depending on
 	// whether the save dialog box opens when the user wants to quit or save
@@ -320,6 +323,18 @@ public class GamePanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Image resizedImage = background.getImage().getScaledInstance(400,
+					300, Image.SCALE_SMOOTH);
+			background = new ImageIcon(resizedImage);
+			
+			JPanel mainPanel = new JPanel() {
+				// Displays the background image on the panel.
+				@Override
+				public void paintComponent(Graphics g) {
+					g.drawImage(background.getImage(), 0, 0, null);
+				}
+			};
+			
 			final JDialog d = new JDialog(currentFrame, "Controls", true);
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
@@ -370,9 +385,15 @@ public class GamePanel extends JPanel {
 					d.dispose();
 				}
 			});
+			
+			moveControls.setOpaque(false);
+			buttonsPanel.setOpaque(false);
+			
+			mainPanel.setLayout(new BorderLayout());
+			mainPanel.add(moveControls, BorderLayout.CENTER);
+			mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
+			d.add(mainPanel, BorderLayout.CENTER);
 
-			d.add(moveControls, BorderLayout.CENTER);
-			d.add(buttonsPanel, BorderLayout.SOUTH);
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
 		}
@@ -402,6 +423,18 @@ public class GamePanel extends JPanel {
 	 *
 	 */
 	public void saveGame() {
+		Image resizedImage = background.getImage().getScaledInstance(400,
+				300, Image.SCALE_SMOOTH);
+		background = new ImageIcon(resizedImage);
+		
+		JPanel mainPanel = new JPanel() {
+			// Displays the background image on the panel.
+			@Override
+			public void paintComponent(Graphics g) {
+				g.drawImage(background.getImage(), 0, 0, null);
+			}
+		};
+		
 		final JDialog d = new JDialog(currentFrame, "Save Game", true);
 		d.setSize(400, 300);
 		d.setLayout(new BorderLayout());
@@ -415,7 +448,6 @@ public class GamePanel extends JPanel {
 		// model.
 		JList<String> list = new JList<String>(model);
 		JScrollPane scrollPane = new JScrollPane(list);
-		d.add(scrollPane, BorderLayout.CENTER);
 
 		JPanel savePanel = new JPanel();
 		savePanel.setLayout(new BorderLayout());
@@ -479,10 +511,19 @@ public class GamePanel extends JPanel {
 		buttonPanel.add(okButton);
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(new JButton("Delete"));
+		
+		scrollPane.setOpaque(false);
+		namePanel.setOpaque(false);
+		buttonPanel.setOpaque(false);
+		savePanel.setOpaque(false);
 
 		savePanel.add(namePanel, BorderLayout.CENTER);
 		savePanel.add(buttonPanel, BorderLayout.SOUTH);
-		d.add(savePanel, BorderLayout.SOUTH);
+		
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.add(scrollPane, BorderLayout.CENTER);
+		mainPanel.add(savePanel, BorderLayout.SOUTH);
+		d.add(mainPanel, BorderLayout.CENTER);
 
 		d.setLocationRelativeTo(null);
 		d.setVisible(true);
