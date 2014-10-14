@@ -116,10 +116,58 @@ public class GamePanel extends JPanel {
 		saveGame.setFocusPainted(false);
 		saveGame.setForeground(Color.GREEN);
 
-		saveGame.setBounds(10, 20, 250, 40);
+		saveGame.setBounds(920, 100, 250, 40);
 		saveGame.addMouseListener(new HoverButtonListener());
 		saveGame.addActionListener(new SaveGameListener());
 		add(saveGame);
+		
+		JButton northButton = new JButton("North");
+		northButton.setOpaque(false);
+		northButton.setContentAreaFilled(false);
+		northButton.setBorderPainted(false);
+		northButton.setFont(new Font("Arial", Font.PLAIN, 35));
+		northButton.setFocusPainted(false);
+		northButton.setForeground(Color.GREEN);
+		
+		northButton.setBounds(5, 20, 200, 40);
+		northButton.addMouseListener(new HoverButtonListener());
+		add(northButton);
+		
+		JButton southButton = new JButton("South");
+		southButton.setOpaque(false);
+		southButton.setContentAreaFilled(false);
+		southButton.setBorderPainted(false);
+		southButton.setFont(new Font("Arial", Font.PLAIN, 35));
+		southButton.setFocusPainted(false);
+		southButton.setForeground(Color.GREEN);
+		
+		southButton.setBounds(5, 60, 200, 40);
+		southButton.addMouseListener(new HoverButtonListener());
+		add(southButton);
+		
+		JButton eastButton = new JButton("East");
+		eastButton.setOpaque(false);
+		eastButton.setContentAreaFilled(false);
+		eastButton.setBorderPainted(false);
+		eastButton.setFont(new Font("Arial", Font.PLAIN, 35));
+		eastButton.setFocusPainted(false);
+		eastButton.setForeground(Color.GREEN);
+		
+		eastButton.setBounds(5, 100, 200, 40);
+		eastButton.addMouseListener(new HoverButtonListener());
+		add(eastButton);
+		
+		JButton westButton = new JButton("West");
+		westButton.setOpaque(false);
+		westButton.setContentAreaFilled(false);
+		westButton.setBorderPainted(false);
+		westButton.setFont(new Font("Arial", Font.PLAIN, 35));
+		westButton.setFocusPainted(false);
+		westButton.setForeground(Color.GREEN);
+		
+		westButton.setBounds(5, 140, 200, 40);
+		westButton.addMouseListener(new HoverButtonListener());
+		add(westButton);
 
 		setInventory();
 
