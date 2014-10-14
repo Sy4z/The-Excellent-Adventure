@@ -61,6 +61,8 @@ public class ClientThread extends Thread {
 
 					//Receive the GameBoard from the Server and update current game world
 					try {
+						String isMyTurn = "myturn";
+						boardToServer.writeObject(isMyTurn); //Tells the serverThread its this clients turn
 						Object gameBoardGeneric = boardFromServer.readObject(); //Read into  Generic Object Type
 						if(gameBoardGeneric instanceof GameObject[][]){ //Check that the generic object is an arraylist - Cant check further than this because nested generics get erased at runtime but at least theres some safeguard to typechecking
 							localGameMap = (GameObject[][])gameBoardGeneric; //Set the board as a local variable
@@ -81,6 +83,8 @@ public class ClientThread extends Thread {
 
 
 
+					
+					//Set endOfEndPhase on
 					//Wait for end turn phase then send server local gameBoard
 					while(Main.tw.startOfEndPhase == false); //Loop around, then when it is not false, go to the instruction
 

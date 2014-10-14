@@ -1,5 +1,6 @@
 package clientServer;
 
+import gameWorld.GameObject;
 import gameWorld.UnitPlayer;
 
 import java.io.IOException;
@@ -16,13 +17,18 @@ import runGame.Main;
  * This class cannot run at the same time as a client
  */
 public class Server {
-private static int numPlayers = Main.getNumberOfPlayers(); //this is a static int for use in an array of threads
-boolean serverIsOn = true;
-List<UnitPlayer> playerList = new ArrayList<UnitPlayer>();
+	private static int numPlayers; //this is a static int for use in an array of threads
+	boolean serverIsOn = true;
+	List<UnitPlayer> playerList = new ArrayList<UnitPlayer>();
+	private static GameObject[][] mainGameBoard;
 
-public Server(int numberPlayers){
-	this.numPlayers = numberPlayers;
-}
+
+
+
+	public Server(int numberPlayers){
+		this.numPlayers = numberPlayers;
+		mainGameBoard = Main.world.getGameBoard(); //Get the initial State of the gameboard for the first player to receive;
+	}
 
 	/**
 	 * This method is in charge of initialising the server - It creates a new thread every time a connection is accepted
@@ -31,83 +37,91 @@ public Server(int numberPlayers){
 		ServerSocket serverSock = null;
 		Socket accept = null;
 		while(serverIsOn){
-		try{
-			ServerThread[] serverThreads = new ServerThread[numPlayers]; //Can use this for the number of possible players to accept, and store their threads. Unused currently
-			serverSock = new ServerSocket(port);
-			
-			int i=0;
-			while(true){
-				System.err.println("Waiting for Connection");
-				accept = serverSock.accept();
-				//Will only reach this point if the socket actually accepts a connection - considering accept() blocks until it receives input
-				System.out.println("Accepted Connection from: " + accept.getInetAddress());
-				
-				ServerThread server = new ServerThread(accept);
-				
-				serverThreads[i] = server; //adds thread to the array of threads
-				i++; //increments count
-				//playerList.add()
-				
-				server.start();
+			try{
+				ServerThread[] serverThreads = new ServerThread[numPlayers]; //Can use this for the number of possible players to accept, and store their threads. Unused currently
+				serverSock = new ServerSocket(port);
 
+				int i=0;
+				while(true){
+					System.err.println("Waiting for Connection");
+					accept = serverSock.accept();
+					//Will only reach this point if the socket actually accepts a connection - considering accept() blocks until it receives input
+					System.out.println("Accepted Connection from: " + accept.getInetAddress());
+
+					ServerThread server = new ServerThread(accept);
+
+					serverThreads[i] = server; //adds thread to the array of threads
+					i++; //increments count
+					//playerList.add()
+
+					server.start();
+
+				}
 			}
-		}
-		catch(IOException e){
-			System.out.println("SocketAccept(); Threw exception on server"); 
-			e.printStackTrace();
-		}
+			catch(IOException e){
+				System.out.println("SocketAccept(); Threw exception on server"); 
+				e.printStackTrace();
+			}
 		}
 		System.out.println("Server Stopped");
 		try {
-			
+
 			serverSock.close();
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
+
+
 	/**
 	 * This method starts the server if it is stopped
 	 * Else, if it is already started, gives the user a message
 	 */
 	public void startServer(){
-	
+
 		if(serverIsOn){
 			System.out.println("Server is Already Running");
-		
+
 		}
 		else{
 			serverIsOn = true; //sets the boolean to true
 			//May need to actually call runServer - I'll get to this later after some testing
 			System.out.println("Server is now started");
 		}
-		
-		
+
+
 	}
-	
+
 	/**
 	 * This method stops the server if it is running
 	 * If it is already stopped, gives the user a message
 	 */
 	public void stopServer(){
-		
+
 		if(serverIsOn){
-		//Stopped message happens after loop closes anyway
+			//Stopped message happens after loop closes anyway
 			System.out.println("Stopping Server");
 			serverIsOn = false;
 		}
 		else{
 			System.out.println("Server is Already Stopped");
 		}
-		
-		
-		
+
+
+
 	}
-	
+
+	public static GameObject[][] getMainGameBoard() {
+		return mainGameBoard;
+	}
+
+	public static void setMainGameBoard(GameObject[][] mainGameBoard) {
+		Server.mainGameBoard = mainGameBoard;
+	}
+
 
 
 
