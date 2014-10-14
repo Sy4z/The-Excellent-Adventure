@@ -14,13 +14,14 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 	private int center_offset_x;
 	public int tile_width = 64;
 	public int tile_height = 32;
+	
 	public DrawMapNorth(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int mapSize){
 		calculateOffset(tile_width,tile_height,canvasWidth, canvasHeight, mapSize);
 	}
 
 	@Override
 	public void calculateOffset(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int veiwportSize) {
-		this.center_offset_y = (int)((canvasHeight/2) - (tile_height)*2);
+		this.center_offset_y = (int)((canvasHeight/2) - (tile_height)*1.5)+tile_height;
 		this.center_offset_x = (int)((canvasWidth/2) - ((tile_width)*veiwportSize)/2);//-tile_width;//this too.
 
 	}

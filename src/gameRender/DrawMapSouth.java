@@ -21,10 +21,27 @@ public class DrawMapSouth implements IsoCanvas.DrawMap{
 	
 	@Override
 	public void calculateOffset(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int mapSize) {
-		this.center_offset_y = (int)((canvasHeight/2) - (tile_height)*1.5)+tile_height;//-tile_height;//spread this calculation out.
-		this.center_offset_x = (int)((canvasWidth/2) - ((tile_width)*mapSize)/2);//-tile_width;//this too.
-		
+		this.center_offset_y = (int)((canvasHeight/2) - (tile_height)*1.5)+tile_height;//spread this calculation out.
+		this.center_offset_x = (int)((canvasWidth/2) - ((tile_width)*mapSize)/2);//this too.
 	}
+	
+	private TileMultiton.type[][] flipArray(TileMultiton.type[][] map){
+		TileMultiton.type[][] fliped = new TileMultiton.type[map.length][map[0].length];
+		int newX;
+		int newY =0;
+		for(int y = map.length-1;y>=0 ;y--){
+			newX = 0;
+			for(int x = map.length-1;x >=0;x--){
+				fliped[newY][newX] = map[y][x];
+				//System.out.println(newY+":"+newX+"<--"+y+":"+x);
+				newX++;
+			}
+			newY++;	
+		}
+		return fliped;
+	}
+	
+	
 	public Point toIso(int x, int y){
 		Point isoPoint = new Point();
 		int tileOffsetX = x*(tile_width/2);
@@ -33,12 +50,10 @@ public class DrawMapSouth implements IsoCanvas.DrawMap{
 		isoPoint.y = ((tileOffsetX - tileOffsetY)/2)+center_offset_y;
 		return isoPoint;
 	}
-
-
 	
 	@Override
-	public void draw(Graphics2D g2d, TileMultiton.type[][] map, Unit entity, UnitCursor cursor) {
-		//System.out.println("DrawMapNorth.draw");
+	public void draw(Graphics2D g2d, TileMultiton.type[][] visibleTiles, Unit entity, UnitCursor cursor) {
+		TileMultiton.type[][] map = flipArray(visibleTiles);
 		Tile tile;
 		Point tilePos;
 		Point entityPos;
@@ -60,7 +75,7 @@ public class DrawMapSouth implements IsoCanvas.DrawMap{
 					cX = cursor.getLocation().x;
 					cY = cursor.getLocation().y;
 					if(cX == x && cY == y){
-					cursorPos = toIso(cX,cY);
+					cursorPos = toIso(x,y);
 					cursor.draw(g2d, cursorPos.x, cursorPos.y);
 				}
 				}
@@ -68,7 +83,7 @@ public class DrawMapSouth implements IsoCanvas.DrawMap{
 					eX = entity.getLocation().x;
 					eY = entity.getLocation().y;
 					if(eX==x && eY==y){
-						entityPos = toIso(eX,eY);
+						entityPos = toIso(x,y);
 						entity.draw(g2d, entityPos.x, entityPos.y);
 					}
 				}
@@ -78,4 +93,3 @@ public class DrawMapSouth implements IsoCanvas.DrawMap{
 	}
 
 }
-

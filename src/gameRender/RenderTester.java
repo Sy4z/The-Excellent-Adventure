@@ -52,22 +52,24 @@ public class RenderTester extends JFrame implements KeyListener{
 			//c.setLocation(c.getX()-1, c.getY());
 			//UnitCursor cur = new UnitCursor(c, 1234);
 			//testCanvas.moveCursor(cur);
-			w.moveFromKeyBoard(2);
-		break;
+			//w.moveFromKeyBoard(2);
+			testCanvas.east();
+			break;
 		case 38://up
 		//Point pU = new Point(entity.getLocation().x-1,entity.getLocation().y+1);
 		//ArrayDeque<Point> up = new ArrayDeque<Point>();
 		//up.add(pU);
 		//testCanvas.moveUnit(entity,up);
-		//testCanvas.north();
-			w.moveFromKeyBoard(0);
+			testCanvas.north();
+		//	w.moveFromKeyBoard(0);
 		break;
 		case 40://down
 			//Point pD = new Point(entity.getLocation().x+1,entity.getLocation().y-1);
 			//Stack<Point> down = new Stack<Point>();
 			//down.add(pD);
 			//testCanvas.moveUnit(entity,down);
-			w.moveFromKeyBoard(1);
+			//w.moveFromKeyBoard(1);
+			testCanvas.south();
 			break;
 
 
@@ -76,11 +78,11 @@ public class RenderTester extends JFrame implements KeyListener{
 			//ArrayDeque<Point> right = new ArrayDeque<Point>();
 			//right.add(pR);
 			//testCanvas.moveUnit(entity,right);
-			//testCanvas.west();
+				testCanvas.west();
 			//c.setLocation(c.getX()+1, c.getY());
 			//UnitCursor curR = new UnitCursor(c, 1234);
 			//testCanvas.moveCursor(curR);
-			w.moveFromKeyBoard(3);
+			//w.moveFromKeyBoard(3);
 			break;
 		case 10: 
 		w.moveToCursor();
