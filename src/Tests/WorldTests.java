@@ -57,7 +57,7 @@ public class WorldTests {
 	public void testLogicalTile_001(){
 		LogicalTile t = new LogicalTile(false);
 		assertFalse(t.isIsTile());
-		t.setIsTile(true);
+		t = new LogicalTile(true);
 		assertTrue(t.isIsTile());
 		t.setReachableByActive(true);
 		assertTrue(t.isReachableByActive());
@@ -101,7 +101,7 @@ public class WorldTests {
 	public void testObjectInteaction_001(){
 
 		World w = new World(null, -1, -1, new IsoCanvas(500, 500));
-		InteractiveObjectChest chst = new InteractiveObjectChest();
+		InteractiveObjectChest chst = new InteractiveObjectChest(null);
 		int keyIncreseC = chst.getContents()[itemTypes.KEY.ordinal()];
 		try {
 			Method m = null;
@@ -125,7 +125,7 @@ public class WorldTests {
 	public void testObjectInteaction_002(){
 
 		World w = new World(null, -1, -1, new IsoCanvas(500, 500));
-		InteractiveObjectMonster mnstr = new InteractiveObjectMonster();
+		InteractiveObjectMonster mnstr = new InteractiveObjectMonster(null);
 		int keyIncreseM = mnstr.getContents()[itemTypes.KEY.ordinal()];
 		try {
 			Method m = null;

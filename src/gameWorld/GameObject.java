@@ -6,7 +6,9 @@ import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 /**
- *
+ *This is what everything except tiles in the gameWorld will extend.
+ *It mainly exists to allow for storing of all gameObjects together
+ *as well as ensuring everything holds it's own XY
  * @author ChrisMcIntosh
  *
  */

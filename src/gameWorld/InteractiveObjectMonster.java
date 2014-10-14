@@ -8,14 +8,24 @@ import java.awt.Point;
 public class InteractiveObjectMonster extends InteractiveObject{
 
 	private int[] contents;
+	//This is the combat power of a monster
 	private int str;
 
+	/**
+	 * Makes a monster given a it's items held, combat power and location
+	 * @param loot
+	 * @param strength
+	 * @param p
+	 */
 	public InteractiveObjectMonster(int[] loot, int strength, Point p){
 		super(p);
 		contents = loot;
 		str = strength;
 	}
-
+	/**
+	 * Makes a monster randomizing its items held and combat power
+	 * @param p
+	 */
 	public InteractiveObjectMonster(Point p){
 		super(p);
 		int[] itms = new int[itemTypes.values().length];
@@ -40,12 +50,18 @@ public class InteractiveObjectMonster extends InteractiveObject{
 		return null;
 	}
 	@Override
+	/**
+	 * Draws itself at a given location
+	 */
 	void draw(Graphics2D g, int dx, int dy) {
 		// TODO Auto-generated method stub
 
 	}
 
-
+	/**
+	 *Returns the items hold by the monster
+	 * @return The monsters loot
+	 */
 	public int[] getContents() {
 		return contents;
 	}

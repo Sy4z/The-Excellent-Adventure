@@ -6,16 +6,31 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 
+/**
+ * This is a chest, If a player ends their turn on one of these they will get
+ * all the items in it added to their inventory.
+ *
+ * @author mcintochri1
+ *
+ */
 public class InteractiveObjectChest extends InteractiveObject{
 
-//	private ArrayList<Item> contents = new ArrayList<Item>();
 	private int[] contents;
 
+	/**
+	 * Constructs a chest from given contents
+	 * @param contents
+	 * @param p
+	 */
 	public InteractiveObjectChest(int[] contents, Point p){
 		super(p);
 		this.contents = contents;
 	}
 
+	/**
+	 * Constructs a chest with randomized contents
+	 * @param p
+	 */
 	public InteractiveObjectChest(Point p){
 		super(p);
 		int[] itms = new int[itemTypes.values().length];
@@ -24,29 +39,16 @@ public class InteractiveObjectChest extends InteractiveObject{
 		contents = itms;
 	}
 
-	public int[] takeContents(){
-		int[]  tempContents = contents;
-		contents = null;
-		return tempContents;
-	}
 	@Override
 	void draw(Graphics2D g, int dx, int dy) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public String toString() {
-		return toString("");
-	}
-
-	public String toString(String append){
-		StringBuilder s = new StringBuilder("Chest{");
-		append = "|\t" + append;
-
-		return s + "\n" + append.substring(2) + "}";
-	}
-
+	/**
+	 * Returns the contents of the chest
+	 * @return The Chests Contents
+	 */
 	public int[] getContents() {
 		return contents;
 	}
