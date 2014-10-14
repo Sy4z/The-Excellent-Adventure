@@ -25,6 +25,21 @@ public class DrawMapEast implements IsoCanvas.DrawMap{
 		this.center_offset_x = (int)((canvasWidth/2) - ((tile_width)*mapSize)/2);//this too.
 	}
 	
+	public void flipArray(TileMultiton.type[][] map){
+		TileMultiton.type[][] fliped = new TileMultiton.type[map.length][map[0].length];
+		int newX =0;
+		int newY =0;
+		for(int y = map.length-1;y >=0;y--){
+			for(int x = map.length-1;x >=0;x--){
+				fliped[newY][newX] = map[y][x];
+				newX++;
+			}
+			newY++;	
+		}
+		map = fliped;
+	}
+	
+	
 	public Point toIso(int x, int y){
 		Point isoPoint = new Point();
 		int tileOffsetX = x*(tile_width/2);

@@ -399,8 +399,8 @@ public class Data {
 
 		int sizeX = 100;
 		int sizeY = 100;
-		int entityX = 6;
-		int entityY = 6;
+		int entityX = 7;
+		int entityY = 7;
 		error("Beginning test");
 		TileMultiton.type[][] t = new TileMultiton.type[sizeY][sizeX];
 
