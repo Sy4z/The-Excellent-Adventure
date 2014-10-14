@@ -98,6 +98,7 @@ public class MainMenuPanel extends JPanel {
 		serverButton.setFocusPainted(false);
 		serverButton.setForeground(Color.black);
 		serverButton.addMouseListener(new HoverButtonListener());
+		serverButton.addActionListener(new ServerButtonListener());
 
 		// The load button allows the user to load a game they have saved
 		// before.
@@ -213,6 +214,7 @@ public class MainMenuPanel extends JPanel {
 								.showInputDialog("Enter IP Address:");
 						Main.setIP(input);
 					}
+					Main.runClientMain(Main.client);
 				}
 			});
 
@@ -229,6 +231,51 @@ public class MainMenuPanel extends JPanel {
 
 			currentFrame.getContentPane().validate();
 			currentFrame.getContentPane().repaint();
+		}
+
+	}
+
+	class ServerButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Image resizedImage = background.getImage().getScaledInstance(400,
+					300, Image.SCALE_SMOOTH);
+			background = new ImageIcon(resizedImage);
+
+			JPanel mainPanel = new JPanel() {
+				// Displays the background image on the panel.
+				@Override
+				public void paintComponent(Graphics g) {
+					g.drawImage(background.getImage(), 0, 0, null);
+				}
+			};
+
+			final JDialog d = new JDialog(currentFrame, "Server Running", true);
+			d.setSize(400, 300);
+			d.setLayout(new BorderLayout());
+			
+			JLabel label = new JLabel("Running Server...");
+			JButton exit = new JButton("Exit");
+			
+			exit.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Main.server.stopServer();
+					d.dispose();
+				}
+			});
+
+			mainPanel.setLayout(new BorderLayout());
+			mainPanel.add(label, BorderLayout.CENTER);
+			mainPanel.add(exit, BorderLayout.SOUTH);
+			d.add(mainPanel, BorderLayout.CENTER);
+
+			d.setLocationRelativeTo(null);
+			d.setVisible(true);
+			
+			Main.runServerMain(Main.server);
 		}
 
 	}
