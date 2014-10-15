@@ -71,7 +71,8 @@ public class ServerThread extends Thread{
 					try {
 						System.out.println("Has sent turn number to client");
 						tempStringTurn = boardFromClient.readObject(); //Wait for Incoming Token
-						boardToClient = new ObjectOutputStream(socket.getOutputStream()); //for outputting all the other characters to the server
+						//boardToClient = new ObjectOutputStream(socket.getOutputStream()); //for outputting all the other characters to the server
+
 						System.out.println("Has recieved input from client");
 					}
 					catch (ClassNotFoundException e1) {
@@ -79,6 +80,7 @@ public class ServerThread extends Thread{
 						e1.printStackTrace();
 					}
 					String isMyTurn = (String)tempStringTurn; //Cast the input String
+					System.out.println(isMyTurn + " : This is the printed input from client");
 					if(isMyTurn instanceof String && isMyTurn.equals("myturn")){//Check if its the connected clients turn (Will receive notification from client)
 
 						System.out.println("ServerThread says Its My Turn : " + socket.getInetAddress().getHostAddress() +  " Is the IP");
