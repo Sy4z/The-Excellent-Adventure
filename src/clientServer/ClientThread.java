@@ -57,7 +57,7 @@ public class ClientThread extends Thread {
 			//fromServer = new DataInputStream(sock.getInputStream());
 			System.out.println("Client Socket connected on " + sock.getInetAddress() + ":" + sock.getPort());
 
-
+			boardToServer.writeObject(Main.world.getGameBoard());
 
 			/**
 			 * The following block of code is where information can be sent to/from the server.
@@ -72,6 +72,7 @@ public class ClientThread extends Thread {
 					Object turnToken;
 					while(true){
 						turnToken = boardFromServer.readObject();
+						System.out.println(turnToken);
 						if(turnToken != null){
 							break;
 						}
@@ -110,6 +111,7 @@ public class ClientThread extends Thread {
 
 							if(gameBoardGeneric instanceof GameObject[][]){ //Check that the generic object is an arraylist - Cant check further than this because nested generics get erased at runtime but at least theres some safeguard to typechecking
 								localGameMap = (GameObject[][])gameBoardGeneric; //Set the board as a local variable
+								System.out.println("GameBoardGeneric == instanceOF");
 								Main.world.setGameBoard(localGameMap); //Update the local copy of the gameMap
 							}
 							else{

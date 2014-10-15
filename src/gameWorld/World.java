@@ -127,16 +127,16 @@ public class World {
 		updateGameBoardGraphics();
 		return true;
 	}
-	boolean firstTurn = false;
+//	boolean firstTurn = false;
 	/**
 	 * Resets turn information at the start of the turn
 	 */
 	public void startTurn(){
-		if(firstTurn){
+//		if(firstTurn){
 			avatar.activate();
 			isActive = true;
-			firstTurn = true;
-		}
+//			firstTurn = true;
+//		}
 		calculatePossibleMovments();
 		updateGameBoardGraphics();
 
