@@ -83,7 +83,7 @@ public class World {
 
 	/**
 	 * Generates a new player at a random position on the map;
-	 * @return
+	 * @return The New Avatar
 	 */
 	private UnitPlayer randomPositionAvatar() {
 		int id = -1;
@@ -95,10 +95,11 @@ public class World {
 				}
 			}
 		}
-		//Generate random map positions on the map untill one is free then put the player there.
+		//Generate random map positions on the map until one is free then put the player there.
 		while(true){
-			int x = (int) (Math.random() * gameBoard.length);
-			int y = (int) (Math.random() * gameBoard[0].length);
+			//Limited until map scrolling is implemented.
+			int x = 5;//(int) (Math.random() * gameBoard.length);
+			int y = 5;//(int) (Math.random() * gameBoard[0].length);
 			if(gameBoard[x][y] == null){
 				gameBoard[x][y] = new UnitPlayer(new Point(x,y), id+1);
 				return (UnitPlayer) gameBoard[x][y];
