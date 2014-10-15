@@ -117,7 +117,7 @@ public  class Main {
 	}
 
 	public static void runServerMain(){
-		server.setupInitialState();
+		
 		server.runServer(ipAddress, port);
 	}
 
