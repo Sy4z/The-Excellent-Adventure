@@ -45,17 +45,31 @@ import tile.TileMultiton.type;
  */
 public class Data {
 	static int b = 0;
+	private static boolean testing;
 
+	/**
+	 * Error checking method, Prints the given string to Stderr
+	 * @param s The string to be printed
+	 */
 	private static void error(String s){
-		System.err.println(s);
+		if(testing){
+			System.err.println(s);
+		}
 	}
-
-	public static void load(String f) throws UnexpectedException{
+	/**
+	 * Loads the game state from a given save location
+	 *
+	 * Builds a tileMap, logicalTileMap and GameObject array
+	 *
+	 * @param SaveFile the file to be loaded
+	 * @throws UnexpectedException An unexpected exception is thrown when there is an unknown field in a class, this is mostly to remind the programmer that they need to update their load method
+	 */
+	public static void load(String SaveFile) throws UnexpectedException{
 		//initialise the document
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		Document doc = null;
 		error("Loading has begun");
-		File xmlFile = new File("saves"+ File.separatorChar+ f + File.separatorChar + "data");
+		File xmlFile = new File("saves"+ File.separatorChar+ SaveFile + File.separatorChar + "data");
 		//load the XML file which represents the state of the game
 
 		try {
@@ -70,33 +84,42 @@ public class Data {
 			throw new IllegalArgumentException("File not found");
 		}
 
+		error("XMLDoctree exists");
 
+		//------Preload all tile types used in this map------
 		Element root = doc.getRootElement();
 		Element tilesNode = root.getChild("Tiles");
+
 		error("Got Tiles");
+
 		for(Element e : tilesNode.getChildren()){
 
 			TileMultiton.getTile(TileMultiton.getTypeByRepresentation(e.getName().charAt(0)));
 
 		}
 		error("Tiles loaded");
+
+		//get the size of the map from the xml tree
 		int i = Integer.parseInt(tilesNode.getAttributeValue("X"));
 		int j = Integer.parseInt(tilesNode.getAttributeValue("Y"));
 
+		//initialise the logicalTile, tile and gameobject arrays
 		LogicalTile[][] lTiles = new LogicalTile[i][j];
 		TileMultiton.type[][] tiles = new TileMultiton.type[i][j];
-
 		GameObject[][] gObjs = new GameObject[i][j];
 
+		//--------read in the tilemap------
 		i = 0;
 		j = 0;
+
 		error("Entering tileMap try-catch");
 		try {
-			Scanner tileMapScanner = new Scanner(new File("saves" + File.separatorChar + f + File.separatorChar + "map"));
+			//read in the file map located at save/#file#/map
+			Scanner tileMapScanner = new Scanner(new File("saves" + File.separatorChar + SaveFile + File.separatorChar + "map"));
 
 			String curChar = "";
 			TileMultiton.type curTile = null;
-
+			//for each char in the map, find the given representation in the tile multiton
 			while(tileMapScanner.hasNext()){
 				curChar = tileMapScanner.next();
 				while(curChar.charAt(0) != ';'){
@@ -118,28 +141,30 @@ public class Data {
 		}
 		error("Tilemap built");
 
+		//------Load in the game objects------
 		GameObject tempObj = null;
 		for(Element e: root.getChild("GameObject").getChildren()){
 
 			switch(e.getName()){
-			case "UnitPlayer": tempObj = HandleLoadUnitPlayer(e);break;
-			case "StationaryObjectWall": tempObj = HandleLoadStationaryObjectWall(e); break;
-			case "StationaryObjectHatStand" : tempObj = HandleLoadStationaryObjectHatStand(e);break;
-			default:throw new UnexpectedException("unexpected child found in XML tree" + e.getName());
+			case "UnitPlayer": tempObj = HandleLoadUnitPlayer(e);break;//Load a player
+			case "StationaryObjectWall": tempObj = HandleLoadStationaryObjectWall(e); break; //load a wall
+			case "StationaryObjectHatStand" : tempObj = HandleLoadStationaryObjectHatStand(e);break; //load a hat stand
+			default:throw new UnexpectedException("unexpected child found in XML tree" + e.getName()); //unexpected child
 			}
 
-
+			//--Find the correct position to place this is the array--
 			Field tempField;
 			try {
+				//while tempClass != gameObject.class, climb the class tree
 				Class tempClass = tempObj.getClass();
-
 				for(;tempClass != GameObject.class;tempClass = tempClass.getSuperclass()){}
 
 				tempField = tempClass.getDeclaredField("curLocation");
 				tempField.setAccessible(true);
-
+				//get the array coords from the point field inside of gameObject
 				Point p = (Point) tempField.get(tempObj);
 				tempField.setAccessible(false);
+
 				gObjs[p.x][p.y] = tempObj;
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e1) {
 				// TODO Auto-generated catch block
@@ -148,23 +173,42 @@ public class Data {
 
 		}
 		error(Main.mainFrame.WIDTH + " " + Main.mainFrame.HEIGHT);
-
+		//Create the new IsoCavas
 		Main.cvs = new IsoCanvas(Main.mainFrame.getWidth(), Main.mainFrame.getHeight(),tiles);
 
+		//create the new world object
 		World world = new World("This seems arbitrary", gObjs[1].length, gObjs.length, Main.cvs);
+		//give the world the gameObject array
 		world.setGameBoard(gObjs);
+		//give the world the logical tile map
 		world.setWorldMap(lTiles);
 		Main.world = world;
+		//create a new turnWatcher
 		Main.tw = new TurnWatcher(world);
 	}
 
+	/**
+	 * parse the XML element hatstand
+	 * @param e The XML Element Hatstand
+	 * @return
+	 */
 	private static GameObject HandleLoadStationaryObjectHatStand(Element e) {
-
+		//TODO
 		return null;
 	}
 
+	/**
+	 *
+	 *
+	 * @param s
+	 * @return
+	 */
 	public static boolean deleteFile(String s){
-		return new File("saves" + File.separatorChar + s).delete();
+		File fi = new File("saves" + File.separatorChar + s);
+		for(File f : fi.listFiles()){
+			f.delete();
+		}
+		return fi.delete();
 	}
 
 	private static GameObject HandleLoadStationaryObjectWall(Element e) {
