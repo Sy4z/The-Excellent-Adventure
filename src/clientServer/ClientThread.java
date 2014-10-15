@@ -145,6 +145,11 @@ public class ClientThread extends Thread {
 							Main.tw.endOfEndPhase = true;//End end Phase
 							boardToServer.flush();//Flushing Input buffer, making sure it doesnt fill up
 							System.err.println("Potatoes found!");
+
+							while(Main.world.isTurn()){
+								System.out.println("Looping");
+							}
+
 							boardToServer.writeObject("turnEnded");
 							Main.world.endTurn();
 						}
