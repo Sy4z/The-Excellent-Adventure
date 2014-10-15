@@ -145,4 +145,12 @@ public class UnitPlayer extends Unit{
 	}
 
 
+	public void endTurn() {
+		while(this.getAvilableMoves() != 0){
+			depleateMoves();
+
+		}
+	}
+
+
 }

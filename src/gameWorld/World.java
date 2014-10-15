@@ -511,7 +511,9 @@ public class World {
 	}
 
 
-
+	public void endTurn(){
+		this.avatar.endTurn();
+	}
 	/**
 	 * Returns UnitPlayer because i needed it - Sorry Chris
 	 * @return Local Player
