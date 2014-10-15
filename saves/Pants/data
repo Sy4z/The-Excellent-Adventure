@@ -22,5 +22,39 @@
         <Y>8</Y>
       </curLocation>
     </UnitPlayer>
+    <UnitPlayer>
+      <heightOffSet>32</heightOffSet>
+      <inventory>
+        <KEY>0</KEY>
+        <RUSTY_NAIL>0</RUSTY_NAIL>
+        <KATANA>0</KATANA>
+        <PUPPY>0</PUPPY>
+      </inventory>
+      <notTurnEnd>true</notTurnEnd>
+      <standardAction>true</standardAction>
+      <moveAction>false</moveAction>
+      <ID>1</ID>
+      <curLocation>
+        <X>3</X>
+        <Y>8</Y>
+      </curLocation>
+    </UnitPlayer>
+    <UnitPlayer>
+      <heightOffSet>32</heightOffSet>
+      <inventory>
+        <KEY>0</KEY>
+        <RUSTY_NAIL>0</RUSTY_NAIL>
+        <KATANA>0</KATANA>
+        <PUPPY>0</PUPPY>
+      </inventory>
+      <notTurnEnd>true</notTurnEnd>
+      <standardAction>true</standardAction>
+      <moveAction>false</moveAction>
+      <ID>2</ID>
+      <curLocation>
+        <X>4</X>
+        <Y>8</Y>
+      </curLocation>
+    </UnitPlayer>
   </GameObject>
 </World>
