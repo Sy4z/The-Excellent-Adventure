@@ -42,15 +42,6 @@ public class ClientThread extends Thread {
 
 	public void run(){
 		System.out.println("Trying Connection");
-		try {
-
-			boardFromServer = new ObjectInputStream(sock.getInputStream());
-			System.out.println("Created inputstreaml");
-			boardToServer = new ObjectOutputStream(sock.getOutputStream());
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
 
 		try {
 
@@ -63,8 +54,8 @@ public class ClientThread extends Thread {
 			 * Helper methods incoming
 			 */
 			while(true){ //Main Loop
-
-
+				boardFromServer = new ObjectInputStream(sock.getInputStream());
+				boardToServer = new ObjectOutputStream(sock.getOutputStream());
 				try {
 					System.err.println("Hanging out yo, chur homie, dawg");
 					Object turnToken;
