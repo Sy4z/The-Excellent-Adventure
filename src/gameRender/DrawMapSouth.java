@@ -1,5 +1,6 @@
 package gameRender;
 
+import gameWorld.GameObject;
 import gameWorld.Unit;
 import gameWorld.UnitCursor;
 
@@ -78,38 +79,43 @@ public class DrawMapSouth implements IsoCanvas.DrawMap{
 	 *backwards, but the visibleTiles array is fliped before reading occurs.
 	 */
 	@Override
-	public void draw(Graphics2D g2d, TileMultiton.type[][] visibleTiles, Unit entity, UnitCursor cursor) {
+	public void draw(Graphics2D g2d, TileMultiton.type[][] visibleTiles,GameObject[][] visibleObjects, Unit entity, UnitCursor cursor) {
 		TileMultiton.type[][] map = flipArray(visibleTiles);
 		Tile tile;
 		Point tilePos;
 		Point entityPos;
 		Point cursorPos;
-		int tX;
-		int tY;
-		int eX;
-		int eY;
-		int cX;
-		int cY;
+		int tileX;
+		int tileY;
+		int entityX;
+		int entityY;
+		int cursorX;
+		int cursorY;
 		for(int y = map.length-1;y >=0;y--){
 			for(int x = 0;x<map[y].length;x++){
 				tilePos = toIso(x,y);//
 				tile = TileMultiton.getTile(map[y][x]);
-				tX = (tilePos.x);
-				tY = (tilePos.y);
-				tile.draw(g2d, tX,tY);
+				tileX = (tilePos.x);
+				tileY = (tilePos.y);
+				tile.draw(g2d, tileX,tileY);
+				
 				if(cursor != null){
-					cX = cursor.getLocation().x;
-					cY = cursor.getLocation().y;
-					if(cX == x && cY == y){
-					cursorPos = toIso(y,x);
+					cursorX = cursor.getLocation().x;
+					cursorY = cursor.getLocation().y;
+					if(cursorX == x && cursorY == y){
+					cursorPos = toIso(x,y);
 					cursor.draw(g2d, cursorPos.x, cursorPos.y);
 				}
 				}
+				if(visibleObjects[y][x]!= null){
+					Point objPoint = toIso(x,y);
+					visibleObjects[y][x].draw(g2d,objPoint.x,objPoint.y);
+				}
 				if(entity != null){
-					eX = entity.getLocation().x;
-					eY = entity.getLocation().y;
-					if(eX==x && eY==y){
-						entityPos = toIso(y,x);
+					entityX = entity.getLocation().x;
+					entityY = entity.getLocation().y;
+					if(entityX==x && entityY==y){
+						entityPos = toIso(entityX,entityY);
 						entity.draw(g2d, entityPos.x, entityPos.y);
 					}
 				}
