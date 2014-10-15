@@ -46,7 +46,7 @@ public class World {
 	public World(LogicalTile[][] tiles, GameObject[][] gameboard, int ID) {
 		this.canvas = Main.cvs;
 		this.gameBoard = gameboard;
-		tiles = worldMap;
+		worldMap = tiles;
 		UnitPlayer tempPlayer = null;
 		for (int x = 0; x < gameboard.length; x++) {
 			for (int y = 0; y < gameboard[0].length; y++) {
@@ -73,7 +73,7 @@ public class World {
 	 * @return
 	 */
 	public World( LogicalTile[][] tiles, GameObject[][] gameboard) {
-		tiles = worldMap;
+		worldMap = tiles;
 		this.canvas = Main.cvs;
 		this.gameBoard = gameboard;
 		avatar = randomPositionAvatar();
