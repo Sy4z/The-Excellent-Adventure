@@ -55,6 +55,7 @@ public class TurnWatcher extends Thread{
 	public boolean turn(){
 		System.err.println("Start of turn");
 		world.startTurn();
+		System.out.println("turn started");
 
 		//When this loop breaks, turn is over
 
@@ -68,7 +69,10 @@ public class TurnWatcher extends Thread{
 	 * @return
 	 */
 	public boolean isTurn(){
-		return world.isTurn();
+		System.out.println("------------udhifhdsfau------");
+		boolean is = world.isTurn();
+		System.out.println("_______"+ is);
+		return is;
 	}
 
 
