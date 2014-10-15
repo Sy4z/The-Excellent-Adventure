@@ -22,7 +22,7 @@ public class Server {
 	boolean serverIsOn = true;
 	List<InetAddress> playerList = new ArrayList<InetAddress>(); //The list of players by their Unique IP. The order they are in tells the Server the turn order of Players
 	private static GameObject[][] mainGameBoard;
-	private int currentTurn = 1; //Index of the player in the list who currently has a turn. Assume it starts at 1.
+	private int currentTurn = 0; //Index of the player in the list who currently has a turn. Assume it starts at 1.
 	ServerSocket serverSock;
 	Socket accept;
 
@@ -44,7 +44,7 @@ public class Server {
 	System.out.println("Server Starting up");
 		while(serverIsOn){
 			try{
-				
+
 				serverSock = new ServerSocket(port);
 
 				int i=0;
@@ -56,7 +56,7 @@ public class Server {
 
 					ServerThread server = new ServerThread(accept);
 
-					
+
 					i++; //increments count
 					//playerList.add()
 
@@ -65,7 +65,7 @@ public class Server {
 				}
 			}
 			catch(IOException e){
-				System.out.println("SocketAccept(); Threw exception on server"); 
+				System.out.println("SocketAccept(); Threw exception on server");
 				e.printStackTrace();
 			}
 		}
@@ -145,7 +145,7 @@ public class Server {
 			currentTurn++; //Increment the current turn
 		}
 		else{
-			currentTurn = 1; //Tick back around to 1, because we reached the end of the playerlist
+			currentTurn = 0; //Tick back around to 1, because we reached the end of the playerlist
 		}
 	}
 

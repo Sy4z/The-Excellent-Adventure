@@ -213,6 +213,7 @@ public class MainMenuPanel extends JPanel {
 					d.dispose();
 
 					if (option.equals("server")) {
+						Main.onlineMode = true;
 						String input = JOptionPane
 								.showInputDialog("Enter IP Address:");
 						Main.setIP(input);

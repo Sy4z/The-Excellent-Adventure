@@ -14,6 +14,7 @@ import com.sun.accessibility.internal.resources.accessibility;
 
 import runGame.Main;
 import sun.text.normalizer.UBiDiProps;
+import tile.TileMultiton;
 import tile.TileMultiton.type;
 import dataStorage.Data;
 import dataStorage.Tuple;
@@ -102,8 +103,8 @@ public class World {
 		//Generate random map positions on the map until one is free then put the player there.
 		while(true){
 			//Limited until map scrolling is implemented.
-			int x = 5;//(int) (Math.random() * gameBoard.length);
-			int y = 5;//(int) (Math.random() * gameBoard[0].length);
+			int x = 6;//(int) (Math.random() * gameBoard.length);
+			int y = 5;///(int) (Math.random() * gameBoard[0].length);
 			if(gameBoard[x][y] == null){
 				gameBoard[x][y] = new UnitPlayer(new Point(x,y), id+1);
 				return (UnitPlayer) gameBoard[x][y];
@@ -130,8 +131,10 @@ public class World {
 	 * Resets turn information at the start of the turn
 	 */
 	public void startTurn(){
-		avatar.activate();
-		isActive = true;
+		if(!Main.onlineMode){
+			avatar.activate();
+			isActive = true;
+		}
 		calculatePossibleMovments();
 		updateGameBoardGraphics();
 
@@ -580,5 +583,66 @@ public class World {
 				if(gameBoard[x][y] != null)
 					t.add(gameBoard[x][y]);
 		canvas.updateGameBoardGraphics(t);
+	}
+
+	/**
+	 * This flips the GameBoard and world Map
+	 */
+	@Deprecated
+	public void flip(){
+		flipMap();
+		flipWorld();
+		updateGameBoardGraphics();
+	}
+
+	/**
+	 *Flips a 2d array such that the
+	 *y is reversed and so is the x.
+	 * @param map array to be fliped
+	 * @return new array of with x and y reversed.
+	 */
+	@Deprecated
+	private void flipWorld(){
+		GameObject[][] map = gameBoard;
+		GameObject[][] fliped = new GameObject[map.length][map[0].length];
+		int newX;
+		int newY =0;
+		for(int y = map.length-1;y>=0 ;y--){
+			newX = 0;
+			for(int x = map.length-1;x >=0;x--){
+				fliped[newY][newX] = map[y][x];
+				//System.out.println(newY+":"+newX+"<--"+y+":"+x);
+				newX++;
+			}
+			newY++;
+		}
+		gameBoard = fliped;
+	}
+
+	/**
+	 *Flips a 2d array such that the
+	 *y is reversed and so is the x.
+	 * @param map array to be fliped
+	 */
+	@Deprecated
+	private void flipMap(){
+		LogicalTile[][] map = worldMap;
+		LogicalTile[][] fliped = new LogicalTile[map.length][map[0].length];
+		int newX;
+		int newY =0;
+		for(int y = map.length-1;y>=0 ;y--){
+			newX = 0;
+			for(int x = map.length-1;x >=0;x--){
+				fliped[newY][newX] = map[y][x];
+				//System.out.println(newY+":"+newX+"<--"+y+":"+x);
+				newX++;
+			}
+			newY++;
+		}
+		worldMap = fliped;
+		for(int x = 0; x < worldMap.length; x++)
+			for(int y = 0; y <worldMap[x].length;y++)
+				if(gameBoard[x][y] != null)
+					gameBoard[x][y].curLocation = new Point(x,y);
 	}
 }

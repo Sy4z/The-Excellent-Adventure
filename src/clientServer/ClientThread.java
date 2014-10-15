@@ -71,68 +71,68 @@ public class ClientThread extends Thread {
 					String castTurnToken = (String)turnToken;
 					System.out.println(castTurnToken);
 					//If the toekn received was the server notification telling the client to start the turn,
-
-					Main.tw.turn(); //Start the turn on the local thread
-
-				} catch (ClassNotFoundException e1) {
-					System.out.println("Client: There was a problem Reading the first token (Accepting a turn notification from the server");
-					e1.printStackTrace();
-				}
-				System.out.println("Line after yourturn");
-
-				if(Main.tw.isTurn()){ //If the local thread is set to isTurn = true,
-
-					//Receive the GameBoard from the Server and update current game world
-					try {
-						String isMyTurn = "myturn";
-						System.out.println("second check passed");
-						boardToServer.writeObject(isMyTurn); //Tells the serverThread its this clients turn
-						Object gameBoardGeneric = boardFromServer.readObject(); //Read into  Generic Object Type
-						boardToServer.flush(); //Flush input buffer, just making sure it doesnt fill up
-						if(gameBoardGeneric instanceof GameObject[][]){ //Check that the generic object is an arraylist - Cant check further than this because nested generics get erased at runtime but at least theres some safeguard to typechecking
-							localGameMap = (GameObject[][])gameBoardGeneric; //Set the board as a local variable
-							Main.world.setGameBoard(localGameMap); //Update the local copy of the gameMap
-						}
-						else{
-							System.out.println("Client Expected the ArrayList of Players and Recieved Something that wasnt an ArrayList");
-						}
-					} catch (ClassNotFoundException e) {
-						System.out.println("ClientThread: Could not read CharacterList from Server");
-						e.printStackTrace();
+					if(castTurnToken.equals("yourturn")){
+						Main.tw.turn(); //Start the turn on the local thread
 					}
-
-					//Receive LogicalTiles Here
-
-
-
-
-
-
-
-					System.out.println("other stuffs");
-					//Wait for end turn phase then send server local gameBoard - Thread is now asleep for 1.5 seconds, for the network to wrap up everything else
-					while(Main.tw.startOfEndPhase == false) {//Loop around, then when it is not false, go to the instruction
-						System.out.println(Main.tw.startOfEndPhase);
+					} catch (ClassNotFoundException e1) {
+						System.out.println("Client: There was a problem Reading the first token (Accepting a turn notification from the server");
+						e1.printStackTrace();
 					}
+					System.out.println("Line after yourturn");
+
+					if(Main.tw.isTurn()){ //If the local thread is set to isTurn = true,
+
+						//Receive the GameBoard from the Server and update current game world
+						try {
+							String isMyTurn = "myturn";
+							System.out.println("second check passed");
+							boardToServer.writeObject(isMyTurn); //Tells the serverThread its this clients turn
+							Object gameBoardGeneric = boardFromServer.readObject(); //Read into  Generic Object Type
+							boardToServer.flush(); //Flush input buffer, just making sure it doesnt fill up
+							if(gameBoardGeneric instanceof GameObject[][]){ //Check that the generic object is an arraylist - Cant check further than this because nested generics get erased at runtime but at least theres some safeguard to typechecking
+								localGameMap = (GameObject[][])gameBoardGeneric; //Set the board as a local variable
+								Main.world.setGameBoard(localGameMap); //Update the local copy of the gameMap
+							}
+							else{
+								System.out.println("Client Expected the ArrayList of Players and Recieved Something that wasnt an ArrayList");
+							}
+						} catch (ClassNotFoundException e) {
+							System.out.println("ClientThread: Could not read CharacterList from Server");
+							e.printStackTrace();
+						}
+
+						//Receive LogicalTiles Here
 
 
-					//End Phase started so:
-					System.out.println("Before writing Game Board to Server");
-					boardToServer.writeObject(Main.world.getGameBoard());//Send current state of Local GameBoard to Server
-					//Send the Array of LogicalTiles to the server - Can Just Override the servers version
-
-					System.out.println("After writing Game Board to Server");
-
-
-					Main.tw.endOfEndPhase = true;//End end Phase
-					boardToServer.flush();//Flushing Input buffer, making sure it doesnt fill up
 
 
 
 
 
+						System.out.println("other stuffs");
+						//Wait for end turn phase then send server local gameBoard - Thread is now asleep for 1.5 seconds, for the network to wrap up everything else
+						while(Main.tw.startOfEndPhase == false) {//Loop around, then when it is not false, go to the instruction
+							System.out.println(Main.tw.startOfEndPhase);
+						}
 
-				}
+
+						//End Phase started so:
+						System.out.println("Before writing Game Board to Server");
+						boardToServer.writeObject(Main.world.getGameBoard());//Send current state of Local GameBoard to Server
+						//Send the Array of LogicalTiles to the server - Can Just Override the servers version
+
+						System.out.println("After writing Game Board to Server");
+
+
+						Main.tw.endOfEndPhase = true;//End end Phase
+						boardToServer.flush();//Flushing Input buffer, making sure it doesnt fill up
+
+
+
+
+
+
+					}
 
 
 
@@ -147,7 +147,7 @@ public class ClientThread extends Thread {
 				}
 
 
-			}
+		}
 
 
 			sock.close(); //Closes Socket - Important to do this but this closes the client thread completely, which might be a bad idea until the data beings being sent via a loop w/ exit clause

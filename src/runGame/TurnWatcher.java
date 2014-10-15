@@ -39,13 +39,14 @@ public class TurnWatcher extends Thread{
 		}
 		if(isEndPhase){
 			System.out.println("End Phase Started");
-		startOfEndPhase = true;
-		while(!endPhase())//This is just to make the turn stop until the client decides to send the data to the server
+			startOfEndPhase = true;
+			while(!endPhase())//This is just to make the turn stop until the client decides to send the data to the server
 
-		endOfEndPhase = false; //Change to null so that next time turn is called, its going to start the end phase again
-		isEndPhase = false; //Makes this go bback to false
+				System.out.println("End Phase Ended");
+			endOfEndPhase = false; //Change to null so that next time turn is called, its going to start the end phase again
+			isEndPhase = false; //Makes this go bback to false
 		}
-		}
+	}
 	/**
 	 * Method which controls the gameturns. Starts the turn in gamelogic, and is controlled by network
 	 * @return always returns true, will only return true when the entire turn is finished though.
@@ -77,7 +78,7 @@ public class TurnWatcher extends Thread{
 	 * @author syaz
 	 */
 	public boolean endPhase(){
-//		System.err.println("Entered endPhase");
+		//		System.err.println("Entered endPhase");
 		if(endOfEndPhase == true){
 			try {
 				System.err.println("Sleeping in endPhase");
