@@ -75,7 +75,7 @@ public class DrawMapWest implements IsoCanvas.DrawMap {
 					eY = entity.getLocation().y;
 					if(eX==x && eY==y){
 						entityPos = toIso(eX,eY);
-						entity.draw(g2d, entityPos.x, entityPos.y);
+						//entity.draw(g2d, entityPos.x, entityPos.y);
 					}
 				}	
 			}
