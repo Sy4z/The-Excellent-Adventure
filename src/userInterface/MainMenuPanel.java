@@ -49,7 +49,7 @@ public class MainMenuPanel extends JPanel {
 	private JFrame currentFrame; // Reference to the MainFrame.
 	private JPanel currentPanel; // Reference to current panel being used.
 	private String moveType; // This field is to indicate which controls are
-	// going to be used in the game.
+								// going to be used in the game.
 
 	private JLabel gameName;
 	private JButton newGameButton;
@@ -217,7 +217,7 @@ public class MainMenuPanel extends JPanel {
 								.showInputDialog("Enter IP Address:");
 						Main.setIP(input);
 					}
-					Main.runClientMain();
+					Main.runClientMain(Main.client);
 				}
 			});
 
@@ -251,8 +251,6 @@ public class MainMenuPanel extends JPanel {
 				@Override
 				public void paintComponent(Graphics g) {
 					g.drawImage(background.getImage(), 0, 0, null);
-					Main.server.startServer();
-					Main.server.runServer(Main.ipAddress, Main.port); //Put these here as it was the easiest way to get the server to actually start with a dialog open
 				}
 			};
 
@@ -260,26 +258,8 @@ public class MainMenuPanel extends JPanel {
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
 
-
-			d.add(mainPanel, BorderLayout.CENTER);
-
-
-
 			JLabel label = new JLabel("Running Server...");
 			JButton exit = new JButton("Exit");
-
-			mainPanel.add(label, BorderLayout.CENTER);
-			mainPanel.add(exit, BorderLayout.SOUTH);
-
-
-
-
-			d.setVisible(true);
-
-
-			label.setVisible(true);
-			//exit.setVisible(true);
-
 
 			exit.addActionListener(new ActionListener() {
 
@@ -290,14 +270,15 @@ public class MainMenuPanel extends JPanel {
 				}
 			});
 
-
 			mainPanel.setLayout(new BorderLayout());
+			mainPanel.add(label, BorderLayout.CENTER);
+			mainPanel.add(exit, BorderLayout.SOUTH);
+			d.add(mainPanel, BorderLayout.CENTER);
+
 			d.setLocationRelativeTo(null);
+			d.setVisible(true);
 
-
-
-
-
+			Main.runServerMain(Main.server);
 		}
 
 	}
@@ -343,17 +324,17 @@ public class MainMenuPanel extends JPanel {
 			}
 			final JList<String> list = new JList<String>(model);
 			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Makes
-			// sure
-			// that
-			// the
-			// user
-			// can
-			// only
-			// select
-			// one
-			// game
-			// to
-			// load.
+																		// sure
+																		// that
+																		// the
+																		// user
+																		// can
+																		// only
+																		// select
+																		// one
+																		// game
+																		// to
+																		// load.
 			JScrollPane scrollPane = new JScrollPane(list);
 
 			JPanel buttonPanel = new JPanel();
@@ -441,7 +422,7 @@ public class MainMenuPanel extends JPanel {
 			story.setEditable(false);
 			JScrollPane scrollPane = new JScrollPane(story);
 			scrollPane
-			.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+					.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 			JPanel buttonPanel = new JPanel();
 			buttonPanel.setLayout(new FlowLayout());
@@ -568,7 +549,7 @@ public class MainMenuPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+			Main.server.stopServer();
 			System.exit(0);
 		}
 

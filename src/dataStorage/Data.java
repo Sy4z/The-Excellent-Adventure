@@ -204,9 +204,13 @@ public class Data {
 	 * @return
 	 */
 	public static boolean deleteFile(String s){
-		File fi = new File("saves" + File.separatorChar + s);
-		for(File f : fi.listFiles()){
-			f.delete();
+			File fi = new File("saves" + File.separatorChar + s);
+		try{
+			for(File f : fi.listFiles()){
+				f.delete();
+			}
+		}catch(NullPointerException e){
+
 		}
 		return fi.delete();
 	}
