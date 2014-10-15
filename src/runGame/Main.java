@@ -1,8 +1,9 @@
 package runGame;
 
 import gameRender.IsoCanvas;
-import gameWorld.World;
+import gameWorld.*;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -12,6 +13,7 @@ import java.rmi.UnexpectedException;
 
 import javax.swing.JFrame;
 
+import sun.security.util.Length;
 import tile.TileMultiton.type;
 import userInterface.MainFrame;
 import clientServer.Client;
@@ -19,6 +21,7 @@ import clientServer.ClientThread;
 import clientServer.Server;
 import clientServer.ServerThread;
 import dataStorage.Data;
+import dataStorage.Tuple;
 
 /**
  * Main method, Ties the Program together
@@ -67,7 +70,18 @@ public  class Main {
 		mainFrame = new MainFrame();
 
 		cvs = new IsoCanvas(mainFrame.getWidth(), mainFrame.getHeight());
-		world = new World(null, -1, -1, cvs);
+		Tuple t = Data.testSet(null);
+
+		LogicalTile[][] lTiles = new LogicalTile[t.tiles[1].length][t.tiles.length];
+		GameObject[][] gobjs = new GameObject[t.tiles[1].length][t.tiles.length];
+
+		for(int i  =0; i < lTiles[1].length;i++){
+			for(int j = 0; j < lTiles.length;j++){
+				lTiles[i][j] = new LogicalTile(true);
+			}
+		}
+		gobjs[1][1] = new UnitPlayer(new Point(1,1),0);
+		world = new World(cvs, lTiles, gobjs);
 
 		try {
 			ipAddress = InetAddress.getLocalHost().getHostAddress();
