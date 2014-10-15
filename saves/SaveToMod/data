@@ -3,6 +3,7 @@
   <Tiles X="100" Y="100">
     <b Type="BLUE" />
     <f Type="FLOOR" />
+    <c Type="ClOSEDOOR" />
   </Tiles>
   <GameObject Size="100">
     <UnitPlayer>

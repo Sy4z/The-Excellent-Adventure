@@ -30,5 +30,9 @@ public abstract class GameObject implements Serializable{
 		curLocation = new Point(x, y);
 	}
 
+	public Point getLocation(){
+		return this.curLocation;
+	}
+
 
 }
