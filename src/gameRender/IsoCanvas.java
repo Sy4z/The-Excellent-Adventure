@@ -207,12 +207,12 @@ public class IsoCanvas extends JPanel{
 				if(g!=null){
 					Point objectPos = inObjectMap(g);
 					if(objectPos !=null){
-						//objectMap[objectPos.x][objectPos.y] = null; 
-						//objectMap[g.getLocation().x][g.getLocation().y] = g;
+						objectMap[objectPos.x][objectPos.y] = null; 
+						objectMap[g.getLocation().x][g.getLocation().y] = g;
 						this.repaint();
 					}
 					else{
-						//objectMap[g.getLocation().x][g.getLocation().y] = g;
+						objectMap[g.getLocation().x][g.getLocation().y] = g;
 						this.repaint();
 					}
 				}
