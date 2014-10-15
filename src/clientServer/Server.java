@@ -29,6 +29,7 @@ public class Server {
 
 	public Server(int numberPlayers){
 		this.numPlayers = numberPlayers;
+		this.setupInitialState();
 		//Get the initial State of the gameboard for the first player to receive;
 	}
 
@@ -141,7 +142,7 @@ public class Server {
 	}
 
 	public void setNextTurn(){
-		if((currentTurn+1) < playerList.size()){ //Make sure the next number doesnt tick over the max number of players
+		if((currentTurn) < playerList.size()){ //Make sure the next number doesnt tick over the max number of players
 			currentTurn++; //Increment the current turn
 		}
 		else{

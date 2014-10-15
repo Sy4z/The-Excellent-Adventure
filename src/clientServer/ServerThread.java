@@ -45,7 +45,7 @@ public class ServerThread extends Thread{
 		System.out.println("New Server Thread Created");//debugging info
 		this.socket = clientSocket;
 		Main.server.playerList.add(socket.getInetAddress());//Add this Client to the List of Clients in server - This means the Logic for starting turns can be addressed easily this way
-		turnNumber = Main.server.playerList.size(); //Since the value added will be in the last place in the list, just get the size to set the value
+		turnNumber = Main.server.playerList.size()-1; //Since the value added will be in the last place in the list, just get the size to set the value
 		//for receiving the character from the connected clientThread
 
 	}
@@ -86,15 +86,17 @@ public class ServerThread extends Thread{
 						System.out.println("ServerThread says Its My Turn : " + socket.getInetAddress().getHostAddress() +  " Is the IP");
 						//Send GameBoard current State to Client
 						gameBoardServer = Main.server.getMainGameBoard(); //Get the most updated recent copy of the gameBoard
+						
 						boardToClient.writeObject(gameBoardServer);//Write the gameboard to the client
 
 
-						boardToClient.flush();//Flush output buffer, making sure we dont get overloaded with info
+
 
 
 						// Recieve updated GameBoard from client at end of turn - Should sit here waiting for the token to come in so no logic needed here
 						try {
 							Object tempBoard = boardFromClient.readObject();
+							boardToClient.flush();//Flush output buffer, making sure we dont get overloaded with info
 							gameBoardServer = (GameObject[][]) tempBoard; //Reads the UnitPlayer from the temp object, casting it as correct type and stores it
 							Main.server.setMainGameBoard(gameBoardServer);//Update main board in Server so all threads can see it
 
