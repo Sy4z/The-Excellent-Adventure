@@ -55,9 +55,10 @@ public class WorldTests {
 //	}
 
 	@Test
-	public void boundsTest_001(){
+	public void constructorTest_001(){
 		World w = utils.createWorld();
-		w.
+		World wrld = new World(w.getWorldMap(), w.getGameBoard(), w.getAvatar().getID());
+		assertTrue(w.getAvatar().equals(wrld.getAvatar()));
 	}
 
 	@Test

@@ -64,7 +64,7 @@ public class World {
 		cursor = new UnitCursor(avatar.curLocation, -1);
 		checkPlayerStatus();
 		startTurn();
-		updateGameBoardGraphics();
+		//updateGameBoardGraphics();
 
 	}
 
