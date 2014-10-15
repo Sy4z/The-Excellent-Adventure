@@ -39,7 +39,7 @@ public class IsoCanvas extends JPanel{
 	private ArrayList<Point> HIGHLIGHTED_TILES;
 	private UnitCursor  cursor;
 	private BufferedImage highLight;
-	
+
 	/**
 	 * Initialise the IsoCanvas.
 	 * @param Width Width of canvas
@@ -106,7 +106,7 @@ public class IsoCanvas extends JPanel{
 			mapX = 0;
 			for(int x = veiwport_y;x<veiwport_size+veiwport_x;x++){
 				visableTiles[mapY][mapX] = map[y][x];
-			mapX++;
+				mapX++;
 			}
 			mapY++;
 		}
@@ -127,7 +127,7 @@ public class IsoCanvas extends JPanel{
 			mapX = 0;
 			for(int x = veiwport_y;x<veiwport_size+veiwport_x;x++){
 				visibleObjects[mapY][mapX] = objectMap[y][x];
-			mapX++;
+				mapX++;
 			}
 			mapY++;
 		}
@@ -145,7 +145,16 @@ public class IsoCanvas extends JPanel{
 		this.entity = unit;
 		while(!arrayDeque.isEmpty()){
 			Point p = arrayDeque.pop();
-			entity.upDateLocation(p);
+			Point objectPos = inObjectMap(unit);
+			if(objectPos !=null){
+				//entity.upDateLocation(p);
+				objectMap[objectPos.x][objectPos.y] = null; 
+				objectMap[p.y][p.x] = unit;
+			}
+			else{
+				//entity.upDateLocation(p);
+				objectMap[p.y][p.x] = unit;
+			}
 			this.repaint();
 			i++;
 		}
@@ -169,12 +178,45 @@ public class IsoCanvas extends JPanel{
 	public void highlight(ArrayList<Point> tiles){
 		this.HIGHLIGHTED_TILES = tiles;
 		repaint();
-		
-	}
 
+	}
+	/**
+	 * 
+	 * @param ob
+	 * @return
+	 */
+	public Point inObjectMap(GameObject ob ){
+		for(int y = 0;y<objectMap.length;y++ ){
+			for(int x = 0;x < objectMap[0].length;x++){
+				if(objectMap[y][x]!=null){
+					if(objectMap[y][x].equals(ob)){
+						return new Point(x,y);
+					}
+				}
+			}
+		}
+		return null;
+	}
+	/**
+	 * 
+	 * @param gObs
+	 */
 	public void updateGameBoardGraphics(ArrayList<GameObject> gObs) {
-		for(GameObject g :gObs){
-			objectMap[g.getLocation().x][g.getLocation().y] = g;
+		if(gObs!= null){
+			for(GameObject g :gObs){
+				if(g!=null){
+					Point objectPos = inObjectMap(g);
+					if(objectPos !=null){
+						//objectMap[objectPos.x][objectPos.y] = null; 
+						//objectMap[g.getLocation().x][g.getLocation().y] = g;
+						this.repaint();
+					}
+					else{
+						//objectMap[g.getLocation().x][g.getLocation().y] = g;
+						this.repaint();
+					}
+				}
+			}
 		}
 	}
 	/**
