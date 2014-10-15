@@ -17,7 +17,7 @@ import dataStorage.Tuple;
 
 /**
  * Main method, Ties the Program together
- * @author Syaz
+ * @author Jarred
  * honejarred@gmail.com
  */
 
