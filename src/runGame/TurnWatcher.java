@@ -11,7 +11,7 @@ import gameWorld.World;
 
 
 
-public class TurnWatcher {
+public class TurnWatcher extends Thread{
 	public World world;
 	public static boolean endOfEndPhase = false; //Signifies end of end Phase, so the next turn can switch
 	public static boolean startOfEndPhase = false;
@@ -19,7 +19,8 @@ public class TurnWatcher {
 		this.world = world;
 	}
 
-
+	public void run(){
+	}
 	/**
 	 * Method which controls the gameturns. Starts the turn in gamelogic, and is controlled by network
 	 * @return always returns true, will only return true when the entire turn is finished though.
@@ -66,7 +67,7 @@ public class TurnWatcher {
 	 * @author syaz
 	 */
 	public boolean endPhase(){
-		System.err.println("Entered endPhase");
+//		System.err.println("Entered endPhase");
 		if(endOfEndPhase == true){
 			try {
 				System.err.println("Sleeping in endPhase");

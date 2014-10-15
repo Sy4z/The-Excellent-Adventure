@@ -71,6 +71,7 @@ public class ClientThread extends Thread {
 					String castTurnToken = (String)turnToken;
 					System.out.println(castTurnToken);
 					//If the toekn received was the server notification telling the client to start the turn,
+					
 					Main.tw.turn(); //Start the turn on the local thread
 
 				} catch (ClassNotFoundException e1) {
@@ -78,6 +79,7 @@ public class ClientThread extends Thread {
 					e1.printStackTrace();
 				}
 				System.out.println("Line after yourturn");
+			
 				if(Main.tw.isTurn()){ //If the local thread is set to isTurn = true,
 
 					//Receive the GameBoard from the Server and update current game world
@@ -107,9 +109,11 @@ public class ClientThread extends Thread {
 
 
 
-
+					System.out.println("other stuffs");
 					//Wait for end turn phase then send server local gameBoard - Thread is now asleep for 1.5 seconds, for the network to wrap up everything else
-					while(Main.tw.startOfEndPhase == false); //Loop around, then when it is not false, go to the instruction
+					while(Main.tw.startOfEndPhase == false) {//Loop around, then when it is not false, go to the instruction
+						System.out.println(Main.tw.startOfEndPhase);
+					}
 
 
 					//End Phase started so:

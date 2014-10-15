@@ -4,22 +4,14 @@ import gameRender.IsoCanvas;
 import gameWorld.*;
 
 import java.awt.Point;
-import java.io.IOException;
 import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.UnknownHostException;
-import java.rmi.UnexpectedException;
 
 import javax.swing.JFrame;
 
-import sun.security.util.Length;
-import tile.TileMultiton.type;
 import userInterface.MainFrame;
 import clientServer.Client;
-import clientServer.ClientThread;
 import clientServer.Server;
-import clientServer.ServerThread;
 import dataStorage.Data;
 import dataStorage.Tuple;
 
@@ -90,6 +82,7 @@ public  class Main {
 			e.printStackTrace();
 		}
 		tw = new TurnWatcher(world);
+		tw.start();
 		//The following block deals with starting the server
 		server = new Server(numberOfPlayers);
 		client = new Client();
