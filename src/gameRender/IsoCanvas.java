@@ -72,6 +72,7 @@ public class IsoCanvas extends JPanel{
 		map = Tiles;
 		this.width = Width;
 		this.height = Height;
+		objectMap = new GameObject[map.length][map[0].length];
 		//System.out.println("width :" +width+"height :"+height);//canvas debug
 		this.renderStratagy = new DrawMapNorth(this.tile_width, this.tile_height, this.width, this.height, veiwport_size);
 	}
@@ -92,7 +93,7 @@ public class IsoCanvas extends JPanel{
 		//g2d.drawRect(0,0,width,height);// debug draw rectangle around canvas
 	}
 	/**
-	 * Takes the origin x and y coordinates and size of the area 
+	 * Takes the origin x and y coordinates and size of the area
 	 * to be drawn to screen(veiwport) and loads the elements
 	 * of the map array within those bounds into a new array.
 	 * @return the subset of the map that is visible to be passed to the render
@@ -113,7 +114,7 @@ public class IsoCanvas extends JPanel{
 		return visableTiles;
 	}
 	/**
-	 * Takes the origin x and y coordinates and size of the area 
+	 * Takes the origin x and y coordinates and size of the area
 	 * to be drawn to screen(veiwport) and loads the elements
 	 * of the map array within those bounds into a new array.
 	 * @return the subset of the map that is visible to be passed to the render
@@ -148,7 +149,7 @@ public class IsoCanvas extends JPanel{
 			Point objectPos = inObjectMap(unit);
 			if(objectPos !=null){
 				//entity.upDateLocation(p);
-				objectMap[objectPos.x][objectPos.y] = null; 
+				objectMap[objectPos.x][objectPos.y] = null;
 				objectMap[p.y][p.x] = unit;
 			}
 			else{
@@ -181,7 +182,7 @@ public class IsoCanvas extends JPanel{
 
 	}
 	/**
-	 * 
+	 *
 	 * @param ob
 	 * @return
 	 */
@@ -198,7 +199,7 @@ public class IsoCanvas extends JPanel{
 		return null;
 	}
 	/**
-	 * 
+	 *
 	 * @param gObs
 	 */
 	public void updateGameBoardGraphics(ArrayList<GameObject> gObs) {
@@ -207,7 +208,7 @@ public class IsoCanvas extends JPanel{
 				if(g!=null){
 					Point objectPos = inObjectMap(g);
 					if(objectPos !=null){
-						objectMap[objectPos.x][objectPos.y] = null; 
+						objectMap[objectPos.x][objectPos.y] = null;
 						objectMap[g.getLocation().x][g.getLocation().y] = g;
 						this.repaint();
 					}
@@ -220,14 +221,14 @@ public class IsoCanvas extends JPanel{
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @param u
 	 */
 	public void initEntity(Unit u){
 		this.entity = u;
 	}
 	/**
-	 * 
+	 *
 	 * @param ob
 	 */
 	public void spawnObject(GameObject ob){
@@ -293,7 +294,7 @@ public class IsoCanvas extends JPanel{
 	}
 	/**
 	 * RenderStrategy InterFace
-	 * This is were the calculations for converting a 2d array to 
+	 * This is were the calculations for converting a 2d array to
 	 * isometric cordinates occures and the rendering to screen.
 	 * @author gmos
 	 *
@@ -331,7 +332,7 @@ public class IsoCanvas extends JPanel{
 		public void draw(Graphics2D g2d, TileMultiton.type[][] map, GameObject[][] visibleObjects, Unit entity, UnitCursor cursor);
 	}
 	/**
-	 * 
+	 *
 	 * Nicely wrapped debug statements related to the tile map
 	 *                   WORK IN PROGRESS
 	 */
