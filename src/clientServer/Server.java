@@ -54,9 +54,9 @@ public class Server {
 					System.err.println("Waiting for Connection");
 					players.add(serverSock.accept());
 					//Will only reach this point if the socket actually accepts a connection - considering accept() blocks until it receives input
-					System.out.println("Accepted Connection");
+					System.out.println("Accepted Connection: " + players.get(i++).getInetAddress());
 
-					i++; //increments count
+
 					//playerList.add()
 
 					server.start();
