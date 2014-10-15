@@ -23,6 +23,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.DOMBuilder;
@@ -91,12 +92,13 @@ public class Data {
 		Element tilesNode = root.getChild("Tiles");
 
 		error("Got Tiles");
-
+		int playerID = Integer.parseInt(root.getChild("LocalID").getAttribute("ID").getValue());
 		for(Element e : tilesNode.getChildren()){
 
 			TileMultiton.getTile(TileMultiton.getTypeByRepresentation(e.getName().charAt(0)));
 
 		}
+
 		error("Tiles loaded");
 
 		//get the size of the map from the xml tree
@@ -200,7 +202,7 @@ public class Data {
 	/**
 	 * Deletes the file denoted by the given string from the save folder
 	 *
-	 * @param s 
+	 * @param s
 	 * @return
 	 */
 	public static boolean deleteFile(String s){
@@ -429,6 +431,20 @@ public class Data {
 			}
 		}
 		root.addContent(subRoot);
+		Field playerAvatar;
+		try {
+			playerAvatar = Main.world.getClass().getDeclaredField("avatar");
+			playerAvatar.setAccessible(true);
+			UnitPlayer p = (UnitPlayer)playerAvatar.get(Main.world);
+			elem = new Element("LocalID");
+			elem.setAttribute("ID", p.getID()+"");
+			root.addContent(elem);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+
+
 
 		//----------Output the XML--------
 		XMLOutputter xmlOut = new XMLOutputter();
