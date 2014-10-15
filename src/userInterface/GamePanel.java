@@ -535,7 +535,7 @@ public class GamePanel extends JPanel {
 
 		String[] loadNames = Data.getLoadFiles();
 
-		DefaultListModel<String> model = new DefaultListModel<String>(); // Add
+		final DefaultListModel<String> model = new DefaultListModel<String>(); // Add
 		// saved
 		// game
 		// names
@@ -558,7 +558,7 @@ public class GamePanel extends JPanel {
 																	// game
 																	// to
 																	// load.
-		JScrollPane scrollPane = new JScrollPane(list);
+		final JScrollPane scrollPane = new JScrollPane(list);
 
 		JPanel savePanel = new JPanel();
 		savePanel.setLayout(new BorderLayout());
@@ -618,6 +618,28 @@ public class GamePanel extends JPanel {
 				}
 			}
 		});
+		JButton deleteButton = new JButton("Delete");
+		deleteButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String n = list.getSelectedValue();
+				Data.deleteFile(n);
+
+				String[] modifiedList = Data.getLoadFiles();
+
+				model.removeAllElements();
+
+				for (String name : modifiedList) {
+					model.addElement(name);
+				}
+
+				list.setModel(model);
+				scrollPane.revalidate();
+				scrollPane.repaint();
+
+			}
+		});
 
 		list.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -630,7 +652,7 @@ public class GamePanel extends JPanel {
 
 		buttonPanel.add(okButton);
 		buttonPanel.add(cancelButton);
-		buttonPanel.add(new JButton("Delete"));
+		buttonPanel.add(deleteButton);
 
 		scrollPane.setOpaque(false);
 		namePanel.setOpaque(false);

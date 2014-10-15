@@ -398,12 +398,8 @@ public class MainMenuPanel extends JPanel {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					int index = list.getSelectedIndex();
 					String n = list.getSelectedValue();
-					System.out.println(n + " = " + index);
-
-					boolean i = Data.deleteFile(n);
-					System.out.println(i);
+					Data.deleteFile(n);
 
 					String[] modifiedList = Data.getLoadFiles();
 
