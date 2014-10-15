@@ -63,7 +63,7 @@ public class ServerThread extends Thread{
 
 			//Base this on ticks (Turns) - Send to every client on every turn. Whether you as a local player will have moved or not is based on game logic
 			while(true){
-				
+
 				if(Main.server.currentTurn() == this.turnNumber){
 					System.out.println("Reads turn number");
 					String yourTurn = "yourturn";
@@ -134,8 +134,8 @@ public class ServerThread extends Thread{
 					}
 					//Wrap up and wait for next looparound
 
-					if(socket == null){ //If client DC's? Im not sure how to check for this.
-						socket.close();
+					if(boardFromClient == null){ //If client DC's? Im not sure how to check for this.
+						return;
 					}
 					boardToClient.flush();
 				}

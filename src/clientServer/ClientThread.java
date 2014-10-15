@@ -71,7 +71,7 @@ public class ClientThread extends Thread {
 					String castTurnToken = (String)turnToken;
 					System.out.println(castTurnToken);
 					//If the toekn received was the server notification telling the client to start the turn,
-					
+
 					Main.tw.turn(); //Start the turn on the local thread
 
 				} catch (ClassNotFoundException e1) {
@@ -79,7 +79,7 @@ public class ClientThread extends Thread {
 					e1.printStackTrace();
 				}
 				System.out.println("Line after yourturn");
-			
+
 				if(Main.tw.isTurn()){ //If the local thread is set to isTurn = true,
 
 					//Receive the GameBoard from the Server and update current game world
