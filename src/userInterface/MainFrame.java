@@ -23,7 +23,7 @@ import runGame.Main;
 public class MainFrame extends JFrame implements WindowListener {
 
 	private static final long serialVersionUID = 1L;
-	private ImageIcon background = new ImageIcon("post-apoc.jpg");
+	private ImageIcon background = new ImageIcon("title.png");
 	private static ImageIcon loadBackground = new ImageIcon("robot.png");
 	public MainMenuPanel mainPanel; //Had to add this here chet, needed public access to the panel
 
