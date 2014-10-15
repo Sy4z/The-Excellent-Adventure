@@ -46,13 +46,7 @@ public class ServerThread extends Thread{
 		this.socket = clientSocket;
 		Main.server.playerList.add(socket.getInetAddress());//Add this Client to the List of Clients in server - This means the Logic for starting turns can be addressed easily this way
 		turnNumber = Main.server.playerList.size(); //Since the value added will be in the last place in the list, just get the size to set the value
-		try {
-			boardFromClient = new ObjectInputStream(socket.getInputStream());
-			boardToClient = new ObjectOutputStream(socket.getOutputStream()); //for outputting all the other characters to the server
-		} catch (IOException e) {
-			System.out.println("SERVER IS THROWING ERROR TOO");
-			e.printStackTrace();
-		} //for receiving the character from the connected clientThread
+	 //for receiving the character from the connected clientThread
 
 	}
 
@@ -62,6 +56,10 @@ public class ServerThread extends Thread{
 	 */
 	public void run(){
 		try {
+			boardToClient = new ObjectOutputStream(socket.getOutputStream()); //for outputting all the other characters to the server
+			boardFromClient = new ObjectInputStream(socket.getInputStream());
+
+
 
 			//Base this on ticks (Turns) - Send to every client on every turn. Whether you as a local player will have moved or not is based on game logic
 			while(true){

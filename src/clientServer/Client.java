@@ -16,14 +16,14 @@ import java.net.UnknownHostException;
  */
 public class Client {
 
-	
+
 	public Client(){
 		//Needs no constructor Logic currently
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * This method is in charge of initialising the client
 	 * @param IP Address, Port Number
@@ -37,7 +37,7 @@ public class Client {
 			client.start();
 		} catch (UnknownHostException e) {
 
-			e.printStackTrace();
+
 		} catch (IOException e) {
 
 			e.printStackTrace();

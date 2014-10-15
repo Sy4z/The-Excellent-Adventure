@@ -183,7 +183,8 @@ public class GamePanel extends JPanel {
 	}
 
 	/**
-	 * The inventory
+	 * The inventory displays the items that the player can pick up in the game
+	 * and also the number of items each player has at the given moment.
 	 */
 	private void setInventory() {
 		ImageIcon katana = new ImageIcon("ImageKatana.jpg");
@@ -473,6 +474,13 @@ public class GamePanel extends JPanel {
 
 	}
 
+	/**
+	 * This listener class is for the north button. It rotates the map to face
+	 * the north.
+	 *
+	 * @author Venkata Peesapati
+	 *
+	 */
 	class NorthButtonListener implements ActionListener {
 
 		@Override
@@ -483,6 +491,13 @@ public class GamePanel extends JPanel {
 
 	}
 
+	/**
+	 * This listener class is for the south button. It rotates the map to face
+	 * the south.
+	 *
+	 * @author Venkata Peesapati
+	 *
+	 */
 	class SouthButtonListener implements ActionListener {
 
 		@Override
@@ -493,6 +508,13 @@ public class GamePanel extends JPanel {
 
 	}
 
+	/**
+	 * This listener class is for the east button. It rotates the map to face
+	 * the east.
+	 *
+	 * @author Venkata Peesapati
+	 *
+	 */
 	class EastButtonListener implements ActionListener {
 
 		@Override
@@ -503,6 +525,13 @@ public class GamePanel extends JPanel {
 
 	}
 
+	/**
+	 * This listener class is for the west button. It rotates the map to face
+	 * the west.
+	 *
+	 * @author Venkata Peesapati
+	 *
+	 */
 	class WestButtonListener implements ActionListener {
 
 		@Override
@@ -514,7 +543,9 @@ public class GamePanel extends JPanel {
 	}
 
 	/**
-	 *
+	 * This method is used for opening the dialog box to save the game. A list
+	 * of the already saved games are displayed so that they can be overwritten
+	 * if required.
 	 */
 	public void saveGame() {
 		Image resizedImage = background.getImage().getScaledInstance(400, 300,
@@ -770,6 +801,13 @@ public class GamePanel extends JPanel {
 		}
 	}
 
+	/**
+	 * This MouseListener class is used to change the color of the text when
+	 * hovering over a button. It is used for all the buttons in the Game Panel.
+	 *
+	 * @author Venkata Peesapati
+	 *
+	 */
 	class HoverButtonListener implements MouseListener {
 
 		@Override
