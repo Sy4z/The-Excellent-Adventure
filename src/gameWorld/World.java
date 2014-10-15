@@ -2,13 +2,16 @@ package gameWorld;
 
 import gameRender.IsoCanvas;
 import gameWorld.Inventory.itemTypes;
+
 import java.awt.Point;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+
 import com.sun.accessibility.internal.resources.accessibility;
+
 import sun.text.normalizer.UBiDiProps;
 import tile.TileMultiton.type;
 import dataStorage.Data;
@@ -39,14 +42,23 @@ public class World {
 	 *
 	 * @return
 	 */
-	public World(String save, int width, int height, IsoCanvas cvs) {
-		Tuple t = Data.testSet(null);
+	public World(IsoCanvas cvs, LogicalTile[][] tiles, GameObject[][] gameboard, int ID) {
 		this.canvas = cvs;
-		//units = (UnitPlayer[]) t.units;
-		worldMap = new LogicalTile[t.tiles.length][t.tiles[0].length];
-		gameBoard = new GameObject[t.tiles.length][t.tiles[0].length];
-		populateWorldMape(t.tiles);
-		avatar = (UnitPlayer) t.units[0];
+		this.gameBoard = gameboard;
+		UnitPlayer tempPlayer = null;
+		for (int x = 0; x < gameboard.length; x++) {
+			for (int y = 0; y < gameboard[0].length; y++) {
+				if (gameboard[x][y] instanceof UnitPlayer) {
+					if (((UnitPlayer) gameboard[x][y]).ID == ID) {
+						avatar = (UnitPlayer) gameboard[x][y];
+					}
+				}
+			}
+		}
+		if (avatar == null) {
+			avatar = randomPositionAvatar();
+		}
+
 		cursor = new UnitCursor(avatar.curLocation, -1);
 		checkPlayerStatus();
 		startTurn();
@@ -54,19 +66,44 @@ public class World {
 	}
 
 	/**
-	 * This will be redoen once loading wroks.
-	 * @param tiles
+	 * Constructor
+	 *
+	 * @return
 	 */
-	private void populateWorldMape(type[][] tiles) {
-		for(int x = 0; x < tiles.length; x++)
-			for(int y = 0; y < tiles[0].length; y++){
-				//if(tiles[x][y].DOOR)
-				//	worldMap[x][y] = new LogicalTileDoor(tiles[x][y] != null);
-				//	else
-				worldMap[x][y] = new LogicalTile(tiles[x][y] != null);
-			}
+	public World(IsoCanvas cvs, LogicalTile[][] tiles, GameObject[][] gameboard) {
+		this.canvas = cvs;
+		this.gameBoard = gameboard;
+		avatar = randomPositionAvatar();
+		cursor = new UnitCursor(avatar.curLocation, -1);
+		checkPlayerStatus();
+		startTurn();
+
 	}
 
+	/**
+	 * Generates a new player at a random position on the map;
+	 * @return
+	 */
+	private UnitPlayer randomPositionAvatar() {
+		int id = -1;
+		//Get the current Highest ID to set the new Avatars ID to one higher than that ID
+		for (int x = 0; x < gameBoard.length; x++) {
+			for (int y = 0; y < gameBoard[0].length; y++) {
+				if (gameBoard[x][y] instanceof UnitPlayer) {
+					id = Math.max(id, ((UnitPlayer) gameBoard[x][y]).getID());
+				}
+			}
+		}
+		//Generate random map positions on the map untill one is free then put the player there.
+		while(true){
+			int x = (int) (Math.random() * gameBoard.length);
+			int y = (int) (Math.random() * gameBoard[0].length);
+			if(gameBoard[x][y] == null){
+				gameBoard[x][y] = new UnitPlayer(new Point(x,y), id+1);
+				return (UnitPlayer) gameBoard[x][y];
+			}
+		}
+	}
 
 	/**
 	 *Updates active player
