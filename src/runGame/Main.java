@@ -36,7 +36,7 @@ public  class Main {
 	public static World world;
 	public static IsoCanvas cvs;
 	public static TurnWatcher tw;
-
+	public static boolean onlineMode;
 
 
 	/**
