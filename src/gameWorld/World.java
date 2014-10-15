@@ -45,6 +45,7 @@ public class World {
 		this.canvas = Main.cvs;
 		this.gameBoard = gameboard;
 		worldMap = tiles;
+		LogicalTileNullHandler();
 		UnitPlayer tempPlayer = null;
 		for (int x = 0; x < gameboard.length; x++) {
 			for (int y = 0; y < gameboard[0].length; y++) {
@@ -73,6 +74,7 @@ public class World {
 	 */
 	public World( LogicalTile[][] tiles, GameObject[][] gameboard) {
 		worldMap = tiles;
+		LogicalTileNullHandler();
 		this.canvas = Main.cvs;
 		this.gameBoard = gameboard;
 		avatar = randomPositionAvatar();
@@ -131,6 +133,8 @@ public class World {
 		avatar.activate();
 		isActive = true;
 		calculatePossibleMovments();
+		updateGameBoardGraphics();
+
 	}
 
 
@@ -228,9 +232,13 @@ public class World {
 	private ArrayList<Point> tilesToHightlight() {
 		ArrayList<Point> highPoints = new ArrayList<Point>();
 		for(int x = 0; x < worldMap.length; x++)
-			for(int y = 0; y < worldMap[0].length; y++)
+			for(int y = 0; y < worldMap[0].length; y++){
+				System.out.println(worldMap[x][y]);
+				System.out.println(worldMap[x][y].isReachableByActive());
+				System.out.println(x + " " + y);
 				if(worldMap[x][y].isReachableByActive() && !(gameBoard[x][y] instanceof StationaryObject))
 					highPoints.add(new Point(x, y));
+			}
 		return highPoints;
 	}
 
@@ -453,6 +461,15 @@ public class World {
 	public int[] getInventory(){
 		return avatar.getInventory();
 	}
+	/**
+	 * If a logical tile is null replace it with an inaccessible  tile.
+	 */
+	private void LogicalTileNullHandler(){
+		for(int x = 0; x < worldMap.length; x++)
+			for(int y =0; y <worldMap[x].length; y++)
+				if(worldMap[x][y] == null)
+					worldMap[x][y] = new LogicalTile(false);
+	}
 
 
 	//Networking Methods--------------------------------------------------------------------------------------------
@@ -485,6 +502,7 @@ public class World {
 	 */
 	public void setWorldMap(LogicalTile[][] updatedMap){
 		this.worldMap = updatedMap;
+		LogicalTileNullHandler();
 	}
 
 
