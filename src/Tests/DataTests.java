@@ -3,6 +3,8 @@
  */
 package Tests;
 
+import gameWorld.World;
+
 import org.junit.Test;
 
 /**
@@ -10,8 +12,8 @@ import org.junit.Test;
  *
  */
 public class DataTests {
-	World w = new Worl
+
 	public @Test void testSave1(){
-		
+		World w = utils.createWorld();
 	}
 }

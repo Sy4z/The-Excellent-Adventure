@@ -130,8 +130,10 @@ public class World {
 	 * Resets turn information at the start of the turn
 	 */
 	public void startTurn(){
-		avatar.activate();
-		isActive = true;
+		if(Main.onlineMode){
+			avatar.activate();
+			isActive = true;
+		}
 		calculatePossibleMovments();
 		updateGameBoardGraphics();
 
