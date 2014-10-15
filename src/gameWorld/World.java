@@ -591,6 +591,7 @@ public class World {
 	public void flip(){
 		flipMap();
 		flipWorld();
+		updateGameBoardGraphics();
 	}
 
 	/**
@@ -636,5 +637,9 @@ public class World {
 			newY++;
 		}
 		worldMap = fliped;
+		for(int x = 0; x < worldMap.length; x++)
+			for(int y = 0; y <worldMap[x].length;y++)
+				if(gameBoard[x][y] != null)
+					gameBoard[x][y].curLocation = new Point(x,y);
 	}
 }
