@@ -24,7 +24,7 @@ public class StationaryObjectHatStand extends StationaryObject{
 	public StationaryObjectHatStand(Point p){
 		super(p);
 		try {
-			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/tentacle.png")),"Player");
+			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/tentacle.png")),"hasStand");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

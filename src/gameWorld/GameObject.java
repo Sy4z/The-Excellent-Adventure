@@ -22,18 +22,36 @@ public abstract class GameObject implements Serializable{
 
 	public abstract void draw(Graphics2D g, int dx, int dy);
 
+	/**
+	 * Constructor from point;
+	 * @param p
+	 */
 	public GameObject(Point p){
 		curLocation = p;
 	}
 
+	/**
+	 * Constuctor from XY
+	 * @param x
+	 * @param y
+	 */
 	public GameObject(int x, int y){
 		curLocation = new Point(x, y);
 	}
 
+	/**
+	 * Returns the current location of this GameObject
+	 * @return the location of this GameObject
+	 */
 	public Point getLocation(){
 		return this.curLocation;
 	}
 
+	/**
+	 * Compares if two game ojects are equal by comparing their location
+	 * @param Other GameObject
+	 * @return if this is equals to another gameObject
+	 */
 	public boolean equals(GameObject g){
 		if(g == null)
 			return false;
