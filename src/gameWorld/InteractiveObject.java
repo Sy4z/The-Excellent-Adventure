@@ -9,7 +9,7 @@ import java.awt.Point;
  *
  */
 public abstract class InteractiveObject extends GameObject{
-
+	
 	public InteractiveObject(Point p) {
 		super(p);
 	}

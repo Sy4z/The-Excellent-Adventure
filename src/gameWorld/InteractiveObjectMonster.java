@@ -4,13 +4,16 @@ import gameWorld.Inventory.itemTypes;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class InteractiveObjectMonster extends InteractiveObject{
 
 	private int[] contents;
 	//This is the combat power of a monster
 	private int str;
-
 	/**
 	 * Makes a monster given a it's items held, combat power and location
 	 * @param loot
