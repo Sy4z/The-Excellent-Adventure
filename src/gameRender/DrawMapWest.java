@@ -1,5 +1,6 @@
 package gameRender;
 
+import gameWorld.GameObject;
 import gameWorld.Unit;
 import gameWorld.UnitCursor;
 
@@ -34,7 +35,7 @@ public class DrawMapWest implements IsoCanvas.DrawMap {
 	 *forward, the visibleTiles array is  not fliped before reading occurs.
 	 */
 	@Override
-	public void draw(Graphics2D g2d, TileMultiton.type[][] visibleTiles, Unit entity, UnitCursor cursor) {
+	public void draw(Graphics2D g2d, TileMultiton.type[][] visibleTiles,GameObject[][] visibleObjects, Unit entity, UnitCursor cursor) {
 		//System.out.println("DrawMapWest.draw");
 		Tile tile;
 		Point tilePos;
@@ -60,6 +61,10 @@ public class DrawMapWest implements IsoCanvas.DrawMap {
 					if(cX == x && cY == y){
 						cursorPos = toIso(x,y);
 						cursor.draw(g2d, cursorPos.x, cursorPos.y);
+					}
+					if(visibleObjects[y][x]!= null){
+						Point objPoint = toIso(x,y);
+						visibleObjects[y][x].draw(g2d,objPoint.x,objPoint.y);
 					}
 				}
 				if(entity != null){

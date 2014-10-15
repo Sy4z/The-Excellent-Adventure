@@ -86,7 +86,8 @@ public class IsoCanvas extends JPanel{
 		g2d.setColor(new Color(50,50,60));
 		g2d.fillRect(0,0,width,height);
 		TileMultiton.type[][] visibleTiles = loadVisibleTiles();
-		renderStratagy.draw(g2d, visibleTiles, entity, cursor);
+		GameObject[][] visibleObjects = loadVisibleObjects();
+		renderStratagy.draw(g2d, visibleTiles,visibleObjects, entity, cursor);
 		//g2d.fillRect((width/2)-5,(height/2-5),10,10); //debug center of canvas.
 		//g2d.drawRect(0,0,width,height);// debug draw rectangle around canvas
 	}
@@ -110,6 +111,27 @@ public class IsoCanvas extends JPanel{
 			mapY++;
 		}
 		return visableTiles;
+	}
+	/**
+	 * Takes the origin x and y coordinates and size of the area 
+	 * to be drawn to screen(veiwport) and loads the elements
+	 * of the map array within those bounds into a new array.
+	 * @return the subset of the map that is visible to be passed to the render
+	 * strategy.
+	 */
+	private GameObject[][] loadVisibleObjects(){
+		GameObject[][] visibleObjects = new GameObject[veiwport_size][veiwport_size];
+		int mapX;
+		int mapY=0;
+		for(int y = veiwport_y;y<(veiwport_size+veiwport_y);y++){
+			mapX = 0;
+			for(int x = veiwport_y;x<veiwport_size+veiwport_x;x++){
+				visibleObjects[mapY][mapX] = objectMap[y][x];
+			mapX++;
+			}
+			mapY++;
+		}
+		return visibleObjects;
 	}
 	/**
 	 * Takes a unit and a queue of points,
@@ -147,11 +169,12 @@ public class IsoCanvas extends JPanel{
 	public void highlight(ArrayList<Point> tiles){
 		this.HIGHLIGHTED_TILES = tiles;
 		repaint();
+		
 	}
 
 	public void updateGameBoardGraphics(ArrayList<GameObject> gObs) {
 		for(GameObject g :gObs){
-		System.out.println(g);
+			objectMap[g.getLocation().x][g.getLocation().y] = g;
 		}
 	}
 	/**
@@ -263,7 +286,7 @@ public class IsoCanvas extends JPanel{
 		 * @param entity player charachter to be drawn.
 		 * @param cursor player cursor to be drawn.
 		 */
-		public void draw(Graphics2D g2d, TileMultiton.type[][] map, Unit entity, UnitCursor cursor);
+		public void draw(Graphics2D g2d, TileMultiton.type[][] map, GameObject[][] visibleObjects, Unit entity, UnitCursor cursor);
 	}
 	/**
 	 * 
