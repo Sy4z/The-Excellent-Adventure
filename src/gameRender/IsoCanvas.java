@@ -150,8 +150,9 @@ public class IsoCanvas extends JPanel{
 	}
 
 	public void updateGameBoardGraphics(ArrayList<GameObject> gObs) {
-		
-
+		for(GameObject g :gObs){
+		System.out.println(g);
+		}
 	}
 	/**
 	 * 
