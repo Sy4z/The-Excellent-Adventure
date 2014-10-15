@@ -73,7 +73,7 @@ public class DrawMapEast implements IsoCanvas.DrawMap {
 					eY = entity.getLocation().y;
 					if(eX==x && eY==y){
 						entityPos = toIso(eX,eY);
-						entity.draw(g2d, entityPos.x, entityPos.y);
+						//entity.draw(g2d, entityPos.x, entityPos.y);
 					}
 				}	
 			}
@@ -94,10 +94,17 @@ public class DrawMapEast implements IsoCanvas.DrawMap {
 			newX = 0;
 			for(int x = objs.length-1;x >=0;x--){
 				fliped[newY][newX] = objs[y][x];
-				//System.out.println(newY+":"+newX+"<--"+y+":"+x);
+				
 				newX++;
 			}
 			newY++;	
+		}
+		
+		for(int y = objs.length-1;y>=0 ;y--){
+			for(int x = objs.length-1;x >=0;x--){
+			System.out.println(fliped[y][x]);
+			}
+			
 		}
 		return fliped;
 	}

@@ -53,12 +53,13 @@ public class InteractiveObjectChest extends InteractiveObject{
 			itms[i] = (int) Math.max(0, Math.random()*15 -8);
 		contents = itms;
 		try {
-			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/box.png")),"Player");
+			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/box.png")),"box");
+			System.out.println(BufferedImageHolder.getimage("box"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		heightOffSet = BufferedImageHolder.getimage("tentacle").getHeight();
+		heightOffSet = BufferedImageHolder.getimage("box").getHeight();
 		heightOffSet = Math.max(32 - heightOffSet, heightOffSet -32);
 
 	}

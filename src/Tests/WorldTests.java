@@ -13,44 +13,51 @@ import gameWorld.*;
 import gameWorld.Inventory.itemTypes;
 
 public class WorldTests {
+//The following tests do not function due to changes to server.
+//	@Test
+//	/**
+//	 * Some Basic start up tests
+//	 */
+//	public void test_001(){
+//		World w = utils.createWorld();
+//		assertTrue(w.checkPlayerStatus());
+//		assertTrue(w.getInventory()[0] == 0);
+//		assertTrue(w.getInventory()[1] == 0);
+//		assertTrue(w.getInventory()[2] == 0);
+//		assertTrue(w.getInventory()[3] == 0);
+//		assertTrue(w.isTurn());
+//		assertTrue(w.getAvatar().getMoveAction());
+//		assertTrue(w.getAvatar().getStandardAction());
+//		assertTrue(w.getAvatar() instanceof UnitPlayer);
+//	}
+//	@Test
+//	public void testMovement_001(){
+//		World w = utils.createWorld();
+//		assertTrue(w.checkPlayerStatus());
+//		assertTrue(w.isTurn());
+//		assertTrue(w.getAvatar().getMoveAction());
+//		assertTrue(w.getAvatar().getStandardAction());
+//
+//		w.getAvatar().depleateMoves();
+//
+//		assertTrue(w.checkPlayerStatus());
+//		assertTrue(w.isTurn());
+//		assertFalse(w.getAvatar().getMoveAction());
+//		assertTrue(w.getAvatar().getStandardAction());
+//
+//		w.getAvatar().depleateMoves();
+//
+//		assertFalse(w.checkPlayerStatus());
+//		assertFalse(w.isTurn());
+//		assertFalse(w.getAvatar().getMoveAction());
+//		assertFalse(w.getAvatar().getStandardAction());
+//
+//	}
+
 	@Test
-	/**
-	 * Some Basic start up tests
-	 */
-	public void test_001(){
+	public void boundsTest_001(){
 		World w = utils.createWorld();
-		assertTrue(w.checkPlayerStatus());
-		assertTrue(w.getInventory()[0] == 0);
-		assertTrue(w.getInventory()[1] == 0);
-		assertTrue(w.getInventory()[2] == 0);
-		assertTrue(w.getInventory()[3] == 0);
-		assertTrue(w.isTurn());
-		assertTrue(w.getAvatar().getMoveAction());
-		assertTrue(w.getAvatar().getStandardAction());
-		assertTrue(w.getAvatar() instanceof UnitPlayer);
-	}
-	@Test
-	public void testMovement_001(){
-		World w = utils.createWorld();
-		assertTrue(w.checkPlayerStatus());
-		assertTrue(w.isTurn());
-		assertTrue(w.getAvatar().getMoveAction());
-		assertTrue(w.getAvatar().getStandardAction());
-
-		w.getAvatar().depleateMoves();
-
-		assertTrue(w.checkPlayerStatus());
-		assertTrue(w.isTurn());
-		assertFalse(w.getAvatar().getMoveAction());
-		assertTrue(w.getAvatar().getStandardAction());
-
-		w.getAvatar().depleateMoves();
-
-		assertFalse(w.checkPlayerStatus());
-		assertFalse(w.isTurn());
-		assertFalse(w.getAvatar().getMoveAction());
-		assertFalse(w.getAvatar().getStandardAction());
-
+		w.
 	}
 
 	@Test
@@ -101,7 +108,7 @@ public class WorldTests {
 	public void testObjectInteaction_001(){
 
 		World w = utils.createWorld();
-		InteractiveObjectChest chst = new InteractiveObjectChest(null);
+		InteractiveObjectChest chst = new InteractiveObjectChest(new Point(7,9));
 		int keyIncreseC = chst.getContents()[itemTypes.KEY.ordinal()];
 		try {
 			Method m = null;

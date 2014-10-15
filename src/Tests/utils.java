@@ -31,7 +31,6 @@ public class utils {
 
 		Main.cvs = new IsoCanvas(0, 0, t.tiles);
 		World world = new World(logicTiles, gameObjects);
-		System.out.println("LOVE!!!!");
 
 		return world;
 	}
