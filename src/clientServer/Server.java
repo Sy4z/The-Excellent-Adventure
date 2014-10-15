@@ -23,23 +23,28 @@ public class Server {
 	List<InetAddress> playerList = new ArrayList<InetAddress>(); //The list of players by their Unique IP. The order they are in tells the Server the turn order of Players
 	private static GameObject[][] mainGameBoard;
 	private int currentTurn = 1; //Index of the player in the list who currently has a turn. Assume it starts at 1.
-
+	ServerSocket serverSock;
+	Socket accept;
 
 
 	public Server(int numberPlayers){
 		this.numPlayers = numberPlayers;
-		mainGameBoard = Main.world.getGameBoard(); //Get the initial State of the gameboard for the first player to receive;
+		//Get the initial State of the gameboard for the first player to receive;
 	}
+
+	public void setupInitialState(){
+		mainGameBoard = Main.world.getGameBoard();
+	}
+
 
 	/**
 	 * This method is in charge of initialising the server - It creates a new thread every time a connection is accepted
 	 */
 	public void runServer(String addr, int port){
-		ServerSocket serverSock = null;
-		Socket accept = null;
+	System.out.println("Server Starting up");
 		while(serverIsOn){
 			try{
-				ServerThread[] serverThreads = new ServerThread[numPlayers]; //Can use this for the number of possible players to accept, and store their threads. Unused currently
+				
 				serverSock = new ServerSocket(port);
 
 				int i=0;
@@ -51,7 +56,7 @@ public class Server {
 
 					ServerThread server = new ServerThread(accept);
 
-					serverThreads[i] = server; //adds thread to the array of threads
+					
 					i++; //increments count
 					//playerList.add()
 
@@ -70,7 +75,7 @@ public class Server {
 			serverSock.close();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("The problem is here");
 			e.printStackTrace();
 		}
 	}

@@ -34,6 +34,7 @@ public  class Main {
 
 	public static boolean isServer = true; //Is this instance of the program a server
 	public static String ipAddress = "127.0.0.1";
+	public static int port = 29599;
 	public static Server server;
 	public static Client client;
 	public static MainFrame mainFrame;
@@ -61,16 +62,16 @@ public  class Main {
 
 			e.printStackTrace();
 		}
-
+		
 		loadFrame.dispose();
 		mainFrame = new MainFrame();
-
+		
 		cvs = new IsoCanvas(mainFrame.getWidth(), mainFrame.getHeight());
 		world = new World(null, -1, -1, cvs);
 
 
 		//The following block deals with starting the server
-		server = new Server(getNumberOfPlayers());
+		server = new Server(numberOfPlayers);
 		client = new Client();
 		//tw = new TurnWatcher(mainFrame.mainPanel.gamePanel.getWorld());
 		tw = new TurnWatcher(world);
@@ -94,16 +95,17 @@ public  class Main {
 	 * @param runServer - the Instance of Server
 	 * @param runClient - the Instance of Client
 	 */
-	public static void runClientMain(Client clientTemp){
+	public static void runClientMain(){
 
 
-			clientTemp.runClient(ipAddress, 29599);
+			client.runClient(ipAddress, port );
 
 
 	}
 
-	public static void runServerMain(Server serverTemp){
-		serverTemp.runServer(ipAddress, 29599);
+	public static void runServerMain(){
+		server.setupInitialState();
+		server.runServer(ipAddress, port);
 	}
 
 	/**
