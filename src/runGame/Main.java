@@ -34,7 +34,7 @@ public  class Main {
 
 	public static boolean isServer = true; //Is this instance of the program a server
 	public static String ipAddress = "127.0.0.1";
-	public static int port = 29599;
+	public static int port = 29598;
 	public static Server server;
 	public static Client client;
 	public static MainFrame mainFrame;
