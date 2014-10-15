@@ -33,18 +33,27 @@ import runGame.Main;
  */
 
 public class ServerThread extends Thread{
-	private final Socket socket;
+	private Socket socket;
 	public UnitPlayer clientPlayer; //Local player from client is stored here, gets updated every tick
 	GameObject[][] gameBoardServer;
 	Object tempStringTurn;
 	static int turnNumber; //The number for the Connected Clients turnorder
-
+	ObjectInputStream boardFromClient;
+	ObjectOutputStream boardToClient;
 
 	public ServerThread(Socket clientSocket){
 		System.out.println("New Server Thread Created");//debugging info
 		this.socket = clientSocket;
 		Main.server.playerList.add(socket.getInetAddress());//Add this Client to the List of Clients in server - This means the Logic for starting turns can be addressed easily this way
 		turnNumber = Main.server.playerList.size(); //Since the value added will be in the last place in the list, just get the size to set the value
+		try {
+			boardFromClient = new ObjectInputStream(socket.getInputStream());
+			boardToClient = new ObjectOutputStream(socket.getOutputStream()); //for outputting all the other characters to the server
+		} catch (IOException e) {
+			System.out.println("SERVER IS THROWING ERROR TOO");
+			e.printStackTrace();
+		} //for receiving the character from the connected clientThread
+
 	}
 
 
@@ -57,8 +66,7 @@ public class ServerThread extends Thread{
 			//Base this on ticks (Turns) - Send to every client on every turn. Whether you as a local player will have moved or not is based on game logic
 			while(true){
 				if(Main.server.currentTurn() == this.turnNumber){
-					ObjectInputStream boardFromClient = new ObjectInputStream(socket.getInputStream()); //for receiving the character from the connected clientThread
-					ObjectOutputStream boardToClient = new ObjectOutputStream(socket.getOutputStream()); //for outputting all the other characters to the server
+
 					String yourTurn = "yourturn";
 					boardToClient.writeObject(yourTurn);//Let Client Know its now his turn
 					try {

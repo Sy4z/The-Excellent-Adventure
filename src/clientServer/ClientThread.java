@@ -36,14 +36,21 @@ public class ClientThread extends Thread {
 	public ClientThread(Socket socket){
 		this.sock = socket;
 		System.out.println("Client is Constructed");
+		try {
+			boardFromServer = new ObjectInputStream(sock.getInputStream());
+			boardToServer = new ObjectOutputStream(sock.getOutputStream());
+		} catch (IOException e) {
+			System.out.println("ERROR");
+			e.printStackTrace();
+		}
+
 	}
 
 
 	public void run(){
 		System.out.println("Trying Connection");
 		try {
-			boardFromServer = new ObjectInputStream(sock.getInputStream());
-			boardToServer = new ObjectOutputStream(sock.getOutputStream());
+
 			//fromServer = new DataInputStream(sock.getInputStream());
 			System.out.println("Client Socket connected on " + sock.getInetAddress() + ":" + sock.getPort());
 
