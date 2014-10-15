@@ -455,7 +455,7 @@ public class Data {
 		xmlOut.setFormat(Format.getPrettyFormat());
 		document.addContent(root);
 
-		System.out.println(xmlOut.outputString(document));
+		error(xmlOut.outputString(document));
 		File XMLPath = new File(savePath.toString() + File.separator + "data");
 		try {
 			print = new PrintStream(XMLPath);
@@ -470,7 +470,7 @@ public class Data {
 		finally{
 			print.close();
 		}
-		System.out.println("Saving over");
+		error("Saving over");
 		return true;
 	}
 
