@@ -260,7 +260,11 @@ public class Data {
 		}
 		return p;
 	}
-
+	/**
+	 * Load the inventory from the XMLTree
+	 * @param child
+	 * @return
+	 */
 	private static Inventory HandleLoadInventory(Element child) {
 		Inventory i = new Inventory();
 		i.add(Inventory.itemTypes.KATANA,Integer.parseInt(child.getChildText("KATANA")));
