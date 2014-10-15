@@ -64,6 +64,7 @@ public class World {
 		cursor = new UnitCursor(avatar.curLocation, -1);
 		checkPlayerStatus();
 		startTurn();
+		updateGameBoardGraphics();
 
 	}
 
@@ -80,6 +81,7 @@ public class World {
 		cursor = new UnitCursor(avatar.curLocation, -1);
 		checkPlayerStatus();
 		startTurn();
+		updateGameBoardGraphics();
 
 	}
 
@@ -121,10 +123,11 @@ public class World {
 		}
 		//Otherwise refresh moevment and return true
 		calculatePossibleMovments();
+		updateGameBoardGraphics();
 		return true;
 	}
 	/**
-	 * Resets turn infoamtion at the start of the turn
+	 * Resets turn information at the start of the turn
 	 */
 	public void startTurn(){
 		avatar.activate();
@@ -257,7 +260,7 @@ public class World {
 	 *
 	 * @param curLocation
 	 */
-	private void calculatePossibleMovments(Point curLocation) {
+	private void calculatePossibleMovements(Point curLocation) {
 		checkMoveFrom(curLocation.x, curLocation.y, 6, new ArrayDeque<Point>());
 		canvas.highlight(tilesToHightlight());
 
@@ -436,13 +439,13 @@ public class World {
 	 * @param y
 	 */
 	private void calculatePossibleMovments(int x, int y) {
-		calculatePossibleMovments(new Point(x,y));
+		calculatePossibleMovements(new Point(x,y));
 	}
 	/**
 	 * Calculates all possible movments from the active players current location
 	 */
 	private void calculatePossibleMovments() {
-		calculatePossibleMovments(avatar.getLocation());
+		calculatePossibleMovements(avatar.getLocation());
 	}
 
 	/**
