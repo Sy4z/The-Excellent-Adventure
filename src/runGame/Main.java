@@ -81,7 +81,7 @@ public  class Main {
 			}
 		}
 		gobjs[1][1] = new UnitPlayer(new Point(1,1),0);
-		world = new World(cvs, lTiles, gobjs);
+		world = new World(lTiles, gobjs);
 
 		try {
 			ipAddress = InetAddress.getLocalHost().getHostAddress();
