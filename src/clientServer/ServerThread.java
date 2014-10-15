@@ -145,7 +145,13 @@ public class ServerThread extends Thread{
 					//Set next turn on
 
 					System.out.println("Server Logic Finished");
-					playerIndex = playerIndex  + 1 % Server.players.size()-1;
+					if(playerIndex+1 == Main.server.players.size()){
+					playerIndex = 0;
+					}
+					else{
+						playerIndex++;
+					}
+					System.out.println("Player Index: " + playerIndex);
 				}
 				//Wrap up and wait for next looparound
 
