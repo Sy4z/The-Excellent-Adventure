@@ -163,6 +163,10 @@ public class Data {
 		return null;
 	}
 
+	public static boolean deleteFile(String s){
+		return new File("saves" + File.separatorChar + s).delete();
+	}
+
 	private static GameObject HandleLoadStationaryObjectWall(Element e) {
 		// TODO Auto-generated method stub
 		return null;
