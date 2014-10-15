@@ -43,7 +43,7 @@ public class ClientThread extends Thread {
 	public void run(){
 		System.out.println("Trying Connection");
 		try {
-			
+
 			boardFromServer = new ObjectInputStream(sock.getInputStream());
 			System.out.println("Created inputstreaml");
 			boardToServer = new ObjectOutputStream(sock.getOutputStream());
@@ -82,6 +82,7 @@ public class ClientThread extends Thread {
 					//Receive the GameBoard from the Server and update current game world
 					try {
 						String isMyTurn = "myturn";
+						System.out.println("second check passed");
 						boardToServer.writeObject(isMyTurn); //Tells the serverThread its this clients turn
 						Object gameBoardGeneric = boardFromServer.readObject(); //Read into  Generic Object Type
 						boardToServer.flush(); //Flush input buffer, just making sure it doesnt fill up
