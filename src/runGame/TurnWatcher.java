@@ -40,7 +40,7 @@ public class TurnWatcher extends Thread{
 		if(isEndPhase){
 			System.out.println("End Phase Started");
 			startOfEndPhase = true;
-			while(!endPhase()){}//This is just to make the turn stop until the client decides to send the data to the server
+//			while(!endPhase()){}//This is just to make the turn stop until the client decides to send the data to the server
 
 				System.out.println("End Phase Ended");
 			endOfEndPhase = false; //Change to null so that next time turn is called, its going to start the end phase again
