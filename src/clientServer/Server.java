@@ -20,7 +20,7 @@ import runGame.Main;
 public class Server {
 	private static int numPlayers; //this is a static int for use in an array of threads
 	boolean serverIsOn = true;
-	List<InetAddress> playerList = new ArrayList<InetAddress>(); //The list of players by their Unique IP. The order they are in tells the Server the turn order of Players
+	static List<InetAddress> playerList = new ArrayList<InetAddress>(); //The list of players by their Unique IP. The order they are in tells the Server the turn order of Players
 	private static GameObject[][] mainGameBoard;
 	private int currentTurn = 0; //Index of the player in the list who currently has a turn. Assume it starts at 1.
 	ServerSocket serverSock;
