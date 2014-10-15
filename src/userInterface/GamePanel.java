@@ -509,6 +509,7 @@ public class GamePanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Main.cvs.south();
+			Main.world.flip();
 			repaint();
 		}
 
@@ -526,6 +527,7 @@ public class GamePanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Main.cvs.east();
+			Main.world.flip();
 			repaint();
 		}
 

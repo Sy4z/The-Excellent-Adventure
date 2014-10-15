@@ -14,6 +14,7 @@ import com.sun.accessibility.internal.resources.accessibility;
 
 import runGame.Main;
 import sun.text.normalizer.UBiDiProps;
+import tile.TileMultiton;
 import tile.TileMultiton.type;
 import dataStorage.Data;
 import dataStorage.Tuple;
@@ -130,7 +131,7 @@ public class World {
 	 * Resets turn information at the start of the turn
 	 */
 	public void startTurn(){
-		if(Main.onlineMode){
+		if(!Main.onlineMode){
 			avatar.activate();
 			isActive = true;
 		}
@@ -582,5 +583,58 @@ public class World {
 				if(gameBoard[x][y] != null)
 					t.add(gameBoard[x][y]);
 		canvas.updateGameBoardGraphics(t);
+	}
+
+	/**
+	 * This flips the GameBoard and world Map
+	 */
+	public void flip(){
+		flipMap();
+		flipWorld();
+	}
+
+	/**
+	 *Flips a 2d array such that the
+	 *y is reversed and so is the x.
+	 * @param map array to be fliped
+	 * @return new array of with x and y reversed.
+	 */
+	private void flipWorld(){
+		GameObject[][] map = gameBoard;
+		GameObject[][] fliped = new GameObject[map.length][map[0].length];
+		int newX;
+		int newY =0;
+		for(int y = map.length-1;y>=0 ;y--){
+			newX = 0;
+			for(int x = map.length-1;x >=0;x--){
+				fliped[newY][newX] = map[y][x];
+				//System.out.println(newY+":"+newX+"<--"+y+":"+x);
+				newX++;
+			}
+			newY++;
+		}
+		gameBoard = fliped;
+	}
+
+	/**
+	 *Flips a 2d array such that the
+	 *y is reversed and so is the x.
+	 * @param map array to be fliped
+	 */
+	private void flipMap(){
+		LogicalTile[][] map = worldMap;
+		LogicalTile[][] fliped = new LogicalTile[map.length][map[0].length];
+		int newX;
+		int newY =0;
+		for(int y = map.length-1;y>=0 ;y--){
+			newX = 0;
+			for(int x = map.length-1;x >=0;x--){
+				fliped[newY][newX] = map[y][x];
+				//System.out.println(newY+":"+newX+"<--"+y+":"+x);
+				newX++;
+			}
+			newY++;
+		}
+		worldMap = fliped;
 	}
 }

@@ -18,8 +18,8 @@ import sun.net.util.IPAddressUtil;
 public abstract class Unit extends GameObject {
 	protected Inventory inventory;
 	private boolean notTurnEnd;
-	private boolean standardAction;
-	private boolean moveAction;
+	private boolean standardAction = false;
+	private boolean moveAction = false;
 
 	protected int ID;
 
