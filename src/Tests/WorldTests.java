@@ -59,6 +59,8 @@ public class WorldTests {
 		World w = utils.createWorld();
 		World wrld = new World(w.getWorldMap(), w.getGameBoard(), w.getAvatar().getID());
 		assertTrue(w.getAvatar().equals(wrld.getAvatar()));
+		World world = new World(w.getWorldMap(), w.getGameBoard(), -7);
+		assertFalse(w.getAvatar().equals(world.getAvatar()));
 	}
 
 	@Test
