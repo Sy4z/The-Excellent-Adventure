@@ -68,6 +68,7 @@ public class TurnWatcher extends Thread{
 	 * @return
 	 */
 	public boolean isTurn(){
+		
 		return world.isTurn();
 	}
 

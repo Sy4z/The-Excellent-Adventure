@@ -60,24 +60,8 @@ public class ServerThread extends Thread{
 			boardFromClient = new ObjectInputStream(socket.getInputStream());
 
 
-			try {
-				while(true){
-				Object tempGameBoard = boardFromClient.readObject();
-				gameBoardServer = (GameObject[][]) tempGameBoard;
 
-				if(tempGameBoard != null){
-					tempGameBoard = null;
-					break;
-				}
 
-				}
-
-				Main.server.setMainGameBoard(gameBoardServer);
-				System.out.println("Received Initial Board from client");
-			} catch (ClassNotFoundException e2) {
-				System.out.println("Didnt recieve Initial Gameboard");
-				e2.printStackTrace();
-			}
 			//Base this on ticks (Turns) - Send to every client on every turn. Whether you as a local player will have moved or not is based on game logic
 			while(true){
 
