@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import com.sun.accessibility.internal.resources.accessibility;
 
+import runGame.Main;
 import sun.text.normalizer.UBiDiProps;
 import tile.TileMultiton.type;
 import dataStorage.Data;
@@ -40,8 +41,8 @@ public class World {
 	 *
 	 * @return
 	 */
-	public World(IsoCanvas cvs, LogicalTile[][] tiles, GameObject[][] gameboard, int ID) {
-		this.canvas = cvs;
+	public World(LogicalTile[][] tiles, GameObject[][] gameboard, int ID) {
+		this.canvas = Main.cvs;
 		this.gameBoard = gameboard;
 		tiles = worldMap;
 		UnitPlayer tempPlayer = null;
@@ -69,9 +70,9 @@ public class World {
 	 *
 	 * @return
 	 */
-	public World(IsoCanvas cvs, LogicalTile[][] tiles, GameObject[][] gameboard) {
+	public World( LogicalTile[][] tiles, GameObject[][] gameboard) {
 		tiles = worldMap;
-		this.canvas = cvs;
+		this.canvas = Main.cvs;
 		this.gameBoard = gameboard;
 		avatar = randomPositionAvatar();
 		cursor = new UnitCursor(avatar.curLocation, -1);
