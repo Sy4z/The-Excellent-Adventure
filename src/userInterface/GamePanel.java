@@ -68,7 +68,11 @@ public class GamePanel extends JPanel {
 	private JTable tableItems2;
 	private JTable tableNums2;
 
-	private ImageIcon background = new ImageIcon("post-apoc.jpg");
+	private ImageIcon background = new ImageIcon("post-apoc.jpg"); // Background
+																	// picture
+																	// for the
+																	// dialog
+																	// boxes.
 
 	// This field stores the mode which is either 'Quit' or 'Save' depending on
 	// whether the save dialog box opens when the user wants to quit or save
@@ -175,7 +179,7 @@ public class GamePanel extends JPanel {
 		westButton.addActionListener(new WestButtonListener());
 		add(westButton);
 
-		setInventory();
+		setInventory(); // Set up the inventory.
 
 		Main.cvs.setBounds(0, 0, currentFrame.getWidth(),
 				currentFrame.getHeight());
@@ -344,7 +348,8 @@ public class GamePanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			mode = "Quit";
+			mode = "Quit"; // Set the mode to quit so that the saveGame method
+							// switches to the main menu after saving.
 
 			int option = JOptionPane.showConfirmDialog(null,
 					"Do you want to save before quitting?", "Choose",
@@ -352,7 +357,8 @@ public class GamePanel extends JPanel {
 			if (option == JOptionPane.YES_OPTION) {
 				saveGame();
 			} else {
-				moveType = "arrows";
+				moveType = "arrows"; // Set moveType back to the default
+										// controls.
 				currentFrame.getContentPane().removeAll();
 				currentFrame.getContentPane().validate();
 				currentFrame.getContentPane().repaint();
@@ -573,6 +579,9 @@ public class GamePanel extends JPanel {
 		// to
 		// this
 		// model.
+
+		// This loop populates the list of saved games to be displayed in the
+		// scroll pane.
 		for (String name : loadNames) {
 			model.addElement(name);
 		}
@@ -618,10 +627,15 @@ public class GamePanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String name = nameField.getText();
 
+				// The patterns are used to check whether there are any spaces
+				// or special characters in the name that the user types in.
 				Pattern alphaNumeric = Pattern.compile("^[a-zA-Z0-9]*$");
 				java.util.regex.Matcher match1 = alphaNumeric.matcher(name);
 				Pattern spaces = Pattern.compile("\\s");
 				java.util.regex.Matcher match2 = spaces.matcher(name);
+
+				// If there are no spaces or special characters then it goes
+				// ahead to save the game with the specified file name.
 				if (match1.matches() && !match2.find()) {
 					try {
 						Data.save(name);
@@ -630,6 +644,9 @@ public class GamePanel extends JPanel {
 						e1.printStackTrace();
 					}
 					d.dispose();
+
+					// If the quit button is pressed then the game closes and
+					// the panel is switched to the main menu.
 					if (mode.equals("Quit")) {
 						moveType = "arrows";
 						currentFrame.getContentPane().removeAll();
@@ -644,8 +661,8 @@ public class GamePanel extends JPanel {
 					}
 				} else {
 					JOptionPane.showMessageDialog(GamePanel.this,
-							"Name must alphanumric with no spaces!", "Warning",
-							JOptionPane.WARNING_MESSAGE);
+							"Name must be alphanumeric with no spaces!",
+							"Warning", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -672,6 +689,7 @@ public class GamePanel extends JPanel {
 			}
 		});
 
+		// Displays the selected game in the textbox.
 		list.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
@@ -685,6 +703,7 @@ public class GamePanel extends JPanel {
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(deleteButton);
 
+		// To make sure that the background image can be displayed.
 		scrollPane.setOpaque(false);
 		namePanel.setOpaque(false);
 		buttonPanel.setOpaque(false);
@@ -702,6 +721,13 @@ public class GamePanel extends JPanel {
 		d.setVisible(true);
 	}
 
+	/**
+	 * This method is used to add the key bindings to the game and make the key
+	 * controls function properly. The enter key and the arrow keys are used for
+	 * the game. The letter keys W,A,S,D can be used as alternatives to the
+	 * arrow keys. The panel is repainted and the inventory is updated after
+	 * each key press.
+	 */
 	private void addKeyBindings() {
 		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
 				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
