@@ -260,27 +260,27 @@ public class MainMenuPanel extends JPanel {
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
 
-			
+
 			d.add(mainPanel, BorderLayout.CENTER);
 
-		
-			
+
+
 			JLabel label = new JLabel("Running Server...");
 			JButton exit = new JButton("Exit");
-			
+
 			mainPanel.add(label, BorderLayout.CENTER);
 			mainPanel.add(exit, BorderLayout.SOUTH);
-			
-			
-		
-			
+
+
+
+
 			d.setVisible(true);
-			
-			
+
+
 			label.setVisible(true);
 			//exit.setVisible(true);
-			
-		
+
+
 			exit.addActionListener(new ActionListener() {
 
 				@Override
@@ -290,14 +290,14 @@ public class MainMenuPanel extends JPanel {
 				}
 			});
 
-			
+
 			mainPanel.setLayout(new BorderLayout());
 			d.setLocationRelativeTo(null);
-			
-			
-			
-			
-		
+
+
+
+
+
 		}
 
 	}
