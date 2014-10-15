@@ -115,6 +115,11 @@ public class ServerThread extends Thread{
 							tempBoard = null;
 							Main.server.setMainGameBoard(gameBoardServer);//Update main board in Server so all threads can see it
 
+
+
+
+
+
 							boardToClient.writeObject(new String("finishedmap"));
 						} catch (ClassNotFoundException e) {
 							System.out.println("Problem In Serverthread: Something went wrong when receiving the gameboard from the client");
@@ -140,7 +145,22 @@ public class ServerThread extends Thread{
 
 
 
+						while(true){
+							try {
+								Object receivedEnd = boardFromClient.readObject();
+								String endTurnReceived = (String) receivedEnd;
+								Main.server.setNextTurn();
+								if(receivedEnd != null){
+									break;
+								}
 
+
+							} catch (ClassNotFoundException e) {
+								e.printStackTrace();
+								break;
+
+							}
+						}
 
 
 
