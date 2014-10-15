@@ -20,7 +20,7 @@ public class StationaryObjectWall extends StationaryObject{
 	}
 
 	@Override
-	void draw(Graphics2D g, int dx, int dy) {
+	public void draw(Graphics2D g, int dx, int dy) {
 		// TODO Auto-generated method stub
 
 	}
