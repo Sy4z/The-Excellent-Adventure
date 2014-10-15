@@ -20,7 +20,7 @@ public abstract class GameObject implements Serializable{
 	protected Point curLocation;
 
 
-	abstract void draw(Graphics2D g, int dx, int dy);
+	public abstract void draw(Graphics2D g, int dx, int dy);
 
 	public GameObject(Point p){
 		curLocation = p;

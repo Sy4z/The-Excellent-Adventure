@@ -78,7 +78,7 @@ public class InteractiveObjectMonster extends InteractiveObject{
 	/**
 	 * Draws itself at a given location
 	 */
-	void draw(Graphics2D g, int dx, int dy) {
+	public void draw(Graphics2D g, int dx, int dy) {
 		g.setColor(new Color(155,144,255));
 		g.drawImage(BufferedImageHolder.getimage("tentacle"), dx, dy-heightOffSet, null);
 
