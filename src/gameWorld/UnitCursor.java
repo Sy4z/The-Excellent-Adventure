@@ -29,7 +29,7 @@ public class UnitCursor extends Unit{
 	public UnitCursor(Point loc, int ID) {
 		super(loc, ID, null);
 		try {
-			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/cursor.png")),"Cursor");
+			BufferedImageHolder.addImage(ImageIO.read(this.getClass().getResource("/tile/cursor.png")),"Cursor");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

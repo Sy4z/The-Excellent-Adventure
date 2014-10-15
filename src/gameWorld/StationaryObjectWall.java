@@ -25,7 +25,7 @@ public class StationaryObjectWall extends StationaryObject{
 	public StationaryObjectWall(Point p) {
 		super(p);
 		try {
-			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/wall.png")),"wall");
+			BufferedImageHolder.addImage(ImageIO.read(this.getClass().getResource("/tile/wall.png")),"wall");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

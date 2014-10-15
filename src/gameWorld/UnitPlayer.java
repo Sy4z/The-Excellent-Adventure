@@ -29,8 +29,9 @@ public class UnitPlayer extends Unit{
 	 */
 	public UnitPlayer(Point loc, int ID) {
 		super(loc, ID,new Inventory());
+
 		try {
-			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/wastelander0.png")),"Player");
+			BufferedImageHolder.addImage(ImageIO.read(this.getClass().getResource("/tile/wastelander0.png")),"Player");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

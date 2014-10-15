@@ -1,10 +1,11 @@
 package tile;
 
 import java.io.File;
+import java.net.URL;
 
 public class OpenDoor extends DoorTile {
 
-	public OpenDoor(File imgPath, Character key) {
+	public OpenDoor(URL imgPath, Character key) {
 		super(imgPath, key);
 		this.canMove =true;
 	}
