@@ -117,7 +117,7 @@ public  class Main {
 	}
 
 	public static void runServerMain(){
-		
+
 		server.runServer(ipAddress, port);
 	}
 
@@ -137,10 +137,20 @@ public  class Main {
 
 	}
 
+
+	/**
+	 * Gets the number of players that can currently be in the game
+	 * @return int - The number of players total that can be in the game at any one time
+	 */
 	public static int getNumberOfPlayers() {
 		return numberOfPlayers;
 	}
 
+
+	/**
+	 * Set the number of players that can be in the game at any one time
+	 * @param numberOfPlayers - int The number of players you want to set
+	 */
 	public static void setNumberOfPlayers(int numberOfPlayers) {
 		Main.numberOfPlayers = numberOfPlayers;
 	}

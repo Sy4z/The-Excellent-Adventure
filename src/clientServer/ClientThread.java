@@ -21,7 +21,7 @@ import runGame.Main;
 
 /**
  * CLIENTSIDE CLASS
- * @author syaz
+ * @author Jarred
  * honejarred@gmail.com
  * runs via TCP
  * This class creates packets, and sends them to the server for processing.
