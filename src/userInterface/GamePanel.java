@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.rmi.UnexpectedException;
@@ -39,6 +40,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -50,9 +52,9 @@ import runGame.Main;
 /**
  * This class contains the main canvas displaying the gameplay and other
  * controls required for playing the game.
- * 
+ *
  * @author Venkata Peesapati
- * 
+ *
  */
 public class GamePanel extends JPanel {
 
@@ -333,9 +335,9 @@ public class GamePanel extends JPanel {
 	 * This is the listener class used for the quit button. It returns to the
 	 * main menu by replacing the game panel with the main menu's panel. It also
 	 * asks the user whether they want to save the game before quitting or not.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class QuitGameListener implements ActionListener {
 
@@ -367,9 +369,9 @@ public class GamePanel extends JPanel {
 	/**
 	 * This is the listener class used for the controls button. It allows the
 	 * user to change the keyboard controls during the gameplay.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class ControlsGameListener implements ActionListener {
 
@@ -457,9 +459,9 @@ public class GamePanel extends JPanel {
 	 * user to save the game and continue playing. Note that the mode is 'Save'
 	 * over here which means that the saveGame method will not quit after the
 	 * saving is done.
-	 * 
+	 *
 	 * @author Venkata Peesapati
-	 * 
+	 *
 	 */
 	class SaveGameListener implements ActionListener {
 
@@ -531,6 +533,8 @@ public class GamePanel extends JPanel {
 		d.setSize(400, 300);
 		d.setLayout(new BorderLayout());
 
+		String[] loadNames = Data.getLoadFiles();
+
 		DefaultListModel<String> model = new DefaultListModel<String>(); // Add
 		// saved
 		// game
@@ -538,7 +542,22 @@ public class GamePanel extends JPanel {
 		// to
 		// this
 		// model.
-		JList<String> list = new JList<String>(model);
+		for (String name : loadNames) {
+			model.addElement(name);
+		}
+		final JList<String> list = new JList<String>(model);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Makes
+																	// sure
+																	// that
+																	// the
+																	// user
+																	// can
+																	// only
+																	// select
+																	// one
+																	// game
+																	// to
+																	// load.
 		JScrollPane scrollPane = new JScrollPane(list);
 
 		JPanel savePanel = new JPanel();
@@ -596,6 +615,15 @@ public class GamePanel extends JPanel {
 					JOptionPane.showMessageDialog(GamePanel.this,
 							"Name must alphanumric with no spaces!", "Warning",
 							JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
+
+		list.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					String selectedItem = (String) list.getSelectedValue();
+					nameField.setText(selectedItem);
 				}
 			}
 		});
