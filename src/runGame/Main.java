@@ -12,6 +12,7 @@ import java.rmi.UnexpectedException;
 
 import javax.swing.JFrame;
 
+import tile.TileMultiton.type;
 import userInterface.MainFrame;
 import clientServer.Client;
 import clientServer.ClientThread;

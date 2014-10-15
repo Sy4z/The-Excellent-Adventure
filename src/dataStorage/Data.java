@@ -31,6 +31,7 @@ import org.jdom2.output.XMLOutputter;
 import org.xml.sax.SAXException;
 
 import runGame.Main;
+import runGame.TurnWatcher;
 import tile.*;
 import tile.TileMultiton.type;
 
@@ -147,12 +148,13 @@ public class Data {
 
 		}
 
-		Main.cvs = new IsoCanvas(gObjs[1].length, gObjs.length,tiles);
+		Main.cvs = new IsoCanvas(Main.mainFrame.WIDTH, Main.mainFrame.HEIGHT,tiles);
 
 		World world = new World("This seems arbitrary", gObjs[1].length, gObjs.length, Main.cvs);
 		world.setGameBoard(gObjs);
 		world.setWorldMap(lTiles);
 		Main.world = world;
+		Main.tw = new TurnWatcher(world);
 
 	}
 	private static GameObject HandleLoadStationaryObjectHatStand(Element e) {
