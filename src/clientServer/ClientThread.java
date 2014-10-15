@@ -77,7 +77,7 @@ public class ClientThread extends Thread {
 					System.out.println("Client: There was a problem Reading the first token (Accepting a turn notification from the server");
 					e1.printStackTrace();
 				}
-				if(Main.tw.isTurn()== true){ //If the local thread is set to isTurn = true,
+				if(Main.tw.isTurn()){ //If the local thread is set to isTurn = true,
 
 					//Receive the GameBoard from the Server and update current game world
 					try {
