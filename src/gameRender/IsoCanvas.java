@@ -41,7 +41,9 @@ public class IsoCanvas extends JPanel{
 	private BufferedImage highLight;
 	
 	/**
-	 *
+	 * Initialise the IsoCanvas.
+	 * @param Width Width of canvas
+	 * @param Height height of canvas
 	 */
 	public IsoCanvas(int Width, int Height){
 		cursor = null;
@@ -51,7 +53,8 @@ public class IsoCanvas extends JPanel{
 		map = t.tiles;
 		this.width = Width;
 		this.height = Height;
-		System.out.println("width :" +width+"height :"+height);//canvas debug
+		objectMap = new GameObject[map.length][map[0].length];
+		//System.out.println("width :" +width+"height :"+height);//canvas debug
 		this.renderStratagy = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 	}
 
@@ -69,12 +72,14 @@ public class IsoCanvas extends JPanel{
 		map = Tiles;
 		this.width = Width;
 		this.height = Height;
-		System.out.println("width :" +width+"height :"+height);//canvas debug
+		//System.out.println("width :" +width+"height :"+height);//canvas debug
 		this.renderStratagy = new DrawMapNorth(this.tile_width, this.tile_height, this.width, this.height, veiwport_size);
 	}
 
 	/**
-	 *
+	 *Starts the rendering for a frame, draws the
+	 *background calls for the calculation of visible tiles and
+	 *passes rendering data to the renderStratagy
 	 */
 	public void paintComponent(Graphics g){
 		Graphics2D g2d = (Graphics2D) g;
@@ -82,12 +87,15 @@ public class IsoCanvas extends JPanel{
 		g2d.fillRect(0,0,width,height);
 		TileMultiton.type[][] visibleTiles = loadVisibleTiles();
 		renderStratagy.draw(g2d, visibleTiles, entity, cursor);
-		g2d.fillRect((width/2)-5,(height/2-5),10,10); //debug center of canvas.
-		g2d.drawRect(0,0,width,height);// debug draw rectangle around canvas
+		//g2d.fillRect((width/2)-5,(height/2-5),10,10); //debug center of canvas.
+		//g2d.drawRect(0,0,width,height);// debug draw rectangle around canvas
 	}
 	/**
-	 * 
-	 * @return
+	 * Takes the origin x and y coordinates and size of the area 
+	 * to be drawn to screen(veiwport) and loads the elements
+	 * of the map array within those bounds into a new array.
+	 * @return the subset of the map that is visible to be passed to the render
+	 * strategy.
 	 */
 	private TileMultiton.type[][] loadVisibleTiles(){
 		TileMultiton.type[][] visableTiles = new TileMultiton.type[veiwport_size][veiwport_size];
@@ -104,22 +112,26 @@ public class IsoCanvas extends JPanel{
 		return visableTiles;
 	}
 	/**
-	 *
-	 * @param unit
+	 * Takes a unit and a queue of points,
+	 * updates the location of the unit and
+	 * repaints canvas.
+	 * @param unit unit to be moved.
+	 * @param arrayDeque path unit shall be moved along
 	 */
 	public void moveUnit(UnitPlayer unit, ArrayDeque<Point> arrayDeque){
 		int i = 0;
 		this.entity = unit;
 		while(!arrayDeque.isEmpty()){
 			Point p = arrayDeque.pop();
-			//System.out.println("IsoCanvas.MoveUnit(), StackPoint "+"("+i+"):"+p.x+","+p.y);
 			entity.upDateLocation(p);
 			this.repaint();
 			i++;
 		}
 	}
 	/**
-	 * 
+	 * Takes a cursor and draws it on the canvas
+	 * using its internal location.
+	 * repaints canvas.
 	 * @param cursor
 	 */
 	public void moveCursor(UnitCursor cursor){
@@ -127,30 +139,39 @@ public class IsoCanvas extends JPanel{
 		this.repaint();
 	}
 	/**
-	 * 
+	 * Takes an ArrayList of points.
+	 * highlights these tiles by changing their
+	 * color.
 	 * @param tiles
 	 */
 	public void highlight(ArrayList<Point> tiles){
 		this.HIGHLIGHTED_TILES = tiles;
+		repaint();
 	}
 
 	public void updateGameBoardGraphics(ArrayList<GameObject> gObs) {
 		
 
 	}
-	public void initGameWorld(GameObject[][] obs, Units[][] units){
-
-	}
+	/**
+	 * 
+	 * @param u
+	 */
 	public void initEntity(Unit u){
 		this.entity = u;
 	}
+	/**
+	 * 
+	 * @param ob
+	 */
 	public void spawnObject(GameObject ob){
 
 	}
 	/**
-	 * 
-	 * @param x
-	 * @param y
+	 * If there is a closed door at x,y in the map
+	 * then it is changed to an opendoor.
+	 * @param x x coordinite of door to be opened
+	 * @param y y coordinite of door to be opened
 	 */
 	public void openDoor(int x, int y){
 		if(map[x][y].equals(TileMultiton.type.CLOSEDOOR)){
@@ -158,9 +179,10 @@ public class IsoCanvas extends JPanel{
 		}
 	}
 	/**
-	 * 
-	 * @param x
-	 * @param y
+	 * If there is an open door at x,y in the map
+	 * then it is changed to an closeddoor.
+	 * @param x x coordinite of door to be closed
+	 * @param y y coordinite of door to be closed
 	 */
 	public void closeDoor(int x, int y){
 		if(map[x][y].equals(TileMultiton.type.OPENDOOR)){
@@ -168,35 +190,45 @@ public class IsoCanvas extends JPanel{
 		}
 	}
 	/**
-	 * 
+	 * Switches renderStratagy to DrawMapNorth,
+	 * this will draw the top right edge of the isometric diamond
+	 * as north.
 	 */
 	public void north(){
 		this.renderStratagy = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 		this.repaint();
 	}
 	/**
-	 * 
+	 * Switches renderStratagy to DrawMapWest,
+	 * this will draw the top right edge of the isometric diamond
+	 * as West.
 	 */
 	public void west(){
 		this.renderStratagy = new DrawMapWest(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 		this.repaint();
 	}
 	/**
-	 * 
+	 * Switches renderStratagy to DrawMapEast,
+	 * this will draw the top right edge of the isometric diamond
+	 * as East.
 	 */
 	public void east(){
 		this.renderStratagy = new DrawMapEast(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 		this.repaint();
 	}
 	/**
-	 * 
+	 * Switches renderStratagy to DrawMapSouth,
+	 * this will draw the top right edge of the isometric diamond
+	 * as South.
 	 */
 	public void south(){
 		this.renderStratagy = new DrawMapSouth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 		this.repaint();
 	}
 	/**
-	 * 
+	 * RenderStrategy InterFace
+	 * This is were the calculations for converting a 2d array to 
+	 * isometric cordinates occures and the rendering to screen.
 	 * @author gmos
 	 *
 	 */
@@ -205,8 +237,31 @@ public class IsoCanvas extends JPanel{
 		public int center_offset_y = 0;
 		public int tile_width = 64;
 		public int tile_height = 32;
+		/**
+		 * Calculates the offset needed to draw the map in the
+		 * center of the canvas.
+		 * @param tile_width width of standard floor tile
+		 * @param tile_height height of standard floor tile
+		 * @param canvasWidth width of canvas
+		 * @param canvasHeight height of canvas
+		 * @param mapSize size of area to be rendered.
+		 */
 		public void calculateOffset(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int mapSize);
+		/**
+		 * Converts a coordinate in cartesian space
+		 * into a coordinate in isometric space
+		 * @param x cartesian x coordinate to me converted
+		 * @param y cartesian x coordinate to me converted
+		 * @return Point containing isometric conversion of x and y.
+		 */
 		public Point toIso(int x, int y);
+		/**
+		 * Main rendering loop.
+		 * @param g2d graphics context.
+		 * @param map 2d array of tiles to be drawn.
+		 * @param entity player charachter to be drawn.
+		 * @param cursor player cursor to be drawn.
+		 */
 		public void draw(Graphics2D g2d, TileMultiton.type[][] map, Unit entity, UnitCursor cursor);
 	}
 	/**
