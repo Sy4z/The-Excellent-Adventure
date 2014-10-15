@@ -102,8 +102,8 @@ public class World {
 		//Generate random map positions on the map until one is free then put the player there.
 		while(true){
 			//Limited until map scrolling is implemented.
-			int x = 5;//(int) (Math.random() * gameBoard.length);
-			int y = 5;//(int) (Math.random() * gameBoard[0].length);
+			int x = 6;//(int) (Math.random() * gameBoard.length);
+			int y = 5;///(int) (Math.random() * gameBoard[0].length);
 			if(gameBoard[x][y] == null){
 				gameBoard[x][y] = new UnitPlayer(new Point(x,y), id+1);
 				return (UnitPlayer) gameBoard[x][y];
