@@ -36,10 +36,10 @@ public class ServerThread extends Thread{
 	private int playerIndex = 0;
 
 
-	public ServerThread(Socket clientSocket){
+	public ServerThread(){
 		System.out.println("New Server Thread Created");//debugging info
-		this.socket = clientSocket;
-		Main.server.playerList.add(socket.getInetAddress());//Add this Client to the List of Clients in server - This means the Logic for starting turns can be addressed easily this way
+		//this.socket = clientSocket;
+		//Main.server.playerList.add(socket.getInetAddress());//Add this Client to the List of Clients in server - This means the Logic for starting turns can be addressed easily this way
 		//for receiving the character from the connected clientThread
 
 	}
@@ -58,9 +58,13 @@ public class ServerThread extends Thread{
 
 			//Base this on ticks (Turns) - Send to every client on every turn. Whether you as a local player will have moved or not is based on game logic
 			while(true){
+				try{
 				curPlayer = Server.players.get(playerIndex);
+				}catch(ArrayIndexOutOfBoundsException e){}
 				while(curPlayer == null){
+					try{
 					curPlayer = Server.players.get(0);
+					}catch(ArrayIndexOutOfBoundsException e){}
 					continue;
 				}
 
@@ -89,7 +93,7 @@ public class ServerThread extends Thread{
 				System.out.println(isMyTurn + " : This is the printed input from client");
 				if(isMyTurn instanceof String && isMyTurn.equals("myturn")){//Check if its the connected clients turn (Will receive notification from client)
 
-					System.out.println("ServerThread says Its My Turn : " + socket.getInetAddress().getHostAddress() +  " Is the IP");
+					System.out.println("ServerThread says Its My Turn");
 					//Send GameBoard current State to Client
 					gameBoardServer = Main.server.getMainGameBoard(); //Get the most updated recent copy of the gameBoard
 

@@ -25,7 +25,7 @@ public class Server {
 	private static GameObject[][] mainGameBoard;
 	private int currentTurn = 0; //Index of the player in the list who currently has a turn. Assume it starts at 1.
 	ServerSocket serverSock;
-	Socket accept;
+
 
 
 	public Server(int numberPlayers){
@@ -48,13 +48,13 @@ public class Server {
 			try{
 
 				serverSock = new ServerSocket(port);
-				ServerThread server = new ServerThread(null);
+				ServerThread server = new ServerThread();
 				int i=0;
 				while(true){
 					System.err.println("Waiting for Connection");
 					players.add(serverSock.accept());
 					//Will only reach this point if the socket actually accepts a connection - considering accept() blocks until it receives input
-					System.out.println("Accepted Connection from: " + accept.getInetAddress());
+					System.out.println("Accepted Connection");
 
 					i++; //increments count
 					//playerList.add()
