@@ -251,6 +251,7 @@ public class MainMenuPanel extends JPanel {
 				@Override
 				public void paintComponent(Graphics g) {
 					g.drawImage(background.getImage(), 0, 0, null);
+					Main.server.runServer(Main.ipAddress, Main.port);
 				}
 			};
 
@@ -278,7 +279,7 @@ public class MainMenuPanel extends JPanel {
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
 
-			Main.runServerMain();
+
 		}
 
 	}
