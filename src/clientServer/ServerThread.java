@@ -71,11 +71,11 @@ public class ServerThread extends Thread{
 					try {
 						System.out.println("Has sent turn number to client");
 						while(true){
-						tempStringTurn = boardFromClient.readObject(); //Wait for Incoming Token
+							tempStringTurn = boardFromClient.readObject(); //Wait for Incoming Token
 
-						if(tempStringTurn != null){
-							break;
-						}
+							if(tempStringTurn != null){
+								break;
+							}
 
 						}
 						//boardToClient = new ObjectOutputStream(socket.getOutputStream()); //for outputting all the other characters to the server
@@ -104,10 +104,10 @@ public class ServerThread extends Thread{
 						try {
 							Object tempBoard;
 							while(true){
-							tempBoard = boardFromClient.readObject();
-							if(tempBoard != null){
-								break;
-							}
+								tempBoard = boardFromClient.readObject();
+								if(tempBoard != null){
+									break;
+								}
 							}
 							boardToClient.flush();//Flush output buffer, making sure we dont get overloaded with info
 							gameBoardServer = (GameObject[][]) tempBoard; //Reads the UnitPlayer from the temp object, casting it as correct type and stores it
@@ -146,12 +146,13 @@ public class ServerThread extends Thread{
 
 						//Set next turn on
 
-
+						System.out.println("Server Logic Finished");
 
 					}
 					//Wrap up and wait for next looparound
 
 					if(boardFromClient == null){ //If client DC's? Im not sure how to check for this.
+						System.out.println("Should NOT get to here");
 						return;
 					}
 					boardToClient.flush();
@@ -160,9 +161,7 @@ public class ServerThread extends Thread{
 
 
 
-			//String sentence = "Hello";
-			//output.writeBytes(sentence + '\n');
-			//System.out.println(fromClient.readLine());
+
 
 		} catch (IOException e) {
 			System.out.println("There was a problem with input/output to/from the server");
