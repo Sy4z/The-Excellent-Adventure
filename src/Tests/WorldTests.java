@@ -101,7 +101,7 @@ public class WorldTests {
 	public void testObjectInteaction_001(){
 
 		World w = utils.createWorld();
-		InteractiveObjectChest chst = new InteractiveObjectChest(null);
+		InteractiveObjectChest chst = new InteractiveObjectChest(new Point(7,9));
 		int keyIncreseC = chst.getContents()[itemTypes.KEY.ordinal()];
 		try {
 			Method m = null;

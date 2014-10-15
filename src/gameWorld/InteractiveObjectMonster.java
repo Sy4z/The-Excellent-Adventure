@@ -50,7 +50,7 @@ public class InteractiveObjectMonster extends InteractiveObject{
 		str = (int) Math.max(50, Math.random() * 200);
 
 		try {
-			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/tentacle.png")),"Player");
+			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/tentacle.png")),"tentacle");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
