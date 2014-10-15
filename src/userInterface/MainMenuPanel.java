@@ -260,27 +260,27 @@ public class MainMenuPanel extends JPanel {
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
 
-			
+
 			d.add(mainPanel, BorderLayout.CENTER);
 
-		
-			
+
+
 			JLabel label = new JLabel("Running Server...");
 			JButton exit = new JButton("Exit");
-			
+
 			mainPanel.add(label, BorderLayout.CENTER);
 			mainPanel.add(exit, BorderLayout.SOUTH);
-			
-			
-		
-			
+
+
+
+
 			d.setVisible(true);
-			
-			
+
+
 			label.setVisible(true);
 			//exit.setVisible(true);
-			
-		
+
+
 			exit.addActionListener(new ActionListener() {
 
 				@Override
@@ -290,14 +290,14 @@ public class MainMenuPanel extends JPanel {
 				}
 			});
 
-			
+
 			mainPanel.setLayout(new BorderLayout());
 			d.setLocationRelativeTo(null);
-			
-			
-			
-			
-		
+
+
+
+
+
 		}
 
 	}
@@ -331,7 +331,7 @@ public class MainMenuPanel extends JPanel {
 			d.setSize(400, 300);
 			d.setLayout(new BorderLayout());
 
-			DefaultListModel<String> model = new DefaultListModel<String>(); // Add
+			final DefaultListModel<String> model = new DefaultListModel<String>(); // Add
 			// saved
 			// game
 			// names
@@ -354,7 +354,7 @@ public class MainMenuPanel extends JPanel {
 			// game
 			// to
 			// load.
-			JScrollPane scrollPane = new JScrollPane(list);
+			final JScrollPane scrollPane = new JScrollPane(list);
 
 			JPanel buttonPanel = new JPanel();
 			buttonPanel.setLayout(new FlowLayout());
@@ -393,9 +393,35 @@ public class MainMenuPanel extends JPanel {
 					d.dispose();
 				}
 			});
+			JButton deleteButton = new JButton("Delete");
+			deleteButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int index = list.getSelectedIndex();
+					String n = list.getSelectedValue();
+					System.out.println(n + " = " + index);
+
+					boolean i = Data.deleteFile(n);
+					System.out.println(i);
+
+					String[] modifiedList = Data.getLoadFiles();
+
+					model.removeAllElements();
+
+					for (String name : modifiedList) {
+						model.addElement(name);
+					}
+
+					list.setModel(model);
+					scrollPane.revalidate();
+					scrollPane.repaint();
+
+				}
+			});
 			buttonPanel.add(okButton);
 			buttonPanel.add(cancelButton);
-			buttonPanel.add(new JButton("Delete"));
+			buttonPanel.add(deleteButton);
 
 			scrollPane.setOpaque(false);
 			buttonPanel.setOpaque(false);
