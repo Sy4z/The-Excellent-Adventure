@@ -233,9 +233,6 @@ public class World {
 		ArrayList<Point> highPoints = new ArrayList<Point>();
 		for(int x = 0; x < worldMap.length; x++)
 			for(int y = 0; y < worldMap[0].length; y++){
-				System.out.println(worldMap[x][y]);
-				System.out.println(worldMap[x][y].isReachableByActive());
-				System.out.println(x + " " + y);
 				if(worldMap[x][y].isReachableByActive() && !(gameBoard[x][y] instanceof StationaryObject))
 					highPoints.add(new Point(x, y));
 			}
