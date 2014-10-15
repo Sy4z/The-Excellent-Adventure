@@ -1,6 +1,7 @@
 package gameWorld;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * This class holds the count of all items of each type a player has and allows
@@ -9,7 +10,12 @@ import java.io.IOException;
  * @author ChrisMcIntosh
  *
  */
-public class Inventory {
+public class Inventory implements Serializable{
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 3278395666189208097L;
+
 	//The types of item in the game
 	public static enum itemTypes{KEY, RUSTY_NAIL, KATANA, PUPPY};
 	//The number of each item a player has ordered by itemType Ordinal
