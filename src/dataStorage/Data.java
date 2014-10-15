@@ -46,7 +46,7 @@ import tile.TileMultiton.type;
  */
 public class Data {
 	static int b = 0;
-	private static boolean testing;
+	private static boolean testing = false;
 
 	/**
 	 * Error checking method, Prints the given string to Stderr
@@ -176,12 +176,13 @@ public class Data {
 			}
 
 		}
-		error(Main.mainFrame.WIDTH + " " + Main.mainFrame.HEIGHT);
+		error("GameobjectArray populated");
 		//Create the new IsoCavas
 		Main.cvs = new IsoCanvas(Main.mainFrame.getWidth(), Main.mainFrame.getHeight(),tiles);
 
 		//create the new world object
 		World world = new World(lTiles, gameObjectArray,playerID);
+
 		//give the world the gameObject array
 //		world.setGameBoard(gameObjectArray);
 		//give the world the logical tile map
@@ -189,6 +190,7 @@ public class Data {
 		Main.world = world;
 		//create a new turnWatcher
 		Main.tw = new TurnWatcher(world);
+		error("All files loaded");
 	}
 
 	/**

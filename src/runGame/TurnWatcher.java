@@ -26,16 +26,21 @@ public class TurnWatcher {
 	 *
 	 */
 	public boolean turn(){
+		System.err.println("Start of turn");
 		world.startTurn();
 
 		//When this loop breaks, turn is over
 		while(this.isTurn()){
+			System.err.println("In turn loop");
 			try {
+
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
+			System.err.println("Done sleeping");
 		}
 		startOfEndPhase = true;
 		while(!endPhase())//This is just to make the turn stop until the client decides to send the data to the server
@@ -61,13 +66,16 @@ public class TurnWatcher {
 	 * @author syaz
 	 */
 	public boolean endPhase(){
+		System.err.println("Entered endPhase");
 		if(endOfEndPhase == true){
 			try {
+				System.err.println("Sleeping in endPhase");
 				Thread.sleep(1500); //This is the time given for the client to send the data to the server
 			} catch (InterruptedException e) {
 				System.out.println("Thread could not be slept");
 				e.printStackTrace();
 			}
+			System.err.println("true");
 			return true;
 
 		}
