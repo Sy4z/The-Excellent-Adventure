@@ -34,5 +34,11 @@ public abstract class GameObject implements Serializable{
 		return this.curLocation;
 	}
 
+	public boolean equals(GameObject g){
+		if(g == null)
+			return false;
+		return g.getLocation() == curLocation;
+	}
+
 
 }
