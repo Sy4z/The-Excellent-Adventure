@@ -149,6 +149,7 @@ public class ServerThread extends Thread{
 							try {
 								Object receivedEnd = boardFromClient.readObject();
 								String endTurnReceived = (String) receivedEnd;
+								System.out.println("Just before starting next turn");
 								Main.server.setNextTurn();
 								if(receivedEnd != null){
 									break;
