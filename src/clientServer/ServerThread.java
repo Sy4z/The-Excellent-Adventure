@@ -86,9 +86,8 @@ public class ServerThread extends Thread{
 						System.out.println("ServerThread says Its My Turn : " + socket.getInetAddress().getHostAddress() +  " Is the IP");
 						//Send GameBoard current State to Client
 						gameBoardServer = Main.server.getMainGameBoard(); //Get the most updated recent copy of the gameBoard
-						
-						boardToClient.writeObject(gameBoardServer);//Write the gameboard to the client
 
+						boardToClient.writeObject(gameBoardServer);//Write the gameboard to the client
 
 
 
@@ -100,6 +99,7 @@ public class ServerThread extends Thread{
 							gameBoardServer = (GameObject[][]) tempBoard; //Reads the UnitPlayer from the temp object, casting it as correct type and stores it
 							Main.server.setMainGameBoard(gameBoardServer);//Update main board in Server so all threads can see it
 
+							boardToClient.writeObject(new String("finishedmap"));
 						} catch (ClassNotFoundException e) {
 							System.out.println("Problem In Serverthread: Something went wrong when receiving the gameboard from the client");
 							e.printStackTrace();
