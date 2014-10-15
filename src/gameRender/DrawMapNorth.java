@@ -14,18 +14,32 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 	private int center_offset_x;
 	public int tile_width = 64;
 	public int tile_height = 32;
-	
+	/**
+	 * Contructor for DrawMapNorth
+	 * @param tile_width width of standard floorTile
+	 * @param tile_height height of standard floorTile
+	 * @param canvasWidth width of canvas
+	 * @param canvasHeight height of canvas
+	 * @param mapSize Size of area to be rendered.
+	 */
 	public DrawMapNorth(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int mapSize){
 		calculateOffset(tile_width,tile_height,canvasWidth, canvasHeight, mapSize);
 	}
-	
+	/**
+	 * Calculates offset required to draw map in the centre of the canvas.
+	 */
 	@Override
 	public void calculateOffset(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int veiwportSize) {
 		this.center_offset_y = (int)((canvasHeight/2) - (tile_height)*1.5)+tile_height;
 		this.center_offset_x = (int)((canvasWidth/2) - ((tile_width)*veiwportSize)/2);//-tile_width;//this too.
 
 	}
-
+	/**
+	 * Converts a coordinate in cartesian space
+	 * into a coordinate in isometric space such that
+	 * coordinate (0,0) is at the left corner of 
+	 * the isometric diamond.
+	 */
 	public Point toIso(int x, int y){
 		Point isoPoint = new Point();
 		int tileOffsetX = x*(tile_width/2);
@@ -34,28 +48,14 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 		isoPoint.y = ((tileOffsetX - tileOffsetY)/2)+center_offset_y;
 		return isoPoint;
 	}
-
 	/**
-	 * 
-	 * @param map
-	 * @return
+	 *Render loop for drawing map north.
+	 *Loops through a 2d array of visibleTiles converts x and y array coordinates to isometric
+	 *and draws each tile, if the cursor also ocupies the current x and y it is drawn, then if 
+	 *the entity ocupies the current x and y it is drawn.
+	 *To render the map north correctly the x for loop reads forward and the y loop  reads 
+	 *backwards, the visibleTiles array is not fliped before reading occurs.
 	 */
-	private TileMultiton.type[][] flipArray(TileMultiton.type[][] map){
-		TileMultiton.type[][] fliped = new TileMultiton.type[map.length][map[0].length];
-		int newX;
-		int newY =0;
-		for(int y = map.length-1;y>=0 ;y--){
-			newX = 0;
-			for(int x = map.length-1;x >=0;x--){
-				fliped[newY][newX] = map[y][x];
-				System.out.println(newY+":"+newX+"<--"+y+":"+x);
-				newX++;
-			}
-			newY++;	
-		}
-		return fliped;
-	}
-	
 	@Override
 	public void draw(Graphics2D g2d, TileMultiton.type[][] visibleTiles, Unit entity, UnitCursor cursor) {
 		//System.out.println("DrawMapNorth.draw");
