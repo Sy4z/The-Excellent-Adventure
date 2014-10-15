@@ -43,6 +43,7 @@ public class ClientThread extends Thread {
 	public void run(){
 		System.out.println("Trying Connection");
 		try {
+			
 			boardFromServer = new ObjectInputStream(sock.getInputStream());
 			System.out.println("Created inputstreaml");
 			boardToServer = new ObjectOutputStream(sock.getOutputStream());
