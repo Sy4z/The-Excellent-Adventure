@@ -63,7 +63,7 @@ public class ServerThread extends Thread{
 
 			//Base this on ticks (Turns) - Send to every client on every turn. Whether you as a local player will have moved or not is based on game logic
 			while(true){
-				System.out.println("Main Loop Started");
+				
 				if(Main.server.currentTurn() == this.turnNumber){
 					System.out.println("Reads turn number");
 					String yourTurn = "yourturn";
