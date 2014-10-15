@@ -5,6 +5,7 @@ import gameWorld.Inventory.itemTypes;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -29,11 +30,11 @@ public class UnitPlayer extends Unit{
 	public UnitPlayer(Point loc, int ID) {
 		super(loc, ID,new Inventory());
 		try {
-			img = ImageIO.read(new File("src/tile/wastelander0.png"));
+			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/wastelander0.png")),"Player");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		heightOffSet = img.getHeight();
+		heightOffSet = BufferedImageHolder.getimage("Player").getHeight();
 		heightOffSet = Math.max(32 - heightOffSet, heightOffSet -32);
 	}
 
@@ -81,7 +82,7 @@ public class UnitPlayer extends Unit{
 	@Override
 	public void draw(Graphics2D g, int dx, int dy) {
 		g.setColor(new Color(155,144,255));
-		g.drawImage(img, dx, dy-heightOffSet, null);
+		g.drawImage(BufferedImageHolder.getimage("Player"), dx, dy-heightOffSet, null);
 	}
 
 

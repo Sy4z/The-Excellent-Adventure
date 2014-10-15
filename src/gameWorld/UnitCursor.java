@@ -29,7 +29,7 @@ public class UnitCursor extends Unit{
 	public UnitCursor(Point loc, int ID) {
 		super(loc, ID, null);
 		try {
-			img = ImageIO.read(new File("src/tile/cursor.png"));
+			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/cursor.png")),"Cursor");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -45,7 +45,7 @@ public class UnitCursor extends Unit{
 		Composite alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha_level);
 		Composite initialAlpha = g2d.getComposite();
 		g2d.setComposite(alpha);
-		g2d.drawImage(img, dx, dy, null);
+		g2d.drawImage(BufferedImageHolder.getimage("Cursor"), dx, dy, null);
 		g2d.setComposite(initialAlpha);
 	}
 

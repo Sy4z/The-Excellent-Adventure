@@ -17,7 +17,6 @@ public abstract class GameObject implements Serializable{
 	 *
 	 */
 	private static final long serialVersionUID = 8896684741524936435L;
-	protected BufferedImage img;
 	protected Point curLocation;
 
 
