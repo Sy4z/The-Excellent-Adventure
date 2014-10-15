@@ -130,7 +130,7 @@ public class World {
 	 * Resets turn information at the start of the turn
 	 */
 	public void startTurn(){
-		if(Main.onlineMode){
+		if(!Main.onlineMode){
 			avatar.activate();
 			isActive = true;
 		}
