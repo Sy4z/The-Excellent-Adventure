@@ -22,7 +22,7 @@ public class TurnWatcher extends Thread{
 
 	public void run(){
 		while(this.isTurn()){
-			System.err.println("In turn loop");
+
 			try {
 
 				Thread.sleep(2000);
@@ -31,13 +31,14 @@ public class TurnWatcher extends Thread{
 				e.printStackTrace();
 			}
 
-			System.err.println("Done sleeping");
+
 			if(!isTurn()){
 				System.out.println("Turn has ended but is not looping around a last time and is setting variable");
 				isEndPhase = true;
 			}
 		}
 		if(isEndPhase){
+			System.out.println("End Phase Started");
 		startOfEndPhase = true;
 		while(!endPhase())//This is just to make the turn stop until the client decides to send the data to the server
 
