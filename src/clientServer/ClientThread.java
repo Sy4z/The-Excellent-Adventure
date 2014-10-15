@@ -57,8 +57,6 @@ public class ClientThread extends Thread {
 			//fromServer = new DataInputStream(sock.getInputStream());
 			System.out.println("Client Socket connected on " + sock.getInetAddress() + ":" + sock.getPort());
 
-			boardToServer.writeObject(Main.world.getGameBoard());
-
 			/**
 			 * The following block of code is where information can be sent to/from the server.
 			 *
