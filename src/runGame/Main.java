@@ -33,8 +33,8 @@ public  class Main {
 	private static int numberOfPlayers = 3; //Variable for the number of players in the game
 
 	public static boolean isServer = true; //Is this instance of the program a server
-	public static String ipAddress = "127.0.0.1";
-	public static int port = 29598;
+	public static String ipAddress = "192.168.1.227";
+	public static int port = 29597;
 	public static Server server;
 	public static Client client;
 	public static MainFrame mainFrame;
