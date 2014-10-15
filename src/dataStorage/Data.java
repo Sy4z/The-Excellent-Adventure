@@ -284,7 +284,9 @@ public class Data {
 	 * @throws UnexpectedException
 	 */
 	public static boolean save(String fileName) throws UnexpectedException{
-		assert(fileName != 	null);
+		if(fileName == null){
+			throw new IllegalArgumentException("FileName was null");
+		}
 
 		//Initialise the document
 		Document document = new Document();

@@ -127,14 +127,13 @@ public class World {
 		updateGameBoardGraphics();
 		return true;
 	}
+
 	/**
 	 * Resets turn information at the start of the turn
 	 */
 	public void startTurn(){
-		if(!Main.onlineMode){
-			avatar.activate();
-			isActive = true;
-		}
+		avatar.activate();
+		isActive = true;
 		calculatePossibleMovments();
 		updateGameBoardGraphics();
 

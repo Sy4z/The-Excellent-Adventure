@@ -67,7 +67,9 @@ public class ClientThread extends Thread {
 
 
 				try {
+					System.err.println("Hanging out yo, chur homie, dawg");
 					Object turnToken = boardFromServer.readObject();
+					System.err.println("hanging yo");
 					String castTurnToken = (String)turnToken;
 					System.out.println(castTurnToken);
 					//If the toekn received was the server notification telling the client to start the turn,
@@ -88,6 +90,9 @@ public class ClientThread extends Thread {
 							System.out.println("second check passed");
 							boardToServer.writeObject(isMyTurn); //Tells the serverThread its this clients turn
 							Object gameBoardGeneric = boardFromServer.readObject(); //Read into  Generic Object Type
+
+							System.err.println(gameBoardGeneric);
+							
 							boardToServer.flush(); //Flush input buffer, just making sure it doesnt fill up
 							if(gameBoardGeneric instanceof GameObject[][]){ //Check that the generic object is an arraylist - Cant check further than this because nested generics get erased at runtime but at least theres some safeguard to typechecking
 								localGameMap = (GameObject[][])gameBoardGeneric; //Set the board as a local variable
@@ -112,7 +117,7 @@ public class ClientThread extends Thread {
 						System.out.println("other stuffs");
 						//Wait for end turn phase then send server local gameBoard - Thread is now asleep for 1.5 seconds, for the network to wrap up everything else
 						while(Main.tw.startOfEndPhase == false) {//Loop around, then when it is not false, go to the instruction
-							System.out.println(Main.tw.startOfEndPhase);
+//							System.out.println(Main.tw.startOfEndPhase);
 						}
 
 
