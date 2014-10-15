@@ -587,6 +587,7 @@ public class World {
 	/**
 	 * This flips the GameBoard and world Map
 	 */
+	@Deprecated
 	public void flip(){
 		flipMap();
 		flipWorld();
@@ -599,6 +600,7 @@ public class World {
 	 * @param map array to be fliped
 	 * @return new array of with x and y reversed.
 	 */
+	@Deprecated
 	private void flipWorld(){
 		GameObject[][] map = gameBoard;
 		GameObject[][] fliped = new GameObject[map.length][map[0].length];
@@ -621,6 +623,7 @@ public class World {
 	 *y is reversed and so is the x.
 	 * @param map array to be fliped
 	 */
+	@Deprecated
 	private void flipMap(){
 		LogicalTile[][] map = worldMap;
 		LogicalTile[][] fliped = new LogicalTile[map.length][map[0].length];

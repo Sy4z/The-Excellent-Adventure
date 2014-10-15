@@ -101,7 +101,7 @@ public class DrawMapSouth implements IsoCanvas.DrawMap{
 					cX = cursor.getLocation().x;
 					cY = cursor.getLocation().y;
 					if(cX == x && cY == y){
-					cursorPos = toIso(x,y);
+					cursorPos = toIso(y,x);
 					cursor.draw(g2d, cursorPos.x, cursorPos.y);
 				}
 				}
@@ -109,7 +109,7 @@ public class DrawMapSouth implements IsoCanvas.DrawMap{
 					eX = entity.getLocation().x;
 					eY = entity.getLocation().y;
 					if(eX==x && eY==y){
-						entityPos = toIso(x,y);
+						entityPos = toIso(y,x);
 						entity.draw(g2d, entityPos.x, entityPos.y);
 					}
 				}
