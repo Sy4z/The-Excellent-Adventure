@@ -18,7 +18,7 @@ public class WorldTests {
 	 * Some Basic start up tests
 	 */
 	public void test_001(){
-		World w = new World(null, -1, -1, new IsoCanvas(500, 500));
+		World w = utils.createWorld();
 		assertTrue(w.checkPlayerStatus());
 		assertTrue(w.getInventory()[0] == 0);
 		assertTrue(w.getInventory()[1] == 0);
@@ -31,7 +31,7 @@ public class WorldTests {
 	}
 	@Test
 	public void testMovement_001(){
-		World w = new World(null, -1, -1, new IsoCanvas(500, 500));
+		World w = utils.createWorld();
 		assertTrue(w.checkPlayerStatus());
 		assertTrue(w.isTurn());
 		assertTrue(w.getAvatar().getMoveAction());
@@ -100,7 +100,7 @@ public class WorldTests {
 	@Test
 	public void testObjectInteaction_001(){
 
-		World w = new World(null, -1, -1, new IsoCanvas(500, 500));
+		World w = utils.createWorld();
 		InteractiveObjectChest chst = new InteractiveObjectChest(null);
 		int keyIncreseC = chst.getContents()[itemTypes.KEY.ordinal()];
 		try {
@@ -124,7 +124,7 @@ public class WorldTests {
 	@Test
 	public void testObjectInteaction_002(){
 
-		World w = new World(null, -1, -1, new IsoCanvas(500, 500));
+		World w = utils.createWorld();
 		InteractiveObjectMonster mnstr = new InteractiveObjectMonster(null);
 		int keyIncreseM = mnstr.getContents()[itemTypes.KEY.ordinal()];
 		try {
