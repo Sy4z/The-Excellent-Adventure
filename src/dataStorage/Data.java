@@ -147,16 +147,17 @@ public class Data {
 			}
 
 		}
+		error(Main.mainFrame.WIDTH + " " + Main.mainFrame.HEIGHT);
 
-		Main.cvs = new IsoCanvas(Main.mainFrame.WIDTH, Main.mainFrame.HEIGHT,tiles);
+		Main.cvs = new IsoCanvas(Main.mainFrame.getWidth(), Main.mainFrame.getHeight(),tiles);
 
 		World world = new World("This seems arbitrary", gObjs[1].length, gObjs.length, Main.cvs);
 		world.setGameBoard(gObjs);
 		world.setWorldMap(lTiles);
 		Main.world = world;
 		Main.tw = new TurnWatcher(world);
-
 	}
+
 	private static GameObject HandleLoadStationaryObjectHatStand(Element e) {
 
 		return null;
