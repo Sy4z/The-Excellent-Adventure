@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
  * ClientThread does most of the client logic, this is just a wrapper to deal with creating the threads.
  * This class will start if this instance of the program is signified to be a client, rather than a server in the main method
  * This cannot run at the same time as a server.
- * @author Syaz
+ * @author Jarred
  *
  */
 public class Client {

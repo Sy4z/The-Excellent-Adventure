@@ -60,11 +60,11 @@ public class ServerThread extends Thread{
 			while(true){
 				try{
 				curPlayer = Server.players.get(playerIndex);
-				}catch(ArrayIndexOutOfBoundsException e){}
+				}catch(IndexOutOfBoundsException e){}
 				while(curPlayer == null){
 					try{
 					curPlayer = Server.players.get(0);
-					}catch(ArrayIndexOutOfBoundsException e){}
+					}catch(IndexOutOfBoundsException e){}
 					continue;
 				}
 
