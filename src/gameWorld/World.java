@@ -36,8 +36,6 @@ public class World {
 	private UnitCursor cursor;
 	private IsoCanvas canvas;
 
-
-
 	/**
 	 * Constructor
 	 *
