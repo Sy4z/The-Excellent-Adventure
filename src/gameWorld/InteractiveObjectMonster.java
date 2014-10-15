@@ -2,6 +2,7 @@ package gameWorld;
 
 import gameWorld.Inventory.itemTypes;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.io.File;
@@ -14,6 +15,8 @@ public class InteractiveObjectMonster extends InteractiveObject{
 	private int[] contents;
 	//This is the combat power of a monster
 	private int str;
+	private int heightOffSet;
+
 	/**
 	 * Makes a monster given a it's items held, combat power and location
 	 * @param loot
@@ -24,6 +27,15 @@ public class InteractiveObjectMonster extends InteractiveObject{
 		super(p);
 		contents = loot;
 		str = strength;
+		try {
+			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/tentacle.png")),"Player");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		heightOffSet = BufferedImageHolder.getimage("tentacle").getHeight();
+		heightOffSet = Math.max(32 - heightOffSet, heightOffSet -32);
+
 	}
 	/**
 	 * Makes a monster randomizing its items held and combat power
@@ -36,6 +48,16 @@ public class InteractiveObjectMonster extends InteractiveObject{
 			itms[i] = (int) Math.max(0, Math.random()*50 -25);
 		contents = itms;
 		str = (int) Math.max(50, Math.random() * 200);
+
+		try {
+			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/tentacle.png")),"Player");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		heightOffSet = BufferedImageHolder.getimage("tentacle").getHeight();
+		heightOffSet = Math.max(32 - heightOffSet, heightOffSet -32);
+
+
 	}
 
 	/**
@@ -57,7 +79,8 @@ public class InteractiveObjectMonster extends InteractiveObject{
 	 * Draws itself at a given location
 	 */
 	void draw(Graphics2D g, int dx, int dy) {
-		// TODO Auto-generated method stub
+		g.setColor(new Color(155,144,255));
+		g.drawImage(BufferedImageHolder.getimage("tentacle"), dx, dy-heightOffSet, null);
 
 	}
 

@@ -310,6 +310,8 @@ public class World {
 	 * @return
 	 */
 	private boolean validMove(int x, int y, ArrayDeque<Point> path){
+		if(avatar.getAvilableMoves() == 0)
+			return false;
 		//Return false if it out of bounds of the map array.
 		if(!inBounds(x,y))
 			return false;
