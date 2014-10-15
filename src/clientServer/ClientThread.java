@@ -70,8 +70,8 @@ public class ClientThread extends Thread {
 					Object turnToken = boardFromServer.readObject();
 					String castTurnToken = (String)turnToken;
 					System.out.println(castTurnToken);
-					 //If the toekn received was the server notification telling the client to start the turn,
-						Main.tw.turn(); //Start the turn on the local thread
+					//If the toekn received was the server notification telling the client to start the turn,
+					Main.tw.turn(); //Start the turn on the local thread
 
 				} catch (ClassNotFoundException e1) {
 					System.out.println("Client: There was a problem Reading the first token (Accepting a turn notification from the server");
@@ -113,11 +113,11 @@ public class ClientThread extends Thread {
 
 
 					//End Phase started so:
-
+					System.out.println("Before writing Game Board to Server");
 					boardToServer.writeObject(Main.world.getGameBoard());//Send current state of Local GameBoard to Server
 					//Send the Array of LogicalTiles to the server - Can Just Override the servers version
 
-
+					System.out.println("After writing Game Board to Server");
 
 
 					Main.tw.endOfEndPhase = true;//End end Phase

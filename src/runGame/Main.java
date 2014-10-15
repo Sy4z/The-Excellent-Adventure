@@ -89,11 +89,12 @@ public  class Main {
 			System.out.println("Error getting local host ip");
 			e.printStackTrace();
 		}
+		tw = new TurnWatcher(world);
 		//The following block deals with starting the server
 		server = new Server(numberOfPlayers);
 		client = new Client();
 		//tw = new TurnWatcher(mainFrame.mainPanel.gamePanel.getWorld());
-		tw = new TurnWatcher(world);
+
 		//runServer(server, client);
 
 
