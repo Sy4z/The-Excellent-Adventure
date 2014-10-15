@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<World>
+  <Tiles X="100" Y="100">
+    <b Type="BLUE" />
+    <f Type="FLOOR" />
+  </Tiles>
+  <GameObject Size="100">
+    <UnitPlayer>
+      <heightOffSet>32</heightOffSet>
+      <inventory>
+        <KEY>0</KEY>
+        <RUSTY_NAIL>0</RUSTY_NAIL>
+        <KATANA>0</KATANA>
+        <PUPPY>0</PUPPY>
+      </inventory>
+      <notTurnEnd>false</notTurnEnd>
+      <standardAction>false</standardAction>
+      <moveAction>false</moveAction>
+      <ID>0</ID>
+      <curLocation>
+        <X>1</X>
+        <Y>1</Y>
+      </curLocation>
+    </UnitPlayer>
+    <UnitPlayer>
+      <heightOffSet>32</heightOffSet>
+      <inventory>
+        <KEY>0</KEY>
+        <RUSTY_NAIL>0</RUSTY_NAIL>
+        <KATANA>0</KATANA>
+        <PUPPY>0</PUPPY>
+      </inventory>
+      <notTurnEnd>true</notTurnEnd>
+      <standardAction>true</standardAction>
+      <moveAction>false</moveAction>
+      <ID>1</ID>
+      <curLocation>
+        <X>5</X>
+        <Y>10</Y>
+      </curLocation>
+    </UnitPlayer>
+  </GameObject>
+  <LocalID ID="1" />
+</World>

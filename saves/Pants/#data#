@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<World>
+  <Tiles X="100" Y="100">
+    <b Type="BLUE" />
+    <f Type="FLOOR" />
+  </Tiles>
+  <GameObject Size="100">
+    <UnitPlayer>
+      
+  </GameObject>
+</World>
