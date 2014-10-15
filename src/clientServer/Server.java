@@ -44,7 +44,7 @@ public class Server {
 	 * This method is in charge of initialising the server - It creates a new thread every time a connection is accepted
 	 */
 	public void runServer(String addr, int port){
-	System.out.println("Server Starting up");
+		System.out.println("Server Starting up");
 		while(serverIsOn){
 			try{
 
@@ -120,11 +120,19 @@ public class Server {
 
 
 	}
-
+	/**
+	 * Gets the current server version of the gameboard
+	 * @return the  current server version of the gameboard
+	 */
 	public static GameObject[][] getMainGameBoard() {
 		return mainGameBoard;
 	}
 
+
+	/**
+	 * Sets the current server version of the gameboard
+	 * @param mainGameBoard input a gameobject, and the server version will be set to it
+	 */
 	public static void setMainGameBoard(GameObject[][] mainGameBoard) {
 		Server.mainGameBoard = mainGameBoard;
 	}
@@ -141,14 +149,14 @@ public class Server {
 		return currentTurn;
 	}
 
-//	public void setNextTurn(){
-//		if((currentTurn) < playerList.size()){ //Make sure the next number doesnt tick over the max number of players
-//			currentTurn++; //Increment the current turn
-//		}
-//		else{
-//			currentTurn = 0; //Tick back around to 1, because we reached the end of the playerlist
-//		}
-//	}
+	//	public void setNextTurn(){
+	//		if((currentTurn) < playerList.size()){ //Make sure the next number doesnt tick over the max number of players
+	//			currentTurn++; //Increment the current turn
+	//		}
+	//		else{
+	//			currentTurn = 0; //Tick back around to 1, because we reached the end of the playerlist
+	//		}
+	//	}
 
 
 

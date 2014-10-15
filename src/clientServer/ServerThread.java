@@ -14,7 +14,7 @@ import runGame.Main;
 /**
  * SERVERSIDE CLASS
  * FOR EACH CLIENTTHREAD, CREATE SERVERTHREAD TO DEAL WITH IT
- * @author syaz
+ * @author Jarred
  * honejarred@gmail.com
  * Server class dealing with all server calculations
  * Running via TCP, as the game is now turn based.
