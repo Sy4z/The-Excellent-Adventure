@@ -55,6 +55,7 @@ public class DrawMapWest implements IsoCanvas.DrawMap {
 				tY = (tilePos.y);
 				//System.out.println("DrawMapWest.draw current tile : " + tile );
 				tile.draw(g2d, tX,tY);
+
 				if(cursor != null){
 					cX = cursor.getLocation().x;
 					cY = cursor.getLocation().y;
@@ -62,11 +63,13 @@ public class DrawMapWest implements IsoCanvas.DrawMap {
 						cursorPos = toIso(x,y);
 						cursor.draw(g2d, cursorPos.x, cursorPos.y);
 					}
-					if(visibleObjects[y][x]!= null){
-						Point objPoint = toIso(x,y);
-						visibleObjects[y][x].draw(g2d,objPoint.x,objPoint.y);
-					}
 				}
+				
+				if(visibleObjects[y][x]!= null){
+					Point objPoint = toIso(x,y);
+					visibleObjects[y][x].draw(g2d,objPoint.x,objPoint.y);
+				}
+
 				if(entity != null){
 					eX = entity.getLocation().x;
 					eY = entity.getLocation().y;
@@ -77,7 +80,7 @@ public class DrawMapWest implements IsoCanvas.DrawMap {
 				}	
 			}
 		}
-		
+
 	}
 	/**
 	 * Converts a coordinate in cartesian space
@@ -101,7 +104,7 @@ public class DrawMapWest implements IsoCanvas.DrawMap {
 	public void calculateOffset(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int mapSize) {
 		this.center_offset_x = (int)((canvasWidth/2) - (tile_width)*1.5)+tile_width;//spread this calculation out.
 		this.center_offset_y = (int)((canvasHeight/2) - ((tile_height)*mapSize)/2);//+tile_height;//this too.
-		
+
 	}
 
 }

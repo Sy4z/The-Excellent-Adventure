@@ -38,6 +38,7 @@ public class DrawMapEast implements IsoCanvas.DrawMap {
 	public void draw(Graphics2D g2d, TileMultiton.type[][] visibleTiles,GameObject[][] visibleObjects, Unit entity, UnitCursor cursor) {
 		//System.out.println("DrawMapWest.draw");
 		TileMultiton.type[][] map = flipArray(visibleTiles);
+		GameObject[][] objects = flipObjectArray(visibleObjects);
 		Tile tile;
 		Point tilePos;
 		Point entityPos;
@@ -59,25 +60,46 @@ public class DrawMapEast implements IsoCanvas.DrawMap {
 					cX = cursor.getLocation().x;
 					cY = cursor.getLocation().y;
 					if(cX == x && cY == y){
-						cursorPos = toIso(y,x);
+						cursorPos = toIso(x,y);
 						cursor.draw(g2d, cursorPos.x, cursorPos.y);
 					}
 				}
-				if(visibleObjects[y][x]!= null){
+				if(objects[y][x]!= null){
 					Point objPoint = toIso(x,y);
-					visibleObjects[y][x].draw(g2d,objPoint.x,objPoint.y);
+					objects[y][x].draw(g2d,objPoint.x,objPoint.y);
 				}
 				if(entity != null){
 					eX = entity.getLocation().x;
 					eY = entity.getLocation().y;
 					if(eX==x && eY==y){
-						entityPos = toIso(eY,eX);
+						entityPos = toIso(eX,eY);
 						entity.draw(g2d, entityPos.x, entityPos.y);
 					}
 				}	
 			}
 		}
-		
+
+	}
+	/**
+	 *Flips a 2d array such that the 
+	 *y is reversed and so is the x.
+	 * @param map array to be fliped
+	 * @return new array of with x and y reversed.
+	 */
+	private GameObject[][] flipObjectArray(GameObject[][] objs){
+		GameObject[][] fliped = new GameObject[objs.length][objs[0].length];
+		int newX;
+		int newY =0;
+		for(int y = objs.length-1;y>=0 ;y--){
+			newX = 0;
+			for(int x = objs.length-1;x >=0;x--){
+				fliped[newY][newX] = objs[y][x];
+				//System.out.println(newY+":"+newX+"<--"+y+":"+x);
+				newX++;
+			}
+			newY++;	
+		}
+		return fliped;
 	}
 	/**
 	 *Flips a 2d array such that the 
@@ -122,7 +144,7 @@ public class DrawMapEast implements IsoCanvas.DrawMap {
 	public void calculateOffset(int tile_width, int tile_height, int canvasWidth,int canvasHeight, int veiwportSize) {
 		this.center_offset_x = (int)((canvasWidth/2) - (tile_width)*1.5)+tile_width;//spread this calculation out.
 		this.center_offset_y = (int)((canvasHeight/2) - ((tile_height)*veiwportSize)/2);//+tile_height;//this too.
-		
+
 	}
 
 }

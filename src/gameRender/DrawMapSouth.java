@@ -40,7 +40,7 @@ public class DrawMapSouth implements IsoCanvas.DrawMap{
 	 * @param map array to be fliped
 	 * @return new array of with x and y reversed.
 	 */
-	private TileMultiton.type[][] flipArray(TileMultiton.type[][] map){
+	private TileMultiton.type[][] flipMapArray(TileMultiton.type[][] map){
 		TileMultiton.type[][] fliped = new TileMultiton.type[map.length][map[0].length];
 		int newX;
 		int newY =0;
@@ -55,7 +55,27 @@ public class DrawMapSouth implements IsoCanvas.DrawMap{
 		}
 		return fliped;
 	}
-	
+	/**
+	 *Flips a 2d array such that the 
+	 *y is reversed and so is the x.
+	 * @param map array to be fliped
+	 * @return new array of with x and y reversed.
+	 */
+	private GameObject[][] flipObjectArray(GameObject[][] objs){
+		GameObject[][] fliped = new GameObject[objs.length][objs[0].length];
+		int newX;
+		int newY =0;
+		for(int y = objs.length-1;y>=0 ;y--){
+			newX = 0;
+			for(int x = objs.length-1;x >=0;x--){
+				fliped[newY][newX] = objs[y][x];
+				//System.out.println(newY+":"+newX+"<--"+y+":"+x);
+				newX++;
+			}
+			newY++;	
+		}
+		return fliped;
+	}
 	/**
 	 * Converts a coordinate in cartesian space
 	 * into a coordinate in isometric space such that
@@ -80,7 +100,8 @@ public class DrawMapSouth implements IsoCanvas.DrawMap{
 	 */
 	@Override
 	public void draw(Graphics2D g2d, TileMultiton.type[][] visibleTiles,GameObject[][] visibleObjects, Unit entity, UnitCursor cursor) {
-		TileMultiton.type[][] map = flipArray(visibleTiles);
+		TileMultiton.type[][] map = flipMapArray(visibleTiles);
+		GameObject[][] objects = flipObjectArray(visibleObjects);
 		Tile tile;
 		Point tilePos;
 		Point entityPos;
@@ -98,19 +119,21 @@ public class DrawMapSouth implements IsoCanvas.DrawMap{
 				tileX = (tilePos.x);
 				tileY = (tilePos.y);
 				tile.draw(g2d, tileX,tileY);
-				
+
 				if(cursor != null){
 					cursorX = cursor.getLocation().x;
 					cursorY = cursor.getLocation().y;
 					if(cursorX == x && cursorY == y){
-					cursorPos = toIso(x,y);
-					cursor.draw(g2d, cursorPos.x, cursorPos.y);
+						cursorPos = toIso(x,y);
+						cursor.draw(g2d, cursorPos.x, cursorPos.y);
+					}
 				}
-				}
-				if(visibleObjects[y][x]!= null){
+				
+				if(objects[y][x]!= null){
 					Point objPoint = toIso(x,y);
-					visibleObjects[y][x].draw(g2d,objPoint.x,objPoint.y);
+					objects[y][x].draw(g2d,objPoint.x,objPoint.y);
 				}
+				
 				if(entity != null){
 					entityX = entity.getLocation().x;
 					entityY = entity.getLocation().y;
@@ -121,7 +144,7 @@ public class DrawMapSouth implements IsoCanvas.DrawMap{
 				}
 			}
 		}
-		
+
 	}
 
 }
