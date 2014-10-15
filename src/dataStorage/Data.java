@@ -92,7 +92,9 @@ public class Data {
 		Element tilesNode = root.getChild("Tiles");
 
 		error("Got Tiles");
+
 		int playerID = Integer.parseInt(root.getChild("LocalID").getAttribute("ID").getValue());
+
 		for(Element e : tilesNode.getChildren()){
 
 			TileMultiton.getTile(TileMultiton.getTypeByRepresentation(e.getName().charAt(0)));
@@ -179,11 +181,11 @@ public class Data {
 		Main.cvs = new IsoCanvas(Main.mainFrame.getWidth(), Main.mainFrame.getHeight(),tiles);
 
 		//create the new world object
-		World world = new World("This seems arbitrary", gameObjectArray[1].length, gameObjectArray.length, Main.cvs);
+		World world = new World(lTiles, gameObjectArray,playerID);
 		//give the world the gameObject array
-		world.setGameBoard(gameObjectArray);
+//		world.setGameBoard(gameObjectArray);
 		//give the world the logical tile map
-		world.setWorldMap(lTiles);
+//		world.setWorldMap(lTiles);
 		Main.world = world;
 		//create a new turnWatcher
 		Main.tw = new TurnWatcher(world);
@@ -430,6 +432,7 @@ public class Data {
 				}
 			}
 		}
+
 		root.addContent(subRoot);
 		Field playerAvatar;
 		try {
