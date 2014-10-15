@@ -70,7 +70,7 @@ public class ClientThread extends Thread {
 					Object turnToken = boardFromServer.readObject();
 					String castTurnToken = (String)turnToken;
 					System.out.println(castTurnToken);
-					if(castTurnToken.equals("yourturn")){ //If the toekn received was the server notification telling the client to start the turn,
+					if(castTurnToken instanceof String){ //If the toekn received was the server notification telling the client to start the turn,
 						Main.tw.turn(); //Start the turn on the local thread
 					}
 				} catch (ClassNotFoundException e1) {
