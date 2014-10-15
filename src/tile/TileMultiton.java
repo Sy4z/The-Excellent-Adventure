@@ -38,11 +38,11 @@ public class TileMultiton {
 					new File("src" + File.separator + "tile" +
 							File.separator + "tower.png"),'b'));
 				break;
-			case OPENDOOR:  tiles.put(type , new DoorTile(
+			case OPENDOOR:  tiles.put(type , new OpenDoor(
 					new File("src" + File.separator + "tile" +
 							File.separator + "tower.png"),'d'));//This should get it's own picture
 				break;
-			case CLOSEDOOR:  tiles.put(type , new DoorTile(
+			case CLOSEDOOR:  tiles.put(type , new ClosedDoor(
 					new File("src" + File.separator + "tile" +
 							File.separator + "tower.png"),'c'));//This should get it's own picture
 				break;
