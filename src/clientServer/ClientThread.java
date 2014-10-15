@@ -92,7 +92,7 @@ public class ClientThread extends Thread {
 							Object gameBoardGeneric = boardFromServer.readObject(); //Read into  Generic Object Type
 
 							System.err.println(gameBoardGeneric);
-							
+
 							boardToServer.flush(); //Flush input buffer, just making sure it doesnt fill up
 							if(gameBoardGeneric instanceof GameObject[][]){ //Check that the generic object is an arraylist - Cant check further than this because nested generics get erased at runtime but at least theres some safeguard to typechecking
 								localGameMap = (GameObject[][])gameBoardGeneric; //Set the board as a local variable
@@ -110,43 +110,33 @@ public class ClientThread extends Thread {
 
 
 
-
+						boardToServer.writeObject(Main.world.getGameBoard());
 
 
 
 						System.out.println("other stuffs");
 						//Wait for end turn phase then send server local gameBoard - Thread is now asleep for 1.5 seconds, for the network to wrap up everything else
-						while(Main.tw.startOfEndPhase == false) {//Loop around, then when it is not false, go to the instruction
-//							System.out.println(Main.tw.startOfEndPhase);
+//						while(Main.tw.startOfEndPhase == false) {//Loop around, then when it is not false, go to the instruction
+////							System.out.println(Main.tw.startOfEndPhase);
+//						}
+						String severMessage = "";
+						try {
+							severMessage = (String) boardFromServer.readObject();
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						if(severMessage != "finishedmap"){
+							System.err.println("Finishedmap not received");
+						}
+						else{
+							Main.tw.endOfEndPhase = true;//End end Phase
+							boardToServer.flush();//Flushing Input buffer, making sure it doesnt fill up
+							System.err.println("Potatoes found!");
 						}
 
 
-						//End Phase started so:
-						System.out.println("Before writing Game Board to Server");
-						boardToServer.writeObject(Main.world.getGameBoard());//Send current state of Local GameBoard to Server
-						//Send the Array of LogicalTiles to the server - Can Just Override the servers version
-
-						System.out.println("After writing Game Board to Server");
-
-
-						Main.tw.endOfEndPhase = true;//End end Phase
-						boardToServer.flush();//Flushing Input buffer, making sure it doesnt fill up
-
-
-
-
-
-
 					}
-
-
-
-
-
-
-
-				boardToServer.flush();
-
 				if(boardToServer == null){ //Placeholder for now
 					break;
 				}
