@@ -217,7 +217,7 @@ public class MainMenuPanel extends JPanel {
 								.showInputDialog("Enter IP Address:");
 						Main.setIP(input);
 					}
-					Main.runClientMain(Main.client);
+					Main.runClientMain();
 				}
 			});
 
@@ -278,7 +278,7 @@ public class MainMenuPanel extends JPanel {
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
 
-			Main.runServerMain(Main.server);
+			Main.runServerMain();
 		}
 
 	}
@@ -322,6 +322,7 @@ public class MainMenuPanel extends JPanel {
 			for (String name : loadNames) {
 				model.addElement(name);
 			}
+
 			final JList<String> list = new JList<String>(model);
 			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Makes
 			// sure
@@ -336,6 +337,7 @@ public class MainMenuPanel extends JPanel {
 			// to
 			// load.
 			final JScrollPane scrollPane = new JScrollPane(list);
+
 
 			JPanel buttonPanel = new JPanel();
 			buttonPanel.setLayout(new FlowLayout());
@@ -379,8 +381,12 @@ public class MainMenuPanel extends JPanel {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					int index = list.getSelectedIndex();
 					String n = list.getSelectedValue();
-					Data.deleteFile(n);
+					System.out.println(n + " = " + index);
+
+					boolean i = Data.deleteFile(n);
+					System.out.println(i);
 
 					String[] modifiedList = Data.getLoadFiles();
 

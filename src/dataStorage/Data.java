@@ -106,7 +106,7 @@ public class Data {
 		//initialise the logicalTile, tile and gameobject arrays
 		LogicalTile[][] lTiles = new LogicalTile[i][j];
 		TileMultiton.type[][] tiles = new TileMultiton.type[i][j];
-		GameObject[][] gObjs = new GameObject[i][j];
+		GameObject[][] gameObjectArray = new GameObject[i][j];
 
 		//--------read in the tilemap------
 		i = 0;
@@ -165,7 +165,7 @@ public class Data {
 				Point p = (Point) tempField.get(tempObj);
 				tempField.setAccessible(false);
 
-				gObjs[p.x][p.y] = tempObj;
+				gameObjectArray[p.x][p.y] = tempObj;
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -177,9 +177,9 @@ public class Data {
 		Main.cvs = new IsoCanvas(Main.mainFrame.getWidth(), Main.mainFrame.getHeight(),tiles);
 
 		//create the new world object
-		World world = new World("This seems arbitrary", gObjs[1].length, gObjs.length, Main.cvs);
+		World world = new World("This seems arbitrary", gameObjectArray[1].length, gameObjectArray.length, Main.cvs);
 		//give the world the gameObject array
-		world.setGameBoard(gObjs);
+		world.setGameBoard(gameObjectArray);
 		//give the world the logical tile map
 		world.setWorldMap(lTiles);
 		Main.world = world;
@@ -198,9 +198,9 @@ public class Data {
 	}
 
 	/**
+	 * Deletes the file denoted by the given string from the save folder
 	 *
-	 *
-	 * @param s
+	 * @param s 
 	 * @return
 	 */
 	public static boolean deleteFile(String s){
@@ -557,7 +557,8 @@ public class Data {
 	}
 
 	/**
-	 * -----STANDIN WHILE I STUDY XML------
+	 * Test set of tiles for rendering and gameObjs
+	 *
 	 * @param fi Use null the File shall be ignored
 	 *
 	 * Returns a 2D array of Tiles for testing purposes, feel free to mess with
