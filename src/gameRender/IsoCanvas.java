@@ -51,7 +51,7 @@ public class IsoCanvas extends JPanel{
 		map = t.tiles;
 		this.width = Width;
 		this.height = Height;
-		System.out.println("height :"+height+"width :"+width);
+		System.out.println("width :" +width+"height :"+height);//canvas debug
 		this.renderStratagy = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
 	}
 
@@ -69,7 +69,8 @@ public class IsoCanvas extends JPanel{
 		map = Tiles;
 		this.width = Width;
 		this.height = Height;
-		this.render = new DrawMapNorth(this.tile_width, this.tile_height, this.width, this.height, veiwport_size);
+		System.out.println("width :" +width+"height :"+height);//canvas debug
+		this.renderStratagy = new DrawMapNorth(this.tile_width, this.tile_height, this.width, this.height, veiwport_size);
 	}
 
 	/**
@@ -81,8 +82,8 @@ public class IsoCanvas extends JPanel{
 		g2d.fillRect(0,0,width,height);
 		TileMultiton.type[][] visibleTiles = loadVisibleTiles();
 		renderStratagy.draw(g2d, visibleTiles, entity, cursor);
-		//g2d.fillRect((width/2)-5,(height/2-5),10,10); //center of canvas.
-
+		g2d.fillRect((width/2)-5,(height/2-5),10,10); //debug center of canvas.
+		g2d.drawRect(0,0,width,height);// debug draw rectangle around canvas
 	}
 	/**
 	 * 
