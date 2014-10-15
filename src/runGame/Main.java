@@ -65,7 +65,9 @@ public  class Main {
 		
 		loadFrame.dispose();
 		mainFrame = new MainFrame();
-		
+
+		System.err.println(mainFrame.getWidth() + " " + mainFrame.getHeight());
+
 		cvs = new IsoCanvas(mainFrame.getWidth(), mainFrame.getHeight());
 		world = new World(null, -1, -1, cvs);
 
