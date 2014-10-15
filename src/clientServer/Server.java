@@ -13,6 +13,7 @@ import java.util.List;
 import runGame.Main;
 /**
  * SERVERSIDE Class
+ * @author Jarred
  * This Class Deals with accepting connections from clients and passing them off to their own specific thread
  * This class is started by the main method if this instance of the program is signified to be a server
  * This class cannot run at the same time as a client
@@ -49,6 +50,7 @@ public class Server {
 
 				serverSock = new ServerSocket(port);
 				ServerThread server = new ServerThread();
+				server.start();
 				int i=0;
 				while(true){
 					System.err.println("Waiting for Connection");
@@ -59,7 +61,7 @@ public class Server {
 
 					//playerList.add()
 
-					server.start();
+
 
 				}
 			}
