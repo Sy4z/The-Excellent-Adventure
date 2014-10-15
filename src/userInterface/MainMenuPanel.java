@@ -217,7 +217,7 @@ public class MainMenuPanel extends JPanel {
 								.showInputDialog("Enter IP Address:");
 						Main.setIP(input);
 					}
-					Main.runClientMain(Main.client);
+					Main.runClientMain();
 				}
 			});
 
@@ -278,7 +278,7 @@ public class MainMenuPanel extends JPanel {
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
 
-			Main.runServerMain(Main.server);
+			Main.runServerMain();
 		}
 
 	}
