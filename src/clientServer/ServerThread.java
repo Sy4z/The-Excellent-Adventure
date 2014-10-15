@@ -70,9 +70,16 @@ public class ServerThread extends Thread{
 					boardToClient.writeObject(yourTurn);//Let Client Know its now his turn
 					try {
 						System.out.println("Has sent turn number to client");
+						while(true){
 						tempStringTurn = boardFromClient.readObject(); //Wait for Incoming Token
-						//boardToClient = new ObjectOutputStream(socket.getOutputStream()); //for outputting all the other characters to the server
 
+						if(tempStringTurn != null){
+							break;
+						}
+
+						}
+						//boardToClient = new ObjectOutputStream(socket.getOutputStream()); //for outputting all the other characters to the server
+						System.out.println(tempStringTurn.getClass());
 						System.out.println("Has recieved input from client");
 					}
 					catch (ClassNotFoundException e1) {
@@ -80,6 +87,7 @@ public class ServerThread extends Thread{
 						e1.printStackTrace();
 					}
 					String isMyTurn = (String)tempStringTurn; //Cast the input String
+					tempStringTurn = null;
 					System.out.println(isMyTurn + " : This is the printed input from client");
 					if(isMyTurn instanceof String && isMyTurn.equals("myturn")){//Check if its the connected clients turn (Will receive notification from client)
 
@@ -94,9 +102,16 @@ public class ServerThread extends Thread{
 
 						// Recieve updated GameBoard from client at end of turn - Should sit here waiting for the token to come in so no logic needed here
 						try {
-							Object tempBoard = boardFromClient.readObject();
+							Object tempBoard;
+							while(true){
+							tempBoard = boardFromClient.readObject();
+							if(tempBoard != null){
+								break;
+							}
+							}
 							boardToClient.flush();//Flush output buffer, making sure we dont get overloaded with info
 							gameBoardServer = (GameObject[][]) tempBoard; //Reads the UnitPlayer from the temp object, casting it as correct type and stores it
+							tempBoard = null;
 							Main.server.setMainGameBoard(gameBoardServer);//Update main board in Server so all threads can see it
 
 							boardToClient.writeObject(new String("finishedmap"));
