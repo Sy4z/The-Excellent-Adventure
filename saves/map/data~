@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <World>
-  <Tiles X="100" Y="100">
+  <Tiles X="10" Y="10">
     <b Type="BLUE" />
     <f Type="FLOOR" />
   </Tiles>
@@ -18,8 +18,8 @@
       <moveAction>false</moveAction>
       <ID>1</ID>
       <curLocation>
-        <X>0</X>
-        <Y>11</Y>
+        <X>4</X>
+        <Y>4</Y>
       </curLocation>
     </UnitPlayer>
     <UnitPlayer>

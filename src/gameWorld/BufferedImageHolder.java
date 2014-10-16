@@ -6,6 +6,8 @@ import java.util.Map;
 
 /**
  *
+ *Container for all gameObject imgs, to save the server from sending buffered imgs
+ *
  * @author macdondyla1
  *
  */

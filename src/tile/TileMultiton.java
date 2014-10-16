@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import dataStorage.Data;
+
 /**
  * Implements the the multiton design pattern to efficiently define each type of tile
  * @author macdondyla1
@@ -16,8 +18,8 @@ public class TileMultiton {
 
 	//enum of tile types
 
-	public static enum type{BLUE, FLOOR, OPENDOOR, CLOSEDOOR};
-
+	public static enum type{BLUE, FLOOR, OPENDOOR, CLOSEDOOR, BOX, TENTACLE,GREY,WATER};
+	private static enum typeChar{b,f,d,c,g,t,a,w};
 	/**
 	 * Takes an enum from TileMultiton.type, returns the associated tile
 	 *
@@ -31,7 +33,7 @@ public class TileMultiton {
 		if(tiles.get(type) == null){
 			switch(type){
 			case FLOOR: tiles.put(type, new FloorTile(
-					TileMultiton.class.getResource("/tile/tileD1.png"),'f'));
+					TileMultiton.class.getResource("/tile/openDoor.png"),'f'));
 				break;
 			case BLUE:  tiles.put(type , new BlueTile(
 					TileMultiton.class.getResource("/tile/tower.png"),'b'));
@@ -41,6 +43,16 @@ public class TileMultiton {
 			case CLOSEDOOR:  tiles.put(type , new ClosedDoor(
 					TileMultiton.class.getResource("/tile/closedDoor.png"),'c'));//This should get it's own picture
 				break;
+			case BOX: 		tiles.put(type, new Box(
+					TileMultiton.class.getResource("/tile/t2.png"),'g'));
+						break;
+			case TENTACLE:	tiles.put(type, new Tentacle(
+					TileMultiton.class.getResource("/tile/tentacle.png"),'t'));
+						break;
+			case GREY: 		tiles.put(type, new Grey(
+					TileMultiton.class.getResource("/tile/tile.png"),'a')); break;
+			case WATER: 	tiles.put(type, new Water(
+					TileMultiton.class.getResource("/tile/water.png"), 'w')); break;
 			}
 		}
 		return tiles.get(type);
@@ -55,12 +67,13 @@ public class TileMultiton {
 		throw new IllegalArgumentException("Either an invalid char was entered or a tile was created with an invalid char type");
 	}
 
+	/**
+	 * Retunr the relative type from a given char
+	 * @param ch
+	 * @return
+	 */
 	public static type getTypeByRepresentation(char ch){
-		for(type t : type.values()){
-			if(getTile(t).getRepresentation() == ch){
-				return t;
-			}
-		}
-		throw new IllegalArgumentException("Either an invalid char was entered or a tile was created with an invalid char type");
+		Data.error(ch+"");
+		return type.values()[typeChar.valueOf(ch+"").ordinal()];
 	}
 }
