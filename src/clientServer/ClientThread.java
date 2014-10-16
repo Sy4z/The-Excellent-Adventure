@@ -66,7 +66,7 @@ public class ClientThread extends Thread {
 							break;
 						}
 					}
-					System.err.println("hanging yo");
+
 					String castTurnToken = (String)turnToken;
 					turnToken = null;
 					System.out.println(castTurnToken);
@@ -133,9 +133,14 @@ public class ClientThread extends Thread {
 								}
 							}
 						} catch (ClassNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+
+
 						}
+
+						/**
+						 * Block to handle in game turns locally based on input from the server
+						 */
+
 						if(!severMessage.equals("finishedmap")){
 							System.err.println("Finishedmap not received");
 							severMessage =null;
@@ -147,8 +152,13 @@ public class ClientThread extends Thread {
 							System.err.println("Potatoes found!");
 
 							while(Main.world.isTurn()){
-								System.out.println("Looping");
-								
+								//System.out.println("Looping"); Commenting this out broke the program.... Then we found out that thread.sleep works. Java is weird.
+								try {
+									Thread.sleep(2);
+								} catch (InterruptedException e) {
+
+								}
+
 							}
 							Main.world.updateGameBoardGraphics();
 							boardToServer.writeObject("turnEnded");
