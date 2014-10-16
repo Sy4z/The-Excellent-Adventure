@@ -73,7 +73,7 @@ public class ServerThread extends Thread{
 
 				boardToClient.writeObject("yourturn");//Let Client Know its now his turn
 				try {
-					System.out.println("Has sent turn number to client");
+
 					while(true){
 						tempStringTurn = boardFromClient.readObject(); //Wait for Incoming Token
 
@@ -90,10 +90,10 @@ public class ServerThread extends Thread{
 				}
 				String isMyTurn = (String)tempStringTurn; //Cast the input String
 				tempStringTurn = null;
-				System.out.println(isMyTurn + " : This is the printed input from client");
+
 				if(isMyTurn instanceof String && isMyTurn.equals("myturn")){//Check if its the connected clients turn (Will receive notification from client)
 
-					System.out.println("ServerThread says Its My Turn");
+
 					//Send GameBoard current State to Client
 					gameBoardServer = Main.server.getMainGameBoard(); //Get the most updated recent copy of the gameBoard
 
@@ -119,12 +119,15 @@ public class ServerThread extends Thread{
 						e.printStackTrace();
 					}
 
+
 					/**Array of LogicalTiles - Receive Here
 
 
 
 					*
 					 */
+
+
 					while(true){
 						try {
 							Object receivedEnd = boardFromClient.readObject();
@@ -154,9 +157,11 @@ public class ServerThread extends Thread{
 					System.out.println("Player Index: " + playerIndex);
 
 				}
+
+
 				//Wrap up and wait for next looparound
 
-				if(boardFromClient == null){ //If client DC's? Im not sure how to check for this.
+				if(boardFromClient == null){
 					System.out.println("Should NOT get to here");
 					return;
 				}
