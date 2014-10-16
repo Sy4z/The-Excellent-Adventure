@@ -30,9 +30,9 @@ public class DrawMapEast implements IsoCanvas.DrawMap {
 	/**
 	 *Render loop for drawing map east.
 	 *Loops through a 2d array of visibleTiles converts x and y array coordinates to isometric
-	 *and draws each tile, if the cursor also ocupies the current x and y it is drawn, then if 
+	 *and draws each tile, if the cursor also ocupies the current x and y it is drawn, then if
 	 *the entity ocupies the current x and y it is drawn.
-	 *To render the map west correctly the x for loop reads forward and the y loop also reads 
+	 *To render the map west correctly the x for loop reads forward and the y loop also reads
 	 *forward, but the visibleTiles array is fliped before reading occurs.
 	 */
 	@Override
@@ -81,13 +81,13 @@ public class DrawMapEast implements IsoCanvas.DrawMap {
 						entityPos = toIso(eX,eY);
 						entity.draw(g2d, entityPos.x, entityPos.y);
 					}
-				}	
+				}
 			}
 		}
 
 	}
 	/**
-	 *Flips a 2d array such that the 
+	 *Flips a 2d array such that the
 	 *y is reversed and so is the x.
 	 * @param map array to be fliped
 	 * @return new array of with x and y reversed.
@@ -100,22 +100,22 @@ public class DrawMapEast implements IsoCanvas.DrawMap {
 			newX = 0;
 			for(int x = objs.length-1;x >=0;x--){
 				fliped[newY][newX] = objs[y][x];
-				
+
 				newX++;
 			}
-			newY++;	
+			newY++;
 		}
-		
+
 		for(int y = objs.length-1;y>=0 ;y--){
 			for(int x = objs.length-1;x >=0;x--){
-			System.out.println(fliped[y][x]);
+//			System.out.println(fliped[y][x]);
 			}
-			
+
 		}
 		return fliped;
 	}
 	/**
-	 *Flips a 2d array such that the 
+	 *Flips a 2d array such that the
 	 *y is reversed and so is the x.
 	 * @param map array to be fliped
 	 * @return new array of with x and y reversed.
@@ -131,14 +131,14 @@ public class DrawMapEast implements IsoCanvas.DrawMap {
 				//System.out.println(newY+":"+newX+"<--"+y+":"+x);
 				newX++;
 			}
-			newY++;	
+			newY++;
 		}
 		return fliped;
 	}
 	/**
 	 * Converts a coordinate in cartesian space
 	 * into a coordinate in isometric space such that
-	 * coordinate (0,0) is at the top corner of 
+	 * coordinate (0,0) is at the top corner of
 	 * the isometric diamond.
 	 */
 	@Override

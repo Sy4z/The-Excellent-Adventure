@@ -36,7 +36,7 @@ public class IsoCanvas extends JPanel{
 	private int tile_height = 32;
 	private int veiwport_x = 0;
 	private int veiwport_y = 0;
-	private int veiwport_size = 13;
+	private int veiwport_size = 20;
 	private ArrayList<Point> HIGHLIGHTED_TILES;
 	private UnitCursor  cursor;
 	private BufferedImage highLight;

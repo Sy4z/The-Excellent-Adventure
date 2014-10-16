@@ -4,7 +4,7 @@
     <b Type="BLUE" />
     <f Type="FLOOR" />
   </Tiles>
-  <GameObject Size="100">
+  <GameObject Size="9">
     <UnitPlayer>
       <heightOffSet>32</heightOffSet>
       <inventory>
@@ -28,7 +28,7 @@
         <KEY>0</KEY>
         <RUSTY_NAIL>0</RUSTY_NAIL>
         <KATANA>0</KATANA>
-        <PUPPY>0</PUPPY>
+        <PUPPY>1</PUPPY>
       </inventory>
       <notTurnEnd>false</notTurnEnd>
       <standardAction>false</standardAction>

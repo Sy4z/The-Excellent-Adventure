@@ -51,7 +51,7 @@ public class Data {
 	 * Error checking method, Prints the given string to Stderr
 	 * @param s The string to be printed
 	 */
-	private static void error(String s){
+	public static void error(String s){
 		if(testing){
 			System.err.println(s);
 		}
@@ -96,8 +96,10 @@ public class Data {
 		if(root.getChild("LocalID")!= null){
 			playerID = Integer.parseInt(root.getChild("LocalID").getAttribute("ID").getValue());
 		}
-		for(Element e : tilesNode.getChildren()){
 
+
+		for(Element e : tilesNode.getChildren()){
+			error(e.getName().charAt(0)+"");
 			TileMultiton.getTile(TileMultiton.getTypeByRepresentation(e.getName().charAt(0)));
 
 		}
@@ -128,9 +130,7 @@ public class Data {
 			while(tileMapScanner.hasNext()){
 				curChar = tileMapScanner.next();
 				while(curChar.charAt(0) != ';'){
-
 					curTile = TileMultiton.getTypeByRepresentation(curChar.charAt(0));
-
 					tiles[i][j] = curTile;
 					lTiles[i][j] = new LogicalTile(TileMultiton.getTile(curTile).getCanMove());
 					j++;
@@ -139,6 +139,7 @@ public class Data {
 				i++;
 				j = 0;
 			}
+			tileMapScanner.close();
 
 		} catch (FileNotFoundException e1) {
 			error("-----File Not found-----");
@@ -596,8 +597,8 @@ public class Data {
 	 */
 	public static Tuple testSet(File fi){
 
-		int sizeX = 100;
-		int sizeY = 100;
+		int sizeX = 10;
+		int sizeY = 10;
 		int entityX = 0;
 		int entityY = 0;
 		TileMultiton.type[][] t = new TileMultiton.type[sizeY][sizeX];
