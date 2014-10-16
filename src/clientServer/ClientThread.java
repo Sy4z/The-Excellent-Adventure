@@ -35,18 +35,18 @@ public class ClientThread extends Thread {
 	GameObject[][] localGameMap;
 	public ClientThread(Socket socket){
 		this.sock = socket;
-		System.out.println("Client is Constructed");
+		dataStorage.Data.error("Client is Constructed");
 
 	}
 
 
 	public void run(){
-		System.out.println("Trying Connection");
+		dataStorage.Data.error("Trying Connection");
 
 		try {
 
 			//fromServer = new DataInputStream(sock.getInputStream());
-			System.out.println("Client Socket connected on " + sock.getInetAddress() + ":" + sock.getPort());
+			dataStorage.Data.error("Client Socket connected on " + sock.getInetAddress() + ":" + sock.getPort());
 
 			/**
 			 * The following block of code is where information can be sent to/from the server.
@@ -57,7 +57,7 @@ public class ClientThread extends Thread {
 				boardFromServer = new ObjectInputStream(sock.getInputStream());
 				boardToServer = new ObjectOutputStream(sock.getOutputStream());
 				try {
-					System.err.println("Hanging out yo, chur homie, dawg");
+					dataStorage.Data.error("Hanging out yo, chur homie, dawg");
 					Object turnToken;
 					while(true){
 						turnToken = boardFromServer.readObject();
@@ -69,23 +69,23 @@ public class ClientThread extends Thread {
 
 					String castTurnToken = (String)turnToken;
 					turnToken = null;
-					System.out.println(castTurnToken);
+					dataStorage.Data.error(castTurnToken);
 					//If the toekn received was the server notification telling the client to start the turn,
 					if(castTurnToken.equals("yourturn")){
 						Main.tw.turn(); //Start the turn on the local thread
 					}
 				} catch (ClassNotFoundException e1) {
-					System.out.println("Client: There was a problem Reading the first token (Accepting a turn notification from the server");
+					dataStorage.Data.error("Client: There was a problem Reading the first token (Accepting a turn notification from the server");
 					e1.printStackTrace();
 				}
-				System.out.println("Line after yourturn");
+				dataStorage.Data.error("Line after yourturn");
 
 				if(Main.tw.isTurn()){ //If the local thread is set to isTurn = true,
 
 					//Receive the GameBoard from the Server and update current game world
 					try {
 						String isMyTurn = "myturn";
-						System.out.println("second check passed");
+						dataStorage.Data.error("second check passed");
 						boardToServer.writeObject(isMyTurn); //Tells the serverThread its this clients turn
 						Object gameBoardGeneric = null;
 						while(true){
@@ -94,7 +94,7 @@ public class ClientThread extends Thread {
 								break;
 							}
 						}
-						System.err.println(gameBoardGeneric);
+						dataStorage.Data.error(gameBoardGeneric.toString());
 
 						boardToServer.flush(); //Flush input buffer, just making sure it doesnt fill up
 
@@ -105,10 +105,10 @@ public class ClientThread extends Thread {
 							Main.world.updateGameBoardGraphics();
 						}
 						else{
-							System.out.println("Client Expected the ArrayList of Players and Recieved Something that wasnt an ArrayList");
+							dataStorage.Data.error("Client Expected the ArrayList of Players and Recieved Something that wasnt an ArrayList");
 						}
 					} catch (ClassNotFoundException e) {
-						System.out.println("ClientThread: Could not read CharacterList from Server");
+						dataStorage.Data.error("ClientThread: Could not read CharacterList from Server");
 						e.printStackTrace();
 					}
 
@@ -120,7 +120,7 @@ public class ClientThread extends Thread {
 
 
 
-					System.out.println("other stuffs");
+					dataStorage.Data.error("other stuffs");
 					//Wait for end turn phase then send server local gameBoard - Thread is now asleep for 1.5 seconds, for the network to wrap up everything else
 					//						while(Main.tw.startOfEndPhase == false) {//Loop around, then when it is not false, go to the instruction
 					////							System.out.println(Main.tw.startOfEndPhase);
@@ -143,22 +143,22 @@ public class ClientThread extends Thread {
 					 */
 
 					if(!severMessage.equals("finishedmap")){
-						System.err.println("Finishedmap not received");
+						dataStorage.Data.error("Finishedmap not received");
 						severMessage =null;
 					}
 					else{
 						severMessage = null;
 						Main.tw.endOfEndPhase = true;//End end Phase
 						boardToServer.flush();//Flushing Input buffer, making sure it doesnt fill up
-						System.err.println("Potatoes found!");
+						dataStorage.Data.error("Potatoes found!");
 
 						while(Main.world.isTurn()){
-							//System.out.println("Looping"); Commenting this out broke the program.... Then we found out that thread.sleep works. Java is weird.
-							try {
-								Thread.sleep(2);
-							} catch (InterruptedException e) {
-
-							}
+							dataStorage.Data.error("Looping");// Commenting this out broke the program.... Then we found out that thread.sleep works. Java is weird.
+//							try {
+//								Thread.sleep(2);
+//							} catch (InterruptedException e) {
+//
+//							}
 
 						}
 						Main.world.updateGameBoardGraphics();

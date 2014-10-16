@@ -49,6 +49,7 @@ public class World {
 		LogicalTileNullHandler();
 		loadTestGameBoard();
 		UnitPlayer tempPlayer = null;
+		dataStorage.Data.error("\tIn world before for loop");
 		for (int x = 0; x < gameboard.length; x++) {
 			for (int y = 0; y < gameboard[0].length; y++) {
 				if (gameboard[x][y] instanceof UnitPlayer) {
@@ -58,13 +59,17 @@ public class World {
 				}
 			}
 		}
+		dataStorage.Data.error("\tIn world After for loop");
 		if (avatar == null) {
 			avatar = randomPositionAvatar();
 		}
-
+		dataStorage.Data.error("\tRandom Avatar");
 		cursor = new UnitCursor(avatar.curLocation, -1);
+		dataStorage.Data.error("\tnew Cursor");
 		checkPlayerStatus();
+		dataStorage.Data.error("\tCheck Player status");
 		startTurn();
+		dataStorage.Data.error("\tPost start turn");
 		//updateGameBoardGraphics();
 
 	}
@@ -118,6 +123,7 @@ public class World {
 	 * @return The New Avatar
 	 */
 	private UnitPlayer randomPositionAvatar() {
+		dataStorage.Data.error("\t\tIn world In RPAvatar");
 		int id = -1;
 		//Get the current Highest ID to set the new Avatars ID to one higher than that ID
 		for (int x = 0; x < gameBoard.length; x++) {
@@ -127,16 +133,19 @@ public class World {
 				}
 			}
 		}
+		dataStorage.Data.error("\t\tPost forloop");
 		//Generate random map positions on the map until one is free then put the player there.
 		while(true){
 			//Limited until map scrolling is implemented.
-			int x = 6;//(int) (Math.random() * gameBoard.length);
-			int y = 5;///(int) (Math.random() * gameBoard[0].length);
+			int x = (int) (Math.random() * gameBoard.length);
+			int y = (int) (Math.random() * gameBoard[0].length);
 			if(gameBoard[x][y] == null){
 				gameBoard[x][y] = new UnitPlayer(new Point(x,y), id+1);
 				return (UnitPlayer) gameBoard[x][y];
 			}
+			dataStorage.Data.error("\t\tIn true loop");
 		}
+
 	}
 
 	/**

@@ -181,11 +181,16 @@ public class Data {
 		error("GameobjectArray populated");
 		//Create the new IsoCavas
 		Main.cvs = new IsoCanvas(Main.mainFrame.getWidth(), Main.mainFrame.getHeight(),tiles);
+		error("Canvas initialised");
 		World world = null;
 		if(root.getChild("localID") == null){
 		//create the new world object
 			world = new World(lTiles, gameObjectArray,playerID);
 		}
+		else{
+			world = new World(lTiles, gameObjectArray);
+		}
+		error("World Inititalised");
 		//give the world the gameObject array
 //		world.setGameBoard(gameObjectArray);
 		//give the world the logical tile map

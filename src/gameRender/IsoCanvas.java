@@ -54,6 +54,12 @@ public class IsoCanvas extends JPanel{
 		map = t.tiles;
 		this.width = Width;
 		this.height = Height;
+		if(map[1].length < 20){
+			this.veiwport_size = map[1].length;
+		}
+		else{
+			this.veiwport_size = 20;
+		}
 		objectMap = new GameObject[map.length][map[0].length];
 		//System.out.println("width :" +width+"height :"+height);//canvas debug
 		this.renderStratagy = new DrawMapNorth(this.tile_width,this.tile_height,this.width,this.height,veiwport_size);
@@ -74,6 +80,12 @@ public class IsoCanvas extends JPanel{
 		this.width = Width;
 		this.height = Height;
 		objectMap = new GameObject[map.length][map[0].length];
+		if(map[1].length < 20){
+			this.veiwport_size = map[1].length;
+		}
+		else{
+			this.veiwport_size = 20;
+		}
 		//System.out.println("width :" +width+"height :"+height);//canvas debug
 		this.renderStratagy = new DrawMapNorth(this.tile_width, this.tile_height, this.width, this.height, veiwport_size);
 	}
