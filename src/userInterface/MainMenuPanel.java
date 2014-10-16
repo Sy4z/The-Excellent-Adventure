@@ -280,7 +280,7 @@ public class MainMenuPanel extends JPanel {
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
 
-			//Main.runServerMain();
+//			Main.runServerMain();
 		}
 
 	}
