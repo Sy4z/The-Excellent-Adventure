@@ -99,11 +99,9 @@ public  class Main {
 	 * @param ip
 	 */
 	public static void setIP(String ip){
-<<<<<<< HEAD
+
 		ipAddress = ip;
-=======
-		ipAddress = "130.195.4.175";
->>>>>>> cedcb8d452a68842d55958b732367318c1a53afd
+
 	}
 
 	/**
