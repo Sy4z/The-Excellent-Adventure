@@ -55,7 +55,11 @@ public abstract class GameObject implements Serializable{
 	public boolean equals(GameObject g){
 		if(g == null)
 			return false;
-		return g.getLocation() == curLocation;
+		if(this.getClass() != g.getClass())
+			return false;
+		if(this instanceof UnitPlayer && g instanceof UnitPlayer)
+			return ((UnitPlayer)this).getID() == ((UnitPlayer)g).ID;
+		return true;
 	}
 
 

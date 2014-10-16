@@ -348,10 +348,10 @@ public class World {
 				GameObject currentContents = gameBoard[x][y];
 
 				gameBoard[avatar.getLocation().x][avatar.getLocation().y] = null;
-				canvas.moveUnit(avatar, worldMap[x][y].getPath());
+				avatar.upDateLocation(new Point(x,y));
+				canvas.moveUnit(avatar, worldMap[x][y].getPath().getLast());
 				avatar.depleateMoves();
 				gameBoard[x][y] = avatar;
-				avatar.upDateLocation(new Point(x,y));
 				calculatePossibleMovments(x,y);
 				if(currentContents instanceof InteractiveObject)
 					interactWith((InteractiveObject)currentContents);

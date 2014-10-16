@@ -139,13 +139,12 @@ public class IsoCanvas extends JPanel{
 	 * updates the location of the unit and
 	 * repaints canvas.
 	 * @param unit unit to be moved.
-	 * @param arrayDeque path unit shall be moved along
+	 * @param p path unit shall be moved along
 	 */
-	public void moveUnit(UnitPlayer unit, ArrayDeque<Point> arrayDeque){
+	public void moveUnit(UnitPlayer unit, Point p){
+		objectMap = new GameObject[objectMap.length][objectMap[0].length];
 		int i = 0;
 		this.entity = unit;
-		while(!arrayDeque.isEmpty()){
-			Point p = arrayDeque.pop();
 			Point objectPos = inObjectMap(unit);
 			if(objectPos !=null){
 				//entity.upDateLocation(p);
@@ -158,7 +157,7 @@ public class IsoCanvas extends JPanel{
 			}
 			this.repaint();
 			i++;
-		}
+		//}
 	}
 	/**
 	 * Takes a cursor and draws it on the canvas
@@ -204,6 +203,7 @@ public class IsoCanvas extends JPanel{
 	 */
 	public void updateGameBoardGraphics(ArrayList<GameObject> gObs) {
 		if(gObs!= null){
+			objectMap = new GameObject[objectMap.length][objectMap[0].length];
 			for(GameObject g :gObs){
 				if(g!=null){
 					Point objectPos = inObjectMap(g);
