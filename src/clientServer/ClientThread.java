@@ -21,7 +21,7 @@ import runGame.Main;
 
 /**
  * CLIENTSIDE CLASS
- * @author Jarred
+ * @author Jarred, Dylan
  * honejarred@gmail.com
  * runs via TCP
  * This class creates packets, and sends them to the server for processing.
@@ -148,8 +148,9 @@ public class ClientThread extends Thread {
 
 							while(Main.world.isTurn()){
 								System.out.println("Looping");
+								
 							}
-
+							Main.world.updateGameBoardGraphics();
 							boardToServer.writeObject("turnEnded");
 							Main.world.endTurn();
 						}

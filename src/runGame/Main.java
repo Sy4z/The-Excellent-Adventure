@@ -41,7 +41,7 @@ public  class Main {
 
 	/**
 	 * Main Method to tie the whole program together.
-	 * Using for networking currently.
+	 * Several checks for problems within constructor also
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -99,7 +99,11 @@ public  class Main {
 	 * @param ip
 	 */
 	public static void setIP(String ip){
+<<<<<<< HEAD
 		ipAddress = ip;
+=======
+		ipAddress = "130.195.4.175";
+>>>>>>> cedcb8d452a68842d55958b732367318c1a53afd
 	}
 
 	/**
@@ -109,8 +113,6 @@ public  class Main {
 	 * @param runClient - the Instance of Client
 	 */
 	public static void runClientMain(){
-
-
 			client.runClient(ipAddress, port );
 
 
