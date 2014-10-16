@@ -66,7 +66,7 @@ public class ClientThread extends Thread {
 							break;
 						}
 					}
-					System.err.println("hanging yo");
+
 					String castTurnToken = (String)turnToken;
 					turnToken = null;
 					System.out.println(castTurnToken);
@@ -74,95 +74,106 @@ public class ClientThread extends Thread {
 					if(castTurnToken.equals("yourturn")){
 						Main.tw.turn(); //Start the turn on the local thread
 					}
-					} catch (ClassNotFoundException e1) {
-						System.out.println("Client: There was a problem Reading the first token (Accepting a turn notification from the server");
-						e1.printStackTrace();
-					}
-					System.out.println("Line after yourturn");
+				} catch (ClassNotFoundException e1) {
+					System.out.println("Client: There was a problem Reading the first token (Accepting a turn notification from the server");
+					e1.printStackTrace();
+				}
+				System.out.println("Line after yourturn");
 
-					if(Main.tw.isTurn()){ //If the local thread is set to isTurn = true,
+				if(Main.tw.isTurn()){ //If the local thread is set to isTurn = true,
 
-						//Receive the GameBoard from the Server and update current game world
-						try {
-							String isMyTurn = "myturn";
-							System.out.println("second check passed");
-							boardToServer.writeObject(isMyTurn); //Tells the serverThread its this clients turn
-							Object gameBoardGeneric = null;
-							while(true){
-								gameBoardGeneric = boardFromServer.readObject(); //Read into  Generic Object Type
-								if(gameBoardGeneric != null){
-									break;
-								}
+					//Receive the GameBoard from the Server and update current game world
+					try {
+						String isMyTurn = "myturn";
+						System.out.println("second check passed");
+						boardToServer.writeObject(isMyTurn); //Tells the serverThread its this clients turn
+						Object gameBoardGeneric = null;
+						while(true){
+							gameBoardGeneric = boardFromServer.readObject(); //Read into  Generic Object Type
+							if(gameBoardGeneric != null){
+								break;
 							}
-							System.err.println(gameBoardGeneric);
-
-							boardToServer.flush(); //Flush input buffer, just making sure it doesnt fill up
-
-							if(gameBoardGeneric instanceof GameObject[][]){ //Check that the generic object is an arraylist - Cant check further than this because nested generics get erased at runtime but at least theres some safeguard to typechecking
-								localGameMap = (GameObject[][])gameBoardGeneric; //Set the board as a local variable
-								System.out.println("GameBoardGeneric == instanceOF");
-								Main.world.setGameBoard(localGameMap); //Update the local copy of the gameMap
-							}
-							else{
-								System.out.println("Client Expected the ArrayList of Players and Recieved Something that wasnt an ArrayList");
-							}
-						} catch (ClassNotFoundException e) {
-							System.out.println("ClientThread: Could not read CharacterList from Server");
-							e.printStackTrace();
 						}
+						System.err.println(gameBoardGeneric);
 
-						//Receive LogicalTiles Here
+						boardToServer.flush(); //Flush input buffer, just making sure it doesnt fill up
 
-
-
-						boardToServer.writeObject(Main.world.getGameBoard());
-
-
-
-						System.out.println("other stuffs");
-						//Wait for end turn phase then send server local gameBoard - Thread is now asleep for 1.5 seconds, for the network to wrap up everything else
-//						while(Main.tw.startOfEndPhase == false) {//Loop around, then when it is not false, go to the instruction
-////							System.out.println(Main.tw.startOfEndPhase);
-//						}
-						String severMessage = "";
-						try {
-							while(true){
-								severMessage = (String) boardFromServer.readObject();
-								if(severMessage != null){
-									break;
-								}
-							}
-						} catch (ClassNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						if(!severMessage.equals("finishedmap")){
-							System.err.println("Finishedmap not received");
-							severMessage =null;
+						if(gameBoardGeneric instanceof GameObject[][]){ //Check that the generic object is an arraylist - Cant check further than this because nested generics get erased at runtime but at least theres some safeguard to typechecking
+							localGameMap = (GameObject[][])gameBoardGeneric; //Set the board as a local variable
+							System.out.println("GameBoardGeneric == instanceOF");
+							Main.world.setGameBoard(localGameMap); //Update the local copy of the gameMap
+							Main.world.updateGameBoardGraphics();
 						}
 						else{
-							severMessage = null;
-							Main.tw.endOfEndPhase = true;//End end Phase
-							boardToServer.flush();//Flushing Input buffer, making sure it doesnt fill up
-							System.err.println("Potatoes found!");
-
-							while(Main.world.isTurn()){
-								System.out.println("Looping");
-								
-							}
-							Main.world.updateGameBoardGraphics();
-							boardToServer.writeObject("turnEnded");
-							Main.world.endTurn();
+							System.out.println("Client Expected the ArrayList of Players and Recieved Something that wasnt an ArrayList");
 						}
+					} catch (ClassNotFoundException e) {
+						System.out.println("ClientThread: Could not read CharacterList from Server");
+						e.printStackTrace();
+					}
+
+					//Receive LogicalTiles Here
+
+
+
+					boardToServer.writeObject(Main.world.getGameBoard());
+
+
+
+					System.out.println("other stuffs");
+					//Wait for end turn phase then send server local gameBoard - Thread is now asleep for 1.5 seconds, for the network to wrap up everything else
+					//						while(Main.tw.startOfEndPhase == false) {//Loop around, then when it is not false, go to the instruction
+					////							System.out.println(Main.tw.startOfEndPhase);
+					//						}
+					String severMessage = "";
+					try {
+						while(true){
+							severMessage = (String) boardFromServer.readObject();
+							if(severMessage != null){
+								break;
+							}
+						}
+					} catch (ClassNotFoundException e) {
 
 
 					}
+
+					/**
+					 * Block to handle in game turns locally based on input from the server
+					 */
+
+					if(!severMessage.equals("finishedmap")){
+						System.err.println("Finishedmap not received");
+						severMessage =null;
+					}
+					else{
+						severMessage = null;
+						Main.tw.endOfEndPhase = true;//End end Phase
+						boardToServer.flush();//Flushing Input buffer, making sure it doesnt fill up
+						System.err.println("Potatoes found!");
+
+						while(Main.world.isTurn()){
+							//System.out.println("Looping"); Commenting this out broke the program.... Then we found out that thread.sleep works. Java is weird.
+							try {
+								Thread.sleep(2);
+							} catch (InterruptedException e) {
+
+							}
+
+						}
+						Main.world.updateGameBoardGraphics();
+						boardToServer.writeObject("turnEnded");
+						Main.world.endTurn();
+					}
+
+
+				}
 				if(boardToServer == null){ //Placeholder for now
 					break;
 				}
 
 
-		}
+			}
 
 
 			sock.close(); //Closes Socket - Important to do this but this closes the client thread completely, which might be a bad idea until the data beings being sent via a loop w/ exit clause

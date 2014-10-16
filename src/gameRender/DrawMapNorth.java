@@ -6,6 +6,7 @@ import gameWorld.UnitCursor;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
 
 import tile.Tile;
 import tile.TileMultiton;
@@ -58,7 +59,7 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 	 *backwards, the visibleTiles array is not fliped before reading occurs.
 	 */
 	@Override
-	public void draw(Graphics2D g2d, TileMultiton.type[][] visibleTiles,GameObject[][] visibleObjects, Unit entity, UnitCursor cursor) {
+	public void draw(Graphics2D g2d, TileMultiton.type[][] visibleTiles,ArrayList<GameObject> objects, Unit entity, UnitCursor cursor) {
 		//System.out.println("DrawMapNorth.draw");
 		TileMultiton.type[][] map = visibleTiles;
 		Tile tile;
@@ -87,16 +88,21 @@ public class DrawMapNorth implements IsoCanvas.DrawMap{
 						cursor.draw(g2d, cursorPos.x, cursorPos.y);
 					}
 				}
-				if(visibleObjects[y][x]!= null){
-					Point objPoint = toIso(x,y);
-					visibleObjects[y][x].draw(g2d,objPoint.x,objPoint.y);
+				if(objects != null){
+				for(GameObject ob:objects){
+					Point obPoint = ob.getLocation();
+					if(obPoint.x == x && obPoint.y == y){
+						Point isoOb = toIso(obPoint.x,obPoint.y);
+						ob.draw(g2d, isoOb.x, isoOb.y);
+					}
+				}
 				}
 				if(entity != null){
 					eX = entity.getLocation().x;
 					eY = entity.getLocation().y;
 					if(eX==x && eY==y){
 						entityPos = toIso(x,y);
-						//entity.draw(g2d, entityPos.x, entityPos.y);
+						entity.draw(g2d, entityPos.x, entityPos.y);
 					}
 				}
 			

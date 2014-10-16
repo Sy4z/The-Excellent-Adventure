@@ -47,6 +47,7 @@ public class World {
 		this.gameBoard = gameboard;
 		worldMap = tiles;
 		LogicalTileNullHandler();
+		loadTestGameBoard();
 		UnitPlayer tempPlayer = null;
 		for (int x = 0; x < gameboard.length; x++) {
 			for (int y = 0; y < gameboard[0].length; y++) {
@@ -68,6 +69,31 @@ public class World {
 
 	}
 
+	private void loadTestGameBoard(){
+		gameBoard[1][1] = new InteractiveObjectMonster(new Point(1,1));
+		gameBoard[1][3] = new InteractiveObjectChest(new Point(1, 3));
+		gameBoard[2][6] = new StationaryObjectHatStand(new Point(2,6));
+		gameBoard[2][7] = new InteractiveObjectMonster(new Point(2,7));
+		gameBoard[2][8] = new StationaryObjectHatStand(new Point(2,6));
+
+		gameBoard[3][0] = new StationaryObjectWall(new Point(3,0));
+		gameBoard[3][1] = new StationaryObjectWall(new Point(3,1));
+		gameBoard[3][2] = new StationaryObjectWall(new Point(3,2));
+		gameBoard[3][3] = new StationaryObjectWall(new Point(3,3));
+		gameBoard[3][4] = new StationaryObjectWall(new Point(3,4));
+		gameBoard[3][5] = new StationaryObjectWall(new Point(3,5));
+		gameBoard[3][6] = new StationaryObjectWall(new Point(3,6));
+
+		gameBoard[4][0] = new InteractiveObjectChest(new Point(4, 0));
+		gameBoard[4][1] = new InteractiveObjectChest(new Point(4, 1));
+		gameBoard[4][2] = new InteractiveObjectChest(new Point(4, 2));
+		gameBoard[4][3] = new InteractiveObjectChest(new Point(4, 3));
+
+		gameBoard[1][1] = new InteractiveObjectMonster(new Point(9,9));
+		gameBoard[1][1] = new InteractiveObjectMonster(new Point(8,8));
+		gameBoard[1][1] = new InteractiveObjectMonster(new Point(7,7));
+	}
+
 	/**
 	 * Constructor
 	 *
@@ -78,6 +104,7 @@ public class World {
 		LogicalTileNullHandler();
 		this.canvas = Main.cvs;
 		this.gameBoard = gameboard;
+		loadTestGameBoard();
 		avatar = randomPositionAvatar();
 		cursor = new UnitCursor(avatar.curLocation, -1);
 		checkPlayerStatus();
@@ -194,7 +221,6 @@ public class World {
 		// 1 is down
 		// 2 is left
 		// 3 is right
-
 		if(i > 3 || i < 0) return;
 		int x = cursor.getLocation().x;
 		int y = cursor.getLocation().y;
@@ -374,6 +400,7 @@ public class World {
 	 * @return
 	 */
 	public boolean moveToCursor() {
+		updateGameBoardGraphics();
 		if (move(cursor.curLocation)) {
 			refresh();
 			return true;
@@ -590,6 +617,7 @@ public class World {
 				if(gameBoard[x][y] != null)
 					t.add(gameBoard[x][y]);
 		canvas.updateGameBoardGraphics(t);
+
 	}
 
 	/**

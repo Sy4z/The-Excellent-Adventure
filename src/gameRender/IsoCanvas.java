@@ -27,6 +27,7 @@ public class IsoCanvas extends JPanel{
 	private static final long serialVersionUID = -1838809788973263253L;
 	private TileMultiton.type[][] map = null;
 	private GameObject[][] objectMap = null;
+	ArrayList<GameObject> gObs = null;
 	private DrawMap renderStratagy;
 	private Unit entity;
 	private int width;
@@ -88,7 +89,7 @@ public class IsoCanvas extends JPanel{
 		g2d.fillRect(0,0,width,height);
 		TileMultiton.type[][] visibleTiles = loadVisibleTiles();
 		GameObject[][] visibleObjects = loadVisibleObjects();
-		renderStratagy.draw(g2d, visibleTiles,visibleObjects, entity, cursor);
+		renderStratagy.draw(g2d, visibleTiles,gObs, entity, cursor);
 		//g2d.fillRect((width/2)-5,(height/2-5),10,10); //debug center of canvas.
 		//g2d.drawRect(0,0,width,height);// debug draw rectangle around canvas
 	}
@@ -143,21 +144,13 @@ public class IsoCanvas extends JPanel{
 	 */
 	public void moveUnit(UnitPlayer unit, Point p){
 		objectMap = new GameObject[objectMap.length][objectMap[0].length];
-		int i = 0;
 		this.entity = unit;
-			Point objectPos = inObjectMap(unit);
-			if(objectPos !=null){
+				entity.upDateLocation(p);
+				//objectMap[objectPos.x][objectPos.y] = null;
+				//objectMap[p.y][p.x] = unit;
 				//entity.upDateLocation(p);
-				objectMap[objectPos.x][objectPos.y] = null;
-				objectMap[p.y][p.x] = unit;
-			}
-			else{
-				//entity.upDateLocation(p);
-				objectMap[p.y][p.x] = unit;
-			}
-			this.repaint();
-			i++;
-		//}
+				//objectMap[p.y][p.x] = unit;
+		this.repaint();
 	}
 	/**
 	 * Takes a cursor and draws it on the canvas
@@ -202,24 +195,9 @@ public class IsoCanvas extends JPanel{
 	 * @param gObs
 	 */
 	public void updateGameBoardGraphics(ArrayList<GameObject> gObs) {
-		if(gObs!= null){
-			objectMap = new GameObject[objectMap.length][objectMap[0].length];
-			for(GameObject g :gObs){
-				if(g!=null){
-					Point objectPos = inObjectMap(g);
-					if(objectPos !=null){
-						objectMap[objectPos.x][objectPos.y] = null;
-						objectMap[g.getLocation().x][g.getLocation().y] = g;
-						this.repaint();
-					}
-					else{
-						objectMap[g.getLocation().x][g.getLocation().y] = g;
-						this.repaint();
-					}
-				}
-			}
-		}
+		this.gObs = gObs;
 		this.repaint();
+		//this.gObs = null;
 	}
 	/**
 	 *
@@ -330,7 +308,7 @@ public class IsoCanvas extends JPanel{
 		 * @param entity player charachter to be drawn.
 		 * @param cursor player cursor to be drawn.
 		 */
-		public void draw(Graphics2D g2d, TileMultiton.type[][] map, GameObject[][] visibleObjects, Unit entity, UnitCursor cursor);
+		public void draw(Graphics2D g2d, TileMultiton.type[][] map, ArrayList<GameObject> Objects, Unit entity, UnitCursor cursor);
 	}
 	/**
 	 *
