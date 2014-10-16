@@ -47,8 +47,8 @@ public  class Main {
 	public static void main(String[] args) {
 
 
-		JFrame loadFrame = MainFrame.createLoadingFrame();
-		loadFrame.setVisible(true);
+//		JFrame loadFrame = MainFrame.createLoadingFrame();
+//		loadFrame.setVisible(true);
 
 
 		try {
@@ -58,7 +58,7 @@ public  class Main {
 			e.printStackTrace();
 		}
 
-		loadFrame.dispose();
+//		loadFrame.dispose();
 		mainFrame = new MainFrame();
 
 		cvs = new IsoCanvas(mainFrame.getWidth(), mainFrame.getHeight());

@@ -60,7 +60,7 @@ public class MainMenuPanel extends JPanel {
 	private JButton exitButton;
 	public GamePanel gamePanel;
 
-	private ImageIcon background = new ImageIcon("post-apoc.jpg");
+	private ImageIcon background = new ImageIcon(this.getClass().getResource("/userInterface/post-apoc.jpg"));
 
 	/**
 	 * The main menu has 6 buttons: New Game, Load, Story, Controls and Exit.

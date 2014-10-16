@@ -1,6 +1,7 @@
 package tile;
 
 import java.io.File;
+import java.net.URL;
 
 /**
  * Testing tile, unless somehow it's liked
@@ -9,7 +10,7 @@ import java.io.File;
  */
 public class BlueTile extends Tile{
 
-	public BlueTile( File imgPath,Character key) {
+	public BlueTile( URL imgPath,Character key) {
 		super(imgPath,key);
 		type = "Blue_Tile";
 		this.canMove = false;

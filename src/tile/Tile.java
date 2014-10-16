@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -34,7 +35,8 @@ public abstract class Tile {
 	protected int heightOffSet;
 
 
-	public Tile(File imgPath, char key){
+	public Tile(URL imgPath, char key){
+
 		try {
 			img = ImageIO.read(imgPath);
 		} catch (IOException e) {

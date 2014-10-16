@@ -68,7 +68,7 @@ public class GamePanel extends JPanel {
 	private JTable tableItems2;
 	private JTable tableNums2;
 
-	private ImageIcon background = new ImageIcon("post-apoc.jpg"); // Background
+	private ImageIcon background = new ImageIcon(this.getClass().getResource("/userInterface/post-apoc.jpg")); // Background
 																	// picture
 																	// for the
 																	// dialog
@@ -191,10 +191,10 @@ public class GamePanel extends JPanel {
 	 * and also the number of items each player has at the given moment.
 	 */
 	private void setInventory() {
-		ImageIcon katana = new ImageIcon("ImageKatana.jpg");
+		ImageIcon katana = new ImageIcon(this.getClass().getResource("/userInterface/ImageKatana.jpg"));
 		katana = new ImageIcon(katana.getImage().getScaledInstance(250, 100,
 				Image.SCALE_SMOOTH));
-		ImageIcon key = new ImageIcon("imageKey.jpg");
+		ImageIcon key = new ImageIcon(this.getClass().getResource("/userInterface/imageKey.jpg"));
 		key = new ImageIcon(key.getImage().getScaledInstance(250, 100,
 				Image.SCALE_SMOOTH));
 
@@ -257,10 +257,10 @@ public class GamePanel extends JPanel {
 
 		// Next
 
-		ImageIcon puppies = new ImageIcon("ImagePuppies07.jpg");
+		ImageIcon puppies = new ImageIcon(this.getClass().getResource("/userInterface/ImagePuppies07.jpg"));
 		puppies = new ImageIcon(puppies.getImage().getScaledInstance(250, 100,
 				Image.SCALE_SMOOTH));
-		ImageIcon nails = new ImageIcon("ImageRustyNails.jpg");
+		ImageIcon nails = new ImageIcon(this.getClass().getResource("/userInterface/ImageRustyNails.jpg"));
 		nails = new ImageIcon(nails.getImage().getScaledInstance(250, 100,
 				Image.SCALE_SMOOTH));
 

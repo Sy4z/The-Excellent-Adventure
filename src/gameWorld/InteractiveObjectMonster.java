@@ -28,7 +28,7 @@ public class InteractiveObjectMonster extends InteractiveObject{
 		contents = loot;
 		str = strength;
 		try {
-			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/tentacle.png")),"Player");
+			BufferedImageHolder.addImage(ImageIO.read(this.getClass().getResource("/tile/tentacle.png")),"Player");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

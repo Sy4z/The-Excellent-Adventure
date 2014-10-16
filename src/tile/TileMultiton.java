@@ -31,20 +31,15 @@ public class TileMultiton {
 		if(tiles.get(type) == null){
 			switch(type){
 			case FLOOR: tiles.put(type, new FloorTile(
-					new File("src" + File.separator + "tile" +
-							File.separator + "tileD1.png"),'f'));
+					TileMultiton.class.getResource("/tile/tileD1.png"),'f'));
 				break;
 			case BLUE:  tiles.put(type , new BlueTile(
-					new File("src" + File.separator + "tile" +
-							File.separator + "tower.png"),'b'));
+					TileMultiton.class.getResource("/tile/tower.png"),'b'));
 				break;
-			case OPENDOOR:  tiles.put(type , new OpenDoor(
-					new File("src" + File.separator + "tile" +
-							File.separator + "openDoor.png"),'d'));//This should get it's own picture
+			case OPENDOOR:  tiles.put(type , new OpenDoor(TileMultiton.class.getResource("/tile/openDoor.png"),'d'));//This should get it's own picture
 				break;
 			case CLOSEDOOR:  tiles.put(type , new ClosedDoor(
-					new File("src" + File.separator + "tile" +
-							File.separator + "closedDoor.png"),'c'));//This should get it's own picture
+					TileMultiton.class.getResource("/tile/closedDoor.png"),'c'));//This should get it's own picture
 				break;
 			}
 		}

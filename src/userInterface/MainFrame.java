@@ -23,8 +23,8 @@ import runGame.Main;
 public class MainFrame extends JFrame implements WindowListener {
 
 	private static final long serialVersionUID = 1L;
-	private ImageIcon background = new ImageIcon("title.png");
-	private static ImageIcon loadBackground = new ImageIcon("robot.png");
+	private ImageIcon background = new ImageIcon(this.getClass().getResource("/userInterface/title.png"));
+//	private static ImageIcon loadBackground = new ImageIcon("robot.png");
 	public MainMenuPanel mainPanel; //Had to add this here chet, needed public access to the panel
 
 	public MainFrame() {
@@ -80,25 +80,25 @@ public class MainFrame extends JFrame implements WindowListener {
 	 *
 	 * @return the loading frame of the game.
 	 */
-	public static JFrame createLoadingFrame() {
-		JFrame frame = new JFrame();
-		Image resizedImage = loadBackground.getImage().getScaledInstance(500,
-				300, Image.SCALE_SMOOTH);
-		loadBackground = new ImageIcon(resizedImage);
-		JPanel panel = new JPanel() {
-			// Displays the background image on the panel.
-			@Override
-			public void paintComponent(Graphics g) {
-				g.drawImage(loadBackground.getImage(), 0, 0, null);
-			}
-		};
-		frame.setLayout(new BorderLayout());
-		frame.add(panel, BorderLayout.CENTER);
-		frame.setUndecorated(true);
-		frame.setSize(500, 300);
-		frame.setLocationRelativeTo(null);
-		return frame;
-	}
+//	public static JFrame createLoadingFrame() {
+//		JFrame frame = new JFrame();
+////		Image resizedImage = loadBackground.getImage().getScaledInstance(500,
+////				300, Image.SCALE_SMOOTH);
+////		loadBackground = new ImageIcon(resizedImage);
+//		JPanel panel = new JPanel() {
+//			// Displays the background image on the panel.
+//			@Override
+//			public void paintComponent(Graphics g) {
+//				g.drawImage(loadBackground.getImage(), 0, 0, null);
+//			}
+//		};
+//		frame.setLayout(new BorderLayout());
+//		frame.add(panel, BorderLayout.CENTER);
+//		frame.setUndecorated(true);
+//		frame.setSize(500, 300);
+//		frame.setLocationRelativeTo(null);
+//		return frame;
+//	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {

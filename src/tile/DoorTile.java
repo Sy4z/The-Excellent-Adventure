@@ -1,6 +1,8 @@
 package tile;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URL;
 
 /**
  * Testing tile, unless somehow it's liked
@@ -9,7 +11,7 @@ import java.io.File;
  */
 public class DoorTile extends Tile{
 
-	public DoorTile( File imgPath,Character key) {
+	public DoorTile( URL imgPath,Character key) {
 		super(imgPath,key);
 		type = "Door_Tile";
 		this.canMove = false;

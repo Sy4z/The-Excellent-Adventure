@@ -32,7 +32,7 @@ public class InteractiveObjectChest extends InteractiveObject{
 		super(p);
 		this.contents = contents;
 		try {
-			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/box.png")),"Player");
+			BufferedImageHolder.addImage(ImageIO.read(this.getClass().getResource("/tile/box.png")),"Player");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
