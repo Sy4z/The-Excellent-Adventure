@@ -41,7 +41,7 @@ public  class Main {
 
 	/**
 	 * Main Method to tie the whole program together.
-	 * Using for networking currently.
+	 * Several checks for problems within constructor also
 	 * @param args
 	 */
 	public static void main(String[] args) {
