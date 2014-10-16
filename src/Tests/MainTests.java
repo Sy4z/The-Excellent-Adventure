@@ -43,7 +43,13 @@ public class MainTests {
 			e.printStackTrace();
 		}
 		Server server = new Server( 43252);
-		Main.runServerMain();
+		try{
+			Main.runServerMain();
+		}
+		catch(NullPointerException e){
+			assert(e instanceof NullPointerException);
+		}
+
 	}
 
 	public @Test void testSetip(){

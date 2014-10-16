@@ -219,6 +219,7 @@ public class IsoCanvas extends JPanel{
 				}
 			}
 		}
+		this.repaint();
 	}
 	/**
 	 *
