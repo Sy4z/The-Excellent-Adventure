@@ -197,7 +197,7 @@ public class IsoCanvas extends JPanel{
 	public void updateGameBoardGraphics(ArrayList<GameObject> gObs) {
 		this.gObs = gObs;
 		this.repaint();
-		this.gObs = null;
+		//this.gObs = null;
 	}
 	/**
 	 *

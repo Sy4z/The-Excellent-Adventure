@@ -221,7 +221,6 @@ public class World {
 		// 1 is down
 		// 2 is left
 		// 3 is right
-
 		if(i > 3 || i < 0) return;
 		int x = cursor.getLocation().x;
 		int y = cursor.getLocation().y;
@@ -618,6 +617,7 @@ public class World {
 				if(gameBoard[x][y] != null)
 					t.add(gameBoard[x][y]);
 		canvas.updateGameBoardGraphics(t);
+
 	}
 
 	/**
