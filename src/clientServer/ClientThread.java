@@ -148,8 +148,9 @@ public class ClientThread extends Thread {
 
 							while(Main.world.isTurn()){
 								System.out.println("Looping");
+								
 							}
-
+							Main.world.updateGameBoardGraphics();
 							boardToServer.writeObject("turnEnded");
 							Main.world.endTurn();
 						}

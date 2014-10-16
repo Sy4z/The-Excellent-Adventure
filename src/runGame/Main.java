@@ -99,7 +99,7 @@ public  class Main {
 	 * @param ip
 	 */
 	public static void setIP(String ip){
-		ipAddress = "130.195.4.155";
+		ipAddress = "130.195.4.175";
 	}
 
 	/**
@@ -109,8 +109,6 @@ public  class Main {
 	 * @param runClient - the Instance of Client
 	 */
 	public static void runClientMain(){
-
-
 			client.runClient(ipAddress, port );
 
 
