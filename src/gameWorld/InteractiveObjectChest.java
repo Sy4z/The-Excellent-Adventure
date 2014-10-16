@@ -54,7 +54,6 @@ public class InteractiveObjectChest extends InteractiveObject{
 		contents = itms;
 		try {
 			BufferedImageHolder.addImage(ImageIO.read(new File("src/tile/box.png")),"box");
-			System.out.println(BufferedImageHolder.getimage("box"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
