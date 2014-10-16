@@ -20,8 +20,7 @@ import runGame.Main;
  * Running via TCP, as the game is now turn based.
  * Currently Sends data from client to server and server Echos the data.
  * So the connection is working currently.
- * Works via RunNetwork.java
- * TODO: Game Logic integration
+ *
  */
 
 public class ServerThread extends Thread{

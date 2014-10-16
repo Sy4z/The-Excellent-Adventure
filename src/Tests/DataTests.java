@@ -24,7 +24,7 @@ public class DataTests {
 		try {
 			Data.save(null);
 		} catch (UnexpectedException | IllegalArgumentException e) {
-			// TODO Auto-generated catch block
+
 			assert(e instanceof IllegalArgumentException);
 		}
 	}
@@ -38,7 +38,7 @@ public class DataTests {
 		try {
 			Data.load(null);
 		} catch (UnexpectedException | IllegalArgumentException e) {
-			// TODO Auto-generated catch block
+
 			assert(e instanceof IllegalArgumentException);
 		}
 	}

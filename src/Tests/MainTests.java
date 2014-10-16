@@ -13,7 +13,6 @@ import runGame.Main;
 /**
  * Tests for the Main Class
  * @author Jarred
- *
  */
 
 
