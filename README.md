@@ -18,3 +18,6 @@ Obviously a lot in this game is buggy or unimplemented. There is a LOT in the co
 CONTROLS:
 The controls are fairly simple,
 arrow keys will move the cursor, then ENTER will set the character onto the cursor. You can do this twice, then it switches to the next persons turn. Obviously graphics are broken and random playerCharacters keep spawning all around the map so just disregard them.
+
+
+The first jar handed in has hardcoded network test code which makes the network connect to one IP only, so a second jar has been handed in with that code taken out.
