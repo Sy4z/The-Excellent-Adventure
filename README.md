@@ -19,4 +19,4 @@ CONTROLS:
 The controls are fairly simple,
 arrow keys will move the cursor, then ENTER will set the character onto the cursor. You can do this twice, then it switches to the next persons turn. 
 
-The first jar handed in has hardcoded network test code which makes the network connect to one IP only, so a second jar has been handed in with that code taken out.
+The first jar handed in has hardcoded network test code which makes the network connect to one IP only, so a second jar has been handed in with that code taken out. Also turns out the .java files didnt get added to the first jar because tired dylan. So the initially submitted .jar wont have any of the code, but will have the class files. The newly submitted version will have the code.
